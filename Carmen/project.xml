@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project>
+	<!-- NMML reference: https://gist.github.com/1763850 -->
+	
+	<!-- metadata, make sure 'package' is at least 3 segments (ie. com.mycompany.myproject) -->
+	<meta title="Carmen" package="Carmen" version="1.0.0" company="TuMadre" />
+	
+	<!-- output -->
+	<app main="Main" file="Carmen" path="bin" />
+	
+	<window background="#000000" fps="60" />
+	<window width="1920" height="1080" unless="mobile" />
+	<window orientation="landscape" vsync="false" antialiasing="0" if="cpp" />
+	<app swf-version="11.8" if="flash"/>
+	<!-- classpath, haxe libs -->
+	<source path="src" />
+	<haxelib name="openfl" />
+	<haxelib name="flixel"/>
+	<haxelib name="actuate" />
+	
+	<!-- assets -->
+		<!-- assets -->
+	<icon path="assets/openfl.svg" />
+	<assets path="assets/img" rename="img" />
+	<assets path="assets" rename="assets" />
+	
+	<!-- optimize output
+	<haxeflag name="-dce full" /> -->
+	
+</project>
