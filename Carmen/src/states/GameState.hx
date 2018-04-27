@@ -15,7 +15,7 @@ import flixel.FlxSprite;
 import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.system.FlxAssets.FlxGraphicAsset;
 import flixel.group.FlxGroup;
-import states.GameWin;
+import states.GameWinPlayer;
 
 	
 	/**
@@ -30,7 +30,7 @@ class GameState extends FlxState
 	var projectiles:FlxGroup;
    var coins:FlxGroup;
 	var numberCoins:Int = 0;
-	var resetPlaceCoin:Bool = true;
+	var resetPlaceCoin:Bool = false;
 	
 	public function new() 
 	{
@@ -48,11 +48,11 @@ class GameState extends FlxState
 	add(projectiles);
 	        for (i in 0...2){
 			var pro:Projectile = new Projectile();
-			pro.set_visible(false);
+			//pro.set_visible(false);
 		projectiles.add(pro);
-
+          pro.kill();
 		}
-	player = new Player1(80, 900, map);
+	player = new Player1(80, 900, map,projectiles);
 
 	add(player);
 	god = new God(1000, 900, map);
@@ -83,21 +83,15 @@ FlxG.worldBounds.set(0, 0, map.width, map.height);
 		var coinCoordinates:Array<FlxPoint> = map.getTileCoords(12, true);
 		
 		 var rand:Float = Math.random();
-		  trace(rand);
-		   trace(coinCoordinates.length);
-		   rand = coinCoordinates.length * rand;
-		    trace(rand);
-		   rand = Math.round(rand);
-		    trace(rand);
+		   rand = Math.round(coinCoordinates.length * rand);
+		   
 		 var index:Int = Std.int(rand)-1;
 
+
 		 
-		 trace(index);
-		 
-		var anX:Float = coinCoordinates[index].x;
-		var anY:Float = coinCoordinates[index].y;
-		 trace(anX);
-		  trace(anY);
+		var anX:Float = coinCoordinates[index].x-(aCoin.width/2);
+		var anY:Float = coinCoordinates[index].y-(aCoin.height);
+
 		
 		if (otherCoins == null || otherCoins.length == 0)
 		{
@@ -118,10 +112,9 @@ FlxG.worldBounds.set(0, 0, map.width, map.height);
 			}
 	
 		}
-		trace(anX - aCoin.width);
-		trace(anY - aCoin.height);
-		aCoin.x = anX-aCoin.width;
-		aCoin.y = anY-aCoin.height;
+
+		aCoin.x = anX;
+		aCoin.y = anY;
 	}
 	
 	public function thereIsACoinHere(anX:Float, anY:Float,otherCoins:FlxGroup):Bool
@@ -162,25 +155,31 @@ FlxG.worldBounds.set(0, 0, map.width, map.height);
 		FlxG.collide(map, god);
 		
 	FlxG.overlap(player, coins, playerVsCoins);
+	FlxG.overlap(projectiles,god, projectilesVsGod);
 		
 if (playerCollectedAllCoins())
 {	
 	player.coins = 0;
 	
+	for (i in 0...2){
+	projectiles.members[i].revive();
+	projectiles.members[i].set_visible(false);
+	}
 
-	player.intanceProjectiles(projectiles);			
+	resetPlaceCoin = true;
+	player.intanceProjectiles();
 		}
 		
-		trace(projectiles.countLiving()+"PROYECTILES");
-		if (projectiles!=null&&(projectiles.countLiving()==0||projectiles.countLiving()==-1)&&god.exists&&resetPlaceCoin)
+		trace(projectiles.countDead()+"PROYECTILES");
+		if (projectiles!=null&&projectiles.countDead()==2&&god.exists&&resetPlaceCoin)
 		{
+			player.projCount =-1;
 			resetPlaceCoin = false;
 			shuffleCoins();
-			
 		}
 
 	}
-	//FlxG.switchState(new GameWin());
+
 
 	function shuffleCoins()
 	{
@@ -190,7 +189,7 @@ if (playerCollectedAllCoins())
 		setCoinXAndYRandom(coins,c);
 		}*/ //NO ANDA ESTO
 		
-		
+		coins.destroy();
 	coins = new FlxGroup();
 		add(coins);
 		   for (i in 0...2){
@@ -206,7 +205,10 @@ if (playerCollectedAllCoins())
 		aPlayer.coins = aPlayer.coins + 1;
 		aCoin.destroy();
 	}
-	
+	function projectilesVsGod(aProjectile:Projectile, aGod:God)
+	{
+		FlxG.switchState(new GameWinPlayer());
+	}
 	override public function destroy():Void 
 	{
 		super.destroy();

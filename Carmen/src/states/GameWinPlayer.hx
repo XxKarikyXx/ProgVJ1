@@ -8,7 +8,7 @@ import flixel.text.FlxText;
  * ...
  * @author juako
  */
-class GameOver extends FlxState 
+class GameWinPlayer extends FlxState 
 {
 
 	public function new() 
@@ -17,12 +17,13 @@ class GameOver extends FlxState
 	}
 	override public function create():Void 
 	{
-		add(new FlxText(900, 900, 700, "Perdiste papu"));
+		add(new FlxText(500, 500, 0, "Gana Jugador", 100));
+		add(new FlxText(600, 650, 0, "Presione ENTER para re iniciar", 20));
 	}
 	override public function update(elapsed:Float):Void 
 	{
 		super.update(elapsed);
-		if (FlxG.keys.justPressed.SPACE)
+		if (FlxG.keys.justPressed.ENTER)
 		{
 			FlxG.switchState(new GameState());
 		}

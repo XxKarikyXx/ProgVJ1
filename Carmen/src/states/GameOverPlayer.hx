@@ -8,7 +8,7 @@ import flixel.text.FlxText;
  * ...
  * @author juako
  */
-class GameWin extends FlxState 
+class GameOverPlayer extends FlxState 
 {
 
 	public function new() 
@@ -17,7 +17,10 @@ class GameWin extends FlxState
 	}
 	override public function create():Void 
 	{
-		add(new FlxText(1000, 1000, 900, "Buena papu"));
+		add(new FlxText(500, 500, 0, "Gana Dios", 100));
+		add(new FlxText(600, 650, 0, "Presione ENTER para re iniciar", 20));
+		
+		
 	}
 	override public function update(elapsed:Float):Void 
 	{

@@ -16,7 +16,6 @@ class Projectile extends FlxSprite
 {
 	var followBool:Bool = false;
 	var timeStartToBeAlive:Int = 0;
-	var shooteable:Bool = true;
 
 	public function new() 
 	{
@@ -46,7 +45,10 @@ class Projectile extends FlxSprite
 	}
 		
 		if (x<0 || x>FlxG.width||y<0||y>FlxG.height){
+			this.set_visible(false);
+			reset(100, 100);
 		kill();
+		trace("ME MORI");
 	}
 		}
 	
@@ -54,7 +56,8 @@ class Projectile extends FlxSprite
 	public function shoot(ax:Float, ay:Float)
 	{
 
-		reset(ax, ay);
+		this.x = ax;
+		this.y=ay;
 		followBool = true;
 		timeStartToBeAlive = Lib.getTimer();
 	}
@@ -72,8 +75,8 @@ class Projectile extends FlxSprite
 			var length = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
 			deltaX /= length;
 			deltaY /= length;
-			velocity.x = deltaX * 400;
-			velocity.y = deltaY * 400;
+			velocity.x = deltaX * 600;
+			velocity.y = deltaY * 600;
 			
 	}
 }

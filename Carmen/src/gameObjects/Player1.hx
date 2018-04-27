@@ -20,10 +20,11 @@ class Player1 extends FlxSprite
     var projectiles:FlxGroup;
 	@:isVar public var projCount = -1;
 	
-	public function new(X:Float, Y:Float, aMap:FlxTilemap) 
+	public function new(X:Float, Y:Float, aMap:FlxTilemap,aprojectiles:FlxGroup) 
 	{
 		super(X, Y);
 		map = aMap;
+		projectiles = aprojectiles;
 			loadGraphic(AssetPaths.hero__png, true, 45, 60);
 animation.add("run", [2, 3, 4, 5, 6, 7, 8, 9], 30);
 animation.add("idle", [10]);
@@ -43,10 +44,9 @@ maxVelocity.x = 700;
 acceleration.y = 3500;
 	}
 	
-	public function intanceProjectiles(aprojectiles:FlxGroup)
+	public function intanceProjectiles()
 	{
 		projCount = 0;
-		projectiles=aprojectiles;
 
 	}
 	
@@ -110,14 +110,11 @@ override public function update(aDt:Float):Void
 		
 		if (FlxG.keys.justPressed.SPACE)
 		{
-		   trace("holaaa");
-			if (projectiles != null && projectiles.length > 0 && projCount < projectiles.length && projCount !=-1){
-				trace("entre");
-			var pro:Projectile = cast(projectiles.getRandom(), Projectile);
+			if (projectiles != null && projCount < projectiles.length && projCount !=-1){
+				projCount = projCount + 1;
+			var pro:Projectile = cast(projectiles.members[projCount-1], Projectile);
+			pro.shoot(this.x, this.y);
 			pro.set_visible(true);
-			projCount = projCount + 1;
-			pro.shoot(this.x,this.y);	
-			//projectiles.remove(pro);
 			}
 
 			
