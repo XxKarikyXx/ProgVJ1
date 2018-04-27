@@ -6,7 +6,7 @@ import flixel.text.FlxText;
 
 /**
  * ...
- * @author juako
+ * @author
  */
 class GameOverPlayer extends FlxState 
 {

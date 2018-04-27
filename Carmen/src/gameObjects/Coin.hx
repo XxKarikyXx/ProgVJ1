@@ -11,7 +11,7 @@ import flixel.tile.FlxTilemap;
 
 /**
  * ...
- * @author TuMadre
+ * @author 
  */
 class Coin extends FlxSprite
 {

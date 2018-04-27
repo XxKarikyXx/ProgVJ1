@@ -4,7 +4,7 @@ import gameObjects.God;
 
 /**
  * ...
- * @author juako
+ * @author 
  */
 
 class GlobalGameData 
