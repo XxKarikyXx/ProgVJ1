@@ -36,6 +36,8 @@ ApplicationMain.create = function() {
 	types.push("IMAGE");
 	urls.push("flixel/images/logo/default.png");
 	types.push("IMAGE");
+	urls.push("img/backgroundGame.png");
+	types.push("IMAGE");
 	urls.push("img/julia.png");
 	types.push("IMAGE");
 	urls.push("img/julia.xml");
@@ -59,6 +61,8 @@ ApplicationMain.create = function() {
 	urls.push("assets/explosion.png");
 	types.push("IMAGE");
 	urls.push("assets/hero.png");
+	types.push("IMAGE");
+	urls.push("assets/img/backgroundGame.png");
 	types.push("IMAGE");
 	urls.push("assets/img/julia.png");
 	types.push("IMAGE");
@@ -108,7 +112,7 @@ ApplicationMain.init = function() {
 	}
 };
 ApplicationMain.main = function() {
-	ApplicationMain.config = { build : "280", company : "TuMadre", file : "Carmen", fps : 60, name : "Carmen", orientation : "", packageName : "Carmen", version : "1.0.0", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : false, height : 1080, parameters : "{}", resizable : true, stencilBuffer : true, title : "Carmen", vsync : false, width : 1920, x : null, y : null}]};
+	ApplicationMain.config = { build : "295", company : "TuMadre", file : "Carmen", fps : 60, name : "Carmen", orientation : "", packageName : "Carmen", version : "1.0.0", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : false, height : 1080, parameters : "{}", resizable : true, stencilBuffer : true, title : "Carmen", vsync : false, width : 1920, x : null, y : null}]};
 };
 ApplicationMain.start = function() {
 	var hasMain = false;
@@ -2354,7 +2358,7 @@ var DefaultAssetLibrary = function() {
 	} else {
 		_this11.h[id] = value7;
 	}
-	id = "img/julia.png";
+	id = "img/backgroundGame.png";
 	var _this12 = this.path;
 	if(__map_reserved[id] != null) {
 		_this12.setReserved(id,id);
@@ -2368,7 +2372,7 @@ var DefaultAssetLibrary = function() {
 	} else {
 		_this13.h[id] = value8;
 	}
-	id = "img/julia.xml";
+	id = "img/julia.png";
 	var _this14 = this.path;
 	if(__map_reserved[id] != null) {
 		_this14.setReserved(id,id);
@@ -2376,13 +2380,13 @@ var DefaultAssetLibrary = function() {
 		_this14.h[id] = id;
 	}
 	var _this15 = this.type;
-	var value9 = "TEXT";
+	var value9 = "IMAGE";
 	if(__map_reserved[id] != null) {
 		_this15.setReserved(id,value9);
 	} else {
 		_this15.h[id] = value9;
 	}
-	id = "img/moneda.png";
+	id = "img/julia.xml";
 	var _this16 = this.path;
 	if(__map_reserved[id] != null) {
 		_this16.setReserved(id,id);
@@ -2390,13 +2394,13 @@ var DefaultAssetLibrary = function() {
 		_this16.h[id] = id;
 	}
 	var _this17 = this.type;
-	var value10 = "IMAGE";
+	var value10 = "TEXT";
 	if(__map_reserved[id] != null) {
 		_this17.setReserved(id,value10);
 	} else {
 		_this17.h[id] = value10;
 	}
-	id = "img/moneda.xml";
+	id = "img/moneda.png";
 	var _this18 = this.path;
 	if(__map_reserved[id] != null) {
 		_this18.setReserved(id,id);
@@ -2404,13 +2408,13 @@ var DefaultAssetLibrary = function() {
 		_this18.h[id] = id;
 	}
 	var _this19 = this.type;
-	var value11 = "TEXT";
+	var value11 = "IMAGE";
 	if(__map_reserved[id] != null) {
 		_this19.setReserved(id,value11);
 	} else {
 		_this19.h[id] = value11;
 	}
-	id = "img/monedagiro.png";
+	id = "img/moneda.xml";
 	var _this20 = this.path;
 	if(__map_reserved[id] != null) {
 		_this20.setReserved(id,id);
@@ -2418,13 +2422,13 @@ var DefaultAssetLibrary = function() {
 		_this20.h[id] = id;
 	}
 	var _this21 = this.type;
-	var value12 = "IMAGE";
+	var value12 = "TEXT";
 	if(__map_reserved[id] != null) {
 		_this21.setReserved(id,value12);
 	} else {
 		_this21.h[id] = value12;
 	}
-	id = "img/monedagiro.xml";
+	id = "img/monedagiro.png";
 	var _this22 = this.path;
 	if(__map_reserved[id] != null) {
 		_this22.setReserved(id,id);
@@ -2432,13 +2436,13 @@ var DefaultAssetLibrary = function() {
 		_this22.h[id] = id;
 	}
 	var _this23 = this.type;
-	var value13 = "TEXT";
+	var value13 = "IMAGE";
 	if(__map_reserved[id] != null) {
 		_this23.setReserved(id,value13);
 	} else {
 		_this23.h[id] = value13;
 	}
-	id = "assets/cosahermosa.csv";
+	id = "img/monedagiro.xml";
 	var _this24 = this.path;
 	if(__map_reserved[id] != null) {
 		_this24.setReserved(id,id);
@@ -2452,7 +2456,7 @@ var DefaultAssetLibrary = function() {
 	} else {
 		_this25.h[id] = value14;
 	}
-	id = "assets/cosahermosa.tmx";
+	id = "assets/cosahermosa.csv";
 	var _this26 = this.path;
 	if(__map_reserved[id] != null) {
 		_this26.setReserved(id,id);
@@ -2466,7 +2470,7 @@ var DefaultAssetLibrary = function() {
 	} else {
 		_this27.h[id] = value15;
 	}
-	id = "assets/dataTilespng.tsx";
+	id = "assets/cosahermosa.tmx";
 	var _this28 = this.path;
 	if(__map_reserved[id] != null) {
 		_this28.setReserved(id,id);
@@ -2480,7 +2484,7 @@ var DefaultAssetLibrary = function() {
 	} else {
 		_this29.h[id] = value16;
 	}
-	id = "assets/dust.png";
+	id = "assets/dataTilespng.tsx";
 	var _this30 = this.path;
 	if(__map_reserved[id] != null) {
 		_this30.setReserved(id,id);
@@ -2488,13 +2492,13 @@ var DefaultAssetLibrary = function() {
 		_this30.h[id] = id;
 	}
 	var _this31 = this.type;
-	var value17 = "IMAGE";
+	var value17 = "TEXT";
 	if(__map_reserved[id] != null) {
 		_this31.setReserved(id,value17);
 	} else {
 		_this31.h[id] = value17;
 	}
-	id = "assets/explosion.png";
+	id = "assets/dust.png";
 	var _this32 = this.path;
 	if(__map_reserved[id] != null) {
 		_this32.setReserved(id,id);
@@ -2508,7 +2512,7 @@ var DefaultAssetLibrary = function() {
 	} else {
 		_this33.h[id] = value18;
 	}
-	id = "assets/hero.png";
+	id = "assets/explosion.png";
 	var _this34 = this.path;
 	if(__map_reserved[id] != null) {
 		_this34.setReserved(id,id);
@@ -2522,7 +2526,7 @@ var DefaultAssetLibrary = function() {
 	} else {
 		_this35.h[id] = value19;
 	}
-	id = "assets/img/julia.png";
+	id = "assets/hero.png";
 	var _this36 = this.path;
 	if(__map_reserved[id] != null) {
 		_this36.setReserved(id,id);
@@ -2536,7 +2540,7 @@ var DefaultAssetLibrary = function() {
 	} else {
 		_this37.h[id] = value20;
 	}
-	id = "assets/img/julia.xml";
+	id = "assets/img/backgroundGame.png";
 	var _this38 = this.path;
 	if(__map_reserved[id] != null) {
 		_this38.setReserved(id,id);
@@ -2544,13 +2548,13 @@ var DefaultAssetLibrary = function() {
 		_this38.h[id] = id;
 	}
 	var _this39 = this.type;
-	var value21 = "TEXT";
+	var value21 = "IMAGE";
 	if(__map_reserved[id] != null) {
 		_this39.setReserved(id,value21);
 	} else {
 		_this39.h[id] = value21;
 	}
-	id = "assets/img/moneda.png";
+	id = "assets/img/julia.png";
 	var _this40 = this.path;
 	if(__map_reserved[id] != null) {
 		_this40.setReserved(id,id);
@@ -2564,7 +2568,7 @@ var DefaultAssetLibrary = function() {
 	} else {
 		_this41.h[id] = value22;
 	}
-	id = "assets/img/moneda.xml";
+	id = "assets/img/julia.xml";
 	var _this42 = this.path;
 	if(__map_reserved[id] != null) {
 		_this42.setReserved(id,id);
@@ -2578,7 +2582,7 @@ var DefaultAssetLibrary = function() {
 	} else {
 		_this43.h[id] = value23;
 	}
-	id = "assets/img/monedagiro.png";
+	id = "assets/img/moneda.png";
 	var _this44 = this.path;
 	if(__map_reserved[id] != null) {
 		_this44.setReserved(id,id);
@@ -2592,7 +2596,7 @@ var DefaultAssetLibrary = function() {
 	} else {
 		_this45.h[id] = value24;
 	}
-	id = "assets/img/monedagiro.xml";
+	id = "assets/img/moneda.xml";
 	var _this46 = this.path;
 	if(__map_reserved[id] != null) {
 		_this46.setReserved(id,id);
@@ -2606,7 +2610,7 @@ var DefaultAssetLibrary = function() {
 	} else {
 		_this47.h[id] = value25;
 	}
-	id = "assets/mapCSV_map2_specials.csv";
+	id = "assets/img/monedagiro.png";
 	var _this48 = this.path;
 	if(__map_reserved[id] != null) {
 		_this48.setReserved(id,id);
@@ -2614,13 +2618,13 @@ var DefaultAssetLibrary = function() {
 		_this48.h[id] = id;
 	}
 	var _this49 = this.type;
-	var value26 = "TEXT";
+	var value26 = "IMAGE";
 	if(__map_reserved[id] != null) {
 		_this49.setReserved(id,value26);
 	} else {
 		_this49.h[id] = value26;
 	}
-	id = "assets/mapCSV_map2_tiles.csv";
+	id = "assets/img/monedagiro.xml";
 	var _this50 = this.path;
 	if(__map_reserved[id] != null) {
 		_this50.setReserved(id,id);
@@ -2634,7 +2638,7 @@ var DefaultAssetLibrary = function() {
 	} else {
 		_this51.h[id] = value27;
 	}
-	id = "assets/openfl.svg";
+	id = "assets/mapCSV_map2_specials.csv";
 	var _this52 = this.path;
 	if(__map_reserved[id] != null) {
 		_this52.setReserved(id,id);
@@ -2648,7 +2652,7 @@ var DefaultAssetLibrary = function() {
 	} else {
 		_this53.h[id] = value28;
 	}
-	id = "assets/tiles.png";
+	id = "assets/mapCSV_map2_tiles.csv";
 	var _this54 = this.path;
 	if(__map_reserved[id] != null) {
 		_this54.setReserved(id,id);
@@ -2656,11 +2660,39 @@ var DefaultAssetLibrary = function() {
 		_this54.h[id] = id;
 	}
 	var _this55 = this.type;
-	var value29 = "IMAGE";
+	var value29 = "TEXT";
 	if(__map_reserved[id] != null) {
 		_this55.setReserved(id,value29);
 	} else {
 		_this55.h[id] = value29;
+	}
+	id = "assets/openfl.svg";
+	var _this56 = this.path;
+	if(__map_reserved[id] != null) {
+		_this56.setReserved(id,id);
+	} else {
+		_this56.h[id] = id;
+	}
+	var _this57 = this.type;
+	var value30 = "TEXT";
+	if(__map_reserved[id] != null) {
+		_this57.setReserved(id,value30);
+	} else {
+		_this57.h[id] = value30;
+	}
+	id = "assets/tiles.png";
+	var _this58 = this.path;
+	if(__map_reserved[id] != null) {
+		_this58.setReserved(id,id);
+	} else {
+		_this58.h[id] = id;
+	}
+	var _this59 = this.type;
+	var value31 = "IMAGE";
+	if(__map_reserved[id] != null) {
+		_this59.setReserved(id,value31);
+	} else {
+		_this59.h[id] = value31;
 	}
 	var assetsPrefix = null;
 	if(ApplicationMain.config != null && Object.prototype.hasOwnProperty.call(ApplicationMain.config,"assetsPrefix")) {
@@ -2671,13 +2703,13 @@ var DefaultAssetLibrary = function() {
 		while(k.hasNext()) {
 			var k1 = k.next();
 			var this1 = this.path;
-			var _this56 = this.path;
-			var value30 = assetsPrefix + (__map_reserved[k1] != null ? _this56.getReserved(k1) : _this56.h[k1]);
-			var _this57 = this1;
+			var _this60 = this.path;
+			var value32 = assetsPrefix + (__map_reserved[k1] != null ? _this60.getReserved(k1) : _this60.h[k1]);
+			var _this61 = this1;
 			if(__map_reserved[k1] != null) {
-				_this57.setReserved(k1,value30);
+				_this61.setReserved(k1,value32);
 			} else {
-				_this57.h[k1] = value30;
+				_this61.h[k1] = value32;
 			}
 		}
 	}
@@ -3622,6 +3654,16 @@ StringTools.quoteWinArg = function(argument,escapeMetaCharacters) {
 	} else {
 		return argument;
 	}
+};
+var ToolsForUse = function() { };
+$hxClasses["ToolsForUse"] = ToolsForUse;
+ToolsForUse.__name__ = ["ToolsForUse"];
+ToolsForUse.IsInsideCircle = function(centeraX,centeraY,aX,aY,aRad) {
+	var ecuationA = Math.pow(centeraX - aX,2) + Math.pow(centeraY - aY,2);
+	if(Math.sqrt(ecuationA) < aRad) {
+		return true;
+	}
+	return false;
 };
 var ValueType = $hxClasses["ValueType"] = { __ename__ : ["ValueType"], __constructs__ : ["TNull","TInt","TFloat","TBool","TObject","TFunction","TClass","TEnum","TUnknown"] };
 ValueType.TNull = ["TNull",0];
@@ -83270,7 +83312,7 @@ states_GameOverPlayer.prototype = $extend(flixel_FlxState.prototype,{
 	,update: function(elapsed) {
 		flixel_FlxState.prototype.update.call(this,elapsed);
 		var _this = flixel_FlxG.keys.justPressed;
-		if(_this.keyManager.checkStatus(32,_this.status)) {
+		if(_this.keyManager.checkStatus(13,_this.status)) {
 			var nextState = new states_GameState();
 			if(flixel_FlxG.game._state.switchTo(nextState)) {
 				flixel_FlxG.game._requestedState = nextState;
@@ -83295,7 +83337,11 @@ states_GameState.prototype = $extend(flixel_FlxState.prototype,{
 	,coins: null
 	,numberCoins: null
 	,resetPlaceCoin: null
+	,background: null
 	,create: function() {
+		this.background = new flixel_FlxSprite();
+		this.background.loadGraphic("assets/img/backgroundGame.png",false,1920,1080);
+		this.add(this.background);
 		this.map = new flixel_tile_FlxTilemap();
 		this.map.loadMapFromCSV("assets/cosahermosa.csv","assets/tiles.png",32,32);
 		this.map.setTileProperties(12,0);
@@ -83311,7 +83357,7 @@ states_GameState.prototype = $extend(flixel_FlxState.prototype,{
 		}
 		this.player = new gameObjects_Player1(80,900,this.map,this.projectiles);
 		this.add(this.player);
-		this.god = new gameObjects_God(1000,900,this.map);
+		this.god = new gameObjects_God(1700,900,this.map);
 		GlobalGameData.player = this.god;
 		this.add(this.god);
 		flixel_FlxG.camera.setScrollBoundsRect(0,0,this.map.get_width(),this.map.get_height());
@@ -83352,15 +83398,13 @@ states_GameState.prototype = $extend(flixel_FlxState.prototype,{
 		aCoin.set_y(anY);
 	}
 	,thereIsACoinHere: function(anX,anY,otherCoins) {
-		var ecuationA = 0;
 		var rad = 192;
 		var cont = 0;
 		var aCoin = new flixel_group_FlxTypedGroupIterator(otherCoins.members,null);
 		while(aCoin.hasNext()) {
 			var aCoin1 = aCoin.next();
 			var coin1 = js_Boot.__cast(aCoin1 , gameObjects_Coin);
-			ecuationA = Math.pow(coin1.x - anX,2) + Math.pow(coin1.y - anY,2);
-			if(Math.sqrt(ecuationA) < rad) {
+			if(ToolsForUse.IsInsideCircle(anX,anY,coin1.x,coin1.y,rad)) {
 				return true;
 			}
 			++cont;
@@ -83513,6 +83557,7 @@ AssetPaths.cosahermosa__csv = "assets/cosahermosa.csv";
 AssetPaths.dust__png = "assets/dust.png";
 AssetPaths.explosion__png = "assets/explosion.png";
 AssetPaths.hero__png = "assets/hero.png";
+AssetPaths.backgroundGame__png = "assets/img/backgroundGame.png";
 AssetPaths.julia__png = "assets/img/julia.png";
 AssetPaths.moneda__png = "assets/img/moneda.png";
 AssetPaths.monedagiro__png = "assets/img/monedagiro.png";

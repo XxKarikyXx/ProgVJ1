@@ -30,6 +30,7 @@ class GameState extends FlxState
 	var coins:FlxGroup;
 	var numberCoins:Int = 0;
 	var resetPlaceCoin:Bool = false;
+	var background:FlxSprite;
 
 	public function new()
 	{
@@ -38,6 +39,9 @@ class GameState extends FlxState
 
 	override public function create():Void
 	{
+		background=new FlxSprite();
+		background.loadGraphic(AssetPaths.backgroundGame__png,false, 1920, 1080);
+        add(background);
 		map = new FlxTilemap();
 		map.loadMapFromCSV(AssetPaths.cosahermosa__csv, AssetPaths.tiles__png, 32, 32);
 		map.setTileProperties(12, FlxObject.NONE);
@@ -54,7 +58,7 @@ class GameState extends FlxState
 		player = new Player1(80, 900, map,projectiles);
 
 		add(player);
-		god = new God(1000, 900, map);
+		god = new God(1700, 900, map);
 		GlobalGameData.player = god;
 		add(god);
 
@@ -113,20 +117,15 @@ class GameState extends FlxState
 	public function thereIsACoinHere(anX:Float, anY:Float,otherCoins:FlxGroup):Bool
 	{
 		//(x−a)2 + (y−b)2 = r2
-		var ecuationA:Float = 0;
 		var rad = (32 * 6);
 
 		var cont = 0;
-
 		for (aCoin in otherCoins)
 		{
 			var coin1:Coin = cast (aCoin, Coin);
-			ecuationA = Math.pow(( coin1.x - anX), 2) + Math.pow((coin1.y - anY), 2);
-
-			if (Math.sqrt(ecuationA) < rad)
+			if (ToolsForUse.IsInsideCircle(anX,anY,coin1.x, coin1.y, rad))
 			{
 				return true;
-
 			}
 
 			cont = cont + 1;

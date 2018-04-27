@@ -54,6 +54,10 @@ class ApplicationMain {
 		types.push (lime.Assets.AssetType.IMAGE);
 		
 		
+		urls.push ("img/backgroundGame.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
 		urls.push ("img/julia.png");
 		types.push (lime.Assets.AssetType.IMAGE);
 		
@@ -99,6 +103,10 @@ class ApplicationMain {
 		
 		
 		urls.push ("assets/hero.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("assets/img/backgroundGame.png");
 		types.push (lime.Assets.AssetType.IMAGE);
 		
 		
@@ -203,7 +211,7 @@ class ApplicationMain {
 		
 		config = {
 			
-			build: "161",
+			build: "291",
 			company: "TuMadre",
 			file: "Carmen",
 			fps: 60,

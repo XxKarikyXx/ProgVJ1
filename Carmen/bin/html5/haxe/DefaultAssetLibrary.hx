@@ -80,6 +80,8 @@ class DefaultAssetLibrary extends AssetLibrary {
 		
 		
 		
+		
+		
 		#end
 		
 		#if flash
@@ -96,6 +98,8 @@ class DefaultAssetLibrary extends AssetLibrary {
 		type.set ("flixel/images/ui/button.png", AssetType.IMAGE);
 		className.set ("flixel/images/logo/default.png", __ASSET__flixel_images_logo_default_png);
 		type.set ("flixel/images/logo/default.png", AssetType.IMAGE);
+		className.set ("img/backgroundGame.png", __ASSET__img_backgroundgame_png);
+		type.set ("img/backgroundGame.png", AssetType.IMAGE);
 		className.set ("img/julia.png", __ASSET__img_julia_png);
 		type.set ("img/julia.png", AssetType.IMAGE);
 		className.set ("img/julia.xml", __ASSET__img_julia_xml);
@@ -120,6 +124,8 @@ class DefaultAssetLibrary extends AssetLibrary {
 		type.set ("assets/explosion.png", AssetType.IMAGE);
 		className.set ("assets/hero.png", __ASSET__assets_hero_png);
 		type.set ("assets/hero.png", AssetType.IMAGE);
+		className.set ("assets/img/backgroundGame.png", __ASSET__assets_img_backgroundgame_png);
+		type.set ("assets/img/backgroundGame.png", AssetType.IMAGE);
 		className.set ("assets/img/julia.png", __ASSET__assets_img_julia_png);
 		type.set ("assets/img/julia.png", AssetType.IMAGE);
 		className.set ("assets/img/julia.xml", __ASSET__assets_img_julia_xml);
@@ -169,6 +175,10 @@ class DefaultAssetLibrary extends AssetLibrary {
 		path.set (id, id);
 		
 		type.set (id, AssetType.IMAGE);
+		id = "img/backgroundGame.png";
+		path.set (id, id);
+		
+		type.set (id, AssetType.IMAGE);
 		id = "img/julia.png";
 		path.set (id, id);
 		
@@ -214,6 +224,10 @@ class DefaultAssetLibrary extends AssetLibrary {
 		
 		type.set (id, AssetType.IMAGE);
 		id = "assets/hero.png";
+		path.set (id, id);
+		
+		type.set (id, AssetType.IMAGE);
+		id = "assets/img/backgroundGame.png";
 		path.set (id, id);
 		
 		type.set (id, AssetType.IMAGE);
@@ -293,6 +307,9 @@ class DefaultAssetLibrary extends AssetLibrary {
 		className.set ("flixel/images/logo/default.png", __ASSET__flixel_images_logo_default_png);
 		type.set ("flixel/images/logo/default.png", AssetType.IMAGE);
 		
+		className.set ("img/backgroundGame.png", __ASSET__img_backgroundgame_png);
+		type.set ("img/backgroundGame.png", AssetType.IMAGE);
+		
 		className.set ("img/julia.png", __ASSET__img_julia_png);
 		type.set ("img/julia.png", AssetType.IMAGE);
 		
@@ -328,6 +345,9 @@ class DefaultAssetLibrary extends AssetLibrary {
 		
 		className.set ("assets/hero.png", __ASSET__assets_hero_png);
 		type.set ("assets/hero.png", AssetType.IMAGE);
+		
+		className.set ("assets/img/backgroundGame.png", __ASSET__assets_img_backgroundgame_png);
+		type.set ("assets/img/backgroundGame.png", AssetType.IMAGE);
 		
 		className.set ("assets/img/julia.png", __ASSET__assets_img_julia_png);
 		type.set ("assets/img/julia.png", AssetType.IMAGE);
@@ -1009,6 +1029,7 @@ class DefaultAssetLibrary extends AssetLibrary {
 @:keep @:bind #if display private #end class __ASSET__flixel_fonts_monsterrat_ttf extends null { }
 @:keep @:bind #if display private #end class __ASSET__flixel_images_ui_button_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind #if display private #end class __ASSET__flixel_images_logo_default_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep @:bind #if display private #end class __ASSET__img_backgroundgame_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind #if display private #end class __ASSET__img_julia_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind #if display private #end class __ASSET__img_julia_xml extends null { }
 @:keep @:bind #if display private #end class __ASSET__img_moneda_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
@@ -1021,6 +1042,7 @@ class DefaultAssetLibrary extends AssetLibrary {
 @:keep @:bind #if display private #end class __ASSET__assets_dust_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind #if display private #end class __ASSET__assets_explosion_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind #if display private #end class __ASSET__assets_hero_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep @:bind #if display private #end class __ASSET__assets_img_backgroundgame_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind #if display private #end class __ASSET__assets_img_julia_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind #if display private #end class __ASSET__assets_img_julia_xml extends null { }
 @:keep @:bind #if display private #end class __ASSET__assets_img_moneda_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
@@ -1065,6 +1087,8 @@ class DefaultAssetLibrary extends AssetLibrary {
 
 
 
+
+
 #else
 
 
@@ -1078,6 +1102,7 @@ class DefaultAssetLibrary extends AssetLibrary {
 @:font("E:/HaxeToolkit/haxe/lib/flixel/4,2,1/assets/fonts/monsterrat.ttf") #if display private #end class __ASSET__flixel_fonts_monsterrat_ttf extends lime.text.Font {}
 @:image("E:/HaxeToolkit/haxe/lib/flixel/4,2,1/assets/images/ui/button.png") #if display private #end class __ASSET__flixel_images_ui_button_png extends lime.graphics.Image {}
 @:image("E:/HaxeToolkit/haxe/lib/flixel/4,2,1/assets/images/logo/default.png") #if display private #end class __ASSET__flixel_images_logo_default_png extends lime.graphics.Image {}
+@:image("assets/img/backgroundGame.png") #if display private #end class __ASSET__img_backgroundgame_png extends lime.graphics.Image {}
 @:image("assets/img/julia.png") #if display private #end class __ASSET__img_julia_png extends lime.graphics.Image {}
 @:file("assets/img/julia.xml") #if display private #end class __ASSET__img_julia_xml extends lime.utils.Bytes {}
 @:image("assets/img/moneda.png") #if display private #end class __ASSET__img_moneda_png extends lime.graphics.Image {}
@@ -1090,6 +1115,7 @@ class DefaultAssetLibrary extends AssetLibrary {
 @:image("assets/dust.png") #if display private #end class __ASSET__assets_dust_png extends lime.graphics.Image {}
 @:image("assets/explosion.png") #if display private #end class __ASSET__assets_explosion_png extends lime.graphics.Image {}
 @:image("assets/hero.png") #if display private #end class __ASSET__assets_hero_png extends lime.graphics.Image {}
+@:image("assets/img/backgroundGame.png") #if display private #end class __ASSET__assets_img_backgroundgame_png extends lime.graphics.Image {}
 @:image("assets/img/julia.png") #if display private #end class __ASSET__assets_img_julia_png extends lime.graphics.Image {}
 @:file("assets/img/julia.xml") #if display private #end class __ASSET__assets_img_julia_xml extends lime.utils.Bytes {}
 @:image("assets/img/moneda.png") #if display private #end class __ASSET__assets_img_moneda_png extends lime.graphics.Image {}
