@@ -5,6 +5,7 @@ import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.FlxState;
 import flixel.math.FlxPoint;
+import flixel.text.FlxText;
 import flixel.tile.FlxTilemap;
 import gameObjects.Player1;
 import gameObjects.God;
@@ -31,7 +32,8 @@ class GameState extends FlxState
 	var numberCoins:Int = 0;
 	var resetPlaceCoin:Bool = false;
 	var background:FlxSprite;
-
+    var textGame:FlxText;
+	
 	public function new()
 	{
 		super();
@@ -46,7 +48,7 @@ class GameState extends FlxState
 		map.loadMapFromCSV(AssetPaths.cosahermosa__csv, AssetPaths.tiles__png, 32, 32);
 		map.setTileProperties(12, FlxObject.NONE);
 		add(map);
-
+     
 		projectiles = new FlxGroup();
 		add(projectiles);
 		for (i in 0...2)
@@ -70,10 +72,13 @@ class GameState extends FlxState
 		for (i in 0...2)
 		{
 			var c:Coin = new Coin(0, 0);
+			setCoinXAndYRandom(coins, c);
 			coins.add(c);
-			setCoinXAndYRandom(coins,c);
 			numberCoins = numberCoins + 1;
 		}
+
+		textGame = new FlxText(50, 50, 0, "Objetos Jugador: " + player.coins + "/" + coins.length, 20);
+		add(textGame);
 
 	}
 
@@ -83,12 +88,10 @@ class GameState extends FlxState
 		var coinCoordinates:Array<FlxPoint> = map.getTileCoords(12, true);
 
 		var rand:Float = Math.random();
-		rand = Math.round(coinCoordinates.length * rand);
-
-		var index:Int = Std.int(rand)-1;
+		var index:Int = Math.round(coinCoordinates.length * rand)-1;
 
 		var anX:Float = coinCoordinates[index].x-(aCoin.width/2);
-		var anY:Float = coinCoordinates[index].y-(aCoin.height);
+		var anY:Float = coinCoordinates[index].y-(aCoin.height/2);
 
 		if (otherCoins == null || otherCoins.length == 0)
 		{
@@ -103,8 +106,8 @@ class GameState extends FlxState
 				rand= Math.random();
 				index = Math.round(coinCoordinates.length * rand)-1;
 
-				anX = coinCoordinates[index].x;
-				anY = coinCoordinates[index].y;
+				anX =  coinCoordinates[index].x-(aCoin.width/2);
+				anY =  coinCoordinates[index].y-(aCoin.height/2);
 
 			}
 
@@ -151,6 +154,7 @@ class GameState extends FlxState
 
 		if (playerCollectedAllCoins())
 		{
+			
 			player.coins = 0;
 
 			for (i in 0...2)
@@ -161,6 +165,13 @@ class GameState extends FlxState
 
 			resetPlaceCoin = true;
 			player.intanceProjectiles();
+			
+		}
+		
+		if (player.projCount !=-1)
+		{
+			textGame.text="¡Jugador puede matar a Dios (Espacio)! - Tiros: " + (projectiles.length-player.projCount) + "/" + projectiles.length;
+			
 		}
 
 		if (projectiles!=null&&projectiles.countDead()==2&&god.exists&&resetPlaceCoin)
@@ -168,32 +179,29 @@ class GameState extends FlxState
 			player.projCount =-1;
 			resetPlaceCoin = false;
 			shuffleCoins();
+			textGame.text="Objetos Jugador: " + player.coins + "/" + coins.length;
 		}
 
 	}
 
 	function shuffleCoins()
 	{
-		/*	trace("shuffle");
-			   for (i in 0...coins.length){
-				var c:Coin=  cast coins.recycle(Coin);
-			setCoinXAndYRandom(coins,c);
-			}*/ //NO ANDA ESTO
-
 		coins.destroy();
 		coins = new FlxGroup();
 		add(coins);
 		for (i in 0...2)
 		{
 			var c:Coin = new Coin(0,0);
-			coins.add(c);
 			setCoinXAndYRandom(coins,c);
+		coins.add(c);
+			
 		}
 	}
 
 	function playerVsCoins(aPlayer:Player1, aCoin:Coin)
 	{
 		aPlayer.coins = aPlayer.coins + 1;
+		textGame.text="Objetos Jugador: " + player.coins + "/" + coins.length;
 		aCoin.destroy();
 	}
 	function projectilesVsGod(aProjectile:Projectile, aGod:God)

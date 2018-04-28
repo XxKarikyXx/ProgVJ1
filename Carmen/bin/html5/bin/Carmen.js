@@ -112,7 +112,7 @@ ApplicationMain.init = function() {
 	}
 };
 ApplicationMain.main = function() {
-	ApplicationMain.config = { build : "295", company : "TuMadre", file : "Carmen", fps : 60, name : "Carmen", orientation : "", packageName : "Carmen", version : "1.0.0", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : false, height : 1080, parameters : "{}", resizable : true, stencilBuffer : true, title : "Carmen", vsync : false, width : 1920, x : null, y : null}]};
+	ApplicationMain.config = { build : "302", company : "TuMadre", file : "Carmen", fps : 60, name : "Carmen", orientation : "", packageName : "Carmen", version : "1.0.0", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : false, height : 1080, parameters : "{}", resizable : true, stencilBuffer : true, title : "Carmen", vsync : false, width : 1920, x : null, y : null}]};
 };
 ApplicationMain.start = function() {
 	var hasMain = false;
@@ -83338,6 +83338,7 @@ states_GameState.prototype = $extend(flixel_FlxState.prototype,{
 	,numberCoins: null
 	,resetPlaceCoin: null
 	,background: null
+	,textGame: null
 	,create: function() {
 		this.background = new flixel_FlxSprite();
 		this.background.loadGraphic("assets/img/backgroundGame.png",false,1920,1080);
@@ -83374,24 +83375,25 @@ states_GameState.prototype = $extend(flixel_FlxState.prototype,{
 		while(_g1 < 2) {
 			var i1 = _g1++;
 			var c = new gameObjects_Coin(0,0);
-			this.coins.add(c);
 			this.setCoinXAndYRandom(this.coins,c);
+			this.coins.add(c);
 			this.numberCoins += 1;
 		}
+		this.textGame = new flixel_text_FlxText(50,50,0,"Objetos Jugador: " + this.player.get_coins() + "/" + this.coins.length,20);
+		this.add(this.textGame);
 	}
 	,setCoinXAndYRandom: function(otherCoins,aCoin) {
 		var coinCoordinates = this.map.getTileCoords(12,true);
 		var rand = Math.random();
-		rand = Math.round(coinCoordinates.length * rand);
-		var index = (rand | 0) - 1;
+		var index = Math.round(coinCoordinates.length * rand) - 1;
 		var anX = coinCoordinates[index].x - aCoin.get_width() / 2;
-		var anY = coinCoordinates[index].y - aCoin.get_height();
+		var anY = coinCoordinates[index].y - aCoin.get_height() / 2;
 		if(!(otherCoins == null || otherCoins.length == 0)) {
 			while(this.thereIsACoinHere(anX,anY,otherCoins)) {
 				rand = Math.random();
 				index = Math.round(coinCoordinates.length * rand) - 1;
-				anX = coinCoordinates[index].x;
-				anY = coinCoordinates[index].y;
+				anX = coinCoordinates[index].x - aCoin.get_width() / 2;
+				anY = coinCoordinates[index].y - aCoin.get_height() / 2;
 			}
 		}
 		aCoin.set_x(anX);
@@ -83432,10 +83434,14 @@ states_GameState.prototype = $extend(flixel_FlxState.prototype,{
 			this.resetPlaceCoin = true;
 			this.player.intanceProjectiles();
 		}
+		if(this.player.projCount != -1) {
+			this.textGame.set_text("¡Jugador puede matar a Dios (Espacio)! - Tiros: " + (this.projectiles.length - this.player.projCount) + "/" + this.projectiles.length);
+		}
 		if(this.projectiles != null && this.projectiles.countDead() == 2 && this.god.exists && this.resetPlaceCoin) {
 			this.player.projCount = -1;
 			this.resetPlaceCoin = false;
 			this.shuffleCoins();
+			this.textGame.set_text("Objetos Jugador: " + this.player.get_coins() + "/" + this.coins.length);
 		}
 	}
 	,shuffleCoins: function() {
@@ -83446,12 +83452,13 @@ states_GameState.prototype = $extend(flixel_FlxState.prototype,{
 		while(_g < 2) {
 			var i = _g++;
 			var c = new gameObjects_Coin(0,0);
-			this.coins.add(c);
 			this.setCoinXAndYRandom(this.coins,c);
+			this.coins.add(c);
 		}
 	}
 	,playerVsCoins: function(aPlayer,aCoin) {
 		aPlayer.set_coins(aPlayer.get_coins() + 1);
+		this.textGame.set_text("Objetos Jugador: " + this.player.get_coins() + "/" + this.coins.length);
 		aCoin.destroy();
 	}
 	,projectilesVsGod: function(aProjectile,aGod) {
