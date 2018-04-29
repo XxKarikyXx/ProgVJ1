@@ -82,6 +82,7 @@ class DefaultAssetLibrary extends AssetLibrary {
 		
 		
 		
+		
 		#end
 		
 		#if flash
@@ -112,6 +113,8 @@ class DefaultAssetLibrary extends AssetLibrary {
 		type.set ("img/monedagiro.png", AssetType.IMAGE);
 		className.set ("img/monedagiro.xml", __ASSET__img_monedagiro_xml);
 		type.set ("img/monedagiro.xml", AssetType.TEXT);
+		className.set ("assets/button.png", __ASSET__assets_button_png);
+		type.set ("assets/button.png", AssetType.IMAGE);
 		className.set ("assets/cosahermosa.csv", __ASSET__assets_cosahermosa_csv);
 		type.set ("assets/cosahermosa.csv", AssetType.TEXT);
 		className.set ("assets/cosahermosa.tmx", __ASSET__assets_cosahermosa_tmx);
@@ -203,6 +206,10 @@ class DefaultAssetLibrary extends AssetLibrary {
 		path.set (id, id);
 		
 		type.set (id, AssetType.TEXT);
+		id = "assets/button.png";
+		path.set (id, id);
+		
+		type.set (id, AssetType.IMAGE);
 		id = "assets/cosahermosa.csv";
 		path.set (id, id);
 		
@@ -327,6 +334,9 @@ class DefaultAssetLibrary extends AssetLibrary {
 		
 		className.set ("img/monedagiro.xml", __ASSET__img_monedagiro_xml);
 		type.set ("img/monedagiro.xml", AssetType.TEXT);
+		
+		className.set ("assets/button.png", __ASSET__assets_button_png);
+		type.set ("assets/button.png", AssetType.IMAGE);
 		
 		className.set ("assets/cosahermosa.csv", __ASSET__assets_cosahermosa_csv);
 		type.set ("assets/cosahermosa.csv", AssetType.TEXT);
@@ -1036,6 +1046,7 @@ class DefaultAssetLibrary extends AssetLibrary {
 @:keep @:bind #if display private #end class __ASSET__img_moneda_xml extends null { }
 @:keep @:bind #if display private #end class __ASSET__img_monedagiro_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind #if display private #end class __ASSET__img_monedagiro_xml extends null { }
+@:keep @:bind #if display private #end class __ASSET__assets_button_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind #if display private #end class __ASSET__assets_cosahermosa_csv extends null { }
 @:keep @:bind #if display private #end class __ASSET__assets_cosahermosa_tmx extends null { }
 @:keep @:bind #if display private #end class __ASSET__assets_datatilespng_tsx extends null { }
@@ -1089,6 +1100,7 @@ class DefaultAssetLibrary extends AssetLibrary {
 
 
 
+
 #else
 
 
@@ -1109,6 +1121,7 @@ class DefaultAssetLibrary extends AssetLibrary {
 @:file("assets/img/moneda.xml") #if display private #end class __ASSET__img_moneda_xml extends lime.utils.Bytes {}
 @:image("assets/img/monedagiro.png") #if display private #end class __ASSET__img_monedagiro_png extends lime.graphics.Image {}
 @:file("assets/img/monedagiro.xml") #if display private #end class __ASSET__img_monedagiro_xml extends lime.utils.Bytes {}
+@:image("assets/button.png") #if display private #end class __ASSET__assets_button_png extends lime.graphics.Image {}
 @:file("assets/cosahermosa.csv") #if display private #end class __ASSET__assets_cosahermosa_csv extends lime.utils.Bytes {}
 @:file("assets/cosahermosa.tmx") #if display private #end class __ASSET__assets_cosahermosa_tmx extends lime.utils.Bytes {}
 @:file("assets/dataTilespng.tsx") #if display private #end class __ASSET__assets_datatilespng_tsx extends lime.utils.Bytes {}

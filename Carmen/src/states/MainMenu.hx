@@ -1,6 +1,7 @@
 package states;
 
 import flixel.FlxG;
+import flixel.FlxObject;
 import flixel.FlxState;
 import flixel.text.FlxText;
 import flixel.ui.FlxButton;
@@ -16,9 +17,11 @@ import states.MainMenuInstructions;
  */
 class MainMenu extends FlxState
 {
-	private var startGame:FlxButton;
-	private var instructions:FlxButton;
-	private var exit:FlxButton;
+
+	var playButton:FlxButtonAnimation;
+	var instructionsButton:FlxButtonAnimation;
+	var exitButton:FlxButtonAnimation;
+	
 	private var index = 0;
 
 	public function new()
@@ -29,132 +32,144 @@ class MainMenu extends FlxState
 	{
 		//"assets/fonts/grapple.ttf"
 		//Std.int(FlxG.width / 4), Std.int(FlxG.height / 6)
+		
+		var spacerY:Float = 50;
+		var spacerYTitle:Float = 150;
+		
 		var mp:FlxText = new FlxText(0, 100, 0, "Menú Principal", 70);
 		mp.screenCenter(X);
 		add(mp);
+
+		 playButton = new FlxButtonAnimation(AssetPaths.button__png, 80, 20, onClickPlay);//la animacion de chivito boy
+		playButton.setSize(Std.int(FlxG.width / 3), Std.int(FlxG.height / 9));
+		playButton.setOver([1]);
+		playButton.setUp([0]);
+		playButton.setDown([2]);
+		playButton.setPosition((FlxG.width / 2)-(playButton.width/2), mp.height+spacerYTitle+(playButton.height/2));
+		playButton.setGraphicSize(Std.int(FlxG.width / 3), Std.int(FlxG.height / 9));
+		add(playButton);
+		playButton.updateHitbox();
+
+		var labelPlayButton:FlxText = new FlxText("Jugar");
+		labelPlayButton.allowCollisions = FlxObject.NONE;
+		labelPlayButton.setFormat(65, FlxColor.BLACK, FlxTextAlign.CENTER);
+		labelPlayButton.y =(mp.height+spacerYTitle)+(playButton.height/2)+(labelPlayButton.height/4);
+		labelPlayButton.x = (FlxG.width / 2)-(labelPlayButton.width/2);
+		add(labelPlayButton);
 		
 		
-
-		startGame = new FlxButton(0,mp.height+250, "Jugar", clickPlay);
-		startGame.setSize(Std.int(FlxG.width / 3), Std.int(FlxG.height / 9));
-		startGame.setGraphicSize(Std.int(FlxG.width / 3), Std.int(FlxG.height / 9));
-		startGame.screenCenter(X);
-		startGame.updateHitbox();
-		startGame.label.setFormat(65, FlxColor.BLACK,FlxTextAlign.CENTER);
-		startGame.label.textField.width =Std.int( FlxG.width / 3);
-		startGame.label.textField.height = Std.int(FlxG.height / 9);
-		startGame.onOver.callback = overPlay;
-        add(startGame);
-
-
-		instructions = new FlxButton(0, mp.height+Std.int(FlxG.height / 9)+300, "Instrucciones", clickInstructions);
-		instructions.setSize(Std.int(FlxG.width / 3), Std.int(FlxG.height / 9));
-		instructions.setGraphicSize(Std.int(FlxG.width / 3), Std.int(FlxG.height / 9));
-		instructions.screenCenter(X);
-		instructions.updateHitbox();
-		instructions.label.setFormat(65, FlxColor.BLACK,FlxTextAlign.CENTER);
-		instructions.label.textField.width =Std.int( FlxG.width / 3);
-		instructions.label.textField.height = Std.int(FlxG.height / 9);
-		instructions.onOver.callback = overInstructions;
-		add(instructions);
-
-		trace(Std.int(FlxG.height / 9));
 		
-		exit = new FlxButton(0, mp.height+(Std.int(FlxG.height / 9)*2)+350, "Salir", clickExit);
-		exit.setSize(Std.int(FlxG.width / 3), Std.int(FlxG.height / 9));
-		exit.setGraphicSize(Std.int(FlxG.width / 3), Std.int(FlxG.height / 9));
-		exit.screenCenter(X);
-		exit.updateHitbox();
-		exit.label.setFormat(65, FlxColor.BLACK,FlxTextAlign.CENTER);
-		exit.label.textField.width =Std.int( FlxG.width / 3);
-		exit.label.textField.height = Std.int(FlxG.height / 9);
-		exit.onOver.callback = overExit;
-				add(exit);
+		
+		 instructionsButton= new FlxButtonAnimation(AssetPaths.button__png, 80, 20, onClickInstructions);//la animacion de chivito boy
+		instructionsButton.setSize(Std.int(FlxG.width / 3), Std.int(FlxG.height / 9));
+		instructionsButton.setOver([1]);
+		instructionsButton.setUp([0]);
+		instructionsButton.setDown([2]);
+		instructionsButton.setPosition((FlxG.width / 2)-(instructionsButton.width/2), mp.height+spacerYTitle+(instructionsButton.height/2)+spacerY+Std.int(FlxG.height / 9));
+		instructionsButton.setGraphicSize(Std.int(FlxG.width / 3), Std.int(FlxG.height / 9));
+		add(instructionsButton);
+		instructionsButton.updateHitbox();
 
+		var labelInstructionsButton:FlxText = new FlxText("Instrucciones");
+		labelInstructionsButton.allowCollisions = FlxObject.NONE;
+		labelInstructionsButton.setFormat(65, FlxColor.BLACK, FlxTextAlign.CENTER);
+		labelInstructionsButton.y =(mp.height+spacerYTitle)+(instructionsButton.height/2)+(labelInstructionsButton.height/4)+spacerY+Std.int(FlxG.height / 9);
+		labelInstructionsButton.x = (FlxG.width / 2)-(labelInstructionsButton.width/2);
+		add(labelInstructionsButton);
+
+
+	 exitButton= new FlxButtonAnimation(AssetPaths.button__png, 80, 20, onClickExit);//la animacion de chivito boy
+		exitButton.setSize(Std.int(FlxG.width / 3), Std.int(FlxG.height / 9));
+		exitButton.setOver([1]);
+		exitButton.setUp([0]);
+		exitButton.setDown([2]);
+		exitButton.setPosition((FlxG.width / 2)-(exitButton.width/2), mp.height+spacerYTitle+(exitButton.height/2)+(spacerY*2)+Std.int(FlxG.height / 9)*2);
+		exitButton.setGraphicSize(Std.int(FlxG.width / 3), Std.int(FlxG.height / 9));
+		add(exitButton);
+		exitButton.updateHitbox();
+
+		var labelExitButton:FlxText = new FlxText("Salir");
+		labelExitButton.allowCollisions = FlxObject.NONE;
+		labelExitButton.setFormat(65, FlxColor.BLACK, FlxTextAlign.CENTER);
+		labelExitButton.y =(mp.height+spacerYTitle)+(exitButton.height/2)+(labelExitButton.height/4)+(spacerY*2)+Std.int(FlxG.height / 9)*2;
+		labelExitButton.x = (FlxG.width / 2)-(labelExitButton.width/2);
+		add(labelExitButton);
+		
+		
+		playButton.animation.play("over");
 	}
+
 	override public function update(elapsed:Float):Void
 	{
 		super.update(elapsed);
-	/*	if (FlxG.keys.justPressed.DOWN && index<2 )
-		{
-			index = index + 1;
-
-		}
-
-		if (FlxG.keys.justPressed.UP && index>0 )
-		{
-			index = index - 1;
-
-		}
-
-		if (FlxG.keys.justPressed.DOWN ||FlxG.keys.justPressed.UP)
-		{
-		startGame.status=FlxButton.NORMAL;
-					instructions.status=FlxButton.NORMAL;
-					exit.status=FlxButton.NORMAL;
-			switch (index)
+			if (FlxG.keys.justPressed.DOWN && index<2 )
 			{
-				case 0:
-					startGame.status=FlxButton.HIGHLIGHT;
-
-				case 1:
-					instructions.status=FlxButton.HIGHLIGHT;
-
-				case 2:
-					exit.status=FlxButton.HIGHLIGHT;
+				index = index + 1;
 
 			}
-		}
 
-		if (FlxG.keys.justPressed.ENTER)
-		{
-			startGame.status=FlxButton.NORMAL;
-					instructions.status=FlxButton.NORMAL;
-					exit.status=FlxButton.NORMAL;
-			switch (index)
+			if (FlxG.keys.justPressed.UP && index>0 )
 			{
-				case 0:
-					clickPlay();
-					startGame.status=FlxButton.PRESSED;
-
-				case 1:
-					clickInstructions();
-					instructions.status=FlxButton.PRESSED;
-
-				case 2:
-					clickExit();
-					exit.status=FlxButton.PRESSED;
+				index = index - 1;
 
 			}
-		}*/
+
+			if (FlxG.keys.justPressed.DOWN ||FlxG.keys.justPressed.UP)
+			{
+			playButton.animation.play("up");
+						instructionsButton.animation.play("up");
+						exitButton.animation.play("up");
+				switch (index)
+				{
+					case 0:
+						playButton.animation.play("over");
+
+					case 1:
+						instructionsButton.animation.play("over");
+
+					case 2:
+						exitButton.animation.play("over");
+
+				}
+			}
+
+			if (FlxG.keys.justPressed.ENTER)
+			{
+			playButton.animation.play("up");
+						instructionsButton.animation.play("up");
+						exitButton.animation.play("up");
+				switch (index)
+				{
+					case 0:
+						onClickPlay(playButton);
+						playButton.animation.play("down");
+
+					case 1:
+						onClickInstructions(instructionsButton);
+						instructionsButton.animation.play("down");
+
+					case 2:
+						onClickExit(exitButton);
+						exitButton.animation.play("down");
+
+				}
+			}
 	}
 
-	private function clickPlay():Void
+	private function onClickPlay(aButton:FlxButtonAnimation):Void
 	{
 		FlxG.switchState(new GameState());
 	}
 
-	private function clickInstructions():Void
+
+	private function onClickInstructions(aButton:FlxButtonAnimation):Void
 	{
 		FlxG.switchState(new MainMenuInstructions());
 	}
 
-	private function clickExit():Void
+	private function onClickExit(aButton:FlxButtonAnimation):Void
 	{
 		System.exit(0);
-	}
-
-	private function overPlay():Void
-	{
-		index = 0;
-	}
-	private function overInstructions():Void
-	{
-		index = 1;
-	}
-	private function overExit():Void
-	{
-		index = 2;
 	}
 
 }
