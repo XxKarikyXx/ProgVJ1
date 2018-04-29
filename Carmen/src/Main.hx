@@ -20,7 +20,7 @@ class Main extends  Sprite
 	{
 		removeEventListener(Event.ADDED_TO_STAGE, init);
 		
-		addChild(new FlxGame(1920,1080, states.GameState));
+		addChild(new FlxGame(1920,1080, states.MainMenu));
 	}
 	
 }

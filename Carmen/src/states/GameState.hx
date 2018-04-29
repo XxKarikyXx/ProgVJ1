@@ -182,6 +182,11 @@ class GameState extends FlxState
 			textGame.text="Objetos Jugador: " + player.coins + "/" + coins.length;
 		}
 
+		if (FlxG.keys.justPressed.ESCAPE)
+		{
+			
+			FlxG.switchState(new MainMenu());
+		}
 	}
 
 	function shuffleCoins()

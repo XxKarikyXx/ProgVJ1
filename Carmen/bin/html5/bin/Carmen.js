@@ -112,7 +112,7 @@ ApplicationMain.init = function() {
 	}
 };
 ApplicationMain.main = function() {
-	ApplicationMain.config = { build : "302", company : "TuMadre", file : "Carmen", fps : 60, name : "Carmen", orientation : "", packageName : "Carmen", version : "1.0.0", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : false, height : 1080, parameters : "{}", resizable : true, stencilBuffer : true, title : "Carmen", vsync : false, width : 1920, x : null, y : null}]};
+	ApplicationMain.config = { build : "465", company : "TuMadre", file : "Carmen", fps : 60, name : "Carmen", orientation : "", packageName : "Carmen", version : "1.0.0", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : false, height : 1080, parameters : "{}", resizable : true, stencilBuffer : true, title : "Carmen", vsync : false, width : 1920, x : null, y : null}]};
 };
 ApplicationMain.start = function() {
 	var hasMain = false;
@@ -2163,7 +2163,7 @@ Main.__super__ = openfl_display_Sprite;
 Main.prototype = $extend(openfl_display_Sprite.prototype,{
 	init: function(e) {
 		this.removeEventListener("addedToStage",$bind(this,this.init));
-		this.addChild(new flixel_FlxGame(1920,1080,states_GameState));
+		this.addChild(new flixel_FlxGame(1920,1080,states_MainMenu));
 	}
 	,__class__: Main
 });
@@ -83318,6 +83318,13 @@ states_GameOverPlayer.prototype = $extend(flixel_FlxState.prototype,{
 				flixel_FlxG.game._requestedState = nextState;
 			}
 		}
+		var _this1 = flixel_FlxG.keys.justPressed;
+		if(_this1.keyManager.checkStatus(27,_this1.status)) {
+			var nextState1 = new states_MainMenu();
+			if(flixel_FlxG.game._state.switchTo(nextState1)) {
+				flixel_FlxG.game._requestedState = nextState1;
+			}
+		}
 	}
 	,__class__: states_GameOverPlayer
 });
@@ -83443,6 +83450,13 @@ states_GameState.prototype = $extend(flixel_FlxState.prototype,{
 			this.shuffleCoins();
 			this.textGame.set_text("Objetos Jugador: " + this.player.get_coins() + "/" + this.coins.length);
 		}
+		var _this = flixel_FlxG.keys.justPressed;
+		if(_this.keyManager.checkStatus(27,_this.status)) {
+			var nextState = new states_MainMenu();
+			if(flixel_FlxG.game._state.switchTo(nextState)) {
+				flixel_FlxG.game._requestedState = nextState;
+			}
+		}
 	}
 	,shuffleCoins: function() {
 		this.coins.destroy();
@@ -83498,8 +83512,137 @@ states_GameWinPlayer.prototype = $extend(flixel_FlxState.prototype,{
 				flixel_FlxG.game._requestedState = nextState;
 			}
 		}
+		var _this1 = flixel_FlxG.keys.justPressed;
+		if(_this1.keyManager.checkStatus(27,_this1.status)) {
+			var nextState1 = new states_MainMenu();
+			if(flixel_FlxG.game._state.switchTo(nextState1)) {
+				flixel_FlxG.game._requestedState = nextState1;
+			}
+		}
 	}
 	,__class__: states_GameWinPlayer
+});
+var states_MainMenu = function() {
+	this.index = 0;
+	flixel_FlxState.call(this);
+};
+$hxClasses["states.MainMenu"] = states_MainMenu;
+states_MainMenu.__name__ = ["states","MainMenu"];
+states_MainMenu.__super__ = flixel_FlxState;
+states_MainMenu.prototype = $extend(flixel_FlxState.prototype,{
+	startGame: null
+	,instructions: null
+	,exit: null
+	,index: null
+	,create: function() {
+		var mp = new flixel_text_FlxText(0,100,0,"Menú Principal",70);
+		mp.screenCenter(flixel_util_FlxAxes.X);
+		this.add(mp);
+		this.startGame = new flixel_ui_FlxButton(0,mp.get_height() + 250,"Jugar",$bind(this,this.clickPlay));
+		this.startGame.setSize(flixel_FlxG.width / 3 | 0,flixel_FlxG.height / 9 | 0);
+		this.startGame.setGraphicSize(flixel_FlxG.width / 3 | 0,flixel_FlxG.height / 9 | 0);
+		this.startGame.screenCenter(flixel_util_FlxAxes.X);
+		this.startGame.updateHitbox();
+		this.startGame.label.setFormat(null,65,-16777216,"center");
+		this.startGame.label.textField.set_width(flixel_FlxG.width / 3 | 0);
+		this.startGame.label.textField.set_height(flixel_FlxG.height / 9 | 0);
+		this.startGame.onOver.callback = $bind(this,this.overPlay);
+		this.add(this.startGame);
+		this.instructions = new flixel_ui_FlxButton(0,mp.get_height() + (flixel_FlxG.height / 9 | 0) + 300,"Instrucciones",$bind(this,this.clickInstructions));
+		this.instructions.setSize(flixel_FlxG.width / 3 | 0,flixel_FlxG.height / 9 | 0);
+		this.instructions.setGraphicSize(flixel_FlxG.width / 3 | 0,flixel_FlxG.height / 9 | 0);
+		this.instructions.screenCenter(flixel_util_FlxAxes.X);
+		this.instructions.updateHitbox();
+		this.instructions.label.setFormat(null,65,-16777216,"center");
+		this.instructions.label.textField.set_width(flixel_FlxG.width / 3 | 0);
+		this.instructions.label.textField.set_height(flixel_FlxG.height / 9 | 0);
+		this.instructions.onOver.callback = $bind(this,this.overInstructions);
+		this.add(this.instructions);
+		haxe_Log.trace(flixel_FlxG.height / 9 | 0,{ fileName : "MainMenu.hx", lineNumber : 61, className : "states.MainMenu", methodName : "create"});
+		this.exit = new flixel_ui_FlxButton(0,mp.get_height() + (flixel_FlxG.height / 9 | 0) * 2 + 350,"Salir",$bind(this,this.clickExit));
+		this.exit.setSize(flixel_FlxG.width / 3 | 0,flixel_FlxG.height / 9 | 0);
+		this.exit.setGraphicSize(flixel_FlxG.width / 3 | 0,flixel_FlxG.height / 9 | 0);
+		this.exit.screenCenter(flixel_util_FlxAxes.X);
+		this.exit.updateHitbox();
+		this.exit.label.setFormat(null,65,-16777216,"center");
+		this.exit.label.textField.set_width(flixel_FlxG.width / 3 | 0);
+		this.exit.label.textField.set_height(flixel_FlxG.height / 9 | 0);
+		this.exit.onOver.callback = $bind(this,this.overExit);
+		this.add(this.exit);
+	}
+	,update: function(elapsed) {
+		flixel_FlxState.prototype.update.call(this,elapsed);
+	}
+	,clickPlay: function() {
+		var nextState = new states_GameState();
+		if(flixel_FlxG.game._state.switchTo(nextState)) {
+			flixel_FlxG.game._requestedState = nextState;
+		}
+	}
+	,clickInstructions: function() {
+		var nextState = new states_MainMenuInstructions();
+		if(flixel_FlxG.game._state.switchTo(nextState)) {
+			flixel_FlxG.game._requestedState = nextState;
+		}
+	}
+	,clickExit: function() {
+		openfl_system_System.exit(0);
+	}
+	,overPlay: function() {
+		this.index = 0;
+	}
+	,overInstructions: function() {
+		this.index = 1;
+	}
+	,overExit: function() {
+		this.index = 2;
+	}
+	,__class__: states_MainMenu
+});
+var states_MainMenuInstructions = function() {
+	flixel_FlxState.call(this);
+};
+$hxClasses["states.MainMenuInstructions"] = states_MainMenuInstructions;
+states_MainMenuInstructions.__name__ = ["states","MainMenuInstructions"];
+states_MainMenuInstructions.__super__ = flixel_FlxState;
+states_MainMenuInstructions.prototype = $extend(flixel_FlxState.prototype,{
+	back: null
+	,create: function() {
+		var mp = new flixel_text_FlxText(0,100,0,"Instrucciones",70);
+		mp.screenCenter(flixel_util_FlxAxes.X);
+		this.add(mp);
+		var godTxt = new flixel_text_FlxText(100,mp.get_height() + (flixel_FlxG.height / 9 | 0) + 100,0,"Jugador 1: Recolecta todos los objetos del mapa, evitando que Dios te mate. Te mueves con a y d, saltas con w.",20);
+		godTxt.screenCenter(flixel_util_FlxAxes.X);
+		this.add(godTxt);
+		var godTxt2 = new flixel_text_FlxText(100,godTxt.get_height() + mp.get_height() + (flixel_FlxG.height / 9 | 0) + 100,0,"Al recolectar todos los objetos podrás matar al Dios disparando proyectiles con ESPACIO.",20);
+		godTxt2.screenCenter(flixel_util_FlxAxes.X);
+		this.add(godTxt2);
+		var player1Txt = new flixel_text_FlxText(100,mp.get_height() + (flixel_FlxG.height / 9 | 0) * 2 + 200,0,"Dios: Intenta matar a Jugador 1 antes de que él te mate a ti.",20);
+		player1Txt.screenCenter(flixel_util_FlxAxes.X);
+		this.add(player1Txt);
+		var player1Txt2 = new flixel_text_FlxText(100,player1Txt.get_height() + mp.get_height() + (flixel_FlxG.height / 9 | 0) * 2 + 200,0,"Te mueves con las flechas. Con el mouse seleccionas y disparas habilidades.",20);
+		player1Txt2.screenCenter(flixel_util_FlxAxes.X);
+		this.add(player1Txt2);
+		this.back = new flixel_ui_FlxButton(0,mp.get_height() + (flixel_FlxG.height / 9 | 0) * 3 + 350,"Volver",$bind(this,this.clickBack));
+		this.back.setSize(flixel_FlxG.width / 3 | 0,flixel_FlxG.height / 9 | 0);
+		this.back.setGraphicSize(flixel_FlxG.width / 3 | 0,flixel_FlxG.height / 9 | 0);
+		this.back.screenCenter(flixel_util_FlxAxes.X);
+		this.back.updateHitbox();
+		this.back.label.setFormat(null,65,-16777216,"center");
+		this.back.label.textField.set_width(flixel_FlxG.width / 3 | 0);
+		this.back.label.textField.set_height(flixel_FlxG.height / 9 | 0);
+		this.add(this.back);
+	}
+	,update: function(elapsed) {
+		flixel_FlxState.prototype.update.call(this,elapsed);
+	}
+	,clickBack: function() {
+		var nextState = new states_MainMenu();
+		if(flixel_FlxG.game._state.switchTo(nextState)) {
+			flixel_FlxG.game._requestedState = nextState;
+		}
+	}
+	,__class__: states_MainMenuInstructions
 });
 function $iterator(o) { if( o instanceof Array ) return function() { return HxOverrides.iter(o); }; return typeof(o.iterator) == 'function' ? $bind(o,o.iterator) : o.iterator; }
 var $_, $fid = 0;

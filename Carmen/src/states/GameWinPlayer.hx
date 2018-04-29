@@ -27,5 +27,11 @@ class GameWinPlayer extends FlxState
 		{
 			FlxG.switchState(new GameState());
 		}
+		
+		if (FlxG.keys.justPressed.ESCAPE)
+		{
+			
+			FlxG.switchState(new MainMenu());
+		}
 	}
 }
