@@ -3,6 +3,7 @@ package gameObjects;
 import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.FlxSprite;
+import flixel.group.FlxGroup;
 import flixel.math.FlxPoint;
 import flixel.system.FlxAssets.FlxGraphicAsset;
 import flixel.tile.FlxTilemap;
@@ -14,11 +15,17 @@ import flixel.tile.FlxTilemap;
 class God extends FlxSprite
 {
 	var map:FlxTilemap;
+	@:isVar public var projectiles(default,set):FlxGroup;
+	@:isVar public var projCount = -1;
+	@:isVar public var idSkill:Int =-1;	
+    @:isVar public var skill1:FlxButtonAnimationSkill;
+
 
 	public function new(X:Float, Y:Float, aMap:FlxTilemap)
 	{
 		super(X, Y);
 		map = aMap;
+		//projectiles = aProjectiles;
 		loadGraphic(AssetPaths.hero__png, true, 45, 60);
 		animation.add("run", [2, 3, 4, 5, 6, 7, 8, 9], 30);
 		animation.add("idle", [10]);
@@ -32,13 +39,28 @@ class God extends FlxSprite
 		width = 40;
 		height = 41;
 
-		maxVelocity.x = 550;
-		maxVelocity.y = 550;
+		maxVelocity.x = 540;
+		maxVelocity.y = 540;
 	}
 
 	public function create():Void
 	{
 
+	}
+	
+		public function intanceProjectiles(){
+		projCount = 0;
+
+	}
+	
+		public function set_projectiles(aProjectiles:FlxGroup):FlxGroup
+	{
+		return projectiles = aProjectiles;
+	}
+	
+		function set_idSkill(anId:Int):Int
+	{
+		return idSkill=anId;
 	}
 
 	override public function update(aDt:Float):Void
@@ -113,6 +135,10 @@ class God extends FlxSprite
 				}
 
 			}
+			
+			
+			
+
 
 		}
 
@@ -125,6 +151,8 @@ class God extends FlxSprite
 		{
 			flipX = false;
 		}
+
+		
 		super.update(aDt);
 
 	}

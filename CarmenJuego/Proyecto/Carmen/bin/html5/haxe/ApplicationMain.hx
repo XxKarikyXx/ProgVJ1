@@ -82,6 +82,10 @@ class ApplicationMain {
 		types.push (lime.Assets.AssetType.TEXT);
 		
 		
+		urls.push ("assets/balaplacebo.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
 		urls.push ("assets/button.png");
 		types.push (lime.Assets.AssetType.IMAGE);
 		
@@ -215,7 +219,7 @@ class ApplicationMain {
 		
 		config = {
 			
-			build: "524",
+			build: "581",
 			company: "TuMadre",
 			file: "Carmen",
 			fps: 60,

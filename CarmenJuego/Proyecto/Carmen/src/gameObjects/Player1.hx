@@ -17,14 +17,14 @@ class Player1 extends FlxSprite
 	var map:FlxTilemap;
 	var jumpOnAirCount:Int = 0;
 	@:isVar public var coins(get, set):Int = 0;
-	var projectiles:FlxGroup;
+	@:isVar public var projectiles(default,set):FlxGroup;
 	@:isVar public var projCount = -1;
 
-	public function new(X:Float, Y:Float, aMap:FlxTilemap,aprojectiles:FlxGroup)
+	public function new(X:Float, Y:Float, aMap:FlxTilemap)
 	{
 		super(X, Y);
 		map = aMap;
-		projectiles = aprojectiles;
+		//projectiles = aProjectiles;
 		loadGraphic(AssetPaths.hero__png, true, 45, 60);
 		animation.add("run", [2, 3, 4, 5, 6, 7, 8, 9], 30);
 		animation.add("idle", [10]);
@@ -49,6 +49,13 @@ class Player1 extends FlxSprite
 		projCount = 0;
 
 	}
+	
+	
+	public function set_projectiles(aProjectiles:FlxGroup):FlxGroup
+	{
+		return projectiles = aProjectiles;
+	}
+
 
 	public function create():Void
 	{
@@ -108,7 +115,7 @@ class Player1 extends FlxSprite
 			if (projectiles != null && projCount < projectiles.length && projCount !=-1)
 			{
 				projCount = projCount + 1;
-				var pro:Projectile = cast(projectiles.members[projCount-1], Projectile);
+				var pro:ProjectilePlayer = cast(projectiles.members[projCount-1], ProjectilePlayer);
 				pro.shoot(this.x, this.y);
 				pro.set_visible(true);
 			}

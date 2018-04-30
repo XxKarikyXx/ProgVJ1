@@ -12,35 +12,50 @@ import flixel.FlxG;
  */
 
 //
-class Projectile extends FlxSprite
+class ProjectilePlayer extends FlxSprite
 {
 	var followBool:Bool = false;
 	var timeStartToBeAlive:Int = 0;
+	@:isVar public var target(default,set):FlxSprite;
+	var followTime:Int = 0;	
+	var velocityProj:Int = 600;
+	
 
-	public function new()
+	public function new(atarget:FlxSprite,?aFollowTime:Int,?aVelocity:Int=600)
 	{
 		super();
+		target = atarget;
 		makeGraphic(10, 10);
 		velocity.x =0;
 		velocity.y = 0;
+		
+		velocityProj = aVelocity;
+		followTime=aFollowTime;
 		var a = new FlxTimer();
+		
 		//a.start(1, function(_) { trace('hola'); }, 0);
+	}
+	public function set_target(atarget:FlxSprite):FlxSprite
+	{
+		return target = atarget;
+		
 	}
 
 	override public function update(elapsed:Float):Void
 	{
 		super.update(elapsed);
+		
+		if (followBool)
+		{
+			followTarget();
+			
+		}
 
-		if ((Lib.getTimer()/1000) - (timeStartToBeAlive/1000) >= 4 &&timeStartToBeAlive>0)
+		if ((Lib.getTimer()/1000) - (timeStartToBeAlive/1000) >= followTime &&timeStartToBeAlive>0)
 		{
 
 			followBool = false;
 			timeStartToBeAlive = 0;
-		}
-
-		if (followBool)
-		{
-			followGod();
 		}
 
 		if (x<0 || x>FlxG.width||y<0||y>FlxG.height)
@@ -58,22 +73,20 @@ class Projectile extends FlxSprite
 		this.y=ay;
 		followBool = true;
 		timeStartToBeAlive = Lib.getTimer();
+		this.set_visible(true);
 	}
 
-	private function followGod()
+	private function followTarget()
 	{
-		var target:FlxSprite = GlobalGameData.player;
+		var target:FlxSprite = target;
 		var deltaX:Float = (target.x+target.width*0.5) - (x+width*0.5);
 		var deltaY:Float = (target.y + target.height * 0.5) -(y + height * 0.5);
-		trace(deltaX);
-		trace(deltaY);
-		trace(velocity);
 
 		var length = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
 		deltaX /= length;
 		deltaY /= length;
-		velocity.x = deltaX * 600;
-		velocity.y = deltaY * 600;
+		velocity.x = deltaX * velocityProj;
+		velocity.y = deltaY * velocityProj;
 
 	}
 }
