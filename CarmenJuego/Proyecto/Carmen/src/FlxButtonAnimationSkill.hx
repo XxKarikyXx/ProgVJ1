@@ -16,13 +16,18 @@ import openfl.Lib;
 {
     private var coolDown:Int = 0;
 	private var timerCoolDown:Int = 0;
-	@:isVar public var disabled:Bool = false;
-
+	@:isVar public var activeButton:Bool = false;
+	public var onPressedActive:FlxButtonAnimation->Void;
+public var onRollOut:FlxButtonAnimation->Void;
+public var onOver:FlxButtonAnimation->Void;
     
-    public function new(aImagePath:String,aAnimationWidth:Int,aAnimationHeight:Int,?aOnPressed:FlxButtonAnimation->Void,?aWithMouse:Bool,?aCoolDown:Int) 
+    public function new(aImagePath:String,aAnimationWidth:Int,aAnimationHeight:Int,?aOnPressed:FlxButtonAnimation->Void,?aOnPressedActive:FlxButtonAnimation->Void,?aOnOver:FlxButtonAnimation->Void,?aOnRollOut:FlxButtonAnimation->Void,?aWithMouse:Bool,?aCoolDown:Int) 
     {
         super(aImagePath,aAnimationWidth,aAnimationHeight,aOnPressed,aWithMouse);
        
+		onPressedActive = aOnPressedActive;
+		onRollOut = aOnRollOut;
+		onOver = aOnOver;
 		coolDown = aCoolDown;
 		
     }
@@ -39,7 +44,7 @@ import openfl.Lib;
 	public function setActivation()
 	{
 			timerCoolDown = Std.int(Lib.getTimer() / 1000) + coolDown;
-			enabled = true;
+			activeButton = true;
 					animation.play("cooldown");
                     onPressed(this);
 		
@@ -49,40 +54,48 @@ import openfl.Lib;
 		if (isWithMouse){
 			if (Std.int(Lib.getTimer()/1000)-timerCoolDown<0)
 			{
-				disabled = false;
+				activeButton = false;
 				trace("EnCoolDown");
 				
 			}else{
         hMousePosition.set(FlxG.mouse.x, FlxG.mouse.y);
         if (isOver(hMousePosition))//over the button
         {
-            if (FlxG.mouse.pressed&&!disabled)
+			onOver(this);
+            if (FlxG.mouse.pressed&&!activeButton)
             {
                 animation.play("down");
             }else {
-				if(!disabled){
+				if(!activeButton){
                 animation.play("over");
 				}
             }
             if (isButtonClicked())
             {
-                if (onPressed != null)
+
+					if(!activeButton){
+					activeButton = true;
+				if (onPressed != null)
                 {
-					if(!disabled){
-					disabled = true;
 					onPressed(this);
+				}
 					animation.play("disabled");
 					}else
 					{
 						
-					disabled = false;
+					activeButton = false;
+					if (onPressedActive != null)
+                {
+					onPressedActive(this);
+				}
 					animation.play("up");	
 					}
 				
                 }
-            }
+            
         }else {
-			if(!disabled){
+			onRollOut(this);
+			if(!activeButton){
             animation.play("up");
 			}
         }

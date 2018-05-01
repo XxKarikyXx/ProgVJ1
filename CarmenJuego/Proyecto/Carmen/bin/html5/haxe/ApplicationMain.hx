@@ -219,7 +219,7 @@ class ApplicationMain {
 		
 		config = {
 			
-			build: "581",
+			build: "601",
 			company: "TuMadre",
 			file: "Carmen",
 			fps: 60,

@@ -116,7 +116,7 @@ ApplicationMain.init = function() {
 	}
 };
 ApplicationMain.main = function() {
-	ApplicationMain.config = { build : "581", company : "TuMadre", file : "Carmen", fps : 60, name : "Carmen", orientation : "", packageName : "Carmen", version : "1.0.0", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : false, height : 1080, parameters : "{}", resizable : true, stencilBuffer : true, title : "Carmen", vsync : false, width : 1920, x : null, y : null}]};
+	ApplicationMain.config = { build : "601", company : "TuMadre", file : "Carmen", fps : 60, name : "Carmen", orientation : "", packageName : "Carmen", version : "1.0.0", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : false, height : 1080, parameters : "{}", resizable : true, stencilBuffer : true, title : "Carmen", vsync : false, width : 1920, x : null, y : null}]};
 };
 ApplicationMain.start = function() {
 	var hasMain = false;
@@ -5532,11 +5532,14 @@ FlxButtonAnimation.prototype = $extend(flixel_FlxSprite.prototype,{
 	}
 	,__class__: FlxButtonAnimation
 });
-var FlxButtonAnimationSkill = function(aImagePath,aAnimationWidth,aAnimationHeight,aOnPressed,aWithMouse,aCoolDown) {
-	this.disabled = false;
+var FlxButtonAnimationSkill = function(aImagePath,aAnimationWidth,aAnimationHeight,aOnPressed,aOnPressedActive,aOnOver,aOnRollOut,aWithMouse,aCoolDown) {
+	this.activeButton = false;
 	this.timerCoolDown = 0;
 	this.coolDown = 0;
 	FlxButtonAnimation.call(this,aImagePath,aAnimationWidth,aAnimationHeight,aOnPressed,aWithMouse);
+	this.onPressedActive = aOnPressedActive;
+	this.onRollOut = aOnRollOut;
+	this.onOver = aOnOver;
 	this.coolDown = aCoolDown;
 };
 $hxClasses["FlxButtonAnimationSkill"] = FlxButtonAnimationSkill;
@@ -5545,7 +5548,10 @@ FlxButtonAnimationSkill.__super__ = FlxButtonAnimation;
 FlxButtonAnimationSkill.prototype = $extend(FlxButtonAnimation.prototype,{
 	coolDown: null
 	,timerCoolDown: null
-	,disabled: null
+	,activeButton: null
+	,onPressedActive: null
+	,onRollOut: null
+	,onOver: null
 	,setCooldown: function(aFrames,aLoop,aFrameRate) {
 		if(aFrameRate == null) {
 			aFrameRate = 30;
@@ -5566,45 +5572,52 @@ FlxButtonAnimationSkill.prototype = $extend(FlxButtonAnimation.prototype,{
 	}
 	,setActivation: function() {
 		this.timerCoolDown = (openfl_Lib.getTimer() / 1000 | 0) + this.coolDown;
-		this.enabled = true;
+		this.activeButton = true;
 		this.animation.play("cooldown");
 		this.onPressed(this);
 	}
 	,update: function(aDt) {
 		if(this.isWithMouse) {
 			if((openfl_Lib.getTimer() / 1000 | 0) - this.timerCoolDown < 0) {
-				this.disabled = false;
-				haxe_Log.trace("EnCoolDown",{ fileName : "FlxButtonAnimationSkill.hx", lineNumber : 53, className : "FlxButtonAnimationSkill", methodName : "update"});
+				this.activeButton = false;
+				haxe_Log.trace("EnCoolDown",{ fileName : "FlxButtonAnimationSkill.hx", lineNumber : 58, className : "FlxButtonAnimationSkill", methodName : "update"});
 			} else {
 				this.hMousePosition.set(flixel_FlxG.mouse.x,flixel_FlxG.mouse.y);
 				var aMousePosition = this.hMousePosition;
 				if(this.overlapsPoint(this.hMousePosition)) {
+					this.onOver(this);
 					var tmp;
 					var _this = flixel_FlxG.mouse._leftButton;
 					if(_this.current == 1 || _this.current == 2) {
-						tmp = !this.disabled;
+						tmp = !this.activeButton;
 					} else {
 						tmp = false;
 					}
 					if(tmp) {
 						this.animation.play("down");
-					} else if(!this.disabled) {
+					} else if(!this.activeButton) {
 						this.animation.play("over");
 					}
 					if(flixel_FlxG.mouse._leftButton.current == -1) {
-						if(this.onPressed != null) {
-							if(!this.disabled) {
-								this.disabled = true;
+						if(!this.activeButton) {
+							this.activeButton = true;
+							if(this.onPressed != null) {
 								this.onPressed(this);
-								this.animation.play("disabled");
-							} else {
-								this.disabled = false;
-								this.animation.play("up");
 							}
+							this.animation.play("disabled");
+						} else {
+							this.activeButton = false;
+							if(this.onPressedActive != null) {
+								this.onPressedActive(this);
+							}
+							this.animation.play("up");
 						}
 					}
-				} else if(!this.disabled) {
-					this.animation.play("up");
+				} else {
+					this.onRollOut(this);
+					if(!this.activeButton) {
+						this.animation.play("up");
+					}
 				}
 			}
 		}
@@ -83570,6 +83583,7 @@ states_GameState.prototype = $extend(flixel_FlxState.prototype,{
 	,resetPlaceCoin: null
 	,background: null
 	,textGame: null
+	,textSkill: null
 	,skill1: null
 	,create: function() {
 		this.background = new flixel_FlxSprite();
@@ -83625,30 +83639,39 @@ states_GameState.prototype = $extend(flixel_FlxState.prototype,{
 		}
 		this.textGame = new flixel_text_FlxText(50,50,0,"Objetos Jugador: " + this.player.get_coins() + "/" + this.coins.length,20);
 		this.add(this.textGame);
-		this.skill1 = new FlxButtonAnimationSkill("assets/balaplacebo.png",57,64,$bind(this,this.onClickSkill1),true,5);
+		this.textSkill = new flixel_text_FlxText(1446,50,0,"",10);
+		this.add(this.textSkill);
+		this.textSkill.textField.set_multiline(true);
+		this.textSkill.textField.set_wordWrap(true);
+		this.textSkill.textField.set_width(150);
+		this.skill1 = new FlxButtonAnimationSkill("assets/balaplacebo.png",57,64,$bind(this,this.onClickSkill1),$bind(this,this.onClickSkill1Active),$bind(this,this.onOverSkill1),$bind(this,this.onRollOutSkill1),true,5);
 		this.skill1.setOver([1]);
 		this.skill1.setUp([0]);
 		this.skill1.setDown([2]);
 		this.skill1.setCooldown([3]);
 		this.skill1.setDisabled([4]);
-		this.skill1.setPosition(1830,50);
+		this.skill1.setPosition(1820,50);
 		this.add(this.skill1);
 		this.god.skill1 = this.skill1;
 	}
 	,onClickSkill1: function(aButton) {
-		if(aButton.enabled) {
-			var _g = 0;
-			while(_g < 1) {
-				var i = _g++;
-				this.projectilesGod.members[i].revive();
-				this.projectilesGod.members[i].set_visible(false);
-			}
-			this.god.intanceProjectiles();
-			this.god.idSkill = 0;
-		} else {
-			this.god.idSkill = -1;
-			aButton.enabled = true;
+		var _g = 0;
+		while(_g < 1) {
+			var i = _g++;
+			this.projectilesGod.members[i].revive();
+			this.projectilesGod.members[i].set_visible(false);
 		}
+		this.god.intanceProjectiles();
+		this.god.idSkill = 0;
+	}
+	,onClickSkill1Active: function(aButton) {
+		this.god.idSkill = -1;
+	}
+	,onOverSkill1: function(aButton) {
+		this.textSkill.set_text("Dispara un proyectil en la dirección donde se haga click.      Cooldown: 5s");
+	}
+	,onRollOutSkill1: function(aButton) {
+		this.textSkill.set_text("");
 	}
 	,setCoinXAndYRandom: function(otherCoins,aCoin) {
 		var coinCoordinates = this.map.getTileCoords(12,true);
@@ -83691,7 +83714,6 @@ states_GameState.prototype = $extend(flixel_FlxState.prototype,{
 		flixel_FlxG.overlap(this.player,this.coins,$bind(this,this.playerVsCoins));
 		flixel_FlxG.overlap(this.projectilesPlayer,this.god,$bind(this,this.projectilesVsGod));
 		flixel_FlxG.overlap(this.projectilesGod,this.player,$bind(this,this.projectilesVsPlayer));
-		flixel_FlxG.overlap(this.player,this.god,$bind(this,this.playerVsGod));
 		if(this.playerCollectedAllCoins()) {
 			this.player.set_coins(0);
 			var _g = 0;
@@ -83701,11 +83723,13 @@ states_GameState.prototype = $extend(flixel_FlxState.prototype,{
 				this.projectilesPlayer.members[i].set_visible(false);
 			}
 			this.player.intanceProjectiles();
+			this.resetPlaceCoin = true;
 		}
 		if(this.player.projCount != -1) {
 			this.textGame.set_text("¡Jugador puede matar a Dios (Espacio)! - Tiros: " + (this.projectilesPlayer.length - this.player.projCount) + "/" + this.projectilesPlayer.length);
 		}
 		if(this.projectilesPlayer != null && this.projectilesPlayer.countDead() == 2 && this.god.exists && this.resetPlaceCoin) {
+			haxe_Log.trace("shuffle",{ fileName : "GameState.hx", lineNumber : 241, className : "states.GameState", methodName : "update"});
 			this.player.projCount = -1;
 			this.resetPlaceCoin = false;
 			this.shuffleCoins();
@@ -83768,12 +83792,6 @@ states_GameState.prototype = $extend(flixel_FlxState.prototype,{
 			if(flixel_FlxG.game._state.switchTo(nextState)) {
 				flixel_FlxG.game._requestedState = nextState;
 			}
-		}
-	}
-	,playerVsGod: function(aPlayer,aGod) {
-		var nextState = new states_GameOverPlayer();
-		if(flixel_FlxG.game._state.switchTo(nextState)) {
-			flixel_FlxG.game._requestedState = nextState;
 		}
 	}
 	,destroy: function() {
