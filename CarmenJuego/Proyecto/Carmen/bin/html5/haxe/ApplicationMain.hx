@@ -82,6 +82,14 @@ class ApplicationMain {
 		types.push (lime.Assets.AssetType.TEXT);
 		
 		
+		urls.push ("assets/ariosheet.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("assets/balaplacebo.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
 		urls.push ("assets/button.png");
 		types.push (lime.Assets.AssetType.IMAGE);
 		
@@ -107,6 +115,10 @@ class ApplicationMain {
 		
 		
 		urls.push ("assets/hero.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("assets/IdleSheet.png");
 		types.push (lime.Assets.AssetType.IMAGE);
 		
 		
@@ -148,6 +160,22 @@ class ApplicationMain {
 		
 		urls.push ("assets/openfl.svg");
 		types.push (lime.Assets.AssetType.TEXT);
+		
+		
+		urls.push ("assets/RunningSheet.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("assets/SheetCaida.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("assets/SheetSalto.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("assets/tiles copia.png");
+		types.push (lime.Assets.AssetType.IMAGE);
 		
 		
 		urls.push ("assets/tiles.png");
@@ -215,7 +243,7 @@ class ApplicationMain {
 		
 		config = {
 			
-			build: "524",
+			build: "652",
 			company: "TuMadre",
 			file: "Carmen",
 			fps: 60,

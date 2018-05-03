@@ -141,16 +141,16 @@ class MainMenu extends FlxState
 				switch (index)
 				{
 					case 0:
-						onClickPlay(playButton);
 						playButton.animation.play("down");
+						onClickPlay(playButton);
 
 					case 1:
-						onClickInstructions(instructionsButton);
 						instructionsButton.animation.play("down");
+						onClickInstructions(instructionsButton);
 
 					case 2:
-						onClickExit(exitButton);
 						exitButton.animation.play("down");
+						onClickExit(exitButton);
 
 				}
 			}
@@ -170,6 +170,7 @@ class MainMenu extends FlxState
 	private function onClickExit(aButton:FlxButtonAnimation):Void
 	{
 		System.exit(0);
+		exitButton.animation.play("up");
 	}
 
 }

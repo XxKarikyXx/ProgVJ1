@@ -17,27 +17,29 @@ class Player1 extends FlxSprite
 	var map:FlxTilemap;
 	var jumpOnAirCount:Int = 0;
 	@:isVar public var coins(get, set):Int = 0;
-	var projectiles:FlxGroup;
+	@:isVar public var projectiles(default,set):FlxGroup;
 	@:isVar public var projCount = -1;
 
-	public function new(X:Float, Y:Float, aMap:FlxTilemap,aprojectiles:FlxGroup)
+	public function new(X:Float, Y:Float, aMap:FlxTilemap)
 	{
 		super(X, Y);
 		map = aMap;
-		projectiles = aprojectiles;
-		loadGraphic(AssetPaths.hero__png, true, 45, 60);
-		animation.add("run", [2, 3, 4, 5, 6, 7, 8, 9], 30);
-		animation.add("idle", [10]);
-		animation.add("jump", [1]);
-		animation.add("fall", [0]);
-		animation.add("wallHang", [11]);
+		//projectiles = aProjectiles;
+		loadGraphic(AssetPaths.ariosheet__png, true, 128, 128);
+		animation.add("run", [20, 21, 22, 23, 24, 25, 26, 27, 28]);
+		animation.add("idle", [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18]);
+		animation.add("jump", [1,2,3]);
+		animation.add("fall", [1,2,3]);
+		//animation.add("wallHang", [11]);
 
 		animation.play("idle");
+//offset.x =-20;
 
-		offset.y = 20;
-		width = 40;
-		height = 41;
-		maxVelocity.x = 700;
+offset.y = 10;
+		offset.x = 37;
+		width = 55;
+		height = 120;
+		maxVelocity.x = 800;
 
 //drag.x = 500; //no se aplica a la aceleracion
 
@@ -49,6 +51,13 @@ class Player1 extends FlxSprite
 		projCount = 0;
 
 	}
+	
+	
+	public function set_projectiles(aProjectiles:FlxGroup):FlxGroup
+	{
+		return projectiles = aProjectiles;
+	}
+
 
 	public function create():Void
 	{
@@ -108,7 +117,7 @@ class Player1 extends FlxSprite
 			if (projectiles != null && projCount < projectiles.length && projCount !=-1)
 			{
 				projCount = projCount + 1;
-				var pro:Projectile = cast(projectiles.members[projCount-1], Projectile);
+				var pro:ProjectilePlayer = cast(projectiles.members[projCount-1], ProjectilePlayer);
 				pro.shoot(this.x, this.y);
 				pro.set_visible(true);
 			}
@@ -157,12 +166,12 @@ class Player1 extends FlxSprite
 
 		if (acceleration.x > 0)
 		{
-			flipX = true;
+			flipX = false;
 		}
 
 		if (acceleration.x < 0)
 		{
-			flipX = false;
+			flipX = true;
 		}
 		super.update(aDt);
 
