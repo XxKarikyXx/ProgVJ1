@@ -15,10 +15,10 @@ import flixel.FlxG;
 class ProjectilePlayer extends FlxSprite
 {
 	var followBool:Bool = false;
-	var timeStartToBeAlive:Int = 0;
 	@:isVar public var target(default,set):FlxSprite;
-	var followTime:Int = 0;	
+	var followTime:Float = 0;	
 	var velocityProj:Int = 600;
+	var followNumber = 0;
 	
 
 	public function new(atarget:FlxSprite,?aFollowTime:Int,?aVelocity:Int=600)
@@ -30,7 +30,8 @@ class ProjectilePlayer extends FlxSprite
 		velocity.y = 0;
 		
 		velocityProj = aVelocity;
-		followTime=aFollowTime;
+		followTime = aFollowTime;
+		followNumber = aFollowTime;
 		var a = new FlxTimer();
 		
 		//a.start(1, function(_) { trace('hola'); }, 0);
@@ -51,11 +52,15 @@ class ProjectilePlayer extends FlxSprite
 			
 		}
 
-		if ((Lib.getTimer()/1000) - (timeStartToBeAlive/1000) >= followTime &&timeStartToBeAlive>0)
+		if (followTime<=0 &&followBool)
 		{
 
 			followBool = false;
-			timeStartToBeAlive = 0;
+			followTime = followNumber;
+		}else
+		{
+			
+			followTime = followTime-elapsed;
 		}
 
 		if (x<0 || x>FlxG.width||y<0||y>FlxG.height)
@@ -72,7 +77,6 @@ class ProjectilePlayer extends FlxSprite
 		this.x = ax;
 		this.y=ay;
 		followBool = true;
-		timeStartToBeAlive = Lib.getTimer();
 		this.set_visible(true);
 	}
 

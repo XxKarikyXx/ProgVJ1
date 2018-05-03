@@ -35,6 +35,7 @@ class GameState extends FlxState
 	var background:FlxSprite;
 	var textGame:FlxText;
 	var textSkill:FlxText; 
+	var stunText:FlxText;
 
 	var skill1:FlxButtonAnimationSkill;
 
@@ -106,7 +107,7 @@ class GameState extends FlxState
 		textSkill.textField.width = 150;
 		
 
-		skill1 = new FlxButtonAnimationSkill(AssetPaths.balaplacebo__png, 57, 64, onClickSkill1,onClickSkill1Active,onOverSkill1,onRollOutSkill1, true, 5);
+		skill1 = new FlxButtonAnimationSkill(AssetPaths.balaplacebo__png, 57, 64, onClickSkill1,onClickSkill1Active,onOverSkill1,onRollOutSkill1,  5);
 		skill1.setOver([1]);
 		skill1.setUp([0]);
 		skill1.setDown([2]);
@@ -115,6 +116,10 @@ class GameState extends FlxState
 		skill1.setPosition(1820, 50);
 		add(skill1);
 		god.skill1 = skill1;
+		
+		stunText = new FlxText(50, 50, 0, "Stuneado!", 15);
+		stunText.set_visible(false);
+		add(stunText);
 	}
 
 	public function onClickSkill1(aButton:FlxButtonAnimation)
@@ -214,6 +219,7 @@ class GameState extends FlxState
 		FlxG.overlap(player, coins, playerVsCoins);
 		FlxG.overlap(projectilesPlayer, god, projectilesVsGod);
 		FlxG.overlap(projectilesGod, player, projectilesVsPlayer);
+		FlxG.overlap(player, god, playerVsGod);
 
 		if (playerCollectedAllCoins())
 		{
@@ -277,6 +283,15 @@ resetPlaceCoin = true;
 			god.idSkill =-1;
 
 		}
+		
+		//OJITO
+		if(god.stateDuration!=-1&&god.state=="Stunned")
+		{
+		stunText.set_visible(true);
+		stunText.setPosition(god.x, god.y);
+		}else{
+			stunText.set_visible(false);
+		}
 	}
 
 	function shuffleCoins()
@@ -314,6 +329,12 @@ resetPlaceCoin = true;
 		{
 			FlxG.switchState(new GameOverPlayer());
 		}
+	}
+	
+	function playerVsGod(aPlayer:Player1, aGod:God)
+	{
+		aGod.state = "Stunned";
+		aGod.stateDuration = 5;
 	}
 
 	override public function destroy():Void

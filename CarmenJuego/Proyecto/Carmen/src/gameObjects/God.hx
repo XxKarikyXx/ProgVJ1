@@ -19,6 +19,8 @@ class God extends FlxSprite
 	@:isVar public var projCount = -1;
 	@:isVar public var idSkill:Int =-1;	
     @:isVar public var skill1:FlxButtonAnimationSkill;
+	@:isVar public var state:String = "Normal";
+	@:isVar public var stateDuration:Float = -1;
 
 
 	public function new(X:Float, Y:Float, aMap:FlxTilemap)
@@ -69,34 +71,15 @@ class God extends FlxSprite
 		velocity.x = 0;
 		acceleration.y = 0;
 		velocity.y = 0;
-
-		if (FlxG.keys.pressed.LEFT)
-		{
-			acceleration.x =-1100;
-			velocity.x = -550;
-
+		
+		switch(state){
+			case "Normal":
+				normalGodMovement(aDt);
+			case "Stunned":
+				godIsStunned(aDt);
 		}
 
-		if (FlxG.keys.pressed.RIGHT)
-		{
-			acceleration.x = 1100;
-			velocity.x = 550;
-
-		}
-
-		if (FlxG.keys.pressed.UP)
-		{
-			acceleration.y = -1100;
-			velocity.y = -550;
-
-		}
-
-		if (FlxG.keys.pressed.DOWN)
-		{
-			acceleration.y = 1100;
-			velocity.y = 550;
-
-		}
+		
 
 		if (velocity.x == 0 && velocity.y == 0)
 		{
@@ -155,6 +138,49 @@ class God extends FlxSprite
 		
 		super.update(aDt);
 
+	}
+	
+	function normalGodMovement(aDt:Float):Void
+	{
+		if (FlxG.keys.pressed.LEFT)
+		{
+			acceleration.x =-1100;
+			velocity.x = -550;
+
+		}
+
+		if (FlxG.keys.pressed.RIGHT)
+		{
+			acceleration.x = 1100;
+			velocity.x = 550;
+
+		}
+
+		if (FlxG.keys.pressed.UP)
+		{
+			acceleration.y = -1100;
+			velocity.y = -550;
+
+		}
+
+		if (FlxG.keys.pressed.DOWN)
+		{
+			acceleration.y = 1100;
+			velocity.y = 550;
+
+		}
+	}
+	
+	function godIsStunned(aDt:Float):Void
+	{
+		if (stateDuration <= 0) {
+			state = "Normal";
+			stateDuration = -1;
+		} else{
+			trace(stateDuration);
+			stateDuration -= aDt;
+		}
+		
 	}
 
 }

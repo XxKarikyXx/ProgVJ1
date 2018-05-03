@@ -14,21 +14,22 @@ import openfl.Lib;
 	
 	class FlxButtonAnimationSkill extends FlxButtonAnimation
 {
-    private var coolDown:Int = 0;
-	private var timerCoolDown:Int = 0;
+    @:isVar public  var coolDown:Int = 0;
+	private var timerCoolDown:Float = 0;
 	@:isVar public var activeButton:Bool = false;
 	public var onPressedActive:FlxButtonAnimation->Void;
 public var onRollOut:FlxButtonAnimation->Void;
 public var onOver:FlxButtonAnimation->Void;
     
-    public function new(aImagePath:String,aAnimationWidth:Int,aAnimationHeight:Int,?aOnPressed:FlxButtonAnimation->Void,?aOnPressedActive:FlxButtonAnimation->Void,?aOnOver:FlxButtonAnimation->Void,?aOnRollOut:FlxButtonAnimation->Void,?aWithMouse:Bool,?aCoolDown:Int) 
+    public function new(aImagePath:String,aAnimationWidth:Int,aAnimationHeight:Int,?aOnPressed:FlxButtonAnimation->Void,?aOnPressedActive:FlxButtonAnimation->Void,?aOnOver:FlxButtonAnimation->Void,?aOnRollOut:FlxButtonAnimation->Void,?aCoolDown:Int) 
     {
-        super(aImagePath,aAnimationWidth,aAnimationHeight,aOnPressed,aWithMouse);
+        super(aImagePath,aAnimationWidth,aAnimationHeight,aOnPressed,true);
        
 		onPressedActive = aOnPressedActive;
 		onRollOut = aOnRollOut;
 		onOver = aOnOver;
 		coolDown = aCoolDown;
+		timerCoolDown = 0;
 		
     }
 
@@ -43,7 +44,7 @@ public var onOver:FlxButtonAnimation->Void;
 	
 	public function setActivation()
 	{
-			timerCoolDown = Std.int(Lib.getTimer() / 1000) + coolDown;
+			timerCoolDown = coolDown;
 			activeButton = true;
 					animation.play("cooldown");
                     onPressed(this);
@@ -52,12 +53,13 @@ public var onOver:FlxButtonAnimation->Void;
     override public function update(aDt:Float):Void 
     {
 		if (isWithMouse){
-			if (Std.int(Lib.getTimer()/1000)-timerCoolDown<0)
+			if (timerCoolDown>0)
 			{
 				activeButton = false;
 				trace("EnCoolDown");
-				
+				timerCoolDown=timerCoolDown-aDt;
 			}else{
+
         hMousePosition.set(FlxG.mouse.x, FlxG.mouse.y);
         if (isOver(hMousePosition))//over the button
         {
@@ -101,7 +103,7 @@ public var onOver:FlxButtonAnimation->Void;
         }
         }
 		}
-        //super.update(aDt);
+      //  super.update(aDt);
     }
 	
 
