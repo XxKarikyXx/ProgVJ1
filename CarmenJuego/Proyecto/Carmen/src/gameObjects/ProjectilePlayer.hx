@@ -52,7 +52,7 @@ class ProjectilePlayer extends FlxSprite
 			
 		}
 
-		if (followTime<=0 &&followBool)
+		if (followTime<0 &&followBool)
 		{
 
 			followBool = false;
@@ -66,7 +66,7 @@ class ProjectilePlayer extends FlxSprite
 		if (x<0 || x>FlxG.width||y<0||y>FlxG.height)
 		{
 			this.set_visible(false);
-			reset(100, 100);
+			reset(0,0);
 			kill();
 		}
 	}

@@ -22,7 +22,6 @@ class God extends FlxSprite
 	@:isVar public var state:String = "Normal";
 	@:isVar public var stateDuration:Float = -1;
 
-
 	public function new(X:Float, Y:Float, aMap:FlxTilemap)
 	{
 		super(X, Y);
@@ -79,7 +78,7 @@ class God extends FlxSprite
 				godIsStunned(aDt);
 		}
 
-		
+
 
 		if (velocity.x == 0 && velocity.y == 0)
 		{

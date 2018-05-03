@@ -107,7 +107,7 @@ class GameState extends FlxState
 		textSkill.textField.width = 150;
 		
 
-		skill1 = new FlxButtonAnimationSkill(AssetPaths.balaplacebo__png, 57, 64, onClickSkill1,onClickSkill1Active,onOverSkill1,onRollOutSkill1,  5);
+		skill1 = new FlxButtonAnimationSkill(AssetPaths.balaplacebo__png, 57, 64, onClickSkill1,onClickSkill1Active,onOverSkill1,onRollOutSkill1,  4);
 		skill1.setOver([1]);
 		skill1.setUp([0]);
 		skill1.setDown([2]);
@@ -142,7 +142,7 @@ class GameState extends FlxState
 	
 		public function onOverSkill1(aButton:FlxButtonAnimation)
 	{
-			textSkill.text = "Dispara un proyectil en la dirección donde se haga click.      Cooldown: 5s";
+			textSkill.text = "Dispara un proyectil en la dirección donde se haga click.      Cooldown: 4s";
 	}
 	
 		public function onRollOutSkill1(aButton:FlxButtonAnimation)
@@ -190,16 +190,16 @@ class GameState extends FlxState
 		//(x−a)2 + (y−b)2 = r2
 		var rad = (32 * 6);
 
-		var cont = 0;
 		for (aCoin in otherCoins)
 		{
+			
 			var coin1:Coin = cast (aCoin, Coin);
+
 			if (ToolsForUse.IsInsideCircle(anX,anY,coin1.x, coin1.y, rad))
 			{
 				return true;
 			}
 
-			cont = cont + 1;
 		}
 		return false;
 	}
@@ -296,14 +296,13 @@ resetPlaceCoin = true;
 
 	function shuffleCoins()
 	{
-		coins.destroy();
-		coins = new FlxGroup();
-		add(coins);
+
 		for (i in 0...2)
 		{
-			var c:Coin = new Coin(0,0);
+			coins.members[i].revive();
+			var c:Coin =cast(coins.members[i],Coin);
+		
 			setCoinXAndYRandom(coins,c);
-			coins.add(c);
 
 		}
 	}
@@ -311,8 +310,9 @@ resetPlaceCoin = true;
 	function playerVsCoins(aPlayer:Player1, aCoin:Coin)
 	{
 		aPlayer.coins = aPlayer.coins + 1;
-		textGame.text="Objetos Jugador: " + player.coins + "/" + coins.length;
-		aCoin.destroy();
+		textGame.text = "Objetos Jugador: " + player.coins + "/" + coins.length;
+		aCoin.setPosition(0, 0);
+		aCoin.kill();
 	}
 	function projectilesVsGod(aProjectile:ProjectilePlayer, aGod:God)
 	{
@@ -334,7 +334,7 @@ resetPlaceCoin = true;
 	function playerVsGod(aPlayer:Player1, aGod:God)
 	{
 		aGod.state = "Stunned";
-		aGod.stateDuration = 5;
+		aGod.stateDuration = 4;
 	}
 
 	override public function destroy():Void

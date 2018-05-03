@@ -128,7 +128,7 @@ ApplicationMain.init = function() {
 	}
 };
 ApplicationMain.main = function() {
-	ApplicationMain.config = { build : "639", company : "TuMadre", file : "Carmen", fps : 60, name : "Carmen", orientation : "", packageName : "Carmen", version : "1.0.0", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : false, height : 1080, parameters : "{}", resizable : true, stencilBuffer : true, title : "Carmen", vsync : false, width : 1920, x : null, y : null}]};
+	ApplicationMain.config = { build : "652", company : "TuMadre", file : "Carmen", fps : 60, name : "Carmen", orientation : "", packageName : "Carmen", version : "1.0.0", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : false, height : 1080, parameters : "{}", resizable : true, stencilBuffer : true, title : "Carmen", vsync : false, width : 1920, x : null, y : null}]};
 };
 ApplicationMain.start = function() {
 	var hasMain = false;
@@ -45185,7 +45185,7 @@ gameObjects_God.prototype = $extend(flixel_FlxSprite.prototype,{
 			this.state = "Normal";
 			this.stateDuration = -1;
 		} else {
-			haxe_Log.trace(this.stateDuration,{ fileName : "God.hx", lineNumber : 180, className : "gameObjects.God", methodName : "godIsStunned"});
+			haxe_Log.trace(this.stateDuration,{ fileName : "God.hx", lineNumber : 179, className : "gameObjects.God", methodName : "godIsStunned"});
 			this.stateDuration -= aDt;
 		}
 	}
@@ -45344,7 +45344,7 @@ gameObjects_ProjectilePlayer.prototype = $extend(flixel_FlxSprite.prototype,{
 		if(this.followBool) {
 			this.followTarget();
 		}
-		if(this.followTime <= 0 && this.followBool) {
+		if(this.followTime < 0 && this.followBool) {
 			this.followBool = false;
 			this.followTime = this.followNumber;
 		} else {
@@ -45352,7 +45352,7 @@ gameObjects_ProjectilePlayer.prototype = $extend(flixel_FlxSprite.prototype,{
 		}
 		if(this.x < 0 || this.x > flixel_FlxG.width || this.y < 0 || this.y > flixel_FlxG.height) {
 			this.set_visible(false);
-			this.reset(100,100);
+			this.reset(0,0);
 			this.kill();
 		}
 	}
@@ -83769,7 +83769,7 @@ states_GameState.prototype = $extend(flixel_FlxState.prototype,{
 		this.textSkill.textField.set_multiline(true);
 		this.textSkill.textField.set_wordWrap(true);
 		this.textSkill.textField.set_width(150);
-		this.skill1 = new FlxButtonAnimationSkill("assets/balaplacebo.png",57,64,$bind(this,this.onClickSkill1),$bind(this,this.onClickSkill1Active),$bind(this,this.onOverSkill1),$bind(this,this.onRollOutSkill1),5);
+		this.skill1 = new FlxButtonAnimationSkill("assets/balaplacebo.png",57,64,$bind(this,this.onClickSkill1),$bind(this,this.onClickSkill1Active),$bind(this,this.onOverSkill1),$bind(this,this.onRollOutSkill1),4);
 		this.skill1.setOver([1]);
 		this.skill1.setUp([0]);
 		this.skill1.setDown([2]);
@@ -83796,7 +83796,7 @@ states_GameState.prototype = $extend(flixel_FlxState.prototype,{
 		this.god.idSkill = -1;
 	}
 	,onOverSkill1: function(aButton) {
-		this.textSkill.set_text("Dispara un proyectil en la dirección donde se haga click.      Cooldown: 5s");
+		this.textSkill.set_text("Dispara un proyectil en la dirección donde se haga click.      Cooldown: 4s");
 	}
 	,onRollOutSkill1: function(aButton) {
 		this.textSkill.set_text("");
@@ -83820,7 +83820,6 @@ states_GameState.prototype = $extend(flixel_FlxState.prototype,{
 	}
 	,thereIsACoinHere: function(anX,anY,otherCoins) {
 		var rad = 192;
-		var cont = 0;
 		var aCoin = new flixel_group_FlxTypedGroupIterator(otherCoins.members,null);
 		while(aCoin.hasNext()) {
 			var aCoin1 = aCoin.next();
@@ -83828,7 +83827,6 @@ states_GameState.prototype = $extend(flixel_FlxState.prototype,{
 			if(ToolsForUse.IsInsideCircle(anX,anY,coin1.x,coin1.y,rad)) {
 				return true;
 			}
-			++cont;
 		}
 		return false;
 	}
@@ -83897,21 +83895,19 @@ states_GameState.prototype = $extend(flixel_FlxState.prototype,{
 		}
 	}
 	,shuffleCoins: function() {
-		this.coins.destroy();
-		this.coins = new flixel_group_FlxTypedGroup();
-		this.add(this.coins);
 		var _g = 0;
 		while(_g < 2) {
 			var i = _g++;
-			var c = new gameObjects_Coin(0,0);
+			this.coins.members[i].revive();
+			var c = js_Boot.__cast(this.coins.members[i] , gameObjects_Coin);
 			this.setCoinXAndYRandom(this.coins,c);
-			this.coins.add(c);
 		}
 	}
 	,playerVsCoins: function(aPlayer,aCoin) {
 		aPlayer.set_coins(aPlayer.get_coins() + 1);
 		this.textGame.set_text("Objetos Jugador: " + this.player.get_coins() + "/" + this.coins.length);
-		aCoin.destroy();
+		aCoin.setPosition(0,0);
+		aCoin.kill();
 	}
 	,projectilesVsGod: function(aProjectile,aGod) {
 		if(aProjectile.target == aGod) {
@@ -83931,7 +83927,7 @@ states_GameState.prototype = $extend(flixel_FlxState.prototype,{
 	}
 	,playerVsGod: function(aPlayer,aGod) {
 		aGod.state = "Stunned";
-		aGod.stateDuration = 5;
+		aGod.stateDuration = 4;
 	}
 	,destroy: function() {
 		flixel_FlxState.prototype.destroy.call(this);
