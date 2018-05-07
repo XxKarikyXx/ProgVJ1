@@ -50,11 +50,17 @@ ApplicationMain.create = function() {
 	types.push("IMAGE");
 	urls.push("img/monedagiro.xml");
 	types.push("TEXT");
+	urls.push("assets/ariosheet.png");
+	types.push("IMAGE");
+	urls.push("assets/balaplacebo.png");
+	types.push("IMAGE");
 	urls.push("assets/button.png");
 	types.push("IMAGE");
 	urls.push("assets/cosahermosa.csv");
 	types.push("TEXT");
 	urls.push("assets/cosahermosa.tmx");
+	types.push("TEXT");
+	urls.push("assets/cosahermosa2.tmx");
 	types.push("TEXT");
 	urls.push("assets/dataTilespng.tsx");
 	types.push("TEXT");
@@ -62,7 +68,11 @@ ApplicationMain.create = function() {
 	types.push("IMAGE");
 	urls.push("assets/explosion.png");
 	types.push("IMAGE");
+	urls.push("assets/fondo_azul.png");
+	types.push("IMAGE");
 	urls.push("assets/hero.png");
+	types.push("IMAGE");
+	urls.push("assets/IdleSheet.png");
 	types.push("IMAGE");
 	urls.push("assets/img/backgroundGame.png");
 	types.push("IMAGE");
@@ -84,8 +94,20 @@ ApplicationMain.create = function() {
 	types.push("TEXT");
 	urls.push("assets/openfl.svg");
 	types.push("TEXT");
+	urls.push("assets/RunningSheet.png");
+	types.push("IMAGE");
+	urls.push("assets/SheetCaida.png");
+	types.push("IMAGE");
+	urls.push("assets/SheetSalto.png");
+	types.push("IMAGE");
+	urls.push("assets/tiles copia.png");
+	types.push("IMAGE");
 	urls.push("assets/tiles.png");
 	types.push("IMAGE");
+	urls.push("assets/tile_ladrillos.png");
+	types.push("IMAGE");
+	urls.push("assets/tile_ladrillos.tsx");
+	types.push("TEXT");
 	if(ApplicationMain.config.assetsPrefix != null) {
 		var _g1 = 0;
 		var _g = urls.length;
@@ -114,7 +136,7 @@ ApplicationMain.init = function() {
 	}
 };
 ApplicationMain.main = function() {
-	ApplicationMain.config = { build : "524", company : "TuMadre", file : "Carmen", fps : 60, name : "Carmen", orientation : "", packageName : "Carmen", version : "1.0.0", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : false, height : 1080, parameters : "{}", resizable : true, stencilBuffer : true, title : "Carmen", vsync : false, width : 1920, x : null, y : null}]};
+	ApplicationMain.config = { build : "660", company : "TuMadre", file : "Carmen", fps : 60, name : "Carmen", orientation : "", packageName : "Carmen", version : "1.0.0", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : false, height : 1080, parameters : "{}", resizable : true, stencilBuffer : true, title : "Carmen", vsync : false, width : 1920, x : null, y : null}]};
 };
 ApplicationMain.start = function() {
 	var hasMain = false;
@@ -2458,7 +2480,7 @@ var DefaultAssetLibrary = function() {
 	} else {
 		_this25.h[id] = value14;
 	}
-	id = "assets/button.png";
+	id = "assets/ariosheet.png";
 	var _this26 = this.path;
 	if(__map_reserved[id] != null) {
 		_this26.setReserved(id,id);
@@ -2472,7 +2494,7 @@ var DefaultAssetLibrary = function() {
 	} else {
 		_this27.h[id] = value15;
 	}
-	id = "assets/cosahermosa.csv";
+	id = "assets/balaplacebo.png";
 	var _this28 = this.path;
 	if(__map_reserved[id] != null) {
 		_this28.setReserved(id,id);
@@ -2480,13 +2502,13 @@ var DefaultAssetLibrary = function() {
 		_this28.h[id] = id;
 	}
 	var _this29 = this.type;
-	var value16 = "TEXT";
+	var value16 = "IMAGE";
 	if(__map_reserved[id] != null) {
 		_this29.setReserved(id,value16);
 	} else {
 		_this29.h[id] = value16;
 	}
-	id = "assets/cosahermosa.tmx";
+	id = "assets/button.png";
 	var _this30 = this.path;
 	if(__map_reserved[id] != null) {
 		_this30.setReserved(id,id);
@@ -2494,13 +2516,13 @@ var DefaultAssetLibrary = function() {
 		_this30.h[id] = id;
 	}
 	var _this31 = this.type;
-	var value17 = "TEXT";
+	var value17 = "IMAGE";
 	if(__map_reserved[id] != null) {
 		_this31.setReserved(id,value17);
 	} else {
 		_this31.h[id] = value17;
 	}
-	id = "assets/dataTilespng.tsx";
+	id = "assets/cosahermosa.csv";
 	var _this32 = this.path;
 	if(__map_reserved[id] != null) {
 		_this32.setReserved(id,id);
@@ -2514,7 +2536,7 @@ var DefaultAssetLibrary = function() {
 	} else {
 		_this33.h[id] = value18;
 	}
-	id = "assets/dust.png";
+	id = "assets/cosahermosa.tmx";
 	var _this34 = this.path;
 	if(__map_reserved[id] != null) {
 		_this34.setReserved(id,id);
@@ -2522,13 +2544,13 @@ var DefaultAssetLibrary = function() {
 		_this34.h[id] = id;
 	}
 	var _this35 = this.type;
-	var value19 = "IMAGE";
+	var value19 = "TEXT";
 	if(__map_reserved[id] != null) {
 		_this35.setReserved(id,value19);
 	} else {
 		_this35.h[id] = value19;
 	}
-	id = "assets/explosion.png";
+	id = "assets/cosahermosa2.tmx";
 	var _this36 = this.path;
 	if(__map_reserved[id] != null) {
 		_this36.setReserved(id,id);
@@ -2536,13 +2558,13 @@ var DefaultAssetLibrary = function() {
 		_this36.h[id] = id;
 	}
 	var _this37 = this.type;
-	var value20 = "IMAGE";
+	var value20 = "TEXT";
 	if(__map_reserved[id] != null) {
 		_this37.setReserved(id,value20);
 	} else {
 		_this37.h[id] = value20;
 	}
-	id = "assets/hero.png";
+	id = "assets/dataTilespng.tsx";
 	var _this38 = this.path;
 	if(__map_reserved[id] != null) {
 		_this38.setReserved(id,id);
@@ -2550,13 +2572,13 @@ var DefaultAssetLibrary = function() {
 		_this38.h[id] = id;
 	}
 	var _this39 = this.type;
-	var value21 = "IMAGE";
+	var value21 = "TEXT";
 	if(__map_reserved[id] != null) {
 		_this39.setReserved(id,value21);
 	} else {
 		_this39.h[id] = value21;
 	}
-	id = "assets/img/backgroundGame.png";
+	id = "assets/dust.png";
 	var _this40 = this.path;
 	if(__map_reserved[id] != null) {
 		_this40.setReserved(id,id);
@@ -2570,7 +2592,7 @@ var DefaultAssetLibrary = function() {
 	} else {
 		_this41.h[id] = value22;
 	}
-	id = "assets/img/julia.png";
+	id = "assets/explosion.png";
 	var _this42 = this.path;
 	if(__map_reserved[id] != null) {
 		_this42.setReserved(id,id);
@@ -2584,7 +2606,7 @@ var DefaultAssetLibrary = function() {
 	} else {
 		_this43.h[id] = value23;
 	}
-	id = "assets/img/julia.xml";
+	id = "assets/fondo_azul.png";
 	var _this44 = this.path;
 	if(__map_reserved[id] != null) {
 		_this44.setReserved(id,id);
@@ -2592,13 +2614,13 @@ var DefaultAssetLibrary = function() {
 		_this44.h[id] = id;
 	}
 	var _this45 = this.type;
-	var value24 = "TEXT";
+	var value24 = "IMAGE";
 	if(__map_reserved[id] != null) {
 		_this45.setReserved(id,value24);
 	} else {
 		_this45.h[id] = value24;
 	}
-	id = "assets/img/moneda.png";
+	id = "assets/hero.png";
 	var _this46 = this.path;
 	if(__map_reserved[id] != null) {
 		_this46.setReserved(id,id);
@@ -2612,7 +2634,7 @@ var DefaultAssetLibrary = function() {
 	} else {
 		_this47.h[id] = value25;
 	}
-	id = "assets/img/moneda.xml";
+	id = "assets/IdleSheet.png";
 	var _this48 = this.path;
 	if(__map_reserved[id] != null) {
 		_this48.setReserved(id,id);
@@ -2620,13 +2642,13 @@ var DefaultAssetLibrary = function() {
 		_this48.h[id] = id;
 	}
 	var _this49 = this.type;
-	var value26 = "TEXT";
+	var value26 = "IMAGE";
 	if(__map_reserved[id] != null) {
 		_this49.setReserved(id,value26);
 	} else {
 		_this49.h[id] = value26;
 	}
-	id = "assets/img/monedagiro.png";
+	id = "assets/img/backgroundGame.png";
 	var _this50 = this.path;
 	if(__map_reserved[id] != null) {
 		_this50.setReserved(id,id);
@@ -2640,7 +2662,7 @@ var DefaultAssetLibrary = function() {
 	} else {
 		_this51.h[id] = value27;
 	}
-	id = "assets/img/monedagiro.xml";
+	id = "assets/img/julia.png";
 	var _this52 = this.path;
 	if(__map_reserved[id] != null) {
 		_this52.setReserved(id,id);
@@ -2648,13 +2670,13 @@ var DefaultAssetLibrary = function() {
 		_this52.h[id] = id;
 	}
 	var _this53 = this.type;
-	var value28 = "TEXT";
+	var value28 = "IMAGE";
 	if(__map_reserved[id] != null) {
 		_this53.setReserved(id,value28);
 	} else {
 		_this53.h[id] = value28;
 	}
-	id = "assets/mapCSV_map2_specials.csv";
+	id = "assets/img/julia.xml";
 	var _this54 = this.path;
 	if(__map_reserved[id] != null) {
 		_this54.setReserved(id,id);
@@ -2668,7 +2690,7 @@ var DefaultAssetLibrary = function() {
 	} else {
 		_this55.h[id] = value29;
 	}
-	id = "assets/mapCSV_map2_tiles.csv";
+	id = "assets/img/moneda.png";
 	var _this56 = this.path;
 	if(__map_reserved[id] != null) {
 		_this56.setReserved(id,id);
@@ -2676,13 +2698,13 @@ var DefaultAssetLibrary = function() {
 		_this56.h[id] = id;
 	}
 	var _this57 = this.type;
-	var value30 = "TEXT";
+	var value30 = "IMAGE";
 	if(__map_reserved[id] != null) {
 		_this57.setReserved(id,value30);
 	} else {
 		_this57.h[id] = value30;
 	}
-	id = "assets/openfl.svg";
+	id = "assets/img/moneda.xml";
 	var _this58 = this.path;
 	if(__map_reserved[id] != null) {
 		_this58.setReserved(id,id);
@@ -2696,7 +2718,7 @@ var DefaultAssetLibrary = function() {
 	} else {
 		_this59.h[id] = value31;
 	}
-	id = "assets/tiles.png";
+	id = "assets/img/monedagiro.png";
 	var _this60 = this.path;
 	if(__map_reserved[id] != null) {
 		_this60.setReserved(id,id);
@@ -2710,6 +2732,160 @@ var DefaultAssetLibrary = function() {
 	} else {
 		_this61.h[id] = value32;
 	}
+	id = "assets/img/monedagiro.xml";
+	var _this62 = this.path;
+	if(__map_reserved[id] != null) {
+		_this62.setReserved(id,id);
+	} else {
+		_this62.h[id] = id;
+	}
+	var _this63 = this.type;
+	var value33 = "TEXT";
+	if(__map_reserved[id] != null) {
+		_this63.setReserved(id,value33);
+	} else {
+		_this63.h[id] = value33;
+	}
+	id = "assets/mapCSV_map2_specials.csv";
+	var _this64 = this.path;
+	if(__map_reserved[id] != null) {
+		_this64.setReserved(id,id);
+	} else {
+		_this64.h[id] = id;
+	}
+	var _this65 = this.type;
+	var value34 = "TEXT";
+	if(__map_reserved[id] != null) {
+		_this65.setReserved(id,value34);
+	} else {
+		_this65.h[id] = value34;
+	}
+	id = "assets/mapCSV_map2_tiles.csv";
+	var _this66 = this.path;
+	if(__map_reserved[id] != null) {
+		_this66.setReserved(id,id);
+	} else {
+		_this66.h[id] = id;
+	}
+	var _this67 = this.type;
+	var value35 = "TEXT";
+	if(__map_reserved[id] != null) {
+		_this67.setReserved(id,value35);
+	} else {
+		_this67.h[id] = value35;
+	}
+	id = "assets/openfl.svg";
+	var _this68 = this.path;
+	if(__map_reserved[id] != null) {
+		_this68.setReserved(id,id);
+	} else {
+		_this68.h[id] = id;
+	}
+	var _this69 = this.type;
+	var value36 = "TEXT";
+	if(__map_reserved[id] != null) {
+		_this69.setReserved(id,value36);
+	} else {
+		_this69.h[id] = value36;
+	}
+	id = "assets/RunningSheet.png";
+	var _this70 = this.path;
+	if(__map_reserved[id] != null) {
+		_this70.setReserved(id,id);
+	} else {
+		_this70.h[id] = id;
+	}
+	var _this71 = this.type;
+	var value37 = "IMAGE";
+	if(__map_reserved[id] != null) {
+		_this71.setReserved(id,value37);
+	} else {
+		_this71.h[id] = value37;
+	}
+	id = "assets/SheetCaida.png";
+	var _this72 = this.path;
+	if(__map_reserved[id] != null) {
+		_this72.setReserved(id,id);
+	} else {
+		_this72.h[id] = id;
+	}
+	var _this73 = this.type;
+	var value38 = "IMAGE";
+	if(__map_reserved[id] != null) {
+		_this73.setReserved(id,value38);
+	} else {
+		_this73.h[id] = value38;
+	}
+	id = "assets/SheetSalto.png";
+	var _this74 = this.path;
+	if(__map_reserved[id] != null) {
+		_this74.setReserved(id,id);
+	} else {
+		_this74.h[id] = id;
+	}
+	var _this75 = this.type;
+	var value39 = "IMAGE";
+	if(__map_reserved[id] != null) {
+		_this75.setReserved(id,value39);
+	} else {
+		_this75.h[id] = value39;
+	}
+	id = "assets/tiles copia.png";
+	var _this76 = this.path;
+	if(__map_reserved[id] != null) {
+		_this76.setReserved(id,id);
+	} else {
+		_this76.h[id] = id;
+	}
+	var _this77 = this.type;
+	var value40 = "IMAGE";
+	if(__map_reserved[id] != null) {
+		_this77.setReserved(id,value40);
+	} else {
+		_this77.h[id] = value40;
+	}
+	id = "assets/tiles.png";
+	var _this78 = this.path;
+	if(__map_reserved[id] != null) {
+		_this78.setReserved(id,id);
+	} else {
+		_this78.h[id] = id;
+	}
+	var _this79 = this.type;
+	var value41 = "IMAGE";
+	if(__map_reserved[id] != null) {
+		_this79.setReserved(id,value41);
+	} else {
+		_this79.h[id] = value41;
+	}
+	id = "assets/tile_ladrillos.png";
+	var _this80 = this.path;
+	if(__map_reserved[id] != null) {
+		_this80.setReserved(id,id);
+	} else {
+		_this80.h[id] = id;
+	}
+	var _this81 = this.type;
+	var value42 = "IMAGE";
+	if(__map_reserved[id] != null) {
+		_this81.setReserved(id,value42);
+	} else {
+		_this81.h[id] = value42;
+	}
+	id = "assets/tile_ladrillos.tsx";
+	var _this82 = this.path;
+	if(__map_reserved[id] != null) {
+		_this82.setReserved(id,id);
+	} else {
+		_this82.h[id] = id;
+	}
+	var _this83 = this.type;
+	var value43 = "TEXT";
+	if(__map_reserved[id] != null) {
+		_this83.setReserved(id,value43);
+	} else {
+		_this83.h[id] = value43;
+	}
 	var assetsPrefix = null;
 	if(ApplicationMain.config != null && Object.prototype.hasOwnProperty.call(ApplicationMain.config,"assetsPrefix")) {
 		assetsPrefix = ApplicationMain.config.assetsPrefix;
@@ -2719,13 +2895,13 @@ var DefaultAssetLibrary = function() {
 		while(k.hasNext()) {
 			var k1 = k.next();
 			var this1 = this.path;
-			var _this62 = this.path;
-			var value33 = assetsPrefix + (__map_reserved[k1] != null ? _this62.getReserved(k1) : _this62.h[k1]);
-			var _this63 = this1;
+			var _this84 = this.path;
+			var value44 = assetsPrefix + (__map_reserved[k1] != null ? _this84.getReserved(k1) : _this84.h[k1]);
+			var _this85 = this1;
 			if(__map_reserved[k1] != null) {
-				_this63.setReserved(k1,value33);
+				_this85.setReserved(k1,value44);
 			} else {
-				_this63.h[k1] = value33;
+				_this85.h[k1] = value44;
 			}
 		}
 	}
@@ -5437,17 +5613,22 @@ flixel_FlxSprite.prototype = $extend(flixel_FlxObject.prototype,{
 	,__class__: flixel_FlxSprite
 	,__properties__: $extend(flixel_FlxObject.prototype.__properties__,{set_clipRect:"set_clipRect",set_color:"set_color",set_blend:"set_blend",set_flipY:"set_flipY",set_flipX:"set_flipX",set_facing:"set_facing",set_alpha:"set_alpha",set_graphic:"set_graphic",set_frames:"set_frames",set_frame:"set_frame",set_pixels:"set_pixels",get_pixels:"get_pixels",set_antialiasing:"set_antialiasing",set_useFramePixels:"set_useFramePixels"})
 });
-var FlxButtonAnimation = function(aImagePath,aAnimationWidth,aAnimationHeight,aOnPressed) {
+var FlxButtonAnimation = function(aImagePath,aAnimationWidth,aAnimationHeight,aOnPressed,aWithMouse) {
+	this.isWithMouse = false;
+	this.enabled = true;
 	flixel_FlxSprite.call(this);
 	this.loadGraphic(openfl_Assets.getBitmapData(aImagePath),true,aAnimationWidth,aAnimationHeight);
 	this.hMousePosition = new flixel_math_FlxPoint();
 	this.onPressed = aOnPressed;
+	this.isWithMouse = aWithMouse;
 };
 $hxClasses["FlxButtonAnimation"] = FlxButtonAnimation;
 FlxButtonAnimation.__name__ = ["FlxButtonAnimation"];
 FlxButtonAnimation.__super__ = flixel_FlxSprite;
 FlxButtonAnimation.prototype = $extend(flixel_FlxSprite.prototype,{
 	onPressed: null
+	,enabled: null
+	,isWithMouse: null
 	,mDisplay: null
 	,hMousePosition: null
 	,setUp: function(aFrames,aLoop,aFrameRate) {
@@ -5478,7 +5659,30 @@ FlxButtonAnimation.prototype = $extend(flixel_FlxSprite.prototype,{
 		this.animation.add("over",aFrames,aFrameRate,aLoop);
 	}
 	,update: function(aDt) {
+		if(this.isWithMouse) {
+			this.hMousePosition.set(flixel_FlxG.mouse.x,flixel_FlxG.mouse.y);
+			var aMousePosition = this.hMousePosition;
+			if(this.overlapsPoint(this.hMousePosition)) {
+				var _this = flixel_FlxG.mouse._leftButton;
+				if(_this.current == 1 || _this.current == 2) {
+					this.animation.play("down");
+				} else {
+					this.animation.play("over");
+				}
+				if(flixel_FlxG.mouse._leftButton.current == -1) {
+					if(this.onPressed != null) {
+						this.onPressed(this);
+					}
+				}
+			} else {
+				this.animation.play("up");
+			}
+		}
 		flixel_FlxSprite.prototype.update.call(this,aDt);
+	}
+	,isTouchingButton: function() {
+		var aMousePosition = this.hMousePosition;
+		return this.overlapsPoint(this.hMousePosition);
 	}
 	,isOver: function(aMousePosition) {
 		return this.overlapsPoint(this.hMousePosition);
@@ -5488,12 +5692,108 @@ FlxButtonAnimation.prototype = $extend(flixel_FlxSprite.prototype,{
 	}
 	,__class__: FlxButtonAnimation
 });
+var FlxButtonAnimationSkill = function(aImagePath,aAnimationWidth,aAnimationHeight,aOnPressed,aOnPressedActive,aOnOver,aOnRollOut,aCoolDown) {
+	this.activeButton = false;
+	this.timerCoolDown = 0;
+	this.coolDown = 0;
+	FlxButtonAnimation.call(this,aImagePath,aAnimationWidth,aAnimationHeight,aOnPressed,true);
+	this.onPressedActive = aOnPressedActive;
+	this.onRollOut = aOnRollOut;
+	this.onOver = aOnOver;
+	this.coolDown = aCoolDown;
+	this.timerCoolDown = 0;
+};
+$hxClasses["FlxButtonAnimationSkill"] = FlxButtonAnimationSkill;
+FlxButtonAnimationSkill.__name__ = ["FlxButtonAnimationSkill"];
+FlxButtonAnimationSkill.__super__ = FlxButtonAnimation;
+FlxButtonAnimationSkill.prototype = $extend(FlxButtonAnimation.prototype,{
+	coolDown: null
+	,timerCoolDown: null
+	,activeButton: null
+	,onPressedActive: null
+	,onRollOut: null
+	,onOver: null
+	,setCooldown: function(aFrames,aLoop,aFrameRate) {
+		if(aFrameRate == null) {
+			aFrameRate = 30;
+		}
+		if(aLoop == null) {
+			aLoop = true;
+		}
+		this.animation.add("cooldown",aFrames,aFrameRate,aLoop);
+	}
+	,setDisabled: function(aFrames,aLoop,aFrameRate) {
+		if(aFrameRate == null) {
+			aFrameRate = 30;
+		}
+		if(aLoop == null) {
+			aLoop = true;
+		}
+		this.animation.add("disabled",aFrames,aFrameRate,aLoop);
+	}
+	,setActivation: function() {
+		this.timerCoolDown = this.coolDown;
+		this.activeButton = true;
+		this.animation.play("cooldown");
+		this.onPressed(this);
+	}
+	,update: function(aDt) {
+		if(this.isWithMouse) {
+			if(this.timerCoolDown > 0) {
+				this.activeButton = false;
+				haxe_Log.trace("EnCoolDown",{ fileName : "FlxButtonAnimationSkill.hx", lineNumber : 59, className : "FlxButtonAnimationSkill", methodName : "update"});
+				this.timerCoolDown -= aDt;
+			} else {
+				this.hMousePosition.set(flixel_FlxG.mouse.x,flixel_FlxG.mouse.y);
+				var aMousePosition = this.hMousePosition;
+				if(this.overlapsPoint(this.hMousePosition)) {
+					this.onOver(this);
+					var tmp;
+					var _this = flixel_FlxG.mouse._leftButton;
+					if(_this.current == 1 || _this.current == 2) {
+						tmp = !this.activeButton;
+					} else {
+						tmp = false;
+					}
+					if(tmp) {
+						this.animation.play("down");
+					} else if(!this.activeButton) {
+						this.animation.play("over");
+					}
+					if(flixel_FlxG.mouse._leftButton.current == -1) {
+						if(!this.activeButton) {
+							this.activeButton = true;
+							if(this.onPressed != null) {
+								this.onPressed(this);
+							}
+							this.animation.play("disabled");
+						} else {
+							this.activeButton = false;
+							if(this.onPressedActive != null) {
+								this.onPressedActive(this);
+							}
+							this.animation.play("up");
+						}
+					}
+				} else {
+					this.onRollOut(this);
+					if(!this.activeButton) {
+						this.animation.play("up");
+					}
+				}
+			}
+		}
+	}
+	,__class__: FlxButtonAnimationSkill
+});
 var GlobalGameData = function() { };
 $hxClasses["GlobalGameData"] = GlobalGameData;
 GlobalGameData.__name__ = ["GlobalGameData"];
 GlobalGameData.player = null;
+GlobalGameData.player2 = null;
 GlobalGameData.clear = function() {
 	GlobalGameData.player = null;
+	GlobalGameData.player2 = null;
 };
 var HxOverrides = function() { };
 $hxClasses["HxOverrides"] = HxOverrides;
@@ -44842,6 +45142,10 @@ gameObjects_Coin.prototype = $extend(flixel_FlxSprite.prototype,{
 	,__class__: gameObjects_Coin
 });
 var gameObjects_God = function(X,Y,aMap) {
+	this.stateDuration = -1;
+	this.state = "Normal";
+	this.idSkill = -1;
+	this.projCount = -1;
 	flixel_FlxSprite.call(this,X,Y);
 	this.map = aMap;
 	this.loadGraphic("assets/hero.png",true,45,60);
@@ -44854,40 +45158,44 @@ var gameObjects_God = function(X,Y,aMap) {
 	this.offset.set_y(20);
 	this.set_width(40);
 	this.set_height(41);
-	this.maxVelocity.set_x(550);
-	this.maxVelocity.set_y(550);
+	this.maxVelocity.set_x(540);
+	this.maxVelocity.set_y(540);
 };
 $hxClasses["gameObjects.God"] = gameObjects_God;
 gameObjects_God.__name__ = ["gameObjects","God"];
 gameObjects_God.__super__ = flixel_FlxSprite;
 gameObjects_God.prototype = $extend(flixel_FlxSprite.prototype,{
 	map: null
+	,projectiles: null
+	,projCount: null
+	,idSkill: null
+	,skill1: null
+	,state: null
+	,stateDuration: null
 	,create: function() {
+	}
+	,intanceProjectiles: function() {
+		this.projCount = 0;
+	}
+	,set_projectiles: function(aProjectiles) {
+		return this.projectiles = aProjectiles;
+	}
+	,set_idSkill: function(anId) {
+		return this.idSkill = anId;
 	}
 	,update: function(aDt) {
 		this.acceleration.set_x(0);
 		this.velocity.set_x(0);
 		this.acceleration.set_y(0);
 		this.velocity.set_y(0);
-		var _this = flixel_FlxG.keys.pressed;
-		if(_this.keyManager.checkStatus(37,_this.status)) {
-			this.acceleration.set_x(-1100);
-			this.velocity.set_x(-550);
-		}
-		var _this1 = flixel_FlxG.keys.pressed;
-		if(_this1.keyManager.checkStatus(39,_this1.status)) {
-			this.acceleration.set_x(1100);
-			this.velocity.set_x(550);
-		}
-		var _this2 = flixel_FlxG.keys.pressed;
-		if(_this2.keyManager.checkStatus(38,_this2.status)) {
-			this.acceleration.set_y(-1100);
-			this.velocity.set_y(-550);
-		}
-		var _this3 = flixel_FlxG.keys.pressed;
-		if(_this3.keyManager.checkStatus(40,_this3.status)) {
-			this.acceleration.set_y(1100);
-			this.velocity.set_y(550);
+		var _g = this.state;
+		switch(_g) {
+		case "Normal":
+			this.normalGodMovement(aDt);
+			break;
+		case "Stunned":
+			this.godIsStunned(aDt);
+			break;
 		}
 		if(this.velocity.x == 0 && this.velocity.y == 0) {
 			this.animation.play("idle");
@@ -44914,26 +45222,57 @@ gameObjects_God.prototype = $extend(flixel_FlxSprite.prototype,{
 		}
 		flixel_FlxSprite.prototype.update.call(this,aDt);
 	}
+	,normalGodMovement: function(aDt) {
+		var _this = flixel_FlxG.keys.pressed;
+		if(_this.keyManager.checkStatus(37,_this.status)) {
+			this.acceleration.set_x(-1100);
+			this.velocity.set_x(-550);
+		}
+		var _this1 = flixel_FlxG.keys.pressed;
+		if(_this1.keyManager.checkStatus(39,_this1.status)) {
+			this.acceleration.set_x(1100);
+			this.velocity.set_x(550);
+		}
+		var _this2 = flixel_FlxG.keys.pressed;
+		if(_this2.keyManager.checkStatus(38,_this2.status)) {
+			this.acceleration.set_y(-1100);
+			this.velocity.set_y(-550);
+		}
+		var _this3 = flixel_FlxG.keys.pressed;
+		if(_this3.keyManager.checkStatus(40,_this3.status)) {
+			this.acceleration.set_y(1100);
+			this.velocity.set_y(550);
+		}
+	}
+	,godIsStunned: function(aDt) {
+		if(this.stateDuration <= 0) {
+			this.state = "Normal";
+			this.stateDuration = -1;
+		} else {
+			haxe_Log.trace(this.stateDuration,{ fileName : "God.hx", lineNumber : 179, className : "gameObjects.God", methodName : "godIsStunned"});
+			this.stateDuration -= aDt;
+		}
+	}
 	,__class__: gameObjects_God
+	,__properties__: $extend(flixel_FlxSprite.prototype.__properties__,{set_projectiles:"set_projectiles"})
 });
-var gameObjects_Player1 = function(X,Y,aMap,aprojectiles) {
+var gameObjects_Player1 = function(X,Y,aMap) {
 	this.projCount = -1;
 	this.coins = 0;
 	this.jumpOnAirCount = 0;
 	flixel_FlxSprite.call(this,X,Y);
 	this.map = aMap;
-	this.projectiles = aprojectiles;
-	this.loadGraphic("assets/hero.png",true,45,60);
-	this.animation.add("run",[2,3,4,5,6,7,8,9],30);
-	this.animation.add("idle",[10]);
-	this.animation.add("jump",[1]);
-	this.animation.add("fall",[0]);
-	this.animation.add("wallHang",[11]);
+	this.loadGraphic("assets/ariosheet.png",true,128,128);
+	this.animation.add("run",[20,21,22,23,24,25,26,27,28]);
+	this.animation.add("idle",[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18]);
+	this.animation.add("jump",[1,2,3]);
+	this.animation.add("fall",[1,2,3]);
 	this.animation.play("idle");
-	this.offset.set_y(20);
-	this.set_width(40);
-	this.set_height(41);
-	this.maxVelocity.set_x(700);
+	this.offset.set_y(10);
+	this.offset.set_x(37);
+	this.set_width(55);
+	this.set_height(120);
+	this.maxVelocity.set_x(800);
 	this.acceleration.set_y(3500);
 };
 $hxClasses["gameObjects.Player1"] = gameObjects_Player1;
@@ -44947,6 +45286,9 @@ gameObjects_Player1.prototype = $extend(flixel_FlxSprite.prototype,{
 	,projCount: null
 	,intanceProjectiles: function() {
 		this.projCount = 0;
+	}
+	,set_projectiles: function(aProjectiles) {
+		return this.projectiles = aProjectiles;
 	}
 	,create: function() {
 	}
@@ -44979,7 +45321,7 @@ gameObjects_Player1.prototype = $extend(flixel_FlxSprite.prototype,{
 		if(_this3.keyManager.checkStatus(32,_this3.status)) {
 			if(this.projectiles != null && this.projCount < this.projectiles.length && this.projCount != -1) {
 				this.projCount += 1;
-				var pro = js_Boot.__cast(this.projectiles.members[this.projCount - 1] , gameObjects_Projectile);
+				var pro = js_Boot.__cast(this.projectiles.members[this.projCount - 1] , gameObjects_ProjectilePlayer);
 				pro.shoot(this.x,this.y);
 				pro.set_visible(true);
 			}
@@ -45002,10 +45344,10 @@ gameObjects_Player1.prototype = $extend(flixel_FlxSprite.prototype,{
 			}
 		}
 		if(this.acceleration.x > 0) {
-			this.set_flipX(true);
+			this.set_flipX(false);
 		}
 		if(this.acceleration.x < 0) {
-			this.set_flipX(false);
+			this.set_flipX(true);
 		}
 		flixel_FlxSprite.prototype.update.call(this,aDt);
 	}
@@ -45029,35 +45371,52 @@ gameObjects_Player1.prototype = $extend(flixel_FlxSprite.prototype,{
 		return this.coins;
 	}
 	,__class__: gameObjects_Player1
-	,__properties__: $extend(flixel_FlxSprite.prototype.__properties__,{set_coins:"set_coins",get_coins:"get_coins"})
+	,__properties__: $extend(flixel_FlxSprite.prototype.__properties__,{set_projectiles:"set_projectiles",set_coins:"set_coins",get_coins:"get_coins"})
 });
-var gameObjects_Projectile = function() {
-	this.timeStartToBeAlive = 0;
+var gameObjects_ProjectilePlayer = function(atarget,aFollowTime,aVelocity) {
+	if(aVelocity == null) {
+		aVelocity = 600;
+	}
+	this.followNumber = 0;
+	this.velocityProj = 600;
+	this.followTime = 0;
 	this.followBool = false;
 	flixel_FlxSprite.call(this);
+	this.set_target(atarget);
 	this.makeGraphic(10,10);
 	this.velocity.set_x(0);
 	this.velocity.set_y(0);
+	this.velocityProj = aVelocity;
+	this.followTime = aFollowTime;
+	this.followNumber = aFollowTime;
 	var a = new flixel_util_FlxTimer();
 };
-$hxClasses["gameObjects.Projectile"] = gameObjects_Projectile;
-gameObjects_Projectile.__name__ = ["gameObjects","Projectile"];
-gameObjects_Projectile.__super__ = flixel_FlxSprite;
-gameObjects_Projectile.prototype = $extend(flixel_FlxSprite.prototype,{
+$hxClasses["gameObjects.ProjectilePlayer"] = gameObjects_ProjectilePlayer;
+gameObjects_ProjectilePlayer.__name__ = ["gameObjects","ProjectilePlayer"];
+gameObjects_ProjectilePlayer.__super__ = flixel_FlxSprite;
+gameObjects_ProjectilePlayer.prototype = $extend(flixel_FlxSprite.prototype,{
 	followBool: null
-	,timeStartToBeAlive: null
+	,target: null
+	,followTime: null
+	,velocityProj: null
+	,followNumber: null
+	,set_target: function(atarget) {
+		return this.target = atarget;
+	}
 	,update: function(elapsed) {
 		flixel_FlxSprite.prototype.update.call(this,elapsed);
-		if(openfl_Lib.getTimer() / 1000 - this.timeStartToBeAlive / 1000 >= 4 && this.timeStartToBeAlive > 0) {
-			this.followBool = false;
-			this.timeStartToBeAlive = 0;
-		}
 		if(this.followBool) {
-			this.followGod();
+			this.followTarget();
+		}
+		if(this.followTime < 0 && this.followBool) {
+			this.followBool = false;
+			this.followTime = this.followNumber;
+		} else {
+			this.followTime -= elapsed;
 		}
 		if(this.x < 0 || this.x > flixel_FlxG.width || this.y < 0 || this.y > flixel_FlxG.height) {
 			this.set_visible(false);
-			this.reset(100,100);
+			this.reset(0,0);
 			this.kill();
 		}
 	}
@@ -45065,22 +45424,20 @@ gameObjects_Projectile.prototype = $extend(flixel_FlxSprite.prototype,{
 		this.set_x(ax);
 		this.set_y(ay);
 		this.followBool = true;
-		this.timeStartToBeAlive = openfl_Lib.getTimer();
+		this.set_visible(true);
 	}
-	,followGod: function() {
-		var target = GlobalGameData.player;
+	,followTarget: function() {
+		var target = this.target;
 		var deltaX = target.x + target.get_width() * 0.5 - (this.x + this.get_width() * 0.5);
 		var deltaY = target.y + target.get_height() * 0.5 - (this.y + this.get_height() * 0.5);
-		haxe_Log.trace(deltaX,{ fileName : "Projectile.hx", lineNumber : 68, className : "gameObjects.Projectile", methodName : "followGod"});
-		haxe_Log.trace(deltaY,{ fileName : "Projectile.hx", lineNumber : 69, className : "gameObjects.Projectile", methodName : "followGod"});
-		haxe_Log.trace(this.velocity,{ fileName : "Projectile.hx", lineNumber : 70, className : "gameObjects.Projectile", methodName : "followGod"});
 		var length = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
 		deltaX /= length;
 		deltaY /= length;
-		this.velocity.set_x(deltaX * 600);
-		this.velocity.set_y(deltaY * 600);
+		this.velocity.set_x(deltaX * this.velocityProj);
+		this.velocity.set_y(deltaY * this.velocityProj);
 	}
-	,__class__: gameObjects_Projectile
+	,__class__: gameObjects_ProjectilePlayer
+	,__properties__: $extend(flixel_FlxSprite.prototype.__properties__,{set_target:"set_target"})
 });
 var haxe_StackItem = $hxClasses["haxe.StackItem"] = { __ename__ : ["haxe","StackItem"], __constructs__ : ["CFunction","Module","FilePos","Method","LocalFunction"] };
 haxe_StackItem.CFunction = ["CFunction",0];
@@ -83407,34 +83764,51 @@ states_GameState.prototype = $extend(flixel_FlxState.prototype,{
 	map: null
 	,player: null
 	,god: null
-	,projectiles: null
+	,projectilesPlayer: null
+	,projectilesGod: null
 	,coins: null
 	,numberCoins: null
 	,resetPlaceCoin: null
 	,background: null
 	,textGame: null
+	,textSkill: null
+	,stunText: null
+	,skill1: null
 	,create: function() {
 		this.background = new flixel_FlxSprite();
-		this.background.loadGraphic("assets/img/backgroundGame.png",false,1920,1080);
+		this.background.loadGraphic("assets/fondo_azul.png",false,1920,1080);
 		this.add(this.background);
 		this.map = new flixel_tile_FlxTilemap();
-		this.map.loadMapFromCSV("assets/cosahermosa.csv","assets/tiles.png",32,32);
-		this.map.setTileProperties(12,0);
+		this.map.loadMapFromCSV("assets/cosahermosa.csv","assets/tile_ladrillos.png",32,32);
+		this.map.setTileProperties(16,0);
+		this.map.setTileProperties(17,0);
 		this.add(this.map);
-		this.projectiles = new flixel_group_FlxTypedGroup();
-		this.add(this.projectiles);
+		this.player = new gameObjects_Player1(80,900,this.map);
+		this.add(this.player);
+		this.god = new gameObjects_God(1700,950,this.map);
+		GlobalGameData.player = this.god;
+		this.add(this.god);
+		this.projectilesPlayer = new flixel_group_FlxTypedGroup();
+		this.add(this.projectilesPlayer);
 		var _g = 0;
 		while(_g < 2) {
 			var i = _g++;
-			var pro = new gameObjects_Projectile();
-			this.projectiles.add(pro);
+			var pro = new gameObjects_ProjectilePlayer(GlobalGameData.player,4);
+			this.projectilesPlayer.add(pro);
 			pro.kill();
 		}
-		this.player = new gameObjects_Player1(80,900,this.map,this.projectiles);
-		this.add(this.player);
-		this.god = new gameObjects_God(1700,900,this.map);
-		GlobalGameData.player = this.god;
-		this.add(this.god);
+		this.player.set_projectiles(this.projectilesPlayer);
+		GlobalGameData.player2 = this.player;
+		this.projectilesGod = new flixel_group_FlxTypedGroup();
+		this.add(this.projectilesGod);
+		var _g1 = 0;
+		while(_g1 < 1) {
+			var i1 = _g1++;
+			var pro1 = new gameObjects_ProjectilePlayer(GlobalGameData.player2,0);
+			this.projectilesGod.add(pro1);
+			pro1.kill();
+		}
+		this.god.set_projectiles(this.projectilesGod);
 		flixel_FlxG.camera.setScrollBoundsRect(0,0,this.map.get_width(),this.map.get_height());
 		var _this = flixel_FlxG.worldBounds;
 		var Width = this.map.get_width();
@@ -83445,9 +83819,9 @@ states_GameState.prototype = $extend(flixel_FlxState.prototype,{
 		_this.height = Height;
 		this.coins = new flixel_group_FlxTypedGroup();
 		this.add(this.coins);
-		var _g1 = 0;
-		while(_g1 < 2) {
-			var i1 = _g1++;
+		var _g2 = 0;
+		while(_g2 < 2) {
+			var i2 = _g2++;
 			var c = new gameObjects_Coin(0,0);
 			this.setCoinXAndYRandom(this.coins,c);
 			this.coins.add(c);
@@ -83455,9 +83829,45 @@ states_GameState.prototype = $extend(flixel_FlxState.prototype,{
 		}
 		this.textGame = new flixel_text_FlxText(50,50,0,"Objetos Jugador: " + this.player.get_coins() + "/" + this.coins.length,20);
 		this.add(this.textGame);
+		this.textSkill = new flixel_text_FlxText(1446,50,0,"",10);
+		this.add(this.textSkill);
+		this.textSkill.textField.set_multiline(true);
+		this.textSkill.textField.set_wordWrap(true);
+		this.textSkill.textField.set_width(150);
+		this.skill1 = new FlxButtonAnimationSkill("assets/balaplacebo.png",57,64,$bind(this,this.onClickSkill1),$bind(this,this.onClickSkill1Active),$bind(this,this.onOverSkill1),$bind(this,this.onRollOutSkill1),3);
+		this.skill1.setOver([1]);
+		this.skill1.setUp([0]);
+		this.skill1.setDown([2]);
+		this.skill1.setCooldown([3]);
+		this.skill1.setDisabled([4]);
+		this.skill1.setPosition(1820,50);
+		this.add(this.skill1);
+		this.god.skill1 = this.skill1;
+		this.stunText = new flixel_text_FlxText(50,50,0,"Stuneado!",15);
+		this.stunText.set_visible(false);
+		this.add(this.stunText);
+	}
+	,onClickSkill1: function(aButton) {
+		var _g = 0;
+		while(_g < 1) {
+			var i = _g++;
+			this.projectilesGod.members[i].revive();
+			this.projectilesGod.members[i].set_visible(false);
+		}
+		this.god.intanceProjectiles();
+		this.god.idSkill = 0;
+	}
+	,onClickSkill1Active: function(aButton) {
+		this.god.idSkill = -1;
+	}
+	,onOverSkill1: function(aButton) {
+		this.textSkill.set_text("Dispara un proyectil en la dirección donde se haga click.      Cooldown: 4s");
+	}
+	,onRollOutSkill1: function(aButton) {
+		this.textSkill.set_text("");
 	}
 	,setCoinXAndYRandom: function(otherCoins,aCoin) {
-		var coinCoordinates = this.map.getTileCoords(12,true);
+		var coinCoordinates = this.map.getTileCoords(16,true);
 		var rand = Math.random();
 		var index = Math.round(coinCoordinates.length * rand) - 1;
 		var anX = coinCoordinates[index].x - aCoin.get_width() / 2;
@@ -83475,7 +83885,6 @@ states_GameState.prototype = $extend(flixel_FlxState.prototype,{
 	}
 	,thereIsACoinHere: function(anX,anY,otherCoins) {
 		var rad = 192;
-		var cont = 0;
 		var aCoin = new flixel_group_FlxTypedGroupIterator(otherCoins.members,null);
 		while(aCoin.hasNext()) {
 			var aCoin1 = aCoin.next();
@@ -83483,7 +83892,6 @@ states_GameState.prototype = $extend(flixel_FlxState.prototype,{
 			if(ToolsForUse.IsInsideCircle(anX,anY,coin1.x,coin1.y,rad)) {
 				return true;
 			}
-			++cont;
 		}
 		return false;
 	}
@@ -83495,23 +83903,25 @@ states_GameState.prototype = $extend(flixel_FlxState.prototype,{
 		flixel_FlxG.overlap(this.map,this.player,null,flixel_FlxObject.separate);
 		flixel_FlxG.overlap(this.map,this.god,null,flixel_FlxObject.separate);
 		flixel_FlxG.overlap(this.player,this.coins,$bind(this,this.playerVsCoins));
-		flixel_FlxG.overlap(this.projectiles,this.god,$bind(this,this.projectilesVsGod));
+		flixel_FlxG.overlap(this.projectilesPlayer,this.god,$bind(this,this.projectilesVsGod));
+		flixel_FlxG.overlap(this.projectilesGod,this.player,$bind(this,this.projectilesVsPlayer));
 		flixel_FlxG.overlap(this.player,this.god,$bind(this,this.playerVsGod));
 		if(this.playerCollectedAllCoins()) {
 			this.player.set_coins(0);
 			var _g = 0;
 			while(_g < 2) {
 				var i = _g++;
-				this.projectiles.members[i].revive();
-				this.projectiles.members[i].set_visible(false);
+				this.projectilesPlayer.members[i].revive();
+				this.projectilesPlayer.members[i].set_visible(false);
 			}
-			this.resetPlaceCoin = true;
 			this.player.intanceProjectiles();
+			this.resetPlaceCoin = true;
 		}
 		if(this.player.projCount != -1) {
-			this.textGame.set_text("¡Jugador puede matar a Dios (Espacio)! - Tiros: " + (this.projectiles.length - this.player.projCount) + "/" + this.projectiles.length);
+			this.textGame.set_text("¡Jugador puede matar a Dios (Espacio)! - Tiros: " + (this.projectilesPlayer.length - this.player.projCount) + "/" + this.projectilesPlayer.length);
 		}
-		if(this.projectiles != null && this.projectiles.countDead() == 2 && this.god.exists && this.resetPlaceCoin) {
+		if(this.projectilesPlayer != null && this.projectilesPlayer.countDead() == 2 && this.god.exists && this.resetPlaceCoin) {
+			haxe_Log.trace("shuffle",{ fileName : "GameState.hx", lineNumber : 248, className : "states.GameState", methodName : "update"});
 			this.player.projCount = -1;
 			this.resetPlaceCoin = false;
 			this.shuffleCoins();
@@ -83524,35 +83934,65 @@ states_GameState.prototype = $extend(flixel_FlxState.prototype,{
 				flixel_FlxG.game._requestedState = nextState;
 			}
 		}
+		if(flixel_FlxG.mouse._leftButton.current == 2 && this.god.idSkill != -1) {
+			var _g1 = this.god.idSkill;
+			if(_g1 == 0) {
+				if(!this.skill1.isTouchingButton()) {
+					var someTarget = new flixel_FlxSprite();
+					someTarget.makeGraphic(1,1);
+					someTarget.setPosition(flixel_FlxG.mouse.x,flixel_FlxG.mouse.y);
+					someTarget.set_visible(false);
+					this.add(someTarget);
+					this.skill1.setActivation();
+					var proj = js_Boot.__cast(this.projectilesGod.members[0] , gameObjects_ProjectilePlayer);
+					proj.set_target(someTarget);
+					proj.shoot(this.god.x,this.god.y);
+					someTarget.destroy();
+				}
+			}
+			this.god.idSkill = -1;
+		}
+		if(this.god.stateDuration != -1 && this.god.state == "Stunned") {
+			this.stunText.set_visible(true);
+			this.stunText.setPosition(this.god.x,this.god.y);
+		} else {
+			this.stunText.set_visible(false);
+		}
 	}
 	,shuffleCoins: function() {
-		this.coins.destroy();
-		this.coins = new flixel_group_FlxTypedGroup();
-		this.add(this.coins);
 		var _g = 0;
 		while(_g < 2) {
 			var i = _g++;
-			var c = new gameObjects_Coin(0,0);
+			this.coins.members[i].revive();
+			var c = js_Boot.__cast(this.coins.members[i] , gameObjects_Coin);
 			this.setCoinXAndYRandom(this.coins,c);
-			this.coins.add(c);
 		}
 	}
 	,playerVsCoins: function(aPlayer,aCoin) {
 		aPlayer.set_coins(aPlayer.get_coins() + 1);
 		this.textGame.set_text("Objetos Jugador: " + this.player.get_coins() + "/" + this.coins.length);
-		aCoin.destroy();
+		aCoin.setPosition(0,0);
+		aCoin.kill();
 	}
 	,projectilesVsGod: function(aProjectile,aGod) {
-		var nextState = new states_GameWinPlayer();
-		if(flixel_FlxG.game._state.switchTo(nextState)) {
-			flixel_FlxG.game._requestedState = nextState;
+		if(aProjectile.target == aGod) {
+			var nextState = new states_GameWinPlayer();
+			if(flixel_FlxG.game._state.switchTo(nextState)) {
+				flixel_FlxG.game._requestedState = nextState;
+			}
+		}
+	}
+	,projectilesVsPlayer: function(aProjectile,aPlayer) {
+		if(aProjectile.target != this.god) {
+			var nextState = new states_GameOverPlayer();
+			if(flixel_FlxG.game._state.switchTo(nextState)) {
+				flixel_FlxG.game._requestedState = nextState;
+			}
 		}
 	}
 	,playerVsGod: function(aPlayer,aGod) {
-		var nextState = new states_GameOverPlayer();
-		if(flixel_FlxG.game._state.switchTo(nextState)) {
-			flixel_FlxG.game._requestedState = nextState;
-		}
+		aGod.state = "Stunned";
+		aGod.stateDuration = 3;
 	}
 	,destroy: function() {
 		flixel_FlxState.prototype.destroy.call(this);
@@ -83709,16 +84149,16 @@ states_MainMenu.prototype = $extend(flixel_FlxState.prototype,{
 			var _g1 = this.index;
 			switch(_g1) {
 			case 0:
-				this.onClickPlay(this.playButton);
 				this.playButton.animation.play("down");
+				this.onClickPlay(this.playButton);
 				break;
 			case 1:
-				this.onClickInstructions(this.instructionsButton);
 				this.instructionsButton.animation.play("down");
+				this.onClickInstructions(this.instructionsButton);
 				break;
 			case 2:
-				this.onClickExit(this.exitButton);
 				this.exitButton.animation.play("down");
+				this.onClickExit(this.exitButton);
 				break;
 			}
 		}
@@ -83737,6 +84177,7 @@ states_MainMenu.prototype = $extend(flixel_FlxState.prototype,{
 	}
 	,onClickExit: function(aButton) {
 		openfl_system_System.exit(0);
+		this.exitButton.animation.play("up");
 	}
 	,__class__: states_MainMenu
 });
@@ -83839,18 +84280,27 @@ openfl_display_DisplayObject.__instanceCount = 0;
 openfl_display_DisplayObject.__worldRenderDirty = 0;
 openfl_display_DisplayObject.__worldTransformDirty = 0;
 openfl_display_DisplayObject.__cacheAsBitmapMode = false;
+AssetPaths.ariosheet__png = "assets/ariosheet.png";
+AssetPaths.balaplacebo__png = "assets/balaplacebo.png";
 AssetPaths.button__png = "assets/button.png";
 AssetPaths.cosahermosa__csv = "assets/cosahermosa.csv";
 AssetPaths.dust__png = "assets/dust.png";
 AssetPaths.explosion__png = "assets/explosion.png";
+AssetPaths.fondo_azul__png = "assets/fondo_azul.png";
 AssetPaths.hero__png = "assets/hero.png";
+AssetPaths.IdleSheet__png = "assets/IdleSheet.png";
 AssetPaths.backgroundGame__png = "assets/img/backgroundGame.png";
 AssetPaths.julia__png = "assets/img/julia.png";
 AssetPaths.moneda__png = "assets/img/moneda.png";
 AssetPaths.monedagiro__png = "assets/img/monedagiro.png";
 AssetPaths.mapCSV_map2_specials__csv = "assets/mapCSV_map2_specials.csv";
 AssetPaths.mapCSV_map2_tiles__csv = "assets/mapCSV_map2_tiles.csv";
+AssetPaths.RunningSheet__png = "assets/RunningSheet.png";
+AssetPaths.SheetCaida__png = "assets/SheetCaida.png";
+AssetPaths.SheetSalto__png = "assets/SheetSalto.png";
+AssetPaths["tiles copia__png"] = "assets/tiles copia.png";
 AssetPaths.tiles__png = "assets/tiles.png";
+AssetPaths.tile_ladrillos__png = "assets/tile_ladrillos.png";
 openfl_text_Font.__registeredFonts = [];
 flixel_FlxBasic.activeCount = 0;
 flixel_FlxBasic.visibleCount = 0;

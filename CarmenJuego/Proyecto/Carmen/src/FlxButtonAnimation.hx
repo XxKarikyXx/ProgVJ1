@@ -14,19 +14,20 @@ import openfl.Assets;
 	class FlxButtonAnimation extends FlxSprite
 {
     public var onPressed:FlxButtonAnimation->Void;
-	
+	public var enabled:Bool = true;
+	private var isWithMouse:Bool = false;
     
     private var mDisplay:FlxSprite;
-    //helper position
     private var hMousePosition:FlxPoint;
 
     
-    public function new(aImagePath:String,aAnimationWidth:Int,aAnimationHeight:Int,?aOnPressed:FlxButtonAnimation->Void) 
+    public function new(aImagePath:String,aAnimationWidth:Int,aAnimationHeight:Int,?aOnPressed:FlxButtonAnimation->Void,?aWithMouse:Bool) 
     {
         super();
         loadGraphic(Assets.getBitmapData(aImagePath), true, aAnimationWidth, aAnimationHeight);
         hMousePosition = new FlxPoint();
         onPressed = aOnPressed;
+		isWithMouse = aWithMouse;
     }
     public function setUp(aFrames:Array<Int>, aLoop:Bool=true,aFrameRate:Int=30):Void
     {
@@ -42,7 +43,8 @@ import openfl.Assets;
     }
     override public function update(aDt:Float):Void 
     {
-      /*  hMousePosition.set(FlxG.mouse.x, FlxG.mouse.y);
+		if(isWithMouse){
+        hMousePosition.set(FlxG.mouse.x, FlxG.mouse.y);
         if (isOver(hMousePosition))//over the button
         {
             if (FlxG.mouse.pressed)
@@ -60,10 +62,16 @@ import openfl.Assets;
             }
         }else {
             animation.play("up");
-        }*/
-        
+        }
+        }
         super.update(aDt);
     }
+	
+	public function isTouchingButton():Bool
+	{
+		
+	return isOver(hMousePosition);	
+	}
     private inline function isOver(aMousePosition:FlxPoint):Bool
     {
         return overlapsPoint(hMousePosition);
