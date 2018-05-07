@@ -14,6 +14,7 @@ import openfl.Lib;
 	
 	class FlxButtonAnimationSkill extends FlxButtonAnimation
 {
+	 @:isVar public  var id:Int = 0;
     @:isVar public  var coolDown:Int = 0;
 	private var timerCoolDown:Float = 0;
 	@:isVar public var activeButton:Bool = false;
@@ -21,7 +22,7 @@ import openfl.Lib;
 public var onRollOut:FlxButtonAnimation->Void;
 public var onOver:FlxButtonAnimation->Void;
     
-    public function new(aImagePath:String,aAnimationWidth:Int,aAnimationHeight:Int,?aOnPressed:FlxButtonAnimation->Void,?aOnPressedActive:FlxButtonAnimation->Void,?aOnOver:FlxButtonAnimation->Void,?aOnRollOut:FlxButtonAnimation->Void,?aCoolDown:Int) 
+    public function new(aImagePath:String,aAnimationWidth:Int,aAnimationHeight:Int,?aOnPressed:FlxButtonAnimation->Void,?aOnPressedActive:FlxButtonAnimation->Void,?aOnOver:FlxButtonAnimation->Void,?aOnRollOut:FlxButtonAnimation->Void,?aCoolDown:Int,?aId:Int) 
     {
         super(aImagePath,aAnimationWidth,aAnimationHeight,aOnPressed,true);
        
@@ -30,6 +31,7 @@ public var onOver:FlxButtonAnimation->Void;
 		onOver = aOnOver;
 		coolDown = aCoolDown;
 		timerCoolDown = 0;
+		id = aId;
 		
     }
 
@@ -47,7 +49,7 @@ public var onOver:FlxButtonAnimation->Void;
 			timerCoolDown = coolDown;
 			activeButton = true;
 					animation.play("cooldown");
-                    onPressed(this);
+                 //   onPressed(this);
 		
 	}
     override public function update(aDt:Float):Void 
@@ -56,7 +58,6 @@ public var onOver:FlxButtonAnimation->Void;
 			if (timerCoolDown>0)
 			{
 				activeButton = false;
-				trace("EnCoolDown");
 				timerCoolDown=timerCoolDown-aDt;
 			}else{
 

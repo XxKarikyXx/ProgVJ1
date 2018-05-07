@@ -94,6 +94,8 @@ class DefaultAssetLibrary extends AssetLibrary {
 		
 		
 		
+		
+		
 		#end
 		
 		#if flash
@@ -142,6 +144,8 @@ class DefaultAssetLibrary extends AssetLibrary {
 		type.set ("assets/dust.png", AssetType.IMAGE);
 		className.set ("assets/explosion.png", __ASSET__assets_explosion_png);
 		type.set ("assets/explosion.png", AssetType.IMAGE);
+		className.set ("assets/fantasmaDiosSheet.png", __ASSET__assets_fantasmadiossheet_png);
+		type.set ("assets/fantasmaDiosSheet.png", AssetType.IMAGE);
 		className.set ("assets/fondo_azul.png", __ASSET__assets_fondo_azul_png);
 		type.set ("assets/fondo_azul.png", AssetType.IMAGE);
 		className.set ("assets/hero.png", __ASSET__assets_hero_png);
@@ -166,6 +170,8 @@ class DefaultAssetLibrary extends AssetLibrary {
 		type.set ("assets/mapCSV_map2_specials.csv", AssetType.TEXT);
 		className.set ("assets/mapCSV_map2_tiles.csv", __ASSET__assets_mapcsv_map2_tiles_csv);
 		type.set ("assets/mapCSV_map2_tiles.csv", AssetType.TEXT);
+		className.set ("assets/ohno.jpg", __ASSET__assets_ohno_jpg);
+		type.set ("assets/ohno.jpg", AssetType.IMAGE);
 		className.set ("assets/openfl.svg", __ASSET__assets_openfl_svg);
 		type.set ("assets/openfl.svg", AssetType.TEXT);
 		className.set ("assets/RunningSheet.png", __ASSET__assets_runningsheet_png);
@@ -275,6 +281,10 @@ class DefaultAssetLibrary extends AssetLibrary {
 		path.set (id, id);
 		
 		type.set (id, AssetType.IMAGE);
+		id = "assets/fantasmaDiosSheet.png";
+		path.set (id, id);
+		
+		type.set (id, AssetType.IMAGE);
 		id = "assets/fondo_azul.png";
 		path.set (id, id);
 		
@@ -323,6 +333,10 @@ class DefaultAssetLibrary extends AssetLibrary {
 		path.set (id, id);
 		
 		type.set (id, AssetType.TEXT);
+		id = "assets/ohno.jpg";
+		path.set (id, id);
+		
+		type.set (id, AssetType.IMAGE);
 		id = "assets/openfl.svg";
 		path.set (id, id);
 		
@@ -439,6 +453,9 @@ class DefaultAssetLibrary extends AssetLibrary {
 		className.set ("assets/explosion.png", __ASSET__assets_explosion_png);
 		type.set ("assets/explosion.png", AssetType.IMAGE);
 		
+		className.set ("assets/fantasmaDiosSheet.png", __ASSET__assets_fantasmadiossheet_png);
+		type.set ("assets/fantasmaDiosSheet.png", AssetType.IMAGE);
+		
 		className.set ("assets/fondo_azul.png", __ASSET__assets_fondo_azul_png);
 		type.set ("assets/fondo_azul.png", AssetType.IMAGE);
 		
@@ -474,6 +491,9 @@ class DefaultAssetLibrary extends AssetLibrary {
 		
 		className.set ("assets/mapCSV_map2_tiles.csv", __ASSET__assets_mapcsv_map2_tiles_csv);
 		type.set ("assets/mapCSV_map2_tiles.csv", AssetType.TEXT);
+		
+		className.set ("assets/ohno.jpg", __ASSET__assets_ohno_jpg);
+		type.set ("assets/ohno.jpg", AssetType.IMAGE);
 		
 		className.set ("assets/openfl.svg", __ASSET__assets_openfl_svg);
 		type.set ("assets/openfl.svg", AssetType.TEXT);
@@ -1165,6 +1185,7 @@ class DefaultAssetLibrary extends AssetLibrary {
 @:keep @:bind #if display private #end class __ASSET__assets_datatilespng_tsx extends null { }
 @:keep @:bind #if display private #end class __ASSET__assets_dust_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind #if display private #end class __ASSET__assets_explosion_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep @:bind #if display private #end class __ASSET__assets_fantasmadiossheet_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind #if display private #end class __ASSET__assets_fondo_azul_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind #if display private #end class __ASSET__assets_hero_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind #if display private #end class __ASSET__assets_idlesheet_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
@@ -1177,6 +1198,7 @@ class DefaultAssetLibrary extends AssetLibrary {
 @:keep @:bind #if display private #end class __ASSET__assets_img_monedagiro_xml extends null { }
 @:keep @:bind #if display private #end class __ASSET__assets_mapcsv_map2_specials_csv extends null { }
 @:keep @:bind #if display private #end class __ASSET__assets_mapcsv_map2_tiles_csv extends null { }
+@:keep @:bind #if display private #end class __ASSET__assets_ohno_jpg extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind #if display private #end class __ASSET__assets_openfl_svg extends null { }
 @:keep @:bind #if display private #end class __ASSET__assets_runningsheet_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind #if display private #end class __ASSET__assets_sheetcaida_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
@@ -1193,6 +1215,8 @@ class DefaultAssetLibrary extends AssetLibrary {
 
 @:keep #if display private #end class __ASSET__flixel_fonts_nokiafc22_ttf extends lime.text.Font { public function new () { super (); name = "Nokia Cellphone FC Small"; } } 
 @:keep #if display private #end class __ASSET__flixel_fonts_monsterrat_ttf extends lime.text.Font { public function new () { super (); name = "Monsterrat"; } } 
+
+
 
 
 
@@ -1262,6 +1286,7 @@ class DefaultAssetLibrary extends AssetLibrary {
 @:file("assets/dataTilespng.tsx") #if display private #end class __ASSET__assets_datatilespng_tsx extends lime.utils.Bytes {}
 @:image("assets/dust.png") #if display private #end class __ASSET__assets_dust_png extends lime.graphics.Image {}
 @:image("assets/explosion.png") #if display private #end class __ASSET__assets_explosion_png extends lime.graphics.Image {}
+@:image("assets/fantasmaDiosSheet.png") #if display private #end class __ASSET__assets_fantasmadiossheet_png extends lime.graphics.Image {}
 @:image("assets/fondo_azul.png") #if display private #end class __ASSET__assets_fondo_azul_png extends lime.graphics.Image {}
 @:image("assets/hero.png") #if display private #end class __ASSET__assets_hero_png extends lime.graphics.Image {}
 @:image("assets/IdleSheet.png") #if display private #end class __ASSET__assets_idlesheet_png extends lime.graphics.Image {}
@@ -1274,6 +1299,7 @@ class DefaultAssetLibrary extends AssetLibrary {
 @:file("assets/img/monedagiro.xml") #if display private #end class __ASSET__assets_img_monedagiro_xml extends lime.utils.Bytes {}
 @:file("assets/mapCSV_map2_specials.csv") #if display private #end class __ASSET__assets_mapcsv_map2_specials_csv extends lime.utils.Bytes {}
 @:file("assets/mapCSV_map2_tiles.csv") #if display private #end class __ASSET__assets_mapcsv_map2_tiles_csv extends lime.utils.Bytes {}
+@:image("assets/ohno.jpg") #if display private #end class __ASSET__assets_ohno_jpg extends lime.graphics.Image {}
 @:file("assets/openfl.svg") #if display private #end class __ASSET__assets_openfl_svg extends lime.utils.Bytes {}
 @:image("assets/RunningSheet.png") #if display private #end class __ASSET__assets_runningsheet_png extends lime.graphics.Image {}
 @:image("assets/SheetCaida.png") #if display private #end class __ASSET__assets_sheetcaida_png extends lime.graphics.Image {}
