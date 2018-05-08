@@ -140,7 +140,7 @@ ApplicationMain.init = function() {
 	}
 };
 ApplicationMain.main = function() {
-	ApplicationMain.config = { build : "756", company : "TuMadre", file : "Carmen", fps : 60, name : "Carmen", orientation : "", packageName : "Carmen", version : "1.0.0", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : false, height : 1080, parameters : "{}", resizable : true, stencilBuffer : true, title : "Carmen", vsync : false, width : 1920, x : null, y : null}]};
+	ApplicationMain.config = { build : "762", company : "TuMadre", file : "Carmen", fps : 60, name : "Carmen", orientation : "", packageName : "Carmen", version : "1.0.0", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : false, height : 1080, parameters : "{}", resizable : true, stencilBuffer : true, title : "Carmen", vsync : false, width : 1920, x : null, y : null}]};
 };
 ApplicationMain.start = function() {
 	var hasMain = false;
@@ -45423,6 +45423,9 @@ var gameObjects_ProjectilePlayer = function(atarget,aFollowTime,aVelocity) {
 	if(aVelocity == null) {
 		aVelocity = 600;
 	}
+	this.yPoint = 0;
+	this.xPoint = 0;
+	this.followPointBool = false;
 	this.followNumber = 0;
 	this.velocityProj = 600;
 	this.followTime = 0;
@@ -45446,15 +45449,22 @@ gameObjects_ProjectilePlayer.prototype = $extend(flixel_FlxSprite.prototype,{
 	,followTime: null
 	,velocityProj: null
 	,followNumber: null
+	,followPointBool: null
+	,xPoint: null
+	,yPoint: null
 	,set_target: function(atarget) {
 		return this.target = atarget;
 	}
 	,update: function(elapsed) {
 		flixel_FlxSprite.prototype.update.call(this,elapsed);
 		if(this.followBool) {
-			this.followTarget();
+			if(!this.followPointBool) {
+				this.followTarget();
+			} else {
+				this.followPoint();
+			}
 		}
-		if(this.followTime < 0 && this.followBool) {
+		if(this.followTime <= 0 && this.followBool) {
 			this.followBool = false;
 			this.followTime = this.followNumber;
 		} else {
@@ -45467,15 +45477,30 @@ gameObjects_ProjectilePlayer.prototype = $extend(flixel_FlxSprite.prototype,{
 		}
 	}
 	,shoot: function(ax,ay) {
-		this.set_x(ax);
-		this.set_y(ay);
+		this.reset(ax,ay);
+		this.followTime = this.followNumber;
 		this.followBool = true;
 		this.set_visible(true);
+	}
+	,setPointToFollow: function(axTo,ayTo) {
+		axTo = this.xPoint;
+		ayTo = this.yPoint;
+		this.followPointBool = true;
 	}
 	,followTarget: function() {
 		var target = this.target;
 		var deltaX = target.x + target.get_width() * 0.5 - (this.x + this.get_width() * 0.5);
 		var deltaY = target.y + target.get_height() * 0.5 - (this.y + this.get_height() * 0.5);
+		var length = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+		deltaX /= length;
+		deltaY /= length;
+		this.velocity.set_x(deltaX * this.velocityProj);
+		this.velocity.set_y(deltaY * this.velocityProj);
+	}
+	,followPoint: function() {
+		var target = this.target;
+		var deltaX = this.xPoint + 0.5 - (this.x + this.get_width() * 0.5);
+		var deltaY = this.yPoint + 0.5 - (this.y + this.get_height() * 0.5);
 		var length = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
 		deltaX /= length;
 		deltaY /= length;
@@ -84108,16 +84133,10 @@ states_GameState.prototype = $extend(flixel_FlxState.prototype,{
 			var _g = this.god.idSkill;
 			switch(_g) {
 			case 0:
-				var someTarget = new flixel_FlxSprite();
-				someTarget.makeGraphic(1,1);
-				someTarget.setPosition(flixel_FlxG.mouse.x,flixel_FlxG.mouse.y);
-				someTarget.set_visible(false);
-				this.add(someTarget);
 				this.skill1.setActivation();
 				var proj = js_Boot.__cast(this.projectilesGod.members[0] , gameObjects_ProjectilePlayer);
-				proj.set_target(someTarget);
+				proj.setPointToFollow(flixel_FlxG.mouse.x,flixel_FlxG.mouse.y);
 				proj.shoot(this.god.x,this.god.y);
-				someTarget.destroy();
 				this.god.idSkill = -1;
 				break;
 			case 1:
@@ -84163,7 +84182,7 @@ states_GameState.prototype = $extend(flixel_FlxState.prototype,{
 		}
 	}
 	,projectilesVsGod: function(aProjectile,aGod) {
-		if(aProjectile.target == aGod) {
+		if(aProjectile.target != null && aProjectile.target == aGod) {
 			var nextState = new states_GameWinPlayer();
 			if(flixel_FlxG.game._state.switchTo(nextState)) {
 				flixel_FlxG.game._requestedState = nextState;
@@ -84171,7 +84190,7 @@ states_GameState.prototype = $extend(flixel_FlxState.prototype,{
 		}
 	}
 	,projectilesVsPlayer: function(aProjectile,aPlayer) {
-		if(aProjectile.target != this.god) {
+		if(aProjectile.target != null && aProjectile.target != this.god) {
 			var nextState = new states_GameOverPlayer();
 			if(flixel_FlxG.game._state.switchTo(nextState)) {
 				flixel_FlxG.game._requestedState = nextState;

@@ -421,17 +421,10 @@ class GameState extends FlxState
 			switch (god.idSkill)
 			{
 				case 0:
-					var someTarget = new FlxSprite();
-					someTarget.makeGraphic(1, 1);
-					someTarget.setPosition(FlxG.mouse.x, FlxG.mouse.y);
-					someTarget.set_visible(false);
-					add(someTarget);
-
 					skill1.setActivation();
 					var proj:ProjectilePlayer = cast(projectilesGod.members[0], ProjectilePlayer);
-					proj.set_target(someTarget);
+					proj.setPointToFollow(FlxG.mouse.x, FlxG.mouse.y);
 					proj.shoot(god.x, god.y);
-					someTarget.destroy();
 					god.idSkill =-1;
 
 				case 1:
@@ -502,7 +495,7 @@ class GameState extends FlxState
 	}
 	function projectilesVsGod(aProjectile:ProjectilePlayer, aGod:God)
 	{
-		if (aProjectile.target==aGod)
+		if (aProjectile.target!=null&&aProjectile.target==aGod)
 		{
 			FlxG.switchState(new GameWinPlayer());
 		}
@@ -511,7 +504,7 @@ class GameState extends FlxState
 
 	function projectilesVsPlayer(aProjectile:ProjectilePlayer, aPlayer:Player1)
 	{
-		if (aProjectile.target!=god)
+		if (aProjectile.target!=null&&aProjectile.target!=god)
 		{
 			FlxG.switchState(new GameOverPlayer());
 		}
