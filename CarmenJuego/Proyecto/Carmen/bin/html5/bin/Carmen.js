@@ -140,7 +140,7 @@ ApplicationMain.init = function() {
 	}
 };
 ApplicationMain.main = function() {
-	ApplicationMain.config = { build : "764", company : "TuMadre", file : "Carmen", fps : 60, name : "Carmen", orientation : "", packageName : "Carmen", version : "1.0.0", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : false, height : 1080, parameters : "{}", resizable : true, stencilBuffer : true, title : "Carmen", vsync : false, width : 1920, x : null, y : null}]};
+	ApplicationMain.config = { build : "773", company : "TuMadre", file : "Carmen", fps : 60, name : "Carmen", orientation : "", packageName : "Carmen", version : "1.0.0", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : false, height : 1080, parameters : "{}", resizable : true, stencilBuffer : true, title : "Carmen", vsync : false, width : 1920, x : null, y : null}]};
 };
 ApplicationMain.start = function() {
 	var hasMain = false;
@@ -5773,12 +5773,18 @@ FlxButtonAnimationSkill.prototype = $extend(FlxButtonAnimation.prototype,{
 	}
 	,update: function(aDt) {
 		if(this.isWithMouse) {
+			this.hMousePosition.set(flixel_FlxG.mouse.x,flixel_FlxG.mouse.y);
 			if(this.timerCoolDown > 0) {
 				this.activeButton = false;
 				this.timerCoolDown -= aDt;
-			} else {
-				this.hMousePosition.set(flixel_FlxG.mouse.x,flixel_FlxG.mouse.y);
 				var aMousePosition = this.hMousePosition;
+				if(this.overlapsPoint(this.hMousePosition)) {
+					this.onOver(this);
+				} else {
+					this.onRollOut(this);
+				}
+			} else {
+				var aMousePosition1 = this.hMousePosition;
 				if(this.overlapsPoint(this.hMousePosition)) {
 					this.onOver(this);
 					var tmp;
