@@ -37,10 +37,10 @@ class God extends FlxSprite
 
 		animation.play("idle");
 
-		//offset.y = 20;
-		//offset.x =-20;
-		width = 80;
-		height =80;
+		offset.y = 15;
+		offset.x =12;
+		width = 57;
+		height =57;
 
 		maxVelocity.x = 540;
 		maxVelocity.y = 540;

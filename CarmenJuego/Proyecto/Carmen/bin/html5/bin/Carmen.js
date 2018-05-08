@@ -140,7 +140,7 @@ ApplicationMain.init = function() {
 	}
 };
 ApplicationMain.main = function() {
-	ApplicationMain.config = { build : "773", company : "TuMadre", file : "Carmen", fps : 60, name : "Carmen", orientation : "", packageName : "Carmen", version : "1.0.0", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : false, height : 1080, parameters : "{}", resizable : true, stencilBuffer : true, title : "Carmen", vsync : false, width : 1920, x : null, y : null}]};
+	ApplicationMain.config = { build : "783", company : "TuMadre", file : "Carmen", fps : 60, name : "Carmen", orientation : "", packageName : "Carmen", version : "1.0.0", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : false, height : 1080, parameters : "{}", resizable : true, stencilBuffer : true, title : "Carmen", vsync : false, width : 1920, x : null, y : null}]};
 };
 ApplicationMain.start = function() {
 	var hasMain = false;
@@ -45192,8 +45192,10 @@ var gameObjects_God = function(X,Y,aMap) {
 	this.animation.add("idle",[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],30);
 	this.set_alpha(0.5);
 	this.animation.play("idle");
-	this.set_width(80);
-	this.set_height(80);
+	this.offset.set_y(15);
+	this.offset.set_x(12);
+	this.set_width(57);
+	this.set_height(57);
 	this.maxVelocity.set_x(540);
 	this.maxVelocity.set_y(540);
 };
