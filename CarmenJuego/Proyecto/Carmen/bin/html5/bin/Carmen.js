@@ -140,7 +140,7 @@ ApplicationMain.init = function() {
 	}
 };
 ApplicationMain.main = function() {
-	ApplicationMain.config = { build : "783", company : "TuMadre", file : "Carmen", fps : 60, name : "Carmen", orientation : "", packageName : "Carmen", version : "1.0.0", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : false, height : 1080, parameters : "{}", resizable : true, stencilBuffer : true, title : "Carmen", vsync : false, width : 1920, x : null, y : null}]};
+	ApplicationMain.config = { build : "800", company : "TuMadre", file : "Carmen", fps : 60, name : "Carmen", orientation : "", packageName : "Carmen", version : "1.0.0", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : false, height : 1080, parameters : "{}", resizable : true, stencilBuffer : true, title : "Carmen", vsync : false, width : 1920, x : null, y : null}]};
 };
 ApplicationMain.start = function() {
 	var hasMain = false;
@@ -83888,8 +83888,8 @@ states_GameState.prototype = $extend(flixel_FlxState.prototype,{
 		this.add(this.background);
 		this.map = new flixel_tile_FlxTilemap();
 		this.map.loadMapFromCSV("assets/cosahermosa.csv","assets/tile_ladrillos.png",32,32);
-		this.map.setTileProperties(16,0);
-		this.map.setTileProperties(17,0);
+		this.map.setTileProperties(2,0);
+		this.map.setTileProperties(1,0);
 		this.add(this.map);
 		this.player = new gameObjects_Player1(80,900,this.map);
 		this.god = new gameObjects_God(1700,950,this.map);
@@ -84036,7 +84036,7 @@ states_GameState.prototype = $extend(flixel_FlxState.prototype,{
 	,onRollOutSkill2: function(aButton) {
 	}
 	,setCoinXAndYRandom: function(otherCoins,aCoin) {
-		var coinCoordinates = this.map.getTileCoords(16,true);
+		var coinCoordinates = this.map.getTileCoords(2,true);
 		var rand = Math.random();
 		var index = Math.round(coinCoordinates.length * rand) - 1;
 		var anX = coinCoordinates[index].x - aCoin.get_width() / 2;
@@ -84107,8 +84107,8 @@ states_GameState.prototype = $extend(flixel_FlxState.prototype,{
 			this.runGodSkill();
 		}
 		if(this.god.idSkill == this.skill2.id && this.actualTrap != null) {
-			this.actualTrap.setPosition(flixel_FlxG.mouse.x,flixel_FlxG.mouse.y);
-			if(!this.thereIsPlayer(64,flixel_FlxG.mouse.x,flixel_FlxG.mouse.y) && this.itsOnASurface(64,flixel_FlxG.mouse.x,flixel_FlxG.mouse.y) && !this.thereIsACoinHere(flixel_FlxG.mouse.x,flixel_FlxG.mouse.y,this.coins,64) && !this.thereIsACoinHere(flixel_FlxG.mouse.x + 32,flixel_FlxG.mouse.y + 32,this.coins,64)) {
+			this.actualTrap.setPosition(flixel_FlxG.mouse.x - 32,flixel_FlxG.mouse.y - 16);
+			if(!this.thereIsPlayer(64,flixel_FlxG.mouse.x,flixel_FlxG.mouse.y) && this.itsOnASurface(64,flixel_FlxG.mouse.x,flixel_FlxG.mouse.y - 16) && !this.thereIsACoinHere(flixel_FlxG.mouse.x,flixel_FlxG.mouse.y - 16,this.coins,64)) {
 				this.actualTrap.setColorTransform(0,1,0,0.8);
 			} else {
 				this.actualTrap.setColorTransform(1,0,0,0.8);
@@ -84148,7 +84148,7 @@ states_GameState.prototype = $extend(flixel_FlxState.prototype,{
 				this.god.idSkill = -1;
 				break;
 			case 1:
-				if(!this.thereIsPlayer(64,flixel_FlxG.mouse.x,flixel_FlxG.mouse.y) && this.itsOnASurface(64,flixel_FlxG.mouse.x,flixel_FlxG.mouse.y) && !this.thereIsACoinHere(flixel_FlxG.mouse.x,flixel_FlxG.mouse.y,this.coins,64) && !this.thereIsACoinHere(flixel_FlxG.mouse.x + 32,flixel_FlxG.mouse.y + 32,this.coins,64)) {
+				if(!this.thereIsPlayer(64,flixel_FlxG.mouse.x,flixel_FlxG.mouse.y) && this.itsOnASurface(64,flixel_FlxG.mouse.x,flixel_FlxG.mouse.y - 16) && !this.thereIsACoinHere(flixel_FlxG.mouse.x,flixel_FlxG.mouse.y - 16,this.coins,64)) {
 					this.god.idSkill = -1;
 					this.actualTrap.setColorTransform(1,1,1,1);
 					this.actualTrap.canCollide = true;
@@ -84164,10 +84164,11 @@ states_GameState.prototype = $extend(flixel_FlxState.prototype,{
 	}
 	,itsOnASurface: function(aSizeOfSurface,aX,aY) {
 		var midSize = aSizeOfSurface / 2 | 0;
-		if(this.map.getTile(aX / 32 | 0,aY / 32 | 0) == 0 || this.map.getTile(aX / 32 | 0,aY / 32 | 0) == 16) {
-			if(this.map.getTile((aX + midSize) / 32 | 0,aY / 32 | 0) == 0 || this.map.getTile((aX + midSize) / 32 | 0,aY / 32 | 0) == 16) {
-				if(this.map.getTile(aX / 32 | 0,(midSize / 2 + aY) / 32 | 0) != 0 && this.map.getTile(aX / 32 | 0,(midSize / 2 + aY) / 32 | 0) != 16) {
-					if(this.map.getTile((aX + midSize) / 32 | 0,(midSize / 2 + aY) / 32 | 0) != 0 && this.map.getTile((aX + midSize) / 32 | 0,(midSize / 2 + aY) / 32 | 0) != 16 && this.map.getTile((aX + midSize) / 32 | 0,(midSize / 2 + aY) / 32 | 0) != 17) {
+		var midSize2 = midSize / 2 | 0;
+		if(this.map.getTile(aX / 32 | 0,aY / 32 | 0) == 0 || this.map.getTile(aX / 32 | 0,aY / 32 | 0) == 2) {
+			if(this.map.getTile((aX + midSize2) / 32 | 0,aY / 32 | 0) == 0 || this.map.getTile((aX + midSize2) / 32 | 0,aY / 32 | 0) == 2) {
+				if(this.map.getTile(aX / 32 | 0,(midSize / 2 + aY) / 32 | 0) != 0 && this.map.getTile(aX / 32 | 0,(midSize / 2 + aY) / 32 | 0) != 2) {
+					if(this.map.getTile((aX + midSize2) / 32 | 0,(midSize / 2 + aY) / 32 | 0) != 0 && this.map.getTile((aX + midSize2) / 32 | 0,(midSize / 2 + aY) / 32 | 0) != 2 && this.map.getTile((aX + midSize2) / 32 | 0,(midSize / 2 + aY) / 32 | 0) != 1) {
 						return true;
 					}
 				}
@@ -87421,5 +87422,8 @@ openfl_utils__$Endian_Endian_$Impl_$.BIG_ENDIAN = 0;
 openfl_utils__$Endian_Endian_$Impl_$.LITTLE_ENDIAN = 1;
 states_GameState.numberProjectilesPlayer = 2;
 states_GameState.numberTotalCoins = 2;
+states_GameState.tileIndexCoins = 2;
+states_GameState.tileIndexNonCollision = 0;
+states_GameState.tileIndexNonCollisionBlack = 1;
 ApplicationMain.main();
 })(typeof exports != "undefined" ? exports : typeof window != "undefined" ? window : typeof self != "undefined" ? self : this, typeof window != "undefined" ? window : typeof global != "undefined" ? global : typeof self != "undefined" ? self : this);

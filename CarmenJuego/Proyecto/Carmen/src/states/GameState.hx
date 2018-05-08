@@ -51,7 +51,11 @@ class GameState extends FlxState
 
 	var skill1:FlxButtonAnimationSkill;
 	var skill2:FlxButtonAnimationSkill;
-
+	
+	static inline var  tileIndexCoins = 2;
+	static inline var  tileIndexNonCollision = 0; 
+    static inline var  tileIndexNonCollisionBlack = 1; 
+	
 	public function new()
 	{
 		super();
@@ -64,8 +68,8 @@ class GameState extends FlxState
 		add(background);
 		map = new FlxTilemap();
 		map.loadMapFromCSV(AssetPaths.cosahermosa__csv, AssetPaths.tile_ladrillos__png, 32, 32);
-		map.setTileProperties(16, FlxObject.NONE);
-		map.setTileProperties(17, FlxObject.NONE);
+		map.setTileProperties(tileIndexCoins, FlxObject.NONE);
+		map.setTileProperties(tileIndexNonCollisionBlack, FlxObject.NONE);
 		add(map);
 
 		player = new Player1(80, 900, map);
@@ -151,7 +155,7 @@ class GameState extends FlxState
 		add(projectilesPlayer);
 		for (i in 0...numberProjectilesPlayer)
 		{
-			var pro:ProjectilePlayer = new ProjectilePlayer(GlobalGameData.player,4);
+			var pro:ProjectilePlayer = new ProjectilePlayer(GlobalGameData.player,4,550);
 			projectilesPlayer.add(pro);
 			pro.kill();
 		}
@@ -253,7 +257,7 @@ class GameState extends FlxState
 	public function setCoinXAndYRandom(otherCoins:FlxGroup,aCoin:Coin):Void
 	{
 
-		var coinCoordinates:Array<FlxPoint> = map.getTileCoords(16, true);
+		var coinCoordinates:Array<FlxPoint> = map.getTileCoords(tileIndexCoins, true);
 
 		var rand:Float = Math.random();
 		var index:Int = Math.round(coinCoordinates.length * rand)-1;
@@ -366,9 +370,9 @@ class GameState extends FlxState
 		if (god.idSkill == skill2.id&&actualTrap!=null)
 		{
 
-			actualTrap.setPosition(FlxG.mouse.x, FlxG.mouse.y);
+			actualTrap.setPosition(FlxG.mouse.x-32, FlxG.mouse.y-16);
 
-			if (!thereIsPlayer(64, FlxG.mouse.x, FlxG.mouse.y) && itsOnASurface(64, FlxG.mouse.x, FlxG.mouse.y)&&!thereIsACoinHere(FlxG.mouse.x,FlxG.mouse.y,coins,32 * 2)&&!thereIsACoinHere(FlxG.mouse.x+32,FlxG.mouse.y+32,coins,32 * 2))
+			if (!thereIsPlayer(64, FlxG.mouse.x, FlxG.mouse.y) && itsOnASurface(64, FlxG.mouse.x, FlxG.mouse.y-16)&&!thereIsACoinHere(FlxG.mouse.x,FlxG.mouse.y-16,coins,32 * 2))
 			{
                 
 				actualTrap.setColorTransform(0, 1, 0, 0.8);
@@ -428,7 +432,7 @@ class GameState extends FlxState
 					god.idSkill =-1;
 
 				case 1:
-					if (!thereIsPlayer(64, FlxG.mouse.x, FlxG.mouse.y) && itsOnASurface(64, FlxG.mouse.x, FlxG.mouse.y)&&!thereIsACoinHere(FlxG.mouse.x,FlxG.mouse.y,coins,32 * 2)&&!thereIsACoinHere(FlxG.mouse.x+32,FlxG.mouse.y+32,coins,32 * 2))
+					if (!thereIsPlayer(64, FlxG.mouse.x, FlxG.mouse.y) && itsOnASurface(64, FlxG.mouse.x, FlxG.mouse.y-16)&&!thereIsACoinHere(FlxG.mouse.x,FlxG.mouse.y-16,coins,32 * 2))
 					{
 						god.idSkill =-1;
 						actualTrap.setColorTransform(1,1,1,1);
@@ -449,16 +453,17 @@ class GameState extends FlxState
 	function itsOnASurface(aSizeOfSurface:Float,aX:Int,aY:Int):Bool
 	{
 		var midSize:Int = Std.int(aSizeOfSurface / 2);
+		var midSize2:Int = Std.int(midSize / 2);
 
-		if (map.getTile(Std.int(aX/32), Std.int(aY/32))==0||map.getTile(Std.int(aX/32), Std.int(aY/32))==16) //fijarte si donde toco es 0
+		if (map.getTile(Std.int(aX/32), Std.int(aY/32))==tileIndexNonCollision||map.getTile(Std.int(aX/32), Std.int(aY/32))==tileIndexCoins) //fijarte si donde toco es 0
 		{
 			//trace("no surface bb1");
-			if (map.getTile(Std.int((aX + midSize)/32), Std.int(aY/32)) == 0 || map.getTile(Std.int((aX + midSize)/32), Std.int(aY/32)) == 16)
+			if (map.getTile(Std.int((aX + midSize2)/32), Std.int(aY/32)) == tileIndexNonCollision || map.getTile(Std.int((aX + midSize2)/32), Std.int(aY/32)) == tileIndexCoins)
 			{
 
-				if (map.getTile(Std.int(aX/32),Std.int(((midSize/2)+aY)/32))!=0&&map.getTile(Std.int(aX/32), Std.int(((midSize/2)+aY)/32))!= 16) //fijarte si es superficie
+				if (map.getTile(Std.int(aX/32),Std.int(((midSize/2)+aY)/32))!=tileIndexNonCollision&&map.getTile(Std.int(aX/32), Std.int(((midSize/2)+aY)/32))!= tileIndexCoins) //fijarte si es superficie
 				{
-					if (map.getTile(Std.int((aX + midSize)/32), Std.int(((midSize/2)+aY)/32)) != 0 && map.getTile(Std.int((aX + midSize)/32), Std.int(((midSize/2)+aY)/32)) != 16 &&map.getTile(Std.int((aX + midSize)/32), Std.int(((midSize/2)+aY)/32)) != 17)
+					if (map.getTile(Std.int((aX + midSize2)/32), Std.int(((midSize/2)+aY)/32)) != tileIndexNonCollision && map.getTile(Std.int((aX + midSize2)/32), Std.int(((midSize/2)+aY)/32)) != tileIndexCoins &&map.getTile(Std.int((aX + midSize2)/32), Std.int(((midSize/2)+aY)/32)) != tileIndexNonCollisionBlack)
 					{
 						return true;
 						
