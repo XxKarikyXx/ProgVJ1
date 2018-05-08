@@ -424,7 +424,7 @@ class GameState extends FlxState
 					skill1.setActivation();
 					var proj:ProjectilePlayer = cast(projectilesGod.members[0], ProjectilePlayer);
 					proj.setPointToFollow(FlxG.mouse.x, FlxG.mouse.y);
-					proj.shoot(god.x, god.y);
+					proj.shoot(god.x+(god.width/2), god.y+(god.height/2));
 					god.idSkill =-1;
 
 				case 1:

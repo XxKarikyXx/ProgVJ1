@@ -140,7 +140,7 @@ ApplicationMain.init = function() {
 	}
 };
 ApplicationMain.main = function() {
-	ApplicationMain.config = { build : "762", company : "TuMadre", file : "Carmen", fps : 60, name : "Carmen", orientation : "", packageName : "Carmen", version : "1.0.0", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : false, height : 1080, parameters : "{}", resizable : true, stencilBuffer : true, title : "Carmen", vsync : false, width : 1920, x : null, y : null}]};
+	ApplicationMain.config = { build : "764", company : "TuMadre", file : "Carmen", fps : 60, name : "Carmen", orientation : "", packageName : "Carmen", version : "1.0.0", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : false, height : 1080, parameters : "{}", resizable : true, stencilBuffer : true, title : "Carmen", vsync : false, width : 1920, x : null, y : null}]};
 };
 ApplicationMain.start = function() {
 	var hasMain = false;
@@ -45338,7 +45338,7 @@ gameObjects_Player1.prototype = $extend(flixel_FlxSprite.prototype,{
 			if(this.projectiles != null && this.projCount < this.projectiles.length && this.projCount != -1) {
 				this.projCount += 1;
 				var pro = js_Boot.__cast(this.projectiles.members[this.projCount - 1] , gameObjects_ProjectilePlayer);
-				pro.shoot(this.x,this.y);
+				pro.shoot(this.x + this.get_width() / 2,this.y + this.get_height() / 2);
 				pro.set_visible(true);
 			}
 		}
@@ -45483,8 +45483,8 @@ gameObjects_ProjectilePlayer.prototype = $extend(flixel_FlxSprite.prototype,{
 		this.set_visible(true);
 	}
 	,setPointToFollow: function(axTo,ayTo) {
-		axTo = this.xPoint;
-		ayTo = this.yPoint;
+		this.xPoint = axTo;
+		this.yPoint = ayTo;
 		this.followPointBool = true;
 	}
 	,followTarget: function() {
@@ -45499,8 +45499,8 @@ gameObjects_ProjectilePlayer.prototype = $extend(flixel_FlxSprite.prototype,{
 	}
 	,followPoint: function() {
 		var target = this.target;
-		var deltaX = this.xPoint + 0.5 - (this.x + this.get_width() * 0.5);
-		var deltaY = this.yPoint + 0.5 - (this.y + this.get_height() * 0.5);
+		var deltaX = this.xPoint + 0.5 - (this.x + 0.5);
+		var deltaY = this.yPoint + 0.5 - (this.y + 0.5);
 		var length = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
 		deltaX /= length;
 		deltaY /= length;
@@ -84136,7 +84136,7 @@ states_GameState.prototype = $extend(flixel_FlxState.prototype,{
 				this.skill1.setActivation();
 				var proj = js_Boot.__cast(this.projectilesGod.members[0] , gameObjects_ProjectilePlayer);
 				proj.setPointToFollow(flixel_FlxG.mouse.x,flixel_FlxG.mouse.y);
-				proj.shoot(this.god.x,this.god.y);
+				proj.shoot(this.god.x + this.god.get_width() / 2,this.god.y + this.god.get_height() / 2);
 				this.god.idSkill = -1;
 				break;
 			case 1:

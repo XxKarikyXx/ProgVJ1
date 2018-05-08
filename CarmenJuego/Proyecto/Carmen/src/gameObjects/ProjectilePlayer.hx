@@ -93,8 +93,8 @@ class ProjectilePlayer extends FlxSprite
 	
 	public function setPointToFollow(axTo:Float, ayTo:Float)
 	{
-		axTo = xPoint;
-		ayTo = yPoint;
+		xPoint = axTo;
+          yPoint=ayTo;
 		followPointBool = true;
 	}
 
@@ -115,8 +115,8 @@ class ProjectilePlayer extends FlxSprite
 		private function followPoint()
 	{
 		var target:FlxSprite = target;
-		var deltaX:Float = (xPoint+0.5) - (x+width*0.5);
-		var deltaY:Float = (yPoint + 0.5) -(y + height * 0.5);
+		var deltaX:Float = (xPoint+0.5) - (x+0.5);
+		var deltaY:Float = (yPoint + 0.5) -(y + 0.5);
 
 		var length = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
 		deltaX /= length;

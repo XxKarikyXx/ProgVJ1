@@ -94,7 +94,7 @@ offset.y = 10;
 			{
 				projCount = projCount + 1;
 				var pro:ProjectilePlayer = cast(projectiles.members[projCount-1], ProjectilePlayer);
-				pro.shoot(this.x, this.y);
+				pro.shoot(this.x+(this.width/2), this.y+(this.height/2));
 				pro.set_visible(true);
 			}
 
