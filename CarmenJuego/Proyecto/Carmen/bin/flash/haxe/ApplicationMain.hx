@@ -82,11 +82,27 @@ class ApplicationMain {
 		types.push (lime.Assets.AssetType.TEXT);
 		
 		
+		urls.push ("assets/ariosheet.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("assets/balaplacebo.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("assets/button.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
 		urls.push ("assets/cosahermosa.csv");
 		types.push (lime.Assets.AssetType.TEXT);
 		
 		
 		urls.push ("assets/cosahermosa.tmx");
+		types.push (lime.Assets.AssetType.TEXT);
+		
+		
+		urls.push ("assets/cosahermosa2.tmx");
 		types.push (lime.Assets.AssetType.TEXT);
 		
 		
@@ -102,7 +118,15 @@ class ApplicationMain {
 		types.push (lime.Assets.AssetType.IMAGE);
 		
 		
+		urls.push ("assets/fondo_azul.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
 		urls.push ("assets/hero.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("assets/IdleSheet.png");
 		types.push (lime.Assets.AssetType.IMAGE);
 		
 		
@@ -142,12 +166,40 @@ class ApplicationMain {
 		types.push (lime.Assets.AssetType.TEXT);
 		
 		
+		urls.push ("assets/ohno.jpg");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
 		urls.push ("assets/openfl.svg");
 		types.push (lime.Assets.AssetType.TEXT);
 		
 		
+		urls.push ("assets/RunningSheet.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("assets/SheetCaida.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("assets/SheetSalto.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("assets/tiles copia.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
 		urls.push ("assets/tiles.png");
 		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("assets/tile_ladrillos.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("assets/tile_ladrillos.tsx");
+		types.push (lime.Assets.AssetType.TEXT);
 		
 		
 		
@@ -211,7 +263,7 @@ class ApplicationMain {
 		
 		config = {
 			
-			build: "291",
+			build: "683",
 			company: "TuMadre",
 			file: "Carmen",
 			fps: 60,

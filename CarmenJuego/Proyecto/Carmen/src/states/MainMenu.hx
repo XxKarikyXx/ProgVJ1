@@ -50,7 +50,8 @@ class MainMenu extends FlxState
 		add(playButton);
 		playButton.updateHitbox();
 
-		var labelPlayButton:FlxText = new FlxText("Jugar");
+		var labelPlayButton:FlxText = new FlxText();
+		labelPlayButton.text = "Jugar";
 		labelPlayButton.allowCollisions = FlxObject.NONE;
 		labelPlayButton.setFormat(65, FlxColor.BLACK, FlxTextAlign.CENTER);
 		labelPlayButton.y =(mp.height+spacerYTitle)+(playButton.height/2)+(labelPlayButton.height/4);
@@ -70,7 +71,8 @@ class MainMenu extends FlxState
 		add(instructionsButton);
 		instructionsButton.updateHitbox();
 
-		var labelInstructionsButton:FlxText = new FlxText("Instrucciones");
+		var labelInstructionsButton:FlxText = new FlxText();
+		labelInstructionsButton.text = "Instrucciones";
 		labelInstructionsButton.allowCollisions = FlxObject.NONE;
 		labelInstructionsButton.setFormat(65, FlxColor.BLACK, FlxTextAlign.CENTER);
 		labelInstructionsButton.y =(mp.height+spacerYTitle)+(instructionsButton.height/2)+(labelInstructionsButton.height/4)+spacerY+Std.int(FlxG.height / 9);
@@ -88,7 +90,8 @@ class MainMenu extends FlxState
 		add(exitButton);
 		exitButton.updateHitbox();
 
-		var labelExitButton:FlxText = new FlxText("Salir");
+		var labelExitButton:FlxText = new FlxText();
+		labelExitButton.text = "Salir";
 		labelExitButton.allowCollisions = FlxObject.NONE;
 		labelExitButton.setFormat(65, FlxColor.BLACK, FlxTextAlign.CENTER);
 		labelExitButton.y =(mp.height+spacerYTitle)+(exitButton.height/2)+(labelExitButton.height/4)+(spacerY*2)+Std.int(FlxG.height / 9)*2;

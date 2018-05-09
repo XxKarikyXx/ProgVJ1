@@ -20,6 +20,9 @@ class Player1 extends FlxSprite
 	@:isVar public var projectiles(default,set):FlxGroup;
 	@:isVar public var projCount = -1;
 
+		@:isVar public var state:String = "Normal";
+	@:isVar public var stateDuration:Float = -1;
+	
 	public function new(X:Float, Y:Float, aMap:FlxTilemap)
 	{
 		super(X, Y);
@@ -68,43 +71,16 @@ offset.y = 10;
 	{
 		acceleration.x = 0;
 		velocity.x = 0;
-
-		if (FlxG.keys.pressed.A)
-		{
-			acceleration.x =-1500;
-			velocity.x = -700;
-
+		
+				switch(state){
+			case "Normal":
+				normalPlayerMovement(aDt);
+			case "Stunned":
+				playerIsStunned(aDt);
 		}
 
-		if (FlxG.keys.pressed.D)
-		{
-			acceleration.x = 1500;
-			velocity.x = 700;
 
-		}
 
-		if (FlxG.keys.justPressed.W)
-		{
-			if (isTouching(FlxObject.FLOOR))
-			{
-				velocity.y = -800;
-			}
-			else
-			{
-				if (jumpOnAirCount == 0)
-				{
-					jumpOnAirCount = jumpOnAirCount + 1;
-					velocity.y = -800;
-
-				}
-				else
-				{
-
-				}
-
-			}
-
-		}
 
 		if (isTouching(FlxObject.FLOOR))
 		{
@@ -118,7 +94,7 @@ offset.y = 10;
 			{
 				projCount = projCount + 1;
 				var pro:ProjectilePlayer = cast(projectiles.members[projCount-1], ProjectilePlayer);
-				pro.shoot(this.x, this.y);
+				pro.shoot(this.x+(this.width/2), this.y+(this.height/2));
 				pro.set_visible(true);
 			}
 
@@ -176,7 +152,58 @@ offset.y = 10;
 		super.update(aDt);
 
 	}
+	
+	function normalPlayerMovement(aDt:Float)
+	{
+		
+			if (FlxG.keys.pressed.A)
+		{
+			acceleration.x =-1500;
+			velocity.x = -700;
 
+		}
+
+		if (FlxG.keys.pressed.D)
+		{
+			acceleration.x = 1500;
+			velocity.x = 700;
+
+		}
+
+		if (FlxG.keys.justPressed.W)
+		{
+			if (isTouching(FlxObject.FLOOR))
+			{
+				velocity.y = -800;
+			}
+			else
+			{
+				if (jumpOnAirCount == 0)
+				{
+					jumpOnAirCount = jumpOnAirCount + 1;
+					velocity.y = -800;
+
+				}
+				else
+				{
+
+				}
+
+			}
+
+		}
+	}
+	function playerIsStunned(aDt:Float)
+	{
+		
+			if (stateDuration <= 0) {
+			state = "Normal";
+			stateDuration = -1;
+		} else{
+			trace(stateDuration);
+			stateDuration -= aDt;
+		}
+	}
 	function isWallHang():Int
 	{
 		var leftX:Float = x - 3;

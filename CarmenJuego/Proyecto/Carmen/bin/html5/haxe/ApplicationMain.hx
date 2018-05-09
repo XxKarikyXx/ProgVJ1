@@ -118,6 +118,10 @@ class ApplicationMain {
 		types.push (lime.Assets.AssetType.IMAGE);
 		
 		
+		urls.push ("assets/fantasmaDiosSheet.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
 		urls.push ("assets/fondo_azul.png");
 		types.push (lime.Assets.AssetType.IMAGE);
 		
@@ -164,6 +168,10 @@ class ApplicationMain {
 		
 		urls.push ("assets/mapCSV_map2_tiles.csv");
 		types.push (lime.Assets.AssetType.TEXT);
+		
+		
+		urls.push ("assets/ohno.jpg");
+		types.push (lime.Assets.AssetType.IMAGE);
 		
 		
 		urls.push ("assets/openfl.svg");
@@ -259,7 +267,7 @@ class ApplicationMain {
 		
 		config = {
 			
-			build: "660",
+			build: "817",
 			company: "TuMadre",
 			file: "Carmen",
 			fps: 60,

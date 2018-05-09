@@ -27,18 +27,20 @@ class God extends FlxSprite
 		super(X, Y);
 		map = aMap;
 		//projectiles = aProjectiles;
-		loadGraphic(AssetPaths.hero__png, true, 45, 60);
-		animation.add("run", [2, 3, 4, 5, 6, 7, 8, 9], 30);
-		animation.add("idle", [10]);
-		animation.add("jump", [1]);
-		animation.add("fall", [0]);
-		animation.add("wallHang", [11]);
+		loadGraphic(AssetPaths.fantasmaDiosSheet__png, true, 80, 80);
+		animation.add("run", [0, 1, 2, 3, 4, 5, 6, 7,8,9,10,11,12,13,14,15], 30);
+		animation.add("idle", [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], 30);
+		set_alpha(0.5);
+		//animation.add("jump", [1]);
+		//animation.add("fall", [0]);
+		//animation.add("wallHang", [11]);
 
 		animation.play("idle");
 
-		offset.y = 20;
-		width = 40;
-		height = 41;
+		offset.y = 15;
+		offset.x =12;
+		width = 57;
+		height =57;
 
 		maxVelocity.x = 540;
 		maxVelocity.y = 540;
@@ -90,13 +92,13 @@ class God extends FlxSprite
 			{
 				if (velocity.y > 0)
 				{
-					animation.play("fall");
+					//animation.play("fall");
 
 				}
 				else
 				{
 
-					animation.play("jump");
+				//	animation.play("jump");
 				}
 			}
 			else
@@ -107,11 +109,11 @@ class God extends FlxSprite
 					if (acceleration.x == 0)
 					{
 
-						animation.play("fall");
+					//	animation.play("fall");
 					}
 					if (velocity.x * acceleration.x < 0)
 					{
-						animation.play("fall");
+						//animation.play("fall");
 
 					}
 				}
@@ -126,12 +128,12 @@ class God extends FlxSprite
 
 		if (acceleration.x > 0)
 		{
-			flipX = true;
+			flipX = false;
 		}
 
 		if (acceleration.x < 0)
 		{
-			flipX = false;
+			flipX = true;
 		}
 
 		

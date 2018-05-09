@@ -20,6 +20,10 @@ class ProjectilePlayer extends FlxSprite
 	var velocityProj:Int = 600;
 	var followNumber = 0;
 	
+	var followPointBool = false;
+	
+	var xPoint:Float = 0;
+	var yPoint:Float = 0;
 
 	public function new(atarget:FlxSprite,?aFollowTime:Int,?aVelocity:Int=600)
 	{
@@ -48,11 +52,17 @@ class ProjectilePlayer extends FlxSprite
 		
 		if (followBool)
 		{
+			if(!followPointBool){
 			followTarget();
+			}else
+			{
+				followPoint();
+				
+			}
 			
 		}
 
-		if (followTime<0 &&followBool)
+		if (followTime<=0 &&followBool)
 		{
 
 			followBool = false;
@@ -73,11 +83,19 @@ class ProjectilePlayer extends FlxSprite
 
 	public function shoot(ax:Float, ay:Float)
 	{
-
-		this.x = ax;
-		this.y=ay;
+        reset(ax, ay);
+		//this.x = ax;
+		//this.y=ay;
+		followTime = followNumber;
 		followBool = true;
 		this.set_visible(true);
+	}
+	
+	public function setPointToFollow(axTo:Float, ayTo:Float)
+	{
+		xPoint = axTo;
+          yPoint=ayTo;
+		followPointBool = true;
 	}
 
 	private function followTarget()
@@ -85,6 +103,20 @@ class ProjectilePlayer extends FlxSprite
 		var target:FlxSprite = target;
 		var deltaX:Float = (target.x+target.width*0.5) - (x+width*0.5);
 		var deltaY:Float = (target.y + target.height * 0.5) -(y + height * 0.5);
+
+		var length = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+		deltaX /= length;
+		deltaY /= length;
+		velocity.x = deltaX * velocityProj;
+		velocity.y = deltaY * velocityProj;
+
+	}
+	
+		private function followPoint()
+	{
+		var target:FlxSprite = target;
+		var deltaX:Float = (xPoint+0.5) - (x+0.5);
+		var deltaY:Float = (yPoint + 0.5) -(y + 0.5);
 
 		var length = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
 		deltaX /= length;
