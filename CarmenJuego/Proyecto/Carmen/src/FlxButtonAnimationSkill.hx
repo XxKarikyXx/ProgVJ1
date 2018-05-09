@@ -77,7 +77,7 @@ updateLabel("");
 			hMousePosition.set(FlxG.mouse.x, FlxG.mouse.y);
 			if (timerCoolDown>0)
 			{
-				updateLabel(Std.int(timerCoolDown)+"");
+				updateLabel(Std.int(timerCoolDown+1)+"");
 				activeButton = false;
 				timerCoolDown = timerCoolDown - aDt;
 				if (isOver(hMousePosition))//over the button

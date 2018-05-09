@@ -140,7 +140,7 @@ ApplicationMain.init = function() {
 	}
 };
 ApplicationMain.main = function() {
-	ApplicationMain.config = { build : "816", company : "TuMadre", file : "Carmen", fps : 60, name : "Carmen", orientation : "", packageName : "Carmen", version : "1.0.0", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : false, height : 1080, parameters : "{}", resizable : true, stencilBuffer : true, title : "Carmen", vsync : false, width : 1920, x : null, y : null}]};
+	ApplicationMain.config = { build : "817", company : "TuMadre", file : "Carmen", fps : 60, name : "Carmen", orientation : "", packageName : "Carmen", version : "1.0.0", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : false, height : 1080, parameters : "{}", resizable : true, stencilBuffer : true, title : "Carmen", vsync : false, width : 1920, x : null, y : null}]};
 };
 ApplicationMain.start = function() {
 	var hasMain = false;
@@ -5792,7 +5792,7 @@ FlxButtonAnimationSkill.prototype = $extend(FlxButtonAnimation.prototype,{
 		if(this.isWithMouse) {
 			this.hMousePosition.set(flixel_FlxG.mouse.x,flixel_FlxG.mouse.y);
 			if(this.timerCoolDown > 0) {
-				this.updateLabel((this.timerCoolDown | 0) + "");
+				this.updateLabel((this.timerCoolDown + 1 | 0) + "");
 				this.activeButton = false;
 				this.timerCoolDown -= aDt;
 				var aMousePosition = this.hMousePosition;
