@@ -140,7 +140,7 @@ ApplicationMain.init = function() {
 	}
 };
 ApplicationMain.main = function() {
-	ApplicationMain.config = { build : "800", company : "TuMadre", file : "Carmen", fps : 60, name : "Carmen", orientation : "", packageName : "Carmen", version : "1.0.0", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : false, height : 1080, parameters : "{}", resizable : true, stencilBuffer : true, title : "Carmen", vsync : false, width : 1920, x : null, y : null}]};
+	ApplicationMain.config = { build : "816", company : "TuMadre", file : "Carmen", fps : 60, name : "Carmen", orientation : "", packageName : "Carmen", version : "1.0.0", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : false, height : 1080, parameters : "{}", resizable : true, stencilBuffer : true, title : "Carmen", vsync : false, width : 1920, x : null, y : null}]};
 };
 ApplicationMain.start = function() {
 	var hasMain = false;
@@ -5724,7 +5724,7 @@ FlxButtonAnimation.prototype = $extend(flixel_FlxSprite.prototype,{
 	}
 	,__class__: FlxButtonAnimation
 });
-var FlxButtonAnimationSkill = function(aImagePath,aAnimationWidth,aAnimationHeight,aOnPressed,aOnPressedActive,aOnOver,aOnRollOut,aCoolDown,aId) {
+var FlxButtonAnimationSkill = function(aImagePath,aAnimationWidth,aAnimationHeight,aOnPressed,aOnPressedActive,aOnOver,aOnRollOut,aCoolDown,aId,aLabel) {
 	this.activeButton = false;
 	this.timerCoolDown = 0;
 	this.coolDown = 0;
@@ -5736,6 +5736,14 @@ var FlxButtonAnimationSkill = function(aImagePath,aAnimationWidth,aAnimationHeig
 	this.coolDown = aCoolDown;
 	this.timerCoolDown = 0;
 	this.id = aId;
+	this.label = aLabel;
+	if(this.label != null) {
+		this.label.set_fieldWidth(this.get_width());
+		this.label.setFormat(null,20,-1);
+		this.label.set_alpha(0.5);
+		this.label.set_visible(false);
+	}
+	this.updateLabel("");
 };
 $hxClasses["FlxButtonAnimationSkill"] = FlxButtonAnimationSkill;
 FlxButtonAnimationSkill.__name__ = ["FlxButtonAnimationSkill"];
@@ -5748,6 +5756,13 @@ FlxButtonAnimationSkill.prototype = $extend(FlxButtonAnimation.prototype,{
 	,onPressedActive: null
 	,onRollOut: null
 	,onOver: null
+	,label: null
+	,updateLabel: function(atext) {
+		if(this.label != null) {
+			this.label.setPosition(this.x,this.y);
+			this.label.set_text(atext);
+		}
+	}
 	,setCooldown: function(aFrames,aLoop,aFrameRate) {
 		if(aFrameRate == null) {
 			aFrameRate = 30;
@@ -5770,11 +5785,14 @@ FlxButtonAnimationSkill.prototype = $extend(FlxButtonAnimation.prototype,{
 		this.timerCoolDown = this.coolDown;
 		this.activeButton = true;
 		this.animation.play("cooldown");
+		this.label.set_text("");
+		this.label.set_visible(true);
 	}
 	,update: function(aDt) {
 		if(this.isWithMouse) {
 			this.hMousePosition.set(flixel_FlxG.mouse.x,flixel_FlxG.mouse.y);
 			if(this.timerCoolDown > 0) {
+				this.updateLabel((this.timerCoolDown | 0) + "");
 				this.activeButton = false;
 				this.timerCoolDown -= aDt;
 				var aMousePosition = this.hMousePosition;
@@ -5784,6 +5802,7 @@ FlxButtonAnimationSkill.prototype = $extend(FlxButtonAnimation.prototype,{
 					this.onRollOut(this);
 				}
 			} else {
+				this.label.set_visible(false);
 				var aMousePosition1 = this.hMousePosition;
 				if(this.overlapsPoint(this.hMousePosition)) {
 					this.onOver(this);
@@ -83910,7 +83929,7 @@ states_GameState.prototype = $extend(flixel_FlxState.prototype,{
 		this.setCoinsData();
 		this.textGame = new flixel_text_FlxText(50,50,0,"Objetos Jugador: " + this.player.get_coins() + "/" + this.coins.length,20);
 		this.add(this.textGame);
-		this.textSkill = new flixel_text_FlxText(1446,50,0,"",10);
+		this.textSkill = new flixel_text_FlxText(1446,35,0,"",15);
 		this.add(this.textSkill);
 		this.textSkill.textField.set_multiline(true);
 		this.textSkill.textField.set_wordWrap(true);
@@ -83918,15 +83937,16 @@ states_GameState.prototype = $extend(flixel_FlxState.prototype,{
 		this.setGodSkillsInMap();
 		this.traps = new flixel_group_FlxTypedGroup();
 		this.add(this.traps);
-		this.stunText = new flixel_text_FlxText(50,50,0,"Inmovilizado",15);
+		this.stunText = new flixel_text_FlxText(50,50,0,"Inmovilizado",10);
 		this.stunText.set_visible(false);
 		this.add(this.stunText);
-		this.stunTextPlayer = new flixel_text_FlxText(50,50,0,"Inmovilizado",15);
+		this.stunTextPlayer = new flixel_text_FlxText(50,50,0,"Inmovilizado",10);
 		this.stunTextPlayer.set_visible(false);
 		this.add(this.stunTextPlayer);
 	}
 	,setGodSkillsInMap: function() {
-		this.skill1 = new FlxButtonAnimationSkill("assets/balaplacebo.png",57,64,$bind(this,this.onClickSkill1),$bind(this,this.onClickSkill1Active),$bind(this,this.onOverSkill1),$bind(this,this.onRollOutSkill1),3,0);
+		var textSkill1FlxText = new flixel_text_FlxText();
+		this.skill1 = new FlxButtonAnimationSkill("assets/balaplacebo.png",57,64,$bind(this,this.onClickSkill1),$bind(this,this.onClickSkill1Active),$bind(this,this.onOverSkill1),$bind(this,this.onRollOutSkill1),3,0,textSkill1FlxText);
 		this.skill1.setOver([1]);
 		this.skill1.setUp([0]);
 		this.skill1.setDown([2]);
@@ -83934,7 +83954,9 @@ states_GameState.prototype = $extend(flixel_FlxState.prototype,{
 		this.skill1.setDisabled([4]);
 		this.skill1.setPosition(1740,50);
 		this.add(this.skill1);
-		this.skill2 = new FlxButtonAnimationSkill("assets/balaplacebo.png",57,64,$bind(this,this.onClickSkill2),$bind(this,this.onClickSkill2Active),$bind(this,this.onOverSkill2),$bind(this,this.onRollOutSkill2),40,1);
+		this.add(textSkill1FlxText);
+		var textSkill2FlxText = new flixel_text_FlxText();
+		this.skill2 = new FlxButtonAnimationSkill("assets/balaplacebo.png",57,64,$bind(this,this.onClickSkill2),$bind(this,this.onClickSkill2Active),$bind(this,this.onOverSkill2),$bind(this,this.onRollOutSkill2),40,1,textSkill2FlxText);
 		this.skill2.setOver([1]);
 		this.skill2.setUp([0]);
 		this.skill2.setDown([2]);
@@ -83942,6 +83964,7 @@ states_GameState.prototype = $extend(flixel_FlxState.prototype,{
 		this.skill2.setDisabled([4]);
 		this.skill2.setPosition(1825,50);
 		this.add(this.skill2);
+		this.add(textSkill2FlxText);
 	}
 	,setCoinsData: function() {
 		this.coins = new flixel_group_FlxTypedGroup();
@@ -83961,7 +83984,7 @@ states_GameState.prototype = $extend(flixel_FlxState.prototype,{
 		var _g = 0;
 		while(_g < 2) {
 			var i = _g++;
-			var pro = new gameObjects_ProjectilePlayer(GlobalGameData.player,4);
+			var pro = new gameObjects_ProjectilePlayer(GlobalGameData.player,4,550);
 			this.projectilesPlayer.add(pro);
 			pro.kill();
 		}
@@ -83995,7 +84018,7 @@ states_GameState.prototype = $extend(flixel_FlxState.prototype,{
 		this.resetSkill();
 	}
 	,onOverSkill1: function(aButton) {
-		this.textSkill.set_text("Dispara un proyectil en la dirección donde se haga click.      Cooldown: 4s");
+		this.textSkill.set_text("Dispara un proyectil en la dirección donde se haga click.    Cooldown: " + this.skill1.coolDown + "s");
 	}
 	,onRollOutSkill1: function(aButton) {
 	}
@@ -84031,7 +84054,7 @@ states_GameState.prototype = $extend(flixel_FlxState.prototype,{
 		this.resetSkill();
 	}
 	,onOverSkill2: function(aButton) {
-		this.textSkill.set_text("Pone una trampa en una superficie que inmoviliza.      Cooldown: 40s");
+		this.textSkill.set_text("Pone una trampa en una superficie que inmoviliza.    Cooldown: " + this.skill2.coolDown + "s");
 	}
 	,onRollOutSkill2: function(aButton) {
 	}
@@ -84116,13 +84139,13 @@ states_GameState.prototype = $extend(flixel_FlxState.prototype,{
 		}
 		if(this.god.stateDuration != -1 && this.god.state == "Stunned") {
 			this.stunText.set_visible(true);
-			this.stunText.setPosition(this.god.x,this.god.y);
+			this.stunText.setPosition(this.god.x + this.god.get_width() / 2 - this.stunText.get_width() / 2,this.god.y);
 		} else {
 			this.stunText.set_visible(false);
 		}
 		if(this.player.stateDuration != -1 && this.player.state == "Stunned") {
 			this.stunTextPlayer.set_visible(true);
-			this.stunTextPlayer.setPosition(this.player.x,this.player.y);
+			this.stunTextPlayer.setPosition(this.player.x + this.player.get_width() / 2 - this.stunTextPlayer.get_width() / 2,this.player.y);
 		} else {
 			this.stunTextPlayer.set_visible(false);
 		}

@@ -3,6 +3,7 @@ import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.math.FlxPoint;
 import flixel.text.FlxText;
+import flixel.util.FlxColor;
 import openfl.Assets;
 import openfl.Lib;
 
@@ -20,8 +21,9 @@ class FlxButtonAnimationSkill extends FlxButtonAnimation
 	public var onPressedActive:FlxButtonAnimation->Void;
 	public var onRollOut:FlxButtonAnimation->Void;
 	public var onOver:FlxButtonAnimation->Void;
+	@:isVar public var label:FlxText;
 
-	public function new(aImagePath:String,aAnimationWidth:Int,aAnimationHeight:Int,?aOnPressed:FlxButtonAnimation->Void,?aOnPressedActive:FlxButtonAnimation->Void,?aOnOver:FlxButtonAnimation->Void,?aOnRollOut:FlxButtonAnimation->Void,?aCoolDown:Int,?aId:Int)
+	public function new(aImagePath:String,aAnimationWidth:Int,aAnimationHeight:Int,?aOnPressed:FlxButtonAnimation->Void,?aOnPressedActive:FlxButtonAnimation->Void,?aOnOver:FlxButtonAnimation->Void,?aOnRollOut:FlxButtonAnimation->Void,?aCoolDown:Int,?aId:Int,?aLabel:FlxText)
 	{
 		super(aImagePath,aAnimationWidth,aAnimationHeight,aOnPressed,true);
 
@@ -31,9 +33,24 @@ class FlxButtonAnimationSkill extends FlxButtonAnimation
 		coolDown = aCoolDown;
 		timerCoolDown = 0;
 		id = aId;
-
+label = aLabel;
+if(label!=null){
+label.fieldWidth = this.width;
+		label.setFormat(20, FlxColor.WHITE);
+		label.alpha = 0.5;
+		label.set_visible(false);
+}
+updateLabel("");
 	}
 
+	public function updateLabel(atext:String)
+	{
+		if (label != null){
+		label.setPosition(this.x, this.y);		
+		label.text = atext;
+		
+		}
+	}
 	public function setCooldown(aFrames:Array<Int>, aLoop:Bool=true,aFrameRate:Int=30):Void
 	{
 		animation.add("cooldown", aFrames, aFrameRate, aLoop);
@@ -48,6 +65,8 @@ class FlxButtonAnimationSkill extends FlxButtonAnimation
 		timerCoolDown = coolDown;
 		activeButton = true;
 		animation.play("cooldown");
+		label.text = "";
+		label.set_visible(true);
 		//   onPressed(this);
 
 	}
@@ -58,6 +77,7 @@ class FlxButtonAnimationSkill extends FlxButtonAnimation
 			hMousePosition.set(FlxG.mouse.x, FlxG.mouse.y);
 			if (timerCoolDown>0)
 			{
+				updateLabel(Std.int(timerCoolDown)+"");
 				activeButton = false;
 				timerCoolDown = timerCoolDown - aDt;
 				if (isOver(hMousePosition))//over the button
@@ -70,7 +90,7 @@ class FlxButtonAnimationSkill extends FlxButtonAnimation
 			}
 			else
 			{
-
+label.set_visible(false);
 				if (isOver(hMousePosition))//over the button
 				{
 					onOver(this);

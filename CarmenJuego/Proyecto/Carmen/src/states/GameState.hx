@@ -8,6 +8,7 @@ import flixel.FlxState;
 import flixel.math.FlxPoint;
 import flixel.text.FlxText;
 import flixel.tile.FlxTilemap;
+import flixel.util.FlxColor;
 import gameObjects.Player1;
 import gameObjects.God;
 import gameObjects.Coin;
@@ -91,7 +92,7 @@ class GameState extends FlxState
 		textGame = new FlxText(50, 50, 0, "Objetos Jugador: " + player.coins + "/" + coins.length, 20);
 		add(textGame);
 
-		textSkill = new FlxText(1446, 50, 0, "", 10);
+		textSkill = new FlxText(1446, 35, 0, "", 15);
 		add(textSkill);
 		textSkill.textField.multiline = true;
 		textSkill.textField.wordWrap = true;
@@ -102,18 +103,19 @@ class GameState extends FlxState
 		traps = new FlxGroup();
 		add(traps);
 
-		stunText = new FlxText(50, 50, 0, "Inmovilizado", 15);
+		stunText = new FlxText(50, 50, 0, "Inmovilizado", 10);
 		stunText.set_visible(false);
 		add(stunText);
 		
-		stunTextPlayer = new FlxText(50, 50, 0, "Inmovilizado", 15);
+		stunTextPlayer = new FlxText(50, 50, 0, "Inmovilizado", 10);
 		stunTextPlayer.set_visible(false);
 		add(stunTextPlayer);
 	}
 
 	public function setGodSkillsInMap()
 	{
-		skill1 = new FlxButtonAnimationSkill(AssetPaths.balaplacebo__png, 57, 64, onClickSkill1,onClickSkill1Active,onOverSkill1,onRollOutSkill1,  3,0);
+		var textSkill1FlxText:FlxText = new FlxText();
+		skill1 = new FlxButtonAnimationSkill(AssetPaths.balaplacebo__png, 57, 64, onClickSkill1,onClickSkill1Active,onOverSkill1,onRollOutSkill1,  3,0,textSkill1FlxText);
 		skill1.setOver([1]);
 		skill1.setUp([0]);
 		skill1.setDown([2]);
@@ -121,9 +123,11 @@ class GameState extends FlxState
 		skill1.setDisabled([4]);
 		skill1.setPosition(1740, 50);
 		add(skill1);
+		add(textSkill1FlxText);
 		//god.skill1 = skill1;
 
-		skill2 = new FlxButtonAnimationSkill(AssetPaths.balaplacebo__png, 57, 64, onClickSkill2,onClickSkill2Active,onOverSkill2,onRollOutSkill2,  40,1);
+		var textSkill2FlxText:FlxText = new FlxText();
+		skill2 = new FlxButtonAnimationSkill(AssetPaths.balaplacebo__png, 57, 64, onClickSkill2,onClickSkill2Active,onOverSkill2,onRollOutSkill2,  40,1,textSkill2FlxText);
 		skill2.setOver([1]);
 		skill2.setUp([0]);
 		skill2.setDown([2]);
@@ -131,6 +135,7 @@ class GameState extends FlxState
 		skill2.setDisabled([4]);
 		skill2.setPosition(1825, 50);
 		add(skill2);
+				add(textSkill2FlxText);
 		//god.skill1 = skill1;
 	}
 
@@ -200,7 +205,7 @@ class GameState extends FlxState
 
 	public function onOverSkill1(aButton:FlxButtonAnimation)
 	{
-		textSkill.text = "Dispara un proyectil en la dirección donde se haga click.      Cooldown: 4s";
+		textSkill.text = "Dispara un proyectil en la dirección donde se haga click.    Cooldown: "+skill1.coolDown+"s";
 	}
 
 	public function onRollOutSkill1(aButton:FlxButtonAnimation)
@@ -246,7 +251,7 @@ class GameState extends FlxState
 
 	public function onOverSkill2(aButton:FlxButtonAnimation)
 	{
-		textSkill.text = "Pone una trampa en una superficie que inmoviliza.      Cooldown: 40s";
+		textSkill.text = "Pone una trampa en una superficie que inmoviliza.    Cooldown: "+skill2.coolDown+"s";
 	}
 
 	public function onRollOutSkill2(aButton:FlxButtonAnimation)
@@ -389,7 +394,7 @@ class GameState extends FlxState
 		if (god.stateDuration!=-1&&god.state=="Stunned")
 		{
 			stunText.set_visible(true);
-			stunText.setPosition(god.x, god.y);
+			stunText.setPosition(god.x+(god.width/2)-(stunText.width/2), god.y);
 		}
 		else{
 			stunText.set_visible(false);
@@ -399,7 +404,7 @@ class GameState extends FlxState
 		if (player.stateDuration!=-1&&player.state=="Stunned")
 		{
 			stunTextPlayer.set_visible(true);
-			stunTextPlayer.setPosition(player.x, player.y);
+			stunTextPlayer.setPosition(player.x+(player.width/2)-(stunTextPlayer.width/2), player.y);
 		}
 		else{
 			stunTextPlayer.set_visible(false);
