@@ -19,7 +19,7 @@ class Coin extends FlxSprite
 	public function new(?X:Float=0, ?Y:Float=0) 
 	{
 		super(0, 0);
-		frames = FlxAtlasFrames.fromSparrow("img/moneda.png", "img/moneda.xml");
+		frames = FlxAtlasFrames.fromSparrow("img/Sheets/moneda.png", "img/Sheets/moneda.xml");
 		animation.addByPrefix("giro", "monedagiro_", 12);
 
 		animation.play("giro");

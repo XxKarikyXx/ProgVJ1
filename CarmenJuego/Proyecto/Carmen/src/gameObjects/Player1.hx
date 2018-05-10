@@ -6,6 +6,7 @@ import flixel.FlxSprite;
 import flixel.group.FlxGroup;
 import flixel.math.FlxPoint;
 import flixel.system.FlxAssets.FlxGraphicAsset;
+import flixel.system.FlxSound;
 import flixel.tile.FlxTilemap;
 
 /**
@@ -24,10 +25,13 @@ class Player1 extends FlxSprite
 		@:isVar public var state:String = "Normal";
 	@:isVar public var stateDuration:Float = -1;
 	
+	@:isVar public var jumpSound:FlxSound;
+	
 	public function new(X:Float, Y:Float, aMap:FlxTilemap)
 	{
 		super(X, Y);
 		map = aMap;
+				jumpSound = FlxG.sound.load(AssetPaths.MarioJump__wav);  
 		//projectiles = aProjectiles;
 		loadGraphic(AssetPaths.ariosheet__png, true, 128, 128);
 		animation.add("run", [20, 21, 22, 23, 24, 25, 26, 27, 28]);
@@ -181,11 +185,13 @@ offset.y = 10;
 			if (isTouching(FlxObject.FLOOR))
 			{
 				velocity.y = -800;
+					jumpSound.play(true, 500);
 			}
 			else
 			{
 				if (jumpOnAirCount == 0)
 				{
+						jumpSound.play(true, 500);
 					jumpOnAirCount = jumpOnAirCount + 1;
 					velocity.y = -800;
 

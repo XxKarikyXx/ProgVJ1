@@ -54,7 +54,7 @@ class ApplicationMain {
 		types.push (lime.Assets.AssetType.IMAGE);
 		
 		
-		urls.push ("img/backgroundGame.png");
+		urls.push ("img/button.png");
 		types.push (lime.Assets.AssetType.IMAGE);
 		
 		
@@ -66,71 +66,55 @@ class ApplicationMain {
 		types.push (lime.Assets.AssetType.TEXT);
 		
 		
-		urls.push ("img/moneda.png");
-		types.push (lime.Assets.AssetType.IMAGE);
-		
-		
 		urls.push ("img/moneda.xml");
 		types.push (lime.Assets.AssetType.TEXT);
 		
 		
-		urls.push ("img/monedagiro.png");
+		urls.push ("img/ohno.jpg");
 		types.push (lime.Assets.AssetType.IMAGE);
 		
 		
-		urls.push ("img/monedagiro.xml");
+		urls.push ("img/Sheets/ariosheet.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("img/Sheets/fantasmaDiosSheet.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("img/Sheets/IdleSheet.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("img/Sheets/moneda.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("img/Sheets/monedagiro.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("img/Sheets/monedagiro.xml");
 		types.push (lime.Assets.AssetType.TEXT);
 		
 		
-		urls.push ("assets/ariosheet.png");
+		urls.push ("img/Sheets/RunningSheet.png");
 		types.push (lime.Assets.AssetType.IMAGE);
 		
 		
-		urls.push ("assets/balaplacebo.png");
+		urls.push ("img/Sheets/SheetCaida.png");
 		types.push (lime.Assets.AssetType.IMAGE);
 		
 		
-		urls.push ("assets/button.png");
+		urls.push ("img/Sheets/SheetSalto.png");
 		types.push (lime.Assets.AssetType.IMAGE);
 		
 		
-		urls.push ("assets/cosahermosa.csv");
-		types.push (lime.Assets.AssetType.TEXT);
-		
-		
-		urls.push ("assets/cosahermosa.tmx");
-		types.push (lime.Assets.AssetType.TEXT);
-		
-		
-		urls.push ("assets/cosahermosa2.tmx");
-		types.push (lime.Assets.AssetType.TEXT);
-		
-		
-		urls.push ("assets/dataTilespng.tsx");
-		types.push (lime.Assets.AssetType.TEXT);
-		
-		
-		urls.push ("assets/dust.png");
+		urls.push ("img/Skills/balaplacebo.png");
 		types.push (lime.Assets.AssetType.IMAGE);
 		
 		
-		urls.push ("assets/explosion.png");
-		types.push (lime.Assets.AssetType.IMAGE);
-		
-		
-		urls.push ("assets/fondo_azul.png");
-		types.push (lime.Assets.AssetType.IMAGE);
-		
-		
-		urls.push ("assets/hero.png");
-		types.push (lime.Assets.AssetType.IMAGE);
-		
-		
-		urls.push ("assets/IdleSheet.png");
-		types.push (lime.Assets.AssetType.IMAGE);
-		
-		
-		urls.push ("assets/img/backgroundGame.png");
+		urls.push ("assets/img/button.png");
 		types.push (lime.Assets.AssetType.IMAGE);
 		
 		
@@ -142,64 +126,96 @@ class ApplicationMain {
 		types.push (lime.Assets.AssetType.TEXT);
 		
 		
-		urls.push ("assets/img/moneda.png");
-		types.push (lime.Assets.AssetType.IMAGE);
-		
-		
 		urls.push ("assets/img/moneda.xml");
 		types.push (lime.Assets.AssetType.TEXT);
 		
 		
-		urls.push ("assets/img/monedagiro.png");
+		urls.push ("assets/img/ohno.jpg");
 		types.push (lime.Assets.AssetType.IMAGE);
 		
 		
-		urls.push ("assets/img/monedagiro.xml");
-		types.push (lime.Assets.AssetType.TEXT);
-		
-		
-		urls.push ("assets/mapCSV_map2_specials.csv");
-		types.push (lime.Assets.AssetType.TEXT);
-		
-		
-		urls.push ("assets/mapCSV_map2_tiles.csv");
-		types.push (lime.Assets.AssetType.TEXT);
-		
-		
-		urls.push ("assets/ohno.jpg");
+		urls.push ("assets/img/Sheets/ariosheet.png");
 		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("assets/img/Sheets/fantasmaDiosSheet.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("assets/img/Sheets/IdleSheet.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("assets/img/Sheets/moneda.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("assets/img/Sheets/monedagiro.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("assets/img/Sheets/monedagiro.xml");
+		types.push (lime.Assets.AssetType.TEXT);
+		
+		
+		urls.push ("assets/img/Sheets/RunningSheet.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("assets/img/Sheets/SheetCaida.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("assets/img/Sheets/SheetSalto.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("assets/img/Skills/balaplacebo.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("assets/map/cosahermosa.csv");
+		types.push (lime.Assets.AssetType.TEXT);
+		
+		
+		urls.push ("assets/map/cosahermosa2.tmx");
+		types.push (lime.Assets.AssetType.TEXT);
+		
+		
+		urls.push ("assets/map/dataTilespng.tsx");
+		types.push (lime.Assets.AssetType.TEXT);
+		
+		
+		urls.push ("assets/map/fondo_azul.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("assets/map/mapCSV_map2_specials.csv");
+		types.push (lime.Assets.AssetType.TEXT);
+		
+		
+		urls.push ("assets/map/mapCSV_map2_tiles.csv");
+		types.push (lime.Assets.AssetType.TEXT);
+		
+		
+		urls.push ("assets/map/tile_ladrillos.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("assets/map/tile_ladrillos.tsx");
+		types.push (lime.Assets.AssetType.TEXT);
 		
 		
 		urls.push ("assets/openfl.svg");
 		types.push (lime.Assets.AssetType.TEXT);
 		
 		
-		urls.push ("assets/RunningSheet.png");
-		types.push (lime.Assets.AssetType.IMAGE);
+		urls.push ("assets/sound/LaMulanaOSV.wav");
+		types.push (lime.Assets.AssetType.SOUND);
 		
 		
-		urls.push ("assets/SheetCaida.png");
-		types.push (lime.Assets.AssetType.IMAGE);
-		
-		
-		urls.push ("assets/SheetSalto.png");
-		types.push (lime.Assets.AssetType.IMAGE);
-		
-		
-		urls.push ("assets/tiles copia.png");
-		types.push (lime.Assets.AssetType.IMAGE);
-		
-		
-		urls.push ("assets/tiles.png");
-		types.push (lime.Assets.AssetType.IMAGE);
-		
-		
-		urls.push ("assets/tile_ladrillos.png");
-		types.push (lime.Assets.AssetType.IMAGE);
-		
-		
-		urls.push ("assets/tile_ladrillos.tsx");
-		types.push (lime.Assets.AssetType.TEXT);
+		urls.push ("assets/sound/MarioJump.wav");
+		types.push (lime.Assets.AssetType.SOUND);
 		
 		
 		
@@ -263,7 +279,7 @@ class ApplicationMain {
 		
 		config = {
 			
-			build: "683",
+			build: "868",
 			company: "TuMadre",
 			file: "Carmen",
 			fps: 60,

@@ -11,7 +11,7 @@ import openfl.Assets;
  */
 
 	
-	class FlxButtonAnimation extends FlxSprite
+class FlxButtonAnimation extends FlxSprite
 {
     public var onPressed:FlxButtonAnimation->Void;
 	public var enabled:Bool = true;

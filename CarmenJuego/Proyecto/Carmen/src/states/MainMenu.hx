@@ -21,6 +21,7 @@ class MainMenu extends FlxState
 	var playButton:FlxButtonAnimation;
 	var instructionsButton:FlxButtonAnimation;
 	var exitButton:FlxButtonAnimation;
+	var maxIndex = 2;
 	
 	private var index = 0;
 
@@ -80,6 +81,7 @@ class MainMenu extends FlxState
 		add(labelInstructionsButton);
 
 
+		
 	 exitButton= new FlxButtonAnimation(AssetPaths.button__png, 80, 20, onClickExit);//la animacion de chivito boy
 		exitButton.setSize(Std.int(FlxG.width / 3), Std.int(FlxG.height / 9));
 		exitButton.setOver([1]);
@@ -98,6 +100,10 @@ class MainMenu extends FlxState
 		labelExitButton.x = (FlxG.width / 2)-(labelExitButton.width/2);
 		add(labelExitButton);
 		
+		#if html5
+				exitButton.visible = false;		
+		maxIndex = 1;
+		#end
 		
 		playButton.animation.play("over");
 	}
@@ -105,7 +111,9 @@ class MainMenu extends FlxState
 	override public function update(elapsed:Float):Void
 	{
 		super.update(elapsed);
-			if (FlxG.keys.justPressed.DOWN && index<2 )
+		
+
+			if (FlxG.keys.justPressed.DOWN && index<maxIndex )
 			{
 				index = index + 1;
 

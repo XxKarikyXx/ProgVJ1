@@ -6,6 +6,8 @@ import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.FlxState;
 import flixel.math.FlxPoint;
+import flixel.system.FlxAssets.FlxSoundAsset;
+import flixel.system.FlxSound;
 import flixel.text.FlxText;
 import flixel.tile.FlxTilemap;
 import flixel.util.FlxColor;
@@ -13,7 +15,7 @@ import gameObjects.Player1;
 import gameObjects.God;
 import gameObjects.Coin;
 import gameObjects.ProjectilePlayer;
-import gameObjects.SkillsController;
+import SkillsController;
 import gameObjects.Trap;
 import openfl.Assets;
 import flixel.FlxSprite;
@@ -35,6 +37,8 @@ class GameState extends FlxState
 	var projectilesGod:FlxGroup;
 
 	var traps:FlxGroup;
+
+	var backgroundSound:FlxSound;
 
 	var coins:FlxGroup;
 	var numberCoins:Int = 0;
@@ -72,6 +76,11 @@ class GameState extends FlxState
 		map.setTileProperties(GlobalGameData.tileIndexNonCollisionBlack, FlxObject.NONE);
 		add(map);
 
+		backgroundSound=FlxG.sound.load(AssetPaths.LaMulanaOSV__wav);
+		add(backgroundSound);
+		backgroundSound.looped = true;
+		backgroundSound.play(true, 0);
+
 		player = new Player1(80, 900, map);
 		god = new God(1700, 950, map);
 
@@ -96,7 +105,7 @@ class GameState extends FlxState
 		skillsGodText = new FlxGroup();
 		add(skillsGodText);
 		skillsController = new SkillsController(skillsGod, textSkill, traps, skillsGodText);
-		
+
 		setPlayerData();
 		setGodData();
 
@@ -131,7 +140,6 @@ class GameState extends FlxState
 		}
 
 	}
-	
 
 	public function setPlayerData()
 	{
@@ -146,6 +154,7 @@ class GameState extends FlxState
 		}
 
 		player.set_projectiles(projectilesPlayer);
+		add(player.jumpSound);
 		GlobalGameData.player2 = player;
 	}
 
@@ -209,6 +218,7 @@ class GameState extends FlxState
 	{
 
 		super.update(aDt);
+
 		FlxG.collide(map, player);
 		FlxG.collide(map, god);
 
@@ -252,7 +262,6 @@ class GameState extends FlxState
 
 			FlxG.switchState(new MainMenu());
 		}
-
 
 		//OJITO
 		if (god.stateDuration!=-1&&god.state=="Stunned")

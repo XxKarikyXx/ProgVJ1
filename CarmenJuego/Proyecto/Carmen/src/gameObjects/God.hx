@@ -1,5 +1,6 @@
 package gameObjects;
 
+import SkillsController;
 import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.FlxSprite;

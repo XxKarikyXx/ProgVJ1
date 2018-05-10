@@ -95,6 +95,10 @@ class DefaultAssetLibrary extends AssetLibrary {
 		
 		
 		
+		
+		
+		
+		
 		#end
 		
 		#if flash
@@ -111,80 +115,88 @@ class DefaultAssetLibrary extends AssetLibrary {
 		type.set ("flixel/images/ui/button.png", AssetType.IMAGE);
 		className.set ("flixel/images/logo/default.png", __ASSET__flixel_images_logo_default_png);
 		type.set ("flixel/images/logo/default.png", AssetType.IMAGE);
-		className.set ("img/backgroundGame.png", __ASSET__img_backgroundgame_png);
-		type.set ("img/backgroundGame.png", AssetType.IMAGE);
+		className.set ("img/button.png", __ASSET__img_button_png);
+		type.set ("img/button.png", AssetType.IMAGE);
 		className.set ("img/julia.png", __ASSET__img_julia_png);
 		type.set ("img/julia.png", AssetType.IMAGE);
 		className.set ("img/julia.xml", __ASSET__img_julia_xml);
 		type.set ("img/julia.xml", AssetType.TEXT);
-		className.set ("img/moneda.png", __ASSET__img_moneda_png);
-		type.set ("img/moneda.png", AssetType.IMAGE);
 		className.set ("img/moneda.xml", __ASSET__img_moneda_xml);
 		type.set ("img/moneda.xml", AssetType.TEXT);
-		className.set ("img/monedagiro.png", __ASSET__img_monedagiro_png);
-		type.set ("img/monedagiro.png", AssetType.IMAGE);
-		className.set ("img/monedagiro.xml", __ASSET__img_monedagiro_xml);
-		type.set ("img/monedagiro.xml", AssetType.TEXT);
-		className.set ("assets/ariosheet.png", __ASSET__assets_ariosheet_png);
-		type.set ("assets/ariosheet.png", AssetType.IMAGE);
-		className.set ("assets/balaplacebo.png", __ASSET__assets_balaplacebo_png);
-		type.set ("assets/balaplacebo.png", AssetType.IMAGE);
-		className.set ("assets/button.png", __ASSET__assets_button_png);
-		type.set ("assets/button.png", AssetType.IMAGE);
-		className.set ("assets/cosahermosa.csv", __ASSET__assets_cosahermosa_csv);
-		type.set ("assets/cosahermosa.csv", AssetType.TEXT);
-		className.set ("assets/cosahermosa.tmx", __ASSET__assets_cosahermosa_tmx);
-		type.set ("assets/cosahermosa.tmx", AssetType.TEXT);
-		className.set ("assets/cosahermosa2.tmx", __ASSET__assets_cosahermosa2_tmx);
-		type.set ("assets/cosahermosa2.tmx", AssetType.TEXT);
-		className.set ("assets/dataTilespng.tsx", __ASSET__assets_datatilespng_tsx);
-		type.set ("assets/dataTilespng.tsx", AssetType.TEXT);
-		className.set ("assets/dust.png", __ASSET__assets_dust_png);
-		type.set ("assets/dust.png", AssetType.IMAGE);
-		className.set ("assets/explosion.png", __ASSET__assets_explosion_png);
-		type.set ("assets/explosion.png", AssetType.IMAGE);
-		className.set ("assets/fondo_azul.png", __ASSET__assets_fondo_azul_png);
-		type.set ("assets/fondo_azul.png", AssetType.IMAGE);
-		className.set ("assets/hero.png", __ASSET__assets_hero_png);
-		type.set ("assets/hero.png", AssetType.IMAGE);
-		className.set ("assets/IdleSheet.png", __ASSET__assets_idlesheet_png);
-		type.set ("assets/IdleSheet.png", AssetType.IMAGE);
-		className.set ("assets/img/backgroundGame.png", __ASSET__assets_img_backgroundgame_png);
-		type.set ("assets/img/backgroundGame.png", AssetType.IMAGE);
+		className.set ("img/ohno.jpg", __ASSET__img_ohno_jpg);
+		type.set ("img/ohno.jpg", AssetType.IMAGE);
+		className.set ("img/Sheets/ariosheet.png", __ASSET__img_sheets_ariosheet_png);
+		type.set ("img/Sheets/ariosheet.png", AssetType.IMAGE);
+		className.set ("img/Sheets/fantasmaDiosSheet.png", __ASSET__img_sheets_fantasmadiossheet_png);
+		type.set ("img/Sheets/fantasmaDiosSheet.png", AssetType.IMAGE);
+		className.set ("img/Sheets/IdleSheet.png", __ASSET__img_sheets_idlesheet_png);
+		type.set ("img/Sheets/IdleSheet.png", AssetType.IMAGE);
+		className.set ("img/Sheets/moneda.png", __ASSET__img_sheets_moneda_png);
+		type.set ("img/Sheets/moneda.png", AssetType.IMAGE);
+		className.set ("img/Sheets/monedagiro.png", __ASSET__img_sheets_monedagiro_png);
+		type.set ("img/Sheets/monedagiro.png", AssetType.IMAGE);
+		className.set ("img/Sheets/monedagiro.xml", __ASSET__img_sheets_monedagiro_xml);
+		type.set ("img/Sheets/monedagiro.xml", AssetType.TEXT);
+		className.set ("img/Sheets/RunningSheet.png", __ASSET__img_sheets_runningsheet_png);
+		type.set ("img/Sheets/RunningSheet.png", AssetType.IMAGE);
+		className.set ("img/Sheets/SheetCaida.png", __ASSET__img_sheets_sheetcaida_png);
+		type.set ("img/Sheets/SheetCaida.png", AssetType.IMAGE);
+		className.set ("img/Sheets/SheetSalto.png", __ASSET__img_sheets_sheetsalto_png);
+		type.set ("img/Sheets/SheetSalto.png", AssetType.IMAGE);
+		className.set ("img/Skills/balaplacebo.png", __ASSET__img_skills_balaplacebo_png);
+		type.set ("img/Skills/balaplacebo.png", AssetType.IMAGE);
+		className.set ("assets/img/button.png", __ASSET__assets_img_button_png);
+		type.set ("assets/img/button.png", AssetType.IMAGE);
 		className.set ("assets/img/julia.png", __ASSET__assets_img_julia_png);
 		type.set ("assets/img/julia.png", AssetType.IMAGE);
 		className.set ("assets/img/julia.xml", __ASSET__assets_img_julia_xml);
 		type.set ("assets/img/julia.xml", AssetType.TEXT);
-		className.set ("assets/img/moneda.png", __ASSET__assets_img_moneda_png);
-		type.set ("assets/img/moneda.png", AssetType.IMAGE);
 		className.set ("assets/img/moneda.xml", __ASSET__assets_img_moneda_xml);
 		type.set ("assets/img/moneda.xml", AssetType.TEXT);
-		className.set ("assets/img/monedagiro.png", __ASSET__assets_img_monedagiro_png);
-		type.set ("assets/img/monedagiro.png", AssetType.IMAGE);
-		className.set ("assets/img/monedagiro.xml", __ASSET__assets_img_monedagiro_xml);
-		type.set ("assets/img/monedagiro.xml", AssetType.TEXT);
-		className.set ("assets/mapCSV_map2_specials.csv", __ASSET__assets_mapcsv_map2_specials_csv);
-		type.set ("assets/mapCSV_map2_specials.csv", AssetType.TEXT);
-		className.set ("assets/mapCSV_map2_tiles.csv", __ASSET__assets_mapcsv_map2_tiles_csv);
-		type.set ("assets/mapCSV_map2_tiles.csv", AssetType.TEXT);
-		className.set ("assets/ohno.jpg", __ASSET__assets_ohno_jpg);
-		type.set ("assets/ohno.jpg", AssetType.IMAGE);
+		className.set ("assets/img/ohno.jpg", __ASSET__assets_img_ohno_jpg);
+		type.set ("assets/img/ohno.jpg", AssetType.IMAGE);
+		className.set ("assets/img/Sheets/ariosheet.png", __ASSET__assets_img_sheets_ariosheet_png);
+		type.set ("assets/img/Sheets/ariosheet.png", AssetType.IMAGE);
+		className.set ("assets/img/Sheets/fantasmaDiosSheet.png", __ASSET__assets_img_sheets_fantasmadiossheet_png);
+		type.set ("assets/img/Sheets/fantasmaDiosSheet.png", AssetType.IMAGE);
+		className.set ("assets/img/Sheets/IdleSheet.png", __ASSET__assets_img_sheets_idlesheet_png);
+		type.set ("assets/img/Sheets/IdleSheet.png", AssetType.IMAGE);
+		className.set ("assets/img/Sheets/moneda.png", __ASSET__assets_img_sheets_moneda_png);
+		type.set ("assets/img/Sheets/moneda.png", AssetType.IMAGE);
+		className.set ("assets/img/Sheets/monedagiro.png", __ASSET__assets_img_sheets_monedagiro_png);
+		type.set ("assets/img/Sheets/monedagiro.png", AssetType.IMAGE);
+		className.set ("assets/img/Sheets/monedagiro.xml", __ASSET__assets_img_sheets_monedagiro_xml);
+		type.set ("assets/img/Sheets/monedagiro.xml", AssetType.TEXT);
+		className.set ("assets/img/Sheets/RunningSheet.png", __ASSET__assets_img_sheets_runningsheet_png);
+		type.set ("assets/img/Sheets/RunningSheet.png", AssetType.IMAGE);
+		className.set ("assets/img/Sheets/SheetCaida.png", __ASSET__assets_img_sheets_sheetcaida_png);
+		type.set ("assets/img/Sheets/SheetCaida.png", AssetType.IMAGE);
+		className.set ("assets/img/Sheets/SheetSalto.png", __ASSET__assets_img_sheets_sheetsalto_png);
+		type.set ("assets/img/Sheets/SheetSalto.png", AssetType.IMAGE);
+		className.set ("assets/img/Skills/balaplacebo.png", __ASSET__assets_img_skills_balaplacebo_png);
+		type.set ("assets/img/Skills/balaplacebo.png", AssetType.IMAGE);
+		className.set ("assets/map/cosahermosa.csv", __ASSET__assets_map_cosahermosa_csv);
+		type.set ("assets/map/cosahermosa.csv", AssetType.TEXT);
+		className.set ("assets/map/cosahermosa2.tmx", __ASSET__assets_map_cosahermosa2_tmx);
+		type.set ("assets/map/cosahermosa2.tmx", AssetType.TEXT);
+		className.set ("assets/map/dataTilespng.tsx", __ASSET__assets_map_datatilespng_tsx);
+		type.set ("assets/map/dataTilespng.tsx", AssetType.TEXT);
+		className.set ("assets/map/fondo_azul.png", __ASSET__assets_map_fondo_azul_png);
+		type.set ("assets/map/fondo_azul.png", AssetType.IMAGE);
+		className.set ("assets/map/mapCSV_map2_specials.csv", __ASSET__assets_map_mapcsv_map2_specials_csv);
+		type.set ("assets/map/mapCSV_map2_specials.csv", AssetType.TEXT);
+		className.set ("assets/map/mapCSV_map2_tiles.csv", __ASSET__assets_map_mapcsv_map2_tiles_csv);
+		type.set ("assets/map/mapCSV_map2_tiles.csv", AssetType.TEXT);
+		className.set ("assets/map/tile_ladrillos.png", __ASSET__assets_map_tile_ladrillos_png);
+		type.set ("assets/map/tile_ladrillos.png", AssetType.IMAGE);
+		className.set ("assets/map/tile_ladrillos.tsx", __ASSET__assets_map_tile_ladrillos_tsx);
+		type.set ("assets/map/tile_ladrillos.tsx", AssetType.TEXT);
 		className.set ("assets/openfl.svg", __ASSET__assets_openfl_svg);
 		type.set ("assets/openfl.svg", AssetType.TEXT);
-		className.set ("assets/RunningSheet.png", __ASSET__assets_runningsheet_png);
-		type.set ("assets/RunningSheet.png", AssetType.IMAGE);
-		className.set ("assets/SheetCaida.png", __ASSET__assets_sheetcaida_png);
-		type.set ("assets/SheetCaida.png", AssetType.IMAGE);
-		className.set ("assets/SheetSalto.png", __ASSET__assets_sheetsalto_png);
-		type.set ("assets/SheetSalto.png", AssetType.IMAGE);
-		className.set ("assets/tiles copia.png", __ASSET__assets_tiles_copia_png);
-		type.set ("assets/tiles copia.png", AssetType.IMAGE);
-		className.set ("assets/tiles.png", __ASSET__assets_tiles_png);
-		type.set ("assets/tiles.png", AssetType.IMAGE);
-		className.set ("assets/tile_ladrillos.png", __ASSET__assets_tile_ladrillos_png);
-		type.set ("assets/tile_ladrillos.png", AssetType.IMAGE);
-		className.set ("assets/tile_ladrillos.tsx", __ASSET__assets_tile_ladrillos_tsx);
-		type.set ("assets/tile_ladrillos.tsx", AssetType.TEXT);
+		className.set ("assets/sound/LaMulanaOSV.wav", __ASSET__assets_sound_lamulanaosv_wav);
+		type.set ("assets/sound/LaMulanaOSV.wav", AssetType.SOUND);
+		className.set ("assets/sound/MarioJump.wav", __ASSET__assets_sound_mariojump_wav);
+		type.set ("assets/sound/MarioJump.wav", AssetType.SOUND);
 		
 		
 		#elseif html5
@@ -214,7 +226,7 @@ class DefaultAssetLibrary extends AssetLibrary {
 		path.set (id, id);
 		
 		type.set (id, AssetType.IMAGE);
-		id = "img/backgroundGame.png";
+		id = "img/button.png";
 		path.set (id, id);
 		
 		type.set (id, AssetType.IMAGE);
@@ -226,71 +238,55 @@ class DefaultAssetLibrary extends AssetLibrary {
 		path.set (id, id);
 		
 		type.set (id, AssetType.TEXT);
-		id = "img/moneda.png";
-		path.set (id, id);
-		
-		type.set (id, AssetType.IMAGE);
 		id = "img/moneda.xml";
 		path.set (id, id);
 		
 		type.set (id, AssetType.TEXT);
-		id = "img/monedagiro.png";
+		id = "img/ohno.jpg";
 		path.set (id, id);
 		
 		type.set (id, AssetType.IMAGE);
-		id = "img/monedagiro.xml";
+		id = "img/Sheets/ariosheet.png";
+		path.set (id, id);
+		
+		type.set (id, AssetType.IMAGE);
+		id = "img/Sheets/fantasmaDiosSheet.png";
+		path.set (id, id);
+		
+		type.set (id, AssetType.IMAGE);
+		id = "img/Sheets/IdleSheet.png";
+		path.set (id, id);
+		
+		type.set (id, AssetType.IMAGE);
+		id = "img/Sheets/moneda.png";
+		path.set (id, id);
+		
+		type.set (id, AssetType.IMAGE);
+		id = "img/Sheets/monedagiro.png";
+		path.set (id, id);
+		
+		type.set (id, AssetType.IMAGE);
+		id = "img/Sheets/monedagiro.xml";
 		path.set (id, id);
 		
 		type.set (id, AssetType.TEXT);
-		id = "assets/ariosheet.png";
+		id = "img/Sheets/RunningSheet.png";
 		path.set (id, id);
 		
 		type.set (id, AssetType.IMAGE);
-		id = "assets/balaplacebo.png";
+		id = "img/Sheets/SheetCaida.png";
 		path.set (id, id);
 		
 		type.set (id, AssetType.IMAGE);
-		id = "assets/button.png";
+		id = "img/Sheets/SheetSalto.png";
 		path.set (id, id);
 		
 		type.set (id, AssetType.IMAGE);
-		id = "assets/cosahermosa.csv";
-		path.set (id, id);
-		
-		type.set (id, AssetType.TEXT);
-		id = "assets/cosahermosa.tmx";
-		path.set (id, id);
-		
-		type.set (id, AssetType.TEXT);
-		id = "assets/cosahermosa2.tmx";
-		path.set (id, id);
-		
-		type.set (id, AssetType.TEXT);
-		id = "assets/dataTilespng.tsx";
-		path.set (id, id);
-		
-		type.set (id, AssetType.TEXT);
-		id = "assets/dust.png";
+		id = "img/Skills/balaplacebo.png";
 		path.set (id, id);
 		
 		type.set (id, AssetType.IMAGE);
-		id = "assets/explosion.png";
-		path.set (id, id);
-		
-		type.set (id, AssetType.IMAGE);
-		id = "assets/fondo_azul.png";
-		path.set (id, id);
-		
-		type.set (id, AssetType.IMAGE);
-		id = "assets/hero.png";
-		path.set (id, id);
-		
-		type.set (id, AssetType.IMAGE);
-		id = "assets/IdleSheet.png";
-		path.set (id, id);
-		
-		type.set (id, AssetType.IMAGE);
-		id = "assets/img/backgroundGame.png";
+		id = "assets/img/button.png";
 		path.set (id, id);
 		
 		type.set (id, AssetType.IMAGE);
@@ -302,66 +298,98 @@ class DefaultAssetLibrary extends AssetLibrary {
 		path.set (id, id);
 		
 		type.set (id, AssetType.TEXT);
-		id = "assets/img/moneda.png";
-		path.set (id, id);
-		
-		type.set (id, AssetType.IMAGE);
 		id = "assets/img/moneda.xml";
 		path.set (id, id);
 		
 		type.set (id, AssetType.TEXT);
-		id = "assets/img/monedagiro.png";
+		id = "assets/img/ohno.jpg";
 		path.set (id, id);
 		
 		type.set (id, AssetType.IMAGE);
-		id = "assets/img/monedagiro.xml";
-		path.set (id, id);
-		
-		type.set (id, AssetType.TEXT);
-		id = "assets/mapCSV_map2_specials.csv";
-		path.set (id, id);
-		
-		type.set (id, AssetType.TEXT);
-		id = "assets/mapCSV_map2_tiles.csv";
-		path.set (id, id);
-		
-		type.set (id, AssetType.TEXT);
-		id = "assets/ohno.jpg";
+		id = "assets/img/Sheets/ariosheet.png";
 		path.set (id, id);
 		
 		type.set (id, AssetType.IMAGE);
+		id = "assets/img/Sheets/fantasmaDiosSheet.png";
+		path.set (id, id);
+		
+		type.set (id, AssetType.IMAGE);
+		id = "assets/img/Sheets/IdleSheet.png";
+		path.set (id, id);
+		
+		type.set (id, AssetType.IMAGE);
+		id = "assets/img/Sheets/moneda.png";
+		path.set (id, id);
+		
+		type.set (id, AssetType.IMAGE);
+		id = "assets/img/Sheets/monedagiro.png";
+		path.set (id, id);
+		
+		type.set (id, AssetType.IMAGE);
+		id = "assets/img/Sheets/monedagiro.xml";
+		path.set (id, id);
+		
+		type.set (id, AssetType.TEXT);
+		id = "assets/img/Sheets/RunningSheet.png";
+		path.set (id, id);
+		
+		type.set (id, AssetType.IMAGE);
+		id = "assets/img/Sheets/SheetCaida.png";
+		path.set (id, id);
+		
+		type.set (id, AssetType.IMAGE);
+		id = "assets/img/Sheets/SheetSalto.png";
+		path.set (id, id);
+		
+		type.set (id, AssetType.IMAGE);
+		id = "assets/img/Skills/balaplacebo.png";
+		path.set (id, id);
+		
+		type.set (id, AssetType.IMAGE);
+		id = "assets/map/cosahermosa.csv";
+		path.set (id, id);
+		
+		type.set (id, AssetType.TEXT);
+		id = "assets/map/cosahermosa2.tmx";
+		path.set (id, id);
+		
+		type.set (id, AssetType.TEXT);
+		id = "assets/map/dataTilespng.tsx";
+		path.set (id, id);
+		
+		type.set (id, AssetType.TEXT);
+		id = "assets/map/fondo_azul.png";
+		path.set (id, id);
+		
+		type.set (id, AssetType.IMAGE);
+		id = "assets/map/mapCSV_map2_specials.csv";
+		path.set (id, id);
+		
+		type.set (id, AssetType.TEXT);
+		id = "assets/map/mapCSV_map2_tiles.csv";
+		path.set (id, id);
+		
+		type.set (id, AssetType.TEXT);
+		id = "assets/map/tile_ladrillos.png";
+		path.set (id, id);
+		
+		type.set (id, AssetType.IMAGE);
+		id = "assets/map/tile_ladrillos.tsx";
+		path.set (id, id);
+		
+		type.set (id, AssetType.TEXT);
 		id = "assets/openfl.svg";
 		path.set (id, id);
 		
 		type.set (id, AssetType.TEXT);
-		id = "assets/RunningSheet.png";
+		id = "assets/sound/LaMulanaOSV.wav";
 		path.set (id, id);
 		
-		type.set (id, AssetType.IMAGE);
-		id = "assets/SheetCaida.png";
+		type.set (id, AssetType.SOUND);
+		id = "assets/sound/MarioJump.wav";
 		path.set (id, id);
 		
-		type.set (id, AssetType.IMAGE);
-		id = "assets/SheetSalto.png";
-		path.set (id, id);
-		
-		type.set (id, AssetType.IMAGE);
-		id = "assets/tiles copia.png";
-		path.set (id, id);
-		
-		type.set (id, AssetType.IMAGE);
-		id = "assets/tiles.png";
-		path.set (id, id);
-		
-		type.set (id, AssetType.IMAGE);
-		id = "assets/tile_ladrillos.png";
-		path.set (id, id);
-		
-		type.set (id, AssetType.IMAGE);
-		id = "assets/tile_ladrillos.tsx";
-		path.set (id, id);
-		
-		type.set (id, AssetType.TEXT);
+		type.set (id, AssetType.SOUND);
 		
 		
 		var assetsPrefix = null;
@@ -398,8 +426,8 @@ class DefaultAssetLibrary extends AssetLibrary {
 		className.set ("flixel/images/logo/default.png", __ASSET__flixel_images_logo_default_png);
 		type.set ("flixel/images/logo/default.png", AssetType.IMAGE);
 		
-		className.set ("img/backgroundGame.png", __ASSET__img_backgroundgame_png);
-		type.set ("img/backgroundGame.png", AssetType.IMAGE);
+		className.set ("img/button.png", __ASSET__img_button_png);
+		type.set ("img/button.png", AssetType.IMAGE);
 		
 		className.set ("img/julia.png", __ASSET__img_julia_png);
 		type.set ("img/julia.png", AssetType.IMAGE);
@@ -407,56 +435,44 @@ class DefaultAssetLibrary extends AssetLibrary {
 		className.set ("img/julia.xml", __ASSET__img_julia_xml);
 		type.set ("img/julia.xml", AssetType.TEXT);
 		
-		className.set ("img/moneda.png", __ASSET__img_moneda_png);
-		type.set ("img/moneda.png", AssetType.IMAGE);
-		
 		className.set ("img/moneda.xml", __ASSET__img_moneda_xml);
 		type.set ("img/moneda.xml", AssetType.TEXT);
 		
-		className.set ("img/monedagiro.png", __ASSET__img_monedagiro_png);
-		type.set ("img/monedagiro.png", AssetType.IMAGE);
+		className.set ("img/ohno.jpg", __ASSET__img_ohno_jpg);
+		type.set ("img/ohno.jpg", AssetType.IMAGE);
 		
-		className.set ("img/monedagiro.xml", __ASSET__img_monedagiro_xml);
-		type.set ("img/monedagiro.xml", AssetType.TEXT);
+		className.set ("img/Sheets/ariosheet.png", __ASSET__img_sheets_ariosheet_png);
+		type.set ("img/Sheets/ariosheet.png", AssetType.IMAGE);
 		
-		className.set ("assets/ariosheet.png", __ASSET__assets_ariosheet_png);
-		type.set ("assets/ariosheet.png", AssetType.IMAGE);
+		className.set ("img/Sheets/fantasmaDiosSheet.png", __ASSET__img_sheets_fantasmadiossheet_png);
+		type.set ("img/Sheets/fantasmaDiosSheet.png", AssetType.IMAGE);
 		
-		className.set ("assets/balaplacebo.png", __ASSET__assets_balaplacebo_png);
-		type.set ("assets/balaplacebo.png", AssetType.IMAGE);
+		className.set ("img/Sheets/IdleSheet.png", __ASSET__img_sheets_idlesheet_png);
+		type.set ("img/Sheets/IdleSheet.png", AssetType.IMAGE);
 		
-		className.set ("assets/button.png", __ASSET__assets_button_png);
-		type.set ("assets/button.png", AssetType.IMAGE);
+		className.set ("img/Sheets/moneda.png", __ASSET__img_sheets_moneda_png);
+		type.set ("img/Sheets/moneda.png", AssetType.IMAGE);
 		
-		className.set ("assets/cosahermosa.csv", __ASSET__assets_cosahermosa_csv);
-		type.set ("assets/cosahermosa.csv", AssetType.TEXT);
+		className.set ("img/Sheets/monedagiro.png", __ASSET__img_sheets_monedagiro_png);
+		type.set ("img/Sheets/monedagiro.png", AssetType.IMAGE);
 		
-		className.set ("assets/cosahermosa.tmx", __ASSET__assets_cosahermosa_tmx);
-		type.set ("assets/cosahermosa.tmx", AssetType.TEXT);
+		className.set ("img/Sheets/monedagiro.xml", __ASSET__img_sheets_monedagiro_xml);
+		type.set ("img/Sheets/monedagiro.xml", AssetType.TEXT);
 		
-		className.set ("assets/cosahermosa2.tmx", __ASSET__assets_cosahermosa2_tmx);
-		type.set ("assets/cosahermosa2.tmx", AssetType.TEXT);
+		className.set ("img/Sheets/RunningSheet.png", __ASSET__img_sheets_runningsheet_png);
+		type.set ("img/Sheets/RunningSheet.png", AssetType.IMAGE);
 		
-		className.set ("assets/dataTilespng.tsx", __ASSET__assets_datatilespng_tsx);
-		type.set ("assets/dataTilespng.tsx", AssetType.TEXT);
+		className.set ("img/Sheets/SheetCaida.png", __ASSET__img_sheets_sheetcaida_png);
+		type.set ("img/Sheets/SheetCaida.png", AssetType.IMAGE);
 		
-		className.set ("assets/dust.png", __ASSET__assets_dust_png);
-		type.set ("assets/dust.png", AssetType.IMAGE);
+		className.set ("img/Sheets/SheetSalto.png", __ASSET__img_sheets_sheetsalto_png);
+		type.set ("img/Sheets/SheetSalto.png", AssetType.IMAGE);
 		
-		className.set ("assets/explosion.png", __ASSET__assets_explosion_png);
-		type.set ("assets/explosion.png", AssetType.IMAGE);
+		className.set ("img/Skills/balaplacebo.png", __ASSET__img_skills_balaplacebo_png);
+		type.set ("img/Skills/balaplacebo.png", AssetType.IMAGE);
 		
-		className.set ("assets/fondo_azul.png", __ASSET__assets_fondo_azul_png);
-		type.set ("assets/fondo_azul.png", AssetType.IMAGE);
-		
-		className.set ("assets/hero.png", __ASSET__assets_hero_png);
-		type.set ("assets/hero.png", AssetType.IMAGE);
-		
-		className.set ("assets/IdleSheet.png", __ASSET__assets_idlesheet_png);
-		type.set ("assets/IdleSheet.png", AssetType.IMAGE);
-		
-		className.set ("assets/img/backgroundGame.png", __ASSET__assets_img_backgroundgame_png);
-		type.set ("assets/img/backgroundGame.png", AssetType.IMAGE);
+		className.set ("assets/img/button.png", __ASSET__assets_img_button_png);
+		type.set ("assets/img/button.png", AssetType.IMAGE);
 		
 		className.set ("assets/img/julia.png", __ASSET__assets_img_julia_png);
 		type.set ("assets/img/julia.png", AssetType.IMAGE);
@@ -464,50 +480,74 @@ class DefaultAssetLibrary extends AssetLibrary {
 		className.set ("assets/img/julia.xml", __ASSET__assets_img_julia_xml);
 		type.set ("assets/img/julia.xml", AssetType.TEXT);
 		
-		className.set ("assets/img/moneda.png", __ASSET__assets_img_moneda_png);
-		type.set ("assets/img/moneda.png", AssetType.IMAGE);
-		
 		className.set ("assets/img/moneda.xml", __ASSET__assets_img_moneda_xml);
 		type.set ("assets/img/moneda.xml", AssetType.TEXT);
 		
-		className.set ("assets/img/monedagiro.png", __ASSET__assets_img_monedagiro_png);
-		type.set ("assets/img/monedagiro.png", AssetType.IMAGE);
+		className.set ("assets/img/ohno.jpg", __ASSET__assets_img_ohno_jpg);
+		type.set ("assets/img/ohno.jpg", AssetType.IMAGE);
 		
-		className.set ("assets/img/monedagiro.xml", __ASSET__assets_img_monedagiro_xml);
-		type.set ("assets/img/monedagiro.xml", AssetType.TEXT);
+		className.set ("assets/img/Sheets/ariosheet.png", __ASSET__assets_img_sheets_ariosheet_png);
+		type.set ("assets/img/Sheets/ariosheet.png", AssetType.IMAGE);
 		
-		className.set ("assets/mapCSV_map2_specials.csv", __ASSET__assets_mapcsv_map2_specials_csv);
-		type.set ("assets/mapCSV_map2_specials.csv", AssetType.TEXT);
+		className.set ("assets/img/Sheets/fantasmaDiosSheet.png", __ASSET__assets_img_sheets_fantasmadiossheet_png);
+		type.set ("assets/img/Sheets/fantasmaDiosSheet.png", AssetType.IMAGE);
 		
-		className.set ("assets/mapCSV_map2_tiles.csv", __ASSET__assets_mapcsv_map2_tiles_csv);
-		type.set ("assets/mapCSV_map2_tiles.csv", AssetType.TEXT);
+		className.set ("assets/img/Sheets/IdleSheet.png", __ASSET__assets_img_sheets_idlesheet_png);
+		type.set ("assets/img/Sheets/IdleSheet.png", AssetType.IMAGE);
 		
-		className.set ("assets/ohno.jpg", __ASSET__assets_ohno_jpg);
-		type.set ("assets/ohno.jpg", AssetType.IMAGE);
+		className.set ("assets/img/Sheets/moneda.png", __ASSET__assets_img_sheets_moneda_png);
+		type.set ("assets/img/Sheets/moneda.png", AssetType.IMAGE);
+		
+		className.set ("assets/img/Sheets/monedagiro.png", __ASSET__assets_img_sheets_monedagiro_png);
+		type.set ("assets/img/Sheets/monedagiro.png", AssetType.IMAGE);
+		
+		className.set ("assets/img/Sheets/monedagiro.xml", __ASSET__assets_img_sheets_monedagiro_xml);
+		type.set ("assets/img/Sheets/monedagiro.xml", AssetType.TEXT);
+		
+		className.set ("assets/img/Sheets/RunningSheet.png", __ASSET__assets_img_sheets_runningsheet_png);
+		type.set ("assets/img/Sheets/RunningSheet.png", AssetType.IMAGE);
+		
+		className.set ("assets/img/Sheets/SheetCaida.png", __ASSET__assets_img_sheets_sheetcaida_png);
+		type.set ("assets/img/Sheets/SheetCaida.png", AssetType.IMAGE);
+		
+		className.set ("assets/img/Sheets/SheetSalto.png", __ASSET__assets_img_sheets_sheetsalto_png);
+		type.set ("assets/img/Sheets/SheetSalto.png", AssetType.IMAGE);
+		
+		className.set ("assets/img/Skills/balaplacebo.png", __ASSET__assets_img_skills_balaplacebo_png);
+		type.set ("assets/img/Skills/balaplacebo.png", AssetType.IMAGE);
+		
+		className.set ("assets/map/cosahermosa.csv", __ASSET__assets_map_cosahermosa_csv);
+		type.set ("assets/map/cosahermosa.csv", AssetType.TEXT);
+		
+		className.set ("assets/map/cosahermosa2.tmx", __ASSET__assets_map_cosahermosa2_tmx);
+		type.set ("assets/map/cosahermosa2.tmx", AssetType.TEXT);
+		
+		className.set ("assets/map/dataTilespng.tsx", __ASSET__assets_map_datatilespng_tsx);
+		type.set ("assets/map/dataTilespng.tsx", AssetType.TEXT);
+		
+		className.set ("assets/map/fondo_azul.png", __ASSET__assets_map_fondo_azul_png);
+		type.set ("assets/map/fondo_azul.png", AssetType.IMAGE);
+		
+		className.set ("assets/map/mapCSV_map2_specials.csv", __ASSET__assets_map_mapcsv_map2_specials_csv);
+		type.set ("assets/map/mapCSV_map2_specials.csv", AssetType.TEXT);
+		
+		className.set ("assets/map/mapCSV_map2_tiles.csv", __ASSET__assets_map_mapcsv_map2_tiles_csv);
+		type.set ("assets/map/mapCSV_map2_tiles.csv", AssetType.TEXT);
+		
+		className.set ("assets/map/tile_ladrillos.png", __ASSET__assets_map_tile_ladrillos_png);
+		type.set ("assets/map/tile_ladrillos.png", AssetType.IMAGE);
+		
+		className.set ("assets/map/tile_ladrillos.tsx", __ASSET__assets_map_tile_ladrillos_tsx);
+		type.set ("assets/map/tile_ladrillos.tsx", AssetType.TEXT);
 		
 		className.set ("assets/openfl.svg", __ASSET__assets_openfl_svg);
 		type.set ("assets/openfl.svg", AssetType.TEXT);
 		
-		className.set ("assets/RunningSheet.png", __ASSET__assets_runningsheet_png);
-		type.set ("assets/RunningSheet.png", AssetType.IMAGE);
+		className.set ("assets/sound/LaMulanaOSV.wav", __ASSET__assets_sound_lamulanaosv_wav);
+		type.set ("assets/sound/LaMulanaOSV.wav", AssetType.SOUND);
 		
-		className.set ("assets/SheetCaida.png", __ASSET__assets_sheetcaida_png);
-		type.set ("assets/SheetCaida.png", AssetType.IMAGE);
-		
-		className.set ("assets/SheetSalto.png", __ASSET__assets_sheetsalto_png);
-		type.set ("assets/SheetSalto.png", AssetType.IMAGE);
-		
-		className.set ("assets/tiles copia.png", __ASSET__assets_tiles_copia_png);
-		type.set ("assets/tiles copia.png", AssetType.IMAGE);
-		
-		className.set ("assets/tiles.png", __ASSET__assets_tiles_png);
-		type.set ("assets/tiles.png", AssetType.IMAGE);
-		
-		className.set ("assets/tile_ladrillos.png", __ASSET__assets_tile_ladrillos_png);
-		type.set ("assets/tile_ladrillos.png", AssetType.IMAGE);
-		
-		className.set ("assets/tile_ladrillos.tsx", __ASSET__assets_tile_ladrillos_tsx);
-		type.set ("assets/tile_ladrillos.tsx", AssetType.TEXT);
+		className.set ("assets/sound/MarioJump.wav", __ASSET__assets_sound_mariojump_wav);
+		type.set ("assets/sound/MarioJump.wav", AssetType.SOUND);
 		
 		
 		if (useManifest) {
@@ -1159,43 +1199,47 @@ class DefaultAssetLibrary extends AssetLibrary {
 @:keep @:bind #if display private #end class __ASSET__flixel_fonts_monsterrat_ttf extends flash.text.Font { }
 @:keep @:bind #if display private #end class __ASSET__flixel_images_ui_button_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind #if display private #end class __ASSET__flixel_images_logo_default_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
-@:keep @:bind #if display private #end class __ASSET__img_backgroundgame_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep @:bind #if display private #end class __ASSET__img_button_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind #if display private #end class __ASSET__img_julia_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind #if display private #end class __ASSET__img_julia_xml extends flash.utils.ByteArray { }
-@:keep @:bind #if display private #end class __ASSET__img_moneda_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind #if display private #end class __ASSET__img_moneda_xml extends flash.utils.ByteArray { }
-@:keep @:bind #if display private #end class __ASSET__img_monedagiro_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
-@:keep @:bind #if display private #end class __ASSET__img_monedagiro_xml extends flash.utils.ByteArray { }
-@:keep @:bind #if display private #end class __ASSET__assets_ariosheet_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
-@:keep @:bind #if display private #end class __ASSET__assets_balaplacebo_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
-@:keep @:bind #if display private #end class __ASSET__assets_button_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
-@:keep @:bind #if display private #end class __ASSET__assets_cosahermosa_csv extends flash.utils.ByteArray { }
-@:keep @:bind #if display private #end class __ASSET__assets_cosahermosa_tmx extends flash.utils.ByteArray { }
-@:keep @:bind #if display private #end class __ASSET__assets_cosahermosa2_tmx extends flash.utils.ByteArray { }
-@:keep @:bind #if display private #end class __ASSET__assets_datatilespng_tsx extends flash.utils.ByteArray { }
-@:keep @:bind #if display private #end class __ASSET__assets_dust_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
-@:keep @:bind #if display private #end class __ASSET__assets_explosion_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
-@:keep @:bind #if display private #end class __ASSET__assets_fondo_azul_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
-@:keep @:bind #if display private #end class __ASSET__assets_hero_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
-@:keep @:bind #if display private #end class __ASSET__assets_idlesheet_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
-@:keep @:bind #if display private #end class __ASSET__assets_img_backgroundgame_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep @:bind #if display private #end class __ASSET__img_ohno_jpg extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep @:bind #if display private #end class __ASSET__img_sheets_ariosheet_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep @:bind #if display private #end class __ASSET__img_sheets_fantasmadiossheet_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep @:bind #if display private #end class __ASSET__img_sheets_idlesheet_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep @:bind #if display private #end class __ASSET__img_sheets_moneda_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep @:bind #if display private #end class __ASSET__img_sheets_monedagiro_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep @:bind #if display private #end class __ASSET__img_sheets_monedagiro_xml extends flash.utils.ByteArray { }
+@:keep @:bind #if display private #end class __ASSET__img_sheets_runningsheet_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep @:bind #if display private #end class __ASSET__img_sheets_sheetcaida_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep @:bind #if display private #end class __ASSET__img_sheets_sheetsalto_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep @:bind #if display private #end class __ASSET__img_skills_balaplacebo_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep @:bind #if display private #end class __ASSET__assets_img_button_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind #if display private #end class __ASSET__assets_img_julia_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind #if display private #end class __ASSET__assets_img_julia_xml extends flash.utils.ByteArray { }
-@:keep @:bind #if display private #end class __ASSET__assets_img_moneda_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind #if display private #end class __ASSET__assets_img_moneda_xml extends flash.utils.ByteArray { }
-@:keep @:bind #if display private #end class __ASSET__assets_img_monedagiro_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
-@:keep @:bind #if display private #end class __ASSET__assets_img_monedagiro_xml extends flash.utils.ByteArray { }
-@:keep @:bind #if display private #end class __ASSET__assets_mapcsv_map2_specials_csv extends flash.utils.ByteArray { }
-@:keep @:bind #if display private #end class __ASSET__assets_mapcsv_map2_tiles_csv extends flash.utils.ByteArray { }
-@:keep @:bind #if display private #end class __ASSET__assets_ohno_jpg extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep @:bind #if display private #end class __ASSET__assets_img_ohno_jpg extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep @:bind #if display private #end class __ASSET__assets_img_sheets_ariosheet_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep @:bind #if display private #end class __ASSET__assets_img_sheets_fantasmadiossheet_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep @:bind #if display private #end class __ASSET__assets_img_sheets_idlesheet_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep @:bind #if display private #end class __ASSET__assets_img_sheets_moneda_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep @:bind #if display private #end class __ASSET__assets_img_sheets_monedagiro_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep @:bind #if display private #end class __ASSET__assets_img_sheets_monedagiro_xml extends flash.utils.ByteArray { }
+@:keep @:bind #if display private #end class __ASSET__assets_img_sheets_runningsheet_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep @:bind #if display private #end class __ASSET__assets_img_sheets_sheetcaida_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep @:bind #if display private #end class __ASSET__assets_img_sheets_sheetsalto_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep @:bind #if display private #end class __ASSET__assets_img_skills_balaplacebo_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep @:bind #if display private #end class __ASSET__assets_map_cosahermosa_csv extends flash.utils.ByteArray { }
+@:keep @:bind #if display private #end class __ASSET__assets_map_cosahermosa2_tmx extends flash.utils.ByteArray { }
+@:keep @:bind #if display private #end class __ASSET__assets_map_datatilespng_tsx extends flash.utils.ByteArray { }
+@:keep @:bind #if display private #end class __ASSET__assets_map_fondo_azul_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep @:bind #if display private #end class __ASSET__assets_map_mapcsv_map2_specials_csv extends flash.utils.ByteArray { }
+@:keep @:bind #if display private #end class __ASSET__assets_map_mapcsv_map2_tiles_csv extends flash.utils.ByteArray { }
+@:keep @:bind #if display private #end class __ASSET__assets_map_tile_ladrillos_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep @:bind #if display private #end class __ASSET__assets_map_tile_ladrillos_tsx extends flash.utils.ByteArray { }
 @:keep @:bind #if display private #end class __ASSET__assets_openfl_svg extends flash.utils.ByteArray { }
-@:keep @:bind #if display private #end class __ASSET__assets_runningsheet_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
-@:keep @:bind #if display private #end class __ASSET__assets_sheetcaida_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
-@:keep @:bind #if display private #end class __ASSET__assets_sheetsalto_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
-@:keep @:bind #if display private #end class __ASSET__assets_tiles_copia_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
-@:keep @:bind #if display private #end class __ASSET__assets_tiles_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
-@:keep @:bind #if display private #end class __ASSET__assets_tile_ladrillos_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
-@:keep @:bind #if display private #end class __ASSET__assets_tile_ladrillos_tsx extends flash.utils.ByteArray { }
+@:keep @:bind #if display private #end class __ASSET__assets_sound_lamulanaosv_wav extends flash.media.Sound { }
+@:keep @:bind #if display private #end class __ASSET__assets_sound_mariojump_wav extends flash.media.Sound { }
 
 
 #elseif html5
@@ -1204,6 +1248,10 @@ class DefaultAssetLibrary extends AssetLibrary {
 
 @:keep #if display private #end class __ASSET__flixel_fonts_nokiafc22_ttf extends lime.text.Font { public function new () { super (); name = "Nokia Cellphone FC Small"; } } 
 @:keep #if display private #end class __ASSET__flixel_fonts_monsterrat_ttf extends lime.text.Font { public function new () { super (); name = "Monsterrat"; } } 
+
+
+
+
 
 
 
@@ -1258,43 +1306,47 @@ class DefaultAssetLibrary extends AssetLibrary {
 @:font("E:/HaxeToolkit/haxe/lib/flixel/4,2,1/assets/fonts/monsterrat.ttf") #if display private #end class __ASSET__flixel_fonts_monsterrat_ttf extends lime.text.Font {}
 @:image("E:/HaxeToolkit/haxe/lib/flixel/4,2,1/assets/images/ui/button.png") #if display private #end class __ASSET__flixel_images_ui_button_png extends lime.graphics.Image {}
 @:image("E:/HaxeToolkit/haxe/lib/flixel/4,2,1/assets/images/logo/default.png") #if display private #end class __ASSET__flixel_images_logo_default_png extends lime.graphics.Image {}
-@:image("assets/img/backgroundGame.png") #if display private #end class __ASSET__img_backgroundgame_png extends lime.graphics.Image {}
+@:image("assets/img/button.png") #if display private #end class __ASSET__img_button_png extends lime.graphics.Image {}
 @:image("assets/img/julia.png") #if display private #end class __ASSET__img_julia_png extends lime.graphics.Image {}
 @:file("assets/img/julia.xml") #if display private #end class __ASSET__img_julia_xml extends lime.utils.Bytes {}
-@:image("assets/img/moneda.png") #if display private #end class __ASSET__img_moneda_png extends lime.graphics.Image {}
 @:file("assets/img/moneda.xml") #if display private #end class __ASSET__img_moneda_xml extends lime.utils.Bytes {}
-@:image("assets/img/monedagiro.png") #if display private #end class __ASSET__img_monedagiro_png extends lime.graphics.Image {}
-@:file("assets/img/monedagiro.xml") #if display private #end class __ASSET__img_monedagiro_xml extends lime.utils.Bytes {}
-@:image("assets/ariosheet.png") #if display private #end class __ASSET__assets_ariosheet_png extends lime.graphics.Image {}
-@:image("assets/balaplacebo.png") #if display private #end class __ASSET__assets_balaplacebo_png extends lime.graphics.Image {}
-@:image("assets/button.png") #if display private #end class __ASSET__assets_button_png extends lime.graphics.Image {}
-@:file("assets/cosahermosa.csv") #if display private #end class __ASSET__assets_cosahermosa_csv extends lime.utils.Bytes {}
-@:file("assets/cosahermosa.tmx") #if display private #end class __ASSET__assets_cosahermosa_tmx extends lime.utils.Bytes {}
-@:file("assets/cosahermosa2.tmx") #if display private #end class __ASSET__assets_cosahermosa2_tmx extends lime.utils.Bytes {}
-@:file("assets/dataTilespng.tsx") #if display private #end class __ASSET__assets_datatilespng_tsx extends lime.utils.Bytes {}
-@:image("assets/dust.png") #if display private #end class __ASSET__assets_dust_png extends lime.graphics.Image {}
-@:image("assets/explosion.png") #if display private #end class __ASSET__assets_explosion_png extends lime.graphics.Image {}
-@:image("assets/fondo_azul.png") #if display private #end class __ASSET__assets_fondo_azul_png extends lime.graphics.Image {}
-@:image("assets/hero.png") #if display private #end class __ASSET__assets_hero_png extends lime.graphics.Image {}
-@:image("assets/IdleSheet.png") #if display private #end class __ASSET__assets_idlesheet_png extends lime.graphics.Image {}
-@:image("assets/img/backgroundGame.png") #if display private #end class __ASSET__assets_img_backgroundgame_png extends lime.graphics.Image {}
+@:image("assets/img/ohno.jpg") #if display private #end class __ASSET__img_ohno_jpg extends lime.graphics.Image {}
+@:image("assets/img/Sheets/ariosheet.png") #if display private #end class __ASSET__img_sheets_ariosheet_png extends lime.graphics.Image {}
+@:image("assets/img/Sheets/fantasmaDiosSheet.png") #if display private #end class __ASSET__img_sheets_fantasmadiossheet_png extends lime.graphics.Image {}
+@:image("assets/img/Sheets/IdleSheet.png") #if display private #end class __ASSET__img_sheets_idlesheet_png extends lime.graphics.Image {}
+@:image("assets/img/Sheets/moneda.png") #if display private #end class __ASSET__img_sheets_moneda_png extends lime.graphics.Image {}
+@:image("assets/img/Sheets/monedagiro.png") #if display private #end class __ASSET__img_sheets_monedagiro_png extends lime.graphics.Image {}
+@:file("assets/img/Sheets/monedagiro.xml") #if display private #end class __ASSET__img_sheets_monedagiro_xml extends lime.utils.Bytes {}
+@:image("assets/img/Sheets/RunningSheet.png") #if display private #end class __ASSET__img_sheets_runningsheet_png extends lime.graphics.Image {}
+@:image("assets/img/Sheets/SheetCaida.png") #if display private #end class __ASSET__img_sheets_sheetcaida_png extends lime.graphics.Image {}
+@:image("assets/img/Sheets/SheetSalto.png") #if display private #end class __ASSET__img_sheets_sheetsalto_png extends lime.graphics.Image {}
+@:image("assets/img/Skills/balaplacebo.png") #if display private #end class __ASSET__img_skills_balaplacebo_png extends lime.graphics.Image {}
+@:image("assets/img/button.png") #if display private #end class __ASSET__assets_img_button_png extends lime.graphics.Image {}
 @:image("assets/img/julia.png") #if display private #end class __ASSET__assets_img_julia_png extends lime.graphics.Image {}
 @:file("assets/img/julia.xml") #if display private #end class __ASSET__assets_img_julia_xml extends lime.utils.Bytes {}
-@:image("assets/img/moneda.png") #if display private #end class __ASSET__assets_img_moneda_png extends lime.graphics.Image {}
 @:file("assets/img/moneda.xml") #if display private #end class __ASSET__assets_img_moneda_xml extends lime.utils.Bytes {}
-@:image("assets/img/monedagiro.png") #if display private #end class __ASSET__assets_img_monedagiro_png extends lime.graphics.Image {}
-@:file("assets/img/monedagiro.xml") #if display private #end class __ASSET__assets_img_monedagiro_xml extends lime.utils.Bytes {}
-@:file("assets/mapCSV_map2_specials.csv") #if display private #end class __ASSET__assets_mapcsv_map2_specials_csv extends lime.utils.Bytes {}
-@:file("assets/mapCSV_map2_tiles.csv") #if display private #end class __ASSET__assets_mapcsv_map2_tiles_csv extends lime.utils.Bytes {}
-@:image("assets/ohno.jpg") #if display private #end class __ASSET__assets_ohno_jpg extends lime.graphics.Image {}
+@:image("assets/img/ohno.jpg") #if display private #end class __ASSET__assets_img_ohno_jpg extends lime.graphics.Image {}
+@:image("assets/img/Sheets/ariosheet.png") #if display private #end class __ASSET__assets_img_sheets_ariosheet_png extends lime.graphics.Image {}
+@:image("assets/img/Sheets/fantasmaDiosSheet.png") #if display private #end class __ASSET__assets_img_sheets_fantasmadiossheet_png extends lime.graphics.Image {}
+@:image("assets/img/Sheets/IdleSheet.png") #if display private #end class __ASSET__assets_img_sheets_idlesheet_png extends lime.graphics.Image {}
+@:image("assets/img/Sheets/moneda.png") #if display private #end class __ASSET__assets_img_sheets_moneda_png extends lime.graphics.Image {}
+@:image("assets/img/Sheets/monedagiro.png") #if display private #end class __ASSET__assets_img_sheets_monedagiro_png extends lime.graphics.Image {}
+@:file("assets/img/Sheets/monedagiro.xml") #if display private #end class __ASSET__assets_img_sheets_monedagiro_xml extends lime.utils.Bytes {}
+@:image("assets/img/Sheets/RunningSheet.png") #if display private #end class __ASSET__assets_img_sheets_runningsheet_png extends lime.graphics.Image {}
+@:image("assets/img/Sheets/SheetCaida.png") #if display private #end class __ASSET__assets_img_sheets_sheetcaida_png extends lime.graphics.Image {}
+@:image("assets/img/Sheets/SheetSalto.png") #if display private #end class __ASSET__assets_img_sheets_sheetsalto_png extends lime.graphics.Image {}
+@:image("assets/img/Skills/balaplacebo.png") #if display private #end class __ASSET__assets_img_skills_balaplacebo_png extends lime.graphics.Image {}
+@:file("assets/map/cosahermosa.csv") #if display private #end class __ASSET__assets_map_cosahermosa_csv extends lime.utils.Bytes {}
+@:file("assets/map/cosahermosa2.tmx") #if display private #end class __ASSET__assets_map_cosahermosa2_tmx extends lime.utils.Bytes {}
+@:file("assets/map/dataTilespng.tsx") #if display private #end class __ASSET__assets_map_datatilespng_tsx extends lime.utils.Bytes {}
+@:image("assets/map/fondo_azul.png") #if display private #end class __ASSET__assets_map_fondo_azul_png extends lime.graphics.Image {}
+@:file("assets/map/mapCSV_map2_specials.csv") #if display private #end class __ASSET__assets_map_mapcsv_map2_specials_csv extends lime.utils.Bytes {}
+@:file("assets/map/mapCSV_map2_tiles.csv") #if display private #end class __ASSET__assets_map_mapcsv_map2_tiles_csv extends lime.utils.Bytes {}
+@:image("assets/map/tile_ladrillos.png") #if display private #end class __ASSET__assets_map_tile_ladrillos_png extends lime.graphics.Image {}
+@:file("assets/map/tile_ladrillos.tsx") #if display private #end class __ASSET__assets_map_tile_ladrillos_tsx extends lime.utils.Bytes {}
 @:file("assets/openfl.svg") #if display private #end class __ASSET__assets_openfl_svg extends lime.utils.Bytes {}
-@:image("assets/RunningSheet.png") #if display private #end class __ASSET__assets_runningsheet_png extends lime.graphics.Image {}
-@:image("assets/SheetCaida.png") #if display private #end class __ASSET__assets_sheetcaida_png extends lime.graphics.Image {}
-@:image("assets/SheetSalto.png") #if display private #end class __ASSET__assets_sheetsalto_png extends lime.graphics.Image {}
-@:image("assets/tiles copia.png") #if display private #end class __ASSET__assets_tiles_copia_png extends lime.graphics.Image {}
-@:image("assets/tiles.png") #if display private #end class __ASSET__assets_tiles_png extends lime.graphics.Image {}
-@:image("assets/tile_ladrillos.png") #if display private #end class __ASSET__assets_tile_ladrillos_png extends lime.graphics.Image {}
-@:file("assets/tile_ladrillos.tsx") #if display private #end class __ASSET__assets_tile_ladrillos_tsx extends lime.utils.Bytes {}
+@:file("assets/sound/LaMulanaOSV.wav") #if display private #end class __ASSET__assets_sound_lamulanaosv_wav extends lime.utils.Bytes {}
+@:file("assets/sound/MarioJump.wav") #if display private #end class __ASSET__assets_sound_mariojump_wav extends lime.utils.Bytes {}
 
 
 
