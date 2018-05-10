@@ -19,7 +19,7 @@ class God extends FlxSprite
 	@:isVar public var projectiles(default,set):FlxGroup;
 	@:isVar public var projCount = -1;
 
-	@:isVar public var state:String = "Normal";
+	@:isVar public var state:String = CharacterStates.normalState;
 	@:isVar public var stateDuration:Float = -1;
 	public var skillsController(default,default):SkillsController;
 
@@ -71,9 +71,9 @@ class God extends FlxSprite
 		velocity.y = 0;
 		
 		switch(state){
-			case "Normal":
+			case CharacterStates.normalState:
 				normalGodMovement(aDt);
-			case "Stunned":
+			case CharacterStates.stunnedState:
 				godIsStunned(aDt);
 		}
 
@@ -85,22 +85,9 @@ class God extends FlxSprite
 		}
 
 		//PREGUNTAR
-		if (skillsController.idSkill == 1&&skillsController.actualTrap!=null)
-		{
+		skillsController.validateSkillsConditions();
+		
 
-			skillsController.actualTrap.setPosition(FlxG.mouse.x-(skillsController.actualTrap.width/2), FlxG.mouse.y-(skillsController.actualTrap.height/2));
-
-			if (skillsController.skill2ConditionToPutElement())
-			{
-				skillsController.actualTrap.setColorTransform(0, 1, 0, 0.8);
-
-			}
-			else
-			{
-				skillsController.actualTrap.setColorTransform(1, 0, 0, 0.8);
-			}
-
-		}
 		
 		
 		if (velocity.x == 0 && velocity.y == 0)
@@ -196,7 +183,7 @@ class God extends FlxSprite
 	function godIsStunned(aDt:Float):Void
 	{
 		if (stateDuration <= 0) {
-			state = "Normal";
+			state = CharacterStates.normalState;
 			stateDuration = -1;
 		} else{
 			trace(stateDuration);

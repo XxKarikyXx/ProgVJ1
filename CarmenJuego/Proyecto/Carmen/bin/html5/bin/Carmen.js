@@ -146,7 +146,7 @@ ApplicationMain.init = function() {
 	}
 };
 ApplicationMain.main = function() {
-	ApplicationMain.config = { build : "915", company : "TuMadre", file : "Carmen", fps : 60, name : "Carmen", orientation : "", packageName : "Carmen", version : "1.0.0", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : false, height : 1080, parameters : "{}", resizable : true, stencilBuffer : true, title : "Carmen", vsync : false, width : 1920, x : null, y : null}]};
+	ApplicationMain.config = { build : "927", company : "TuMadre", file : "Carmen", fps : 60, name : "Carmen", orientation : "", packageName : "Carmen", version : "1.0.0", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : false, height : 1080, parameters : "{}", resizable : true, stencilBuffer : true, title : "Carmen", vsync : false, width : 1920, x : null, y : null}]};
 };
 ApplicationMain.start = function() {
 	var hasMain = false;
@@ -2215,6 +2215,13 @@ DocumentClass.prototype = $extend(Main.prototype,{
 var AssetPaths = function() { };
 $hxClasses["AssetPaths"] = AssetPaths;
 AssetPaths.__name__ = ["AssetPaths"];
+var CharacterStates = function() {
+};
+$hxClasses["CharacterStates"] = CharacterStates;
+CharacterStates.__name__ = ["CharacterStates"];
+CharacterStates.prototype = {
+	__class__: CharacterStates
+};
 var lime_AssetLibrary = function() {
 	this.onChange = new lime_app_Event_$Void_$Void();
 };
@@ -6285,7 +6292,6 @@ var SkillsController = function(aSkills,aText,atraps,aTexts) {
 	this.text = aText;
 	this.traps = atraps;
 	this.skillsText = aTexts;
-	this.originalColor = new openfl_geom_ColorTransform();
 	this.createAndAddSkills();
 };
 $hxClasses["SkillsController"] = SkillsController;
@@ -6299,7 +6305,6 @@ SkillsController.prototype = {
 	,idSkill: null
 	,traps: null
 	,actualTrap: null
-	,originalColor: null
 	,createAndAddSkills: function() {
 		var textSkill1FlxText = new flixel_text_FlxText();
 		this.mskill1 = new FlxButtonAnimationSkill("assets/img/Skills/balaplacebo.png",57,64,$bind(this,this.onClickSkill1),$bind(this,this.onClickSkill1Active),$bind(this,this.onOverSkill1),$bind(this,this.onRollOutSkill1),3,0,textSkill1FlxText);
@@ -6346,6 +6351,7 @@ SkillsController.prototype = {
 		this.idSkill = this.mskill2.id;
 		var trap = new gameObjects_Trap(flixel_FlxG.mouse.x,flixel_FlxG.mouse.y);
 		this.actualTrap = trap;
+		this.setUINotPossiblePlaceToPutTrapFromSkill2();
 		this.traps.add(trap);
 	}
 	,onClickSkill2Active: function(aButton) {
@@ -6374,11 +6380,21 @@ SkillsController.prototype = {
 			break;
 		case 1:
 			idSkill = -1;
+			this.setUIPlacedTrapFromSkill2();
 			this.actualTrap.canCollide = true;
 			this.actualTrap = null;
 			this.mskill2.setActivation();
 			break;
 		}
+	}
+	,setUINotPossiblePlaceToPutTrapFromSkill2: function() {
+		this.actualTrap.setColorTransform(1,0,0,0.8);
+	}
+	,setUIPossiblePlaceToPutTrapFromSkill2: function() {
+		this.actualTrap.setColorTransform(0,1,0,0.8);
+	}
+	,setUIPlacedTrapFromSkill2: function() {
+		this.actualTrap.setColorTransform(1,1,1,1);
 	}
 	,runGodSkill: function(aX,aY,aIdSkill) {
 		if(!this.thereAreSkillsTouching()) {
@@ -6391,6 +6407,16 @@ SkillsController.prototype = {
 					this.activateSkillWithId(aIdSkill);
 				}
 				break;
+			}
+		}
+	}
+	,validateSkillsConditions: function() {
+		if(this.idSkill == this.mskill2.id && this.actualTrap != null) {
+			this.actualTrap.setPosition(flixel_FlxG.mouse.x - this.actualTrap.get_width() / 2,flixel_FlxG.mouse.y - this.actualTrap.get_height() / 2);
+			if(this.skill2ConditionToPutElement()) {
+				this.setUIPossiblePlaceToPutTrapFromSkill2();
+			} else {
+				this.setUINotPossiblePlaceToPutTrapFromSkill2();
 			}
 		}
 	}
@@ -45479,14 +45505,7 @@ gameObjects_God.prototype = $extend(flixel_FlxSprite.prototype,{
 			this.skillsController.runGodSkill(flixel_FlxG.mouse.x,flixel_FlxG.mouse.y,this.skillsController.idSkill);
 			this.skillsController.idSkill = -1;
 		}
-		if(this.skillsController.idSkill == 1 && this.skillsController.actualTrap != null) {
-			this.skillsController.actualTrap.setPosition(flixel_FlxG.mouse.x - this.skillsController.actualTrap.get_width() / 2,flixel_FlxG.mouse.y - this.skillsController.actualTrap.get_height() / 2);
-			if(this.skillsController.skill2ConditionToPutElement()) {
-				this.skillsController.actualTrap.setColorTransform(0,1,0,0.8);
-			} else {
-				this.skillsController.actualTrap.setColorTransform(1,0,0,0.8);
-			}
-		}
+		this.skillsController.validateSkillsConditions();
 		if(this.velocity.x == 0 && this.velocity.y == 0) {
 			this.animation.play("idle");
 		} else if(this.velocity.y != 0) {
@@ -45531,7 +45550,7 @@ gameObjects_God.prototype = $extend(flixel_FlxSprite.prototype,{
 			this.state = "Normal";
 			this.stateDuration = -1;
 		} else {
-			haxe_Log.trace(this.stateDuration,{ fileName : "God.hx", lineNumber : 202, className : "gameObjects.God", methodName : "godIsStunned"});
+			haxe_Log.trace(this.stateDuration,{ fileName : "God.hx", lineNumber : 189, className : "gameObjects.God", methodName : "godIsStunned"});
 			this.stateDuration -= aDt;
 		}
 	}
@@ -84897,9 +84916,9 @@ states_GameState.prototype = $extend(flixel_FlxState.prototype,{
 		this.textSkill.textField.set_wordWrap(true);
 		this.textSkill.textField.set_width(150);
 		this.traps = new flixel_group_FlxTypedGroup();
-		this.add(this.traps);
 		this.skillsGod = new flixel_group_FlxTypedGroup();
 		this.add(this.skillsGod);
+		this.add(this.traps);
 		this.skillsGodText = new flixel_group_FlxTypedGroup();
 		this.add(this.skillsGodText);
 		this.skillsController = new SkillsController(this.skillsGod,this.textSkill,this.traps,this.skillsGodText);
@@ -85025,7 +85044,7 @@ states_GameState.prototype = $extend(flixel_FlxState.prototype,{
 		} else {
 			this.stunText.set_visible(false);
 		}
-		if(this.player.stateDuration != -1 && this.player.state == "Stunned") {
+		if(this.player.stateDuration != -1 && this.player.state == "Normal") {
 			this.stunTextPlayer.set_visible(true);
 			this.stunTextPlayer.setPosition(this.player.x + this.player.get_width() / 2 - this.stunTextPlayer.get_width() / 2,this.player.y);
 		} else {
@@ -85387,6 +85406,8 @@ AssetPaths.mapCSV_map2_tiles__csv = "assets/map/mapCSV_map2_tiles.csv";
 AssetPaths.tile_ladrillos__png = "assets/map/tile_ladrillos.png";
 AssetPaths.LaMulanaOSV__wav = "assets/sound/LaMulanaOSV.wav";
 AssetPaths.MarioJump__wav = "assets/sound/MarioJump.wav";
+CharacterStates.stunnedState = "Stunned";
+CharacterStates.normalState = "Normal";
 openfl_text_Font.__registeredFonts = [];
 flixel_FlxBasic.activeCount = 0;
 flixel_FlxBasic.visibleCount = 0;

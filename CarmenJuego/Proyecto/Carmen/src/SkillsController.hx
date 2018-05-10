@@ -26,7 +26,6 @@ class SkillsController
 
 	var traps:FlxGroup;
 	@:isVar public var actualTrap:Trap;
-	var originalColor:ColorTransform;
 
 	public function new(aSkills:FlxGroup,aText:FlxText,atraps:FlxGroup,aTexts:FlxGroup)
 	{
@@ -34,7 +33,6 @@ class SkillsController
 		text = aText;
 		traps = atraps;
 		skillsText = aTexts;
-		originalColor=new ColorTransform();
 		createAndAddSkills();
 	}
 
@@ -99,6 +97,7 @@ class SkillsController
 		idSkill = mskill2.id;
 		var trap = new Trap(FlxG.mouse.x, FlxG.mouse.y);
 		actualTrap = trap;
+		setUINotPossiblePlaceToPutTrapFromSkill2();
 		traps.add(trap);
 	}
 
@@ -135,7 +134,7 @@ class SkillsController
 
 			case 1:
 				idSkill =-1;
-				//actualTrap.setColorTransform(1, 1, 1, 1);
+				setUIPlacedTrapFromSkill2();
 				actualTrap.canCollide = true;
 
 				actualTrap = null;
@@ -144,6 +143,20 @@ class SkillsController
 		}
 	}
 
+	 function setUINotPossiblePlaceToPutTrapFromSkill2()
+	{
+		actualTrap.setColorTransform(1, 0, 0, 0.8);		
+	}
+	
+	function setUIPossiblePlaceToPutTrapFromSkill2()
+	{
+		actualTrap.setColorTransform(0, 1, 0, 0.8);
+	}
+	
+    function setUIPlacedTrapFromSkill2()
+	{
+		actualTrap.setColorTransform(1, 1, 1, 1);
+	}
 	public function runGodSkill(aX:Int,aY:Int,aIdSkill:Int):Void
 	{
 		if (!thereAreSkillsTouching())
@@ -159,6 +172,27 @@ class SkillsController
 						activateSkillWithId(aIdSkill);
 					}
 			}
+		}
+	}
+	public function validateSkillsConditions()
+	{
+		
+		
+		if (idSkill == mskill2.id&&actualTrap!=null)
+		{
+
+			actualTrap.setPosition(FlxG.mouse.x-(actualTrap.width/2), FlxG.mouse.y-(actualTrap.height/2));
+
+			if (skill2ConditionToPutElement())
+			{
+			setUIPossiblePlaceToPutTrapFromSkill2();
+
+			}
+			else
+			{
+				setUINotPossiblePlaceToPutTrapFromSkill2();
+			}
+
 		}
 	}
 

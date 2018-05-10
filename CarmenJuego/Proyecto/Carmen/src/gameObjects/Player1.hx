@@ -22,7 +22,7 @@ class Player1 extends FlxSprite
 	@:isVar public var projCount = -1;
 	public var coins:FlxGroup;
 
-		@:isVar public var state:String = "Normal";
+		@:isVar public var state:String = CharacterStates.normalState;
 	@:isVar public var stateDuration:Float = -1;
 	
 	@:isVar public var jumpSound:FlxSound;
@@ -83,9 +83,9 @@ offset.y = 10;
 		velocity.x = 0;
 		
 				switch(state){
-			case "Normal":
+			case CharacterStates.normalState:
 				normalPlayerMovement(aDt);
-			case "Stunned":
+			case CharacterStates.stunnedState:
 				playerIsStunned(aDt);
 		}
 
@@ -209,7 +209,7 @@ offset.y = 10;
 	{
 		
 			if (stateDuration <= 0) {
-			state = "Normal";
+			state = CharacterStates.normalState;
 			stateDuration = -1;
 		} else{
 			trace(stateDuration);

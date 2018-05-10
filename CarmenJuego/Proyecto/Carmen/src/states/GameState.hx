@@ -97,10 +97,12 @@ class GameState extends FlxState
 		textSkill.textField.width = 150;
 
 		traps = new FlxGroup();
-		add(traps);
+
 
 		skillsGod = new FlxGroup();
 		add(skillsGod);
+		
+				add(traps);
 
 		skillsGodText = new FlxGroup();
 		add(skillsGodText);
@@ -264,7 +266,7 @@ class GameState extends FlxState
 		}
 
 		//OJITO
-		if (god.stateDuration!=-1&&god.state=="Stunned")
+		if (god.stateDuration!=-1&&god.state==CharacterStates.stunnedState)
 		{
 			stunText.set_visible(true);
 			stunText.setPosition(god.x+(god.width/2)-(stunText.width/2), god.y);
@@ -274,7 +276,7 @@ class GameState extends FlxState
 		}
 
 		//OJITO
-		if (player.stateDuration!=-1&&player.state=="Stunned")
+		if (player.stateDuration!=-1&&player.state==CharacterStates.normalState)
 		{
 			stunTextPlayer.set_visible(true);
 			stunTextPlayer.setPosition(player.x+(player.width/2)-(stunTextPlayer.width/2), player.y);
