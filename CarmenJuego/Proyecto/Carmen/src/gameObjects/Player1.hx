@@ -16,9 +16,10 @@ class Player1 extends FlxSprite
 {
 	var map:FlxTilemap;
 	var jumpOnAirCount:Int = 0;
-	@:isVar public var coins(get, set):Int = 0;
+	@:isVar public var coinsCount(get, set):Int = 0;
 	@:isVar public var projectiles(default,set):FlxGroup;
 	@:isVar public var projCount = -1;
+	public var coins:FlxGroup;
 
 		@:isVar public var state:String = "Normal";
 	@:isVar public var stateDuration:Float = -1;
@@ -55,6 +56,11 @@ offset.y = 10;
 
 	}
 	
+	public function setCoins(aCoins:FlxGroup)
+	{
+		
+		coins = aCoins;
+	}
 	
 	public function set_projectiles(aProjectiles:FlxGroup):FlxGroup
 	{
@@ -223,13 +229,13 @@ offset.y = 10;
 		return FlxObject.NONE;
 	}
 
-	public function set_coins(value:Int):Int
+	public function set_coinsCount(value:Int):Int
 	{
-		return coins = value;
+		return coinsCount = value;
 	}
 
-	public function get_coins():Int
+	public function get_coinsCount():Int
 	{
-		return coins;
+		return coinsCount;
 	}
 }

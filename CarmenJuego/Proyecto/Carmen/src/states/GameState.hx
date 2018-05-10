@@ -13,6 +13,7 @@ import gameObjects.Player1;
 import gameObjects.God;
 import gameObjects.Coin;
 import gameObjects.ProjectilePlayer;
+import gameObjects.SkillsController;
 import gameObjects.Trap;
 import openfl.Assets;
 import flixel.FlxSprite;
@@ -34,8 +35,6 @@ class GameState extends FlxState
 	var projectilesGod:FlxGroup;
 
 	var traps:FlxGroup;
-	var actualTrap:Trap;
-	var originalColor:ColorTransform = new ColorTransform();
 
 	var coins:FlxGroup;
 	var numberCoins:Int = 0;
@@ -43,20 +42,20 @@ class GameState extends FlxState
 	var background:FlxSprite;
 	var textGame:FlxText;
 	var textSkill:FlxText;
-	
+
 	var stunText:FlxText;
 	var stunTextPlayer:FlxText;
 
 	static inline var numberProjectilesPlayer:Int = 2;
 	static inline var numberTotalCoins:Int = 2;
 
+	var skillsGod:FlxGroup;
+	var skillsGodText:FlxGroup;
+	var skillsController:SkillsController;
+
 	var skill1:FlxButtonAnimationSkill;
 	var skill2:FlxButtonAnimationSkill;
-	
-	static inline var  tileIndexCoins = 2;
-	static inline var  tileIndexNonCollision = 0; 
-    static inline var  tileIndexNonCollisionBlack = 1; 
-	
+
 	public function new()
 	{
 		super();
@@ -69,8 +68,8 @@ class GameState extends FlxState
 		add(background);
 		map = new FlxTilemap();
 		map.loadMapFromCSV(AssetPaths.cosahermosa__csv, AssetPaths.tile_ladrillos__png, 32, 32);
-		map.setTileProperties(tileIndexCoins, FlxObject.NONE);
-		map.setTileProperties(tileIndexNonCollisionBlack, FlxObject.NONE);
+		map.setTileProperties(GlobalGameData.tileIndexCoins, FlxObject.NONE);
+		map.setTileProperties(GlobalGameData.tileIndexNonCollisionBlack, FlxObject.NONE);
 		add(map);
 
 		player = new Player1(80, 900, map);
@@ -80,17 +79,7 @@ class GameState extends FlxState
 		add(god);
 		GlobalGameData.player = god;
 		GlobalGameData.player2 = player;
-
-		setPlayerData();
-		setGodData();
-
-		FlxG.camera.setScrollBoundsRect(0, 0, map.width, map.height);
-		FlxG.worldBounds.set(0, 0, map.width, map.height);
-
-		setCoinsData();
-
-		textGame = new FlxText(50, 50, 0, "Objetos Jugador: " + player.coins + "/" + coins.length, 20);
-		add(textGame);
+		GlobalGameData.map = map;
 
 		textSkill = new FlxText(1446, 35, 0, "", 15);
 		add(textSkill);
@@ -98,45 +87,35 @@ class GameState extends FlxState
 		textSkill.textField.wordWrap = true;
 		textSkill.textField.width = 150;
 
-		setGodSkillsInMap();
-
 		traps = new FlxGroup();
 		add(traps);
+
+		skillsGod = new FlxGroup();
+		add(skillsGod);
+
+		skillsGodText = new FlxGroup();
+		add(skillsGodText);
+		skillsController = new SkillsController(skillsGod, textSkill, traps, skillsGodText);
+		
+		setPlayerData();
+		setGodData();
+
+		FlxG.camera.setScrollBoundsRect(0, 0, map.width, map.height);
+		FlxG.worldBounds.set(0, 0, map.width, map.height);
+
+		setCoinsData();
+		player.setCoins(coins);
+
+		textGame = new FlxText(50, 50, 0, "Objetos Jugador: " + player.coinsCount + "/" + coins.length, 20);
+		add(textGame);
 
 		stunText = new FlxText(50, 50, 0, "Inmovilizado", 10);
 		stunText.set_visible(false);
 		add(stunText);
-		
+
 		stunTextPlayer = new FlxText(50, 50, 0, "Inmovilizado", 10);
 		stunTextPlayer.set_visible(false);
 		add(stunTextPlayer);
-	}
-
-	public function setGodSkillsInMap()
-	{
-		var textSkill1FlxText:FlxText = new FlxText();
-		skill1 = new FlxButtonAnimationSkill(AssetPaths.balaplacebo__png, 57, 64, onClickSkill1,onClickSkill1Active,onOverSkill1,onRollOutSkill1,  3,0,textSkill1FlxText);
-		skill1.setOver([1]);
-		skill1.setUp([0]);
-		skill1.setDown([2]);
-		skill1.setCooldown([3]);
-		skill1.setDisabled([4]);
-		skill1.setPosition(1740, 50);
-		add(skill1);
-		add(textSkill1FlxText);
-		//god.skill1 = skill1;
-
-		var textSkill2FlxText:FlxText = new FlxText();
-		skill2 = new FlxButtonAnimationSkill(AssetPaths.balaplacebo__png, 57, 64, onClickSkill2,onClickSkill2Active,onOverSkill2,onRollOutSkill2,  40,1,textSkill2FlxText);
-		skill2.setOver([1]);
-		skill2.setUp([0]);
-		skill2.setDown([2]);
-		skill2.setCooldown([3]);
-		skill2.setDisabled([4]);
-		skill2.setPosition(1825, 50);
-		add(skill2);
-				add(textSkill2FlxText);
-		//god.skill1 = skill1;
 	}
 
 	public function setCoinsData()
@@ -152,6 +131,7 @@ class GameState extends FlxState
 		}
 
 	}
+	
 
 	public function setPlayerData()
 	{
@@ -182,87 +162,13 @@ class GameState extends FlxState
 		}
 
 		god.set_projectiles(projectilesGod);
-	}
-
-	public function onClickSkill1(aButton:FlxButtonAnimation)
-	{
-		resetSkill();
-		for (i in 0...1)
-		{
-			projectilesGod.members[i].revive();
-			projectilesGod.members[i].set_visible(false);
-		}
-
-		god.intanceProjectiles();
-		god.idSkill = skill1.id;
-
-	}
-
-	public function onClickSkill1Active(aButton:FlxButtonAnimation)
-	{
-		resetSkill();
-	}
-
-	public function onOverSkill1(aButton:FlxButtonAnimation)
-	{
-		textSkill.text = "Dispara un proyectil en la dirección donde se haga click.    Cooldown: "+skill1.coolDown+"s";
-	}
-
-	public function onRollOutSkill1(aButton:FlxButtonAnimation)
-	{
-		//textSkill.text = "";
-	}
-
-	public function onClickSkill2(aButton:FlxButtonAnimation)
-	{
-		resetSkill();
-		god.idSkill = skill2.id;
-		var trap = new Trap(FlxG.mouse.x, FlxG.mouse.y);
-		actualTrap = trap;
-		traps.add(trap);
-	}
-
-	public function resetSkill()
-	{
-		switch (god.idSkill)
-		{
-			case 0:
-				for (i in 0...1)
-				{
-					projectilesGod.members[i].kill();
-				}
-		skill1.activeButton = false;
-		skill1.animation.play("up");
-			case 1:
-				traps.remove(actualTrap, true);
-				actualTrap.destroy();
-						skill2.activeButton = false;
-						skill2.animation.play("up");
-
-		}
-
-		god.idSkill = -1;
-	}
-
-	public function onClickSkill2Active(aButton:FlxButtonAnimation)
-	{
-		resetSkill();
-	}
-
-	public function onOverSkill2(aButton:FlxButtonAnimation)
-	{
-		textSkill.text = "Pone una trampa en una superficie que inmoviliza.    Cooldown: "+skill2.coolDown+"s";
-	}
-
-	public function onRollOutSkill2(aButton:FlxButtonAnimation)
-	{
-		//textSkill.text = "";
+		god.skillsController = this.skillsController;
 	}
 
 	public function setCoinXAndYRandom(otherCoins:FlxGroup,aCoin:Coin):Void
 	{
 
-		var coinCoordinates:Array<FlxPoint> = map.getTileCoords(tileIndexCoins, true);
+		var coinCoordinates:Array<FlxPoint> = map.getTileCoords(GlobalGameData.tileIndexCoins, true);
 
 		var rand:Float = Math.random();
 		var index:Int = Math.round(coinCoordinates.length * rand)-1;
@@ -277,7 +183,7 @@ class GameState extends FlxState
 		else
 		{
 
-			while (thereIsACoinHere(anX, anY,otherCoins,32 * 6))
+			while (GlobalGameData.thereIsACoinHere(anX, anY,otherCoins,aCoin.width * 6))
 			{
 
 				rand= Math.random();
@@ -294,29 +200,10 @@ class GameState extends FlxState
 		aCoin.y = anY;
 	}
 
-	public function thereIsACoinHere(anX:Float, anY:Float,otherCoins:FlxGroup,aRad:Float):Bool
-	{
-		//(x−a)2 + (y−b)2 = r2
-		var rad = aRad;
-
-		for (aCoin in otherCoins)
-		{
-
-			var coin1:Coin = cast (aCoin, Coin);
-
-			if (ToolsForUse.IsInsideCircle(anX,anY,coin1.x, coin1.y, rad))
-			{
-				return true;
-			}
-
-		}
-		return false;
-	}
-
 	public function playerCollectedAllCoins():Bool
 	{
 
-		return player.coins == numberCoins;
+		return player.coinsCount == numberCoins;
 	}
 	override public function update(aDt:Float):Void
 	{
@@ -334,7 +221,7 @@ class GameState extends FlxState
 		if (playerCollectedAllCoins())
 		{
 
-			player.coins = 0;
+			player.coinsCount = 0;
 
 			for (i in 0...numberProjectilesPlayer)
 			{
@@ -357,7 +244,7 @@ class GameState extends FlxState
 			player.projCount =-1;
 			resetPlaceCoin = false;
 			shuffleCoins();
-			textGame.text="Objetos Jugador: " + player.coins + "/" + coins.length;
+			textGame.text="Objetos Jugador: " + player.coinsCount + "/" + coins.length;
 		}
 
 		if (FlxG.keys.justPressed.ESCAPE)
@@ -366,29 +253,6 @@ class GameState extends FlxState
 			FlxG.switchState(new MainMenu());
 		}
 
-		//EN GOD_
-		if (FlxG.mouse.justPressed && god.idSkill !=-1)
-		{
-			runGodSkill();
-		}
-		
-		if (god.idSkill == skill2.id&&actualTrap!=null)
-		{
-
-			actualTrap.setPosition(FlxG.mouse.x-32, FlxG.mouse.y-16);
-
-			if (!thereIsPlayer(64, FlxG.mouse.x, FlxG.mouse.y) && itsOnASurface(64, FlxG.mouse.x, FlxG.mouse.y-16)&&!thereIsACoinHere(FlxG.mouse.x,FlxG.mouse.y-16,coins,32 * 2))
-			{
-                
-				actualTrap.setColorTransform(0, 1, 0, 0.8);
-
-			}
-			else
-			{
-				actualTrap.setColorTransform(1, 0, 0, 0.8);
-			}
-
-		}
 
 		//OJITO
 		if (god.stateDuration!=-1&&god.state=="Stunned")
@@ -399,8 +263,8 @@ class GameState extends FlxState
 		else{
 			stunText.set_visible(false);
 		}
-		
-			//OJITO
+
+		//OJITO
 		if (player.stateDuration!=-1&&player.state=="Stunned")
 		{
 			stunTextPlayer.set_visible(true);
@@ -423,71 +287,11 @@ class GameState extends FlxState
 
 		}
 	}
-	function runGodSkill()
-	{
-		if (!skill2.isTouchingButton()&&!skill1.isTouchingButton())
-		{
-			switch (god.idSkill)
-			{
-				case 0:
-					skill1.setActivation();
-					var proj:ProjectilePlayer = cast(projectilesGod.members[0], ProjectilePlayer);
-					proj.setPointToFollow(FlxG.mouse.x, FlxG.mouse.y);
-					proj.shoot(god.x+(god.width/2), god.y+(god.height/2));
-					god.idSkill =-1;
-
-				case 1:
-					if (!thereIsPlayer(64, FlxG.mouse.x, FlxG.mouse.y) && itsOnASurface(64, FlxG.mouse.x, FlxG.mouse.y-16)&&!thereIsACoinHere(FlxG.mouse.x,FlxG.mouse.y-16,coins,32 * 2))
-					{
-						god.idSkill =-1;
-						actualTrap.setColorTransform(1,1,1,1);
-						actualTrap.canCollide = true;
-						
-						actualTrap = null;
-						skill2.setActivation();
-					}
-			}
-		}
-	}
-
-	function thereIsPlayer(aSizeOfSurface:Float,aX:Int,aY:Int):Bool
-	{
-		return ToolsForUse.IsInsideCircle(aX,aY,player.x+(player.width/2), player.y+(player.height/2),aSizeOfSurface+(aSizeOfSurface/2));
-	}
-
-	function itsOnASurface(aSizeOfSurface:Float,aX:Int,aY:Int):Bool
-	{
-		var midSize:Int = Std.int(aSizeOfSurface / 2);
-		var midSize2:Int = Std.int(midSize / 2);
-
-		if (map.getTile(Std.int(aX/32), Std.int(aY/32))==tileIndexNonCollision||map.getTile(Std.int(aX/32), Std.int(aY/32))==tileIndexCoins) //fijarte si donde toco es 0
-		{
-			//trace("no surface bb1");
-			if (map.getTile(Std.int((aX + midSize2)/32), Std.int(aY/32)) == tileIndexNonCollision || map.getTile(Std.int((aX + midSize2)/32), Std.int(aY/32)) == tileIndexCoins)
-			{
-
-				if (map.getTile(Std.int(aX/32),Std.int(((midSize/2)+aY)/32))!=tileIndexNonCollision&&map.getTile(Std.int(aX/32), Std.int(((midSize/2)+aY)/32))!= tileIndexCoins) //fijarte si es superficie
-				{
-					if (map.getTile(Std.int((aX + midSize2)/32), Std.int(((midSize/2)+aY)/32)) != tileIndexNonCollision && map.getTile(Std.int((aX + midSize2)/32), Std.int(((midSize/2)+aY)/32)) != tileIndexCoins &&map.getTile(Std.int((aX + midSize2)/32), Std.int(((midSize/2)+aY)/32)) != tileIndexNonCollisionBlack)
-					{
-						return true;
-						
-					}
-
-				}
-
-			}
-
-		}
-
-		//trace("no surface bb");
-		return false;
-	}
 
 	function playerVsCoins(aPlayer:Player1, aCoin:Coin)
 	{
-		aPlayer.coins = aPlayer.coins + 1;
-		textGame.text = "Objetos Jugador: " + player.coins + "/" + coins.length;
+		aPlayer.coinsCount = aPlayer.coinsCount + 1;
+		textGame.text = "Objetos Jugador: " + player.coinsCount + "/" + coins.length;
 		aCoin.setPosition(0, 0);
 		aCoin.kill();
 
@@ -497,8 +301,8 @@ class GameState extends FlxState
 	{
 		if (aTrap.canCollide)
 		{
-		aPlayer.state = "Stunned";
-		aPlayer.stateDuration = 2;
+			aPlayer.state = "Stunned";
+			aPlayer.stateDuration = 2;
 			traps.remove(aTrap, true);
 			aTrap.destroy();
 		}

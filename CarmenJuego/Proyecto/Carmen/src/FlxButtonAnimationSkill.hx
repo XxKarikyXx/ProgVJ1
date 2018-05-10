@@ -34,7 +34,7 @@ class FlxButtonAnimationSkill extends FlxButtonAnimation
 		timerCoolDown = 0;
 		id = aId;
 label = aLabel;
-if(label!=null){
+if(label != null){
 label.fieldWidth = this.width;
 		label.setFormat(20, FlxColor.WHITE);
 		label.alpha = 0.5;
@@ -80,7 +80,7 @@ updateLabel("");
 				updateLabel(Std.int(timerCoolDown+1)+"");
 				activeButton = false;
 				timerCoolDown = timerCoolDown - aDt;
-				if (isOver(hMousePosition))//over the button
+				if (isOver(hMousePosition))
 				{
 					onOver(this);
 				}else
@@ -91,7 +91,7 @@ updateLabel("");
 			else
 			{
 label.set_visible(false);
-				if (isOver(hMousePosition))//over the button
+				if (isOver(hMousePosition))
 				{
 					onOver(this);
 					if (FlxG.mouse.pressed&&!activeButton)

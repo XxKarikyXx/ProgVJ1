@@ -17,10 +17,10 @@ class God extends FlxSprite
 	var map:FlxTilemap;
 	@:isVar public var projectiles(default,set):FlxGroup;
 	@:isVar public var projCount = -1;
-	@:isVar public var idSkill:Int =-1;	
-    @:isVar public var skill1:FlxButtonAnimationSkill;
+
 	@:isVar public var state:String = "Normal";
 	@:isVar public var stateDuration:Float = -1;
+	public var skillsController(default,default):SkillsController;
 
 	public function new(X:Float, Y:Float, aMap:FlxTilemap)
 	{
@@ -61,10 +61,6 @@ class God extends FlxSprite
 		return projectiles = aProjectiles;
 	}
 	
-		function set_idSkill(anId:Int):Int
-	{
-		return idSkill=anId;
-	}
 
 	override public function update(aDt:Float):Void
 	{
@@ -81,7 +77,31 @@ class God extends FlxSprite
 		}
 
 
+		if (FlxG.mouse.justPressed && skillsController.idSkill !=-1)
+		{
+			skillsController.runGodSkill(FlxG.mouse.x, FlxG.mouse.y, skillsController.idSkill);
+			skillsController.idSkill =-1;
+		}
 
+		//PREGUNTAR
+		if (skillsController.idSkill == 1&&skillsController.actualTrap!=null)
+		{
+
+			skillsController.actualTrap.setPosition(FlxG.mouse.x-(skillsController.actualTrap.width/2), FlxG.mouse.y-(skillsController.actualTrap.height/2));
+
+			if (skillsController.skill2ConditionToPutElement())
+			{
+				skillsController.actualTrap.setColorTransform(0, 1, 0, 0.8);
+
+			}
+			else
+			{
+				skillsController.actualTrap.setColorTransform(1, 0, 0, 0.8);
+			}
+
+		}
+		
+		
 		if (velocity.x == 0 && velocity.y == 0)
 		{
 			animation.play("idle");

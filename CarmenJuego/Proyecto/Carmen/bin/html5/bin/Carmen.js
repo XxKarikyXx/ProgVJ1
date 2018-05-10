@@ -140,7 +140,7 @@ ApplicationMain.init = function() {
 	}
 };
 ApplicationMain.main = function() {
-	ApplicationMain.config = { build : "817", company : "TuMadre", file : "Carmen", fps : 60, name : "Carmen", orientation : "", packageName : "Carmen", version : "1.0.0", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : false, height : 1080, parameters : "{}", resizable : true, stencilBuffer : true, title : "Carmen", vsync : false, width : 1920, x : null, y : null}]};
+	ApplicationMain.config = { build : "864", company : "TuMadre", file : "Carmen", fps : 60, name : "Carmen", orientation : "", packageName : "Carmen", version : "1.0.0", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : false, height : 1080, parameters : "{}", resizable : true, stencilBuffer : true, title : "Carmen", vsync : false, width : 1920, x : null, y : null}]};
 };
 ApplicationMain.start = function() {
 	var hasMain = false;
@@ -5849,9 +5849,40 @@ $hxClasses["GlobalGameData"] = GlobalGameData;
 GlobalGameData.__name__ = ["GlobalGameData"];
 GlobalGameData.player = null;
 GlobalGameData.player2 = null;
+GlobalGameData.map = null;
 GlobalGameData.clear = function() {
 	GlobalGameData.player = null;
 	GlobalGameData.player2 = null;
+	GlobalGameData.map = null;
+};
+GlobalGameData.thereIsPlayer = function(aSizeOfSurface,aX,aY) {
+	return ToolsForUse.IsInsideCircle(aX,aY,GlobalGameData.player2.x + GlobalGameData.player2.get_width() / 2,GlobalGameData.player2.y + GlobalGameData.player2.get_height() / 2,aSizeOfSurface + aSizeOfSurface / 2);
+};
+GlobalGameData.itsOnASurface = function(aSizeOfSurface,aX,aY) {
+	var midSize = aSizeOfSurface / 2 | 0;
+	var midSize2 = midSize / 2 | 0;
+	if(GlobalGameData.map.getTile(aX / 32 | 0,aY / 32 | 0) == 0 || GlobalGameData.map.getTile(aX / 32 | 0,aY / 32 | 0) == 2) {
+		if(GlobalGameData.map.getTile((aX + midSize2) / 32 | 0,aY / 32 | 0) == 0 || GlobalGameData.map.getTile((aX + midSize2) / 32 | 0,aY / 32 | 0) == 2) {
+			if(GlobalGameData.map.getTile(aX / 32 | 0,(midSize / 2 + aY) / 32 | 0) != 0 && GlobalGameData.map.getTile(aX / 32 | 0,(midSize / 2 + aY) / 32 | 0) != 2) {
+				if(GlobalGameData.map.getTile((aX + midSize2) / 32 | 0,(midSize / 2 + aY) / 32 | 0) != 0 && GlobalGameData.map.getTile((aX + midSize2) / 32 | 0,(midSize / 2 + aY) / 32 | 0) != 2 && GlobalGameData.map.getTile((aX + midSize2) / 32 | 0,(midSize / 2 + aY) / 32 | 0) != 1) {
+					return true;
+				}
+			}
+		}
+	}
+	return false;
+};
+GlobalGameData.thereIsACoinHere = function(anX,anY,otherCoins,aRad) {
+	var rad = aRad;
+	var aCoin = new flixel_group_FlxTypedGroupIterator(otherCoins.members,null);
+	while(aCoin.hasNext()) {
+		var aCoin1 = aCoin.next();
+		var coin1 = js_Boot.__cast(aCoin1 , gameObjects_Coin);
+		if(ToolsForUse.IsInsideCircle(anX,anY,coin1.x,coin1.y,rad)) {
+			return true;
+		}
+	}
+	return false;
 };
 var HxOverrides = function() { };
 $hxClasses["HxOverrides"] = HxOverrides;
@@ -45202,7 +45233,6 @@ gameObjects_Coin.prototype = $extend(flixel_FlxSprite.prototype,{
 var gameObjects_God = function(X,Y,aMap) {
 	this.stateDuration = -1;
 	this.state = "Normal";
-	this.idSkill = -1;
 	this.projCount = -1;
 	flixel_FlxSprite.call(this,X,Y);
 	this.map = aMap;
@@ -45225,10 +45255,9 @@ gameObjects_God.prototype = $extend(flixel_FlxSprite.prototype,{
 	map: null
 	,projectiles: null
 	,projCount: null
-	,idSkill: null
-	,skill1: null
 	,state: null
 	,stateDuration: null
+	,skillsController: null
 	,create: function() {
 	}
 	,intanceProjectiles: function() {
@@ -45236,9 +45265,6 @@ gameObjects_God.prototype = $extend(flixel_FlxSprite.prototype,{
 	}
 	,set_projectiles: function(aProjectiles) {
 		return this.projectiles = aProjectiles;
-	}
-	,set_idSkill: function(anId) {
-		return this.idSkill = anId;
 	}
 	,update: function(aDt) {
 		this.acceleration.set_x(0);
@@ -45253,6 +45279,18 @@ gameObjects_God.prototype = $extend(flixel_FlxSprite.prototype,{
 		case "Stunned":
 			this.godIsStunned(aDt);
 			break;
+		}
+		if(flixel_FlxG.mouse._leftButton.current == 2 && this.skillsController.idSkill != -1) {
+			this.skillsController.runGodSkill(flixel_FlxG.mouse.x,flixel_FlxG.mouse.y,this.skillsController.idSkill);
+			this.skillsController.idSkill = -1;
+		}
+		if(this.skillsController.idSkill == 1 && this.skillsController.actualTrap != null) {
+			this.skillsController.actualTrap.setPosition(flixel_FlxG.mouse.x - this.skillsController.actualTrap.get_width() / 2,flixel_FlxG.mouse.y - this.skillsController.actualTrap.get_height() / 2);
+			if(this.skillsController.skill2ConditionToPutElement()) {
+				this.skillsController.actualTrap.setColorTransform(0,1,0,0.8);
+			} else {
+				this.skillsController.actualTrap.setColorTransform(1,0,0,0.8);
+			}
 		}
 		if(this.velocity.x == 0 && this.velocity.y == 0) {
 			this.animation.play("idle");
@@ -45298,7 +45336,7 @@ gameObjects_God.prototype = $extend(flixel_FlxSprite.prototype,{
 			this.state = "Normal";
 			this.stateDuration = -1;
 		} else {
-			haxe_Log.trace(this.stateDuration,{ fileName : "God.hx", lineNumber : 181, className : "gameObjects.God", methodName : "godIsStunned"});
+			haxe_Log.trace(this.stateDuration,{ fileName : "God.hx", lineNumber : 201, className : "gameObjects.God", methodName : "godIsStunned"});
 			this.stateDuration -= aDt;
 		}
 	}
@@ -45309,7 +45347,7 @@ var gameObjects_Player1 = function(X,Y,aMap) {
 	this.stateDuration = -1;
 	this.state = "Normal";
 	this.projCount = -1;
-	this.coins = 0;
+	this.coinsCount = 0;
 	this.jumpOnAirCount = 0;
 	flixel_FlxSprite.call(this,X,Y);
 	this.map = aMap;
@@ -45332,13 +45370,17 @@ gameObjects_Player1.__super__ = flixel_FlxSprite;
 gameObjects_Player1.prototype = $extend(flixel_FlxSprite.prototype,{
 	map: null
 	,jumpOnAirCount: null
-	,coins: null
+	,coinsCount: null
 	,projectiles: null
 	,projCount: null
+	,coins: null
 	,state: null
 	,stateDuration: null
 	,intanceProjectiles: function() {
 		this.projCount = 0;
+	}
+	,setCoins: function(aCoins) {
+		this.coins = aCoins;
 	}
 	,set_projectiles: function(aProjectiles) {
 		return this.projectiles = aProjectiles;
@@ -45420,7 +45462,7 @@ gameObjects_Player1.prototype = $extend(flixel_FlxSprite.prototype,{
 			this.state = "Normal";
 			this.stateDuration = -1;
 		} else {
-			haxe_Log.trace(this.stateDuration,{ fileName : "Player1.hx", lineNumber : 203, className : "gameObjects.Player1", methodName : "playerIsStunned"});
+			haxe_Log.trace(this.stateDuration,{ fileName : "Player1.hx", lineNumber : 209, className : "gameObjects.Player1", methodName : "playerIsStunned"});
 			this.stateDuration -= aDt;
 		}
 	}
@@ -45437,14 +45479,14 @@ gameObjects_Player1.prototype = $extend(flixel_FlxSprite.prototype,{
 		}
 		return 0;
 	}
-	,set_coins: function(value) {
-		return this.coins = value;
+	,set_coinsCount: function(value) {
+		return this.coinsCount = value;
 	}
-	,get_coins: function() {
-		return this.coins;
+	,get_coinsCount: function() {
+		return this.coinsCount;
 	}
 	,__class__: gameObjects_Player1
-	,__properties__: $extend(flixel_FlxSprite.prototype.__properties__,{set_projectiles:"set_projectiles",set_coins:"set_coins",get_coins:"get_coins"})
+	,__properties__: $extend(flixel_FlxSprite.prototype.__properties__,{set_projectiles:"set_projectiles",set_coinsCount:"set_coinsCount",get_coinsCount:"get_coinsCount"})
 });
 var gameObjects_ProjectilePlayer = function(atarget,aFollowTime,aVelocity) {
 	if(aVelocity == null) {
@@ -45453,7 +45495,7 @@ var gameObjects_ProjectilePlayer = function(atarget,aFollowTime,aVelocity) {
 	this.yPoint = 0;
 	this.xPoint = 0;
 	this.followPointBool = false;
-	this.followNumber = 0;
+	this.followTimeTotal = 0;
 	this.velocityProj = 600;
 	this.followTime = 0;
 	this.followBool = false;
@@ -45464,7 +45506,7 @@ var gameObjects_ProjectilePlayer = function(atarget,aFollowTime,aVelocity) {
 	this.velocity.set_y(0);
 	this.velocityProj = aVelocity;
 	this.followTime = aFollowTime;
-	this.followNumber = aFollowTime;
+	this.followTimeTotal = aFollowTime;
 	var a = new flixel_util_FlxTimer();
 };
 $hxClasses["gameObjects.ProjectilePlayer"] = gameObjects_ProjectilePlayer;
@@ -45475,7 +45517,7 @@ gameObjects_ProjectilePlayer.prototype = $extend(flixel_FlxSprite.prototype,{
 	,target: null
 	,followTime: null
 	,velocityProj: null
-	,followNumber: null
+	,followTimeTotal: null
 	,followPointBool: null
 	,xPoint: null
 	,yPoint: null
@@ -45493,7 +45535,7 @@ gameObjects_ProjectilePlayer.prototype = $extend(flixel_FlxSprite.prototype,{
 		}
 		if(this.followTime <= 0 && this.followBool) {
 			this.followBool = false;
-			this.followTime = this.followNumber;
+			this.followTime = this.followTimeTotal;
 		} else {
 			this.followTime -= elapsed;
 		}
@@ -45505,7 +45547,7 @@ gameObjects_ProjectilePlayer.prototype = $extend(flixel_FlxSprite.prototype,{
 	}
 	,shoot: function(ax,ay) {
 		this.reset(ax,ay);
-		this.followTime = this.followNumber;
+		this.followTime = this.followTimeTotal;
 		this.followBool = true;
 		this.set_visible(true);
 	}
@@ -45518,16 +45560,16 @@ gameObjects_ProjectilePlayer.prototype = $extend(flixel_FlxSprite.prototype,{
 		var target = this.target;
 		var deltaX = target.x + target.get_width() * 0.5 - (this.x + this.get_width() * 0.5);
 		var deltaY = target.y + target.get_height() * 0.5 - (this.y + this.get_height() * 0.5);
-		var length = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-		deltaX /= length;
-		deltaY /= length;
-		this.velocity.set_x(deltaX * this.velocityProj);
-		this.velocity.set_y(deltaY * this.velocityProj);
+		this.setVelocityWithDeltas(deltaX,deltaY);
 	}
 	,followPoint: function() {
-		var target = this.target;
 		var deltaX = this.xPoint + 0.5 - (this.x + 0.5);
 		var deltaY = this.yPoint + 0.5 - (this.y + 0.5);
+		this.setVelocityWithDeltas(deltaX,deltaY);
+	}
+	,setVelocityWithDeltas: function(aDeltaX,aDeltaY) {
+		var deltaX = aDeltaX;
+		var deltaY = aDeltaY;
 		var length = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
 		deltaX /= length;
 		deltaY /= length;
@@ -45537,6 +45579,161 @@ gameObjects_ProjectilePlayer.prototype = $extend(flixel_FlxSprite.prototype,{
 	,__class__: gameObjects_ProjectilePlayer
 	,__properties__: $extend(flixel_FlxSprite.prototype.__properties__,{set_target:"set_target"})
 });
+var gameObjects_SkillsController = function(aSkills,aText,atraps,aTexts) {
+	this.originalColor = new openfl_geom_ColorTransform();
+	this.idSkill = -1;
+	this.skills = aSkills;
+	this.text = aText;
+	this.traps = atraps;
+	this.skillsText = aTexts;
+	this.createAndAddSkills();
+};
+$hxClasses["gameObjects.SkillsController"] = gameObjects_SkillsController;
+gameObjects_SkillsController.__name__ = ["gameObjects","SkillsController"];
+gameObjects_SkillsController.prototype = {
+	skills: null
+	,skillsText: null
+	,text: null
+	,mskill1: null
+	,mskill2: null
+	,idSkill: null
+	,traps: null
+	,actualTrap: null
+	,originalColor: null
+	,createAndAddSkills: function() {
+		var textSkill1FlxText = new flixel_text_FlxText();
+		this.mskill1 = new FlxButtonAnimationSkill("assets/balaplacebo.png",57,64,$bind(this,this.onClickSkill1),$bind(this,this.onClickSkill1Active),$bind(this,this.onOverSkill1),$bind(this,this.onRollOutSkill1),3,0,textSkill1FlxText);
+		this.mskill1.setOver([1]);
+		this.mskill1.setUp([0]);
+		this.mskill1.setDown([2]);
+		this.mskill1.setCooldown([3]);
+		this.mskill1.setDisabled([4]);
+		this.mskill1.setPosition(1740,50);
+		this.skills.add(this.mskill1);
+		this.skillsText.add(textSkill1FlxText);
+		var textSkill2FlxText = new flixel_text_FlxText();
+		this.mskill2 = new FlxButtonAnimationSkill("assets/balaplacebo.png",57,64,$bind(this,this.onClickSkill2),$bind(this,this.onClickSkill2Active),$bind(this,this.onOverSkill2),$bind(this,this.onRollOutSkill2),40,1,textSkill2FlxText);
+		this.mskill2.setOver([1]);
+		this.mskill2.setUp([0]);
+		this.mskill2.setDown([2]);
+		this.mskill2.setCooldown([3]);
+		this.mskill2.setDisabled([4]);
+		this.mskill2.setPosition(1825,50);
+		this.skills.add(this.mskill2);
+		this.skillsText.add(textSkill2FlxText);
+	}
+	,onClickSkill1: function(aButton) {
+		this.resetSkill(this.idSkill);
+		var _g = 0;
+		while(_g < 1) {
+			var i = _g++;
+			GlobalGameData.player.projectiles.members[i].revive();
+			GlobalGameData.player.projectiles.members[i].set_visible(false);
+		}
+		GlobalGameData.player.intanceProjectiles();
+		this.idSkill = this.mskill1.id;
+	}
+	,onClickSkill1Active: function(aButton) {
+		this.resetSkill(this.idSkill);
+	}
+	,onOverSkill1: function(aButton) {
+		this.text.set_text("Dispara un proyectil en la dirección donde se haga click.    Cooldown: " + this.mskill1.coolDown + "s");
+	}
+	,onRollOutSkill1: function(aButton) {
+	}
+	,onClickSkill2: function(aButton) {
+		this.resetSkill(this.idSkill);
+		this.idSkill = this.mskill2.id;
+		var trap = new gameObjects_Trap(flixel_FlxG.mouse.x,flixel_FlxG.mouse.y);
+		this.actualTrap = trap;
+		this.traps.add(trap);
+	}
+	,onClickSkill2Active: function(aButton) {
+		this.resetSkill(this.idSkill);
+	}
+	,onOverSkill2: function(aButton) {
+		this.text.set_text("Pone una trampa en una superficie que inmoviliza.    Cooldown: " + this.mskill2.coolDown + "s");
+	}
+	,onRollOutSkill2: function(aButton) {
+	}
+	,getSkillWithId: function(idSkill) {
+		switch(idSkill) {
+		case 0:
+			return this.skills.members[0];
+		case 1:
+			return this.skills.members[1];
+		}
+		return null;
+	}
+	,thereAreSkillsTouching: function() {
+		if(!this.mskill2.isTouchingButton()) {
+			return this.mskill1.isTouchingButton();
+		} else {
+			return true;
+		}
+	}
+	,activateSkillWithId: function(idSkill) {
+		switch(idSkill) {
+		case 0:
+			this.mskill1.setActivation();
+			var proj = js_Boot.__cast(GlobalGameData.player.projectiles.members[0] , gameObjects_ProjectilePlayer);
+			proj.setPointToFollow(flixel_FlxG.mouse.x,flixel_FlxG.mouse.y);
+			proj.shoot(GlobalGameData.player.x + GlobalGameData.player.get_width() / 2,GlobalGameData.player.y + GlobalGameData.player.get_height() / 2);
+			idSkill = -1;
+			break;
+		case 1:
+			idSkill = -1;
+			this.actualTrap.setColorTransform(1,1,1,1);
+			this.actualTrap.canCollide = true;
+			this.actualTrap = null;
+			this.mskill2.setActivation();
+			break;
+		}
+		return null;
+	}
+	,runGodSkill: function(aX,aY,aIdSkill) {
+		if(!this.thereAreSkillsTouching()) {
+			switch(aIdSkill) {
+			case 0:
+				this.activateSkillWithId(aIdSkill);
+				break;
+			case 1:
+				if(this.skill2ConditionToPutElement()) {
+					this.activateSkillWithId(aIdSkill);
+				}
+				break;
+			}
+		}
+	}
+	,resetSkill: function(idSkill) {
+		switch(idSkill) {
+		case 0:
+			var _g = 0;
+			while(_g < 1) {
+				var i = _g++;
+				GlobalGameData.player.projectiles.members[i].kill();
+			}
+			this.mskill1.activeButton = false;
+			this.mskill1.animation.play("up");
+			break;
+		case 1:
+			this.traps.remove(this.actualTrap,true);
+			this.actualTrap.destroy();
+			this.mskill2.activeButton = false;
+			this.mskill2.animation.play("up");
+			break;
+		}
+		idSkill = -1;
+	}
+	,skill2ConditionToPutElement: function() {
+		if(this.actualTrap.get_width() != null && !GlobalGameData.thereIsPlayer(this.actualTrap.get_width() * 2,flixel_FlxG.mouse.x,flixel_FlxG.mouse.y) && GlobalGameData.itsOnASurface(this.actualTrap.get_width(),flixel_FlxG.mouse.x,flixel_FlxG.mouse.y - this.actualTrap.get_height() / 2 | 0)) {
+			return !GlobalGameData.thereIsACoinHere(flixel_FlxG.mouse.x,flixel_FlxG.mouse.y - this.actualTrap.get_height() / 2,GlobalGameData.player2.coins,this.actualTrap.get_width() * 2);
+		} else {
+			return false;
+		}
+	}
+	,__class__: gameObjects_SkillsController
+};
 var gameObjects_Trap = function(X,Y) {
 	if(Y == null) {
 		Y = 0;
@@ -45545,7 +45742,7 @@ var gameObjects_Trap = function(X,Y) {
 		X = 0;
 	}
 	this.canCollide = false;
-	flixel_FlxSprite.call(this,0,0);
+	flixel_FlxSprite.call(this,X,Y);
 	this.loadGraphic("assets/ohno.jpg",true,64,32);
 	this.set_width(64);
 	this.set_height(32);
@@ -45707,6 +45904,7 @@ haxe_IMap.prototype = {
 	,set: null
 	,exists: null
 	,remove: null
+	,keys: null
 	,__class__: haxe_IMap
 };
 var haxe__$Int64__$_$_$Int64 = function(high,low) {
@@ -46950,6 +47148,11 @@ haxe_ds_BalancedTree.prototype = {
 		}
 		return false;
 	}
+	,keys: function() {
+		var ret = [];
+		this.keysLoop(this.root,ret);
+		return HxOverrides.iter(ret);
+	}
 	,setLoop: function(k,v,node) {
 		if(node == null) {
 			return new haxe_ds_TreeNode(null,k,v,null);
@@ -46976,6 +47179,13 @@ haxe_ds_BalancedTree.prototype = {
 			return this.balance(this.removeLoop(k,node.left),node.key,node.value,node.right);
 		} else {
 			return this.balance(node.left,node.key,node.value,this.removeLoop(k,node.right));
+		}
+	}
+	,keysLoop: function(node,acc) {
+		if(node != null) {
+			this.keysLoop(node.left,acc);
+			acc.push(node.key);
+			this.keysLoop(node.right,acc);
 		}
 	}
 	,merge: function(t1,t2) {
@@ -66536,6 +66746,70 @@ openfl__$internal_renderer_canvas_CanvasTextField.render = function(textField,re
 		}
 	}
 };
+var openfl__$internal_renderer_canvas_CanvasTilemap = function() { };
+$hxClasses["openfl._internal.renderer.canvas.CanvasTilemap"] = openfl__$internal_renderer_canvas_CanvasTilemap;
+openfl__$internal_renderer_canvas_CanvasTilemap.__name__ = ["openfl","_internal","renderer","canvas","CanvasTilemap"];
+openfl__$internal_renderer_canvas_CanvasTilemap.render = function(tilemap,renderSession) {
+	if(!tilemap.__renderable || tilemap.__worldAlpha <= 0) {
+		return;
+	}
+	var context = renderSession.context;
+	if(tilemap.__mask != null) {
+		renderSession.maskManager.pushMask(tilemap.__mask);
+	}
+	context.globalAlpha = tilemap.__worldAlpha;
+	var transform = tilemap.__renderTransform;
+	if(renderSession.roundPixels) {
+		context.setTransform(transform.a,transform.b,transform.c,transform.d,transform.tx | 0,transform.ty | 0);
+	} else {
+		context.setTransform(transform.a,transform.b,transform.c,transform.d,transform.tx,transform.ty);
+	}
+	if(!tilemap.smoothing) {
+		context.mozImageSmoothingEnabled = false;
+		context.msImageSmoothingEnabled = false;
+		context.imageSmoothingEnabled = false;
+	}
+	var tileRect = null;
+	var cacheTileID = -1;
+	var tiles;
+	var count;
+	var tile;
+	var source;
+	var rects;
+	var _g = 0;
+	var _g1 = tilemap.__layers;
+	while(_g < _g1.length) {
+		var layer = _g1[_g];
+		++_g;
+		if(layer.__tiles.length == 0 || layer.tileset == null || layer.tileset.bitmapData == null) {
+			continue;
+		}
+		layer.tileset.bitmapData.__sync();
+		source = layer.tileset.bitmapData.image.get_src();
+		tiles = layer.__tiles;
+		count = tiles.length;
+		rects = layer.tileset.__rects;
+		var _g3 = 0;
+		var _g2 = count;
+		while(_g3 < _g2) {
+			var i = _g3++;
+			tile = tiles[i];
+			if(tile.id != cacheTileID) {
+				tileRect = rects[tile.id];
+				cacheTileID = tile.id;
+			}
+			context.drawImage(source,tileRect.x,tileRect.y,tileRect.width,tileRect.height,tile.x,tile.y,tileRect.width,tileRect.height);
+		}
+	}
+	if(!tilemap.smoothing) {
+		context.mozImageSmoothingEnabled = true;
+		context.msImageSmoothingEnabled = true;
+		context.imageSmoothingEnabled = true;
+	}
+	if(tilemap.__mask != null) {
+		renderSession.maskManager.popMask();
+	}
+};
 var openfl__$internal_renderer_console_ConsoleRenderer = function(width,height,ctx) {
 	openfl__$internal_renderer_AbstractRenderer.call(this,width,height);
 	throw new js__$Boot_HaxeError("ConsoleRenderer not supported");
@@ -66836,6 +67110,36 @@ openfl__$internal_renderer_dom_DOMTextField.render = function(textField,renderSe
 		textField.__div = null;
 		textField.__style = null;
 	}
+};
+var openfl__$internal_renderer_flash_FlashRenderer = function() { };
+$hxClasses["openfl._internal.renderer.flash.FlashRenderer"] = openfl__$internal_renderer_flash_FlashRenderer;
+openfl__$internal_renderer_flash_FlashRenderer.__name__ = ["openfl","_internal","renderer","flash","FlashRenderer"];
+openfl__$internal_renderer_flash_FlashRenderer.instances = null;
+openfl__$internal_renderer_flash_FlashRenderer.register = function(renderObject) {
+	if(openfl__$internal_renderer_flash_FlashRenderer.instances == null) {
+		openfl__$internal_renderer_flash_FlashRenderer.instances = new haxe_ds_ObjectMap();
+		openfl_Lib.current.stage.addEventListener("enterFrame",openfl__$internal_renderer_flash_FlashRenderer.render);
+	}
+	openfl__$internal_renderer_flash_FlashRenderer.instances.set(renderObject,true);
+};
+openfl__$internal_renderer_flash_FlashRenderer.render = function(_) {
+	var instance = openfl__$internal_renderer_flash_FlashRenderer.instances.keys();
+	while(instance.hasNext()) {
+		var instance1 = instance.next();
+		instance1.__renderFlash();
+	}
+};
+var openfl__$internal_renderer_flash_IDisplayObject = function() { };
+$hxClasses["openfl._internal.renderer.flash.IDisplayObject"] = openfl__$internal_renderer_flash_IDisplayObject;
+openfl__$internal_renderer_flash_IDisplayObject.__name__ = ["openfl","_internal","renderer","flash","IDisplayObject"];
+openfl__$internal_renderer_flash_IDisplayObject.prototype = {
+	__renderFlash: null
+	,__class__: openfl__$internal_renderer_flash_IDisplayObject
+};
+var openfl__$internal_renderer_flash_FlashTilemap = function() { };
+$hxClasses["openfl._internal.renderer.flash.FlashTilemap"] = openfl__$internal_renderer_flash_FlashTilemap;
+openfl__$internal_renderer_flash_FlashTilemap.__name__ = ["openfl","_internal","renderer","flash","FlashTilemap"];
+openfl__$internal_renderer_flash_FlashTilemap.render = function(tilemap) {
 };
 var openfl__$internal_renderer_opengl_GLBitmap = function() { };
 $hxClasses["openfl._internal.renderer.opengl.GLBitmap"] = openfl__$internal_renderer_opengl_GLBitmap;
@@ -67199,6 +67503,169 @@ openfl__$internal_renderer_opengl_GLRenderer.prototype = $extend(openfl__$intern
 	}
 	,__class__: openfl__$internal_renderer_opengl_GLRenderer
 });
+var openfl__$internal_renderer_opengl_GLTilemap = function() { };
+$hxClasses["openfl._internal.renderer.opengl.GLTilemap"] = openfl__$internal_renderer_opengl_GLTilemap;
+openfl__$internal_renderer_opengl_GLTilemap.__name__ = ["openfl","_internal","renderer","opengl","GLTilemap"];
+openfl__$internal_renderer_opengl_GLTilemap.glImageUniform = null;
+openfl__$internal_renderer_opengl_GLTilemap.glMatrix = null;
+openfl__$internal_renderer_opengl_GLTilemap.glMatrixUniform = null;
+openfl__$internal_renderer_opengl_GLTilemap.glProgram = null;
+openfl__$internal_renderer_opengl_GLTilemap.glTextureAttribute = null;
+openfl__$internal_renderer_opengl_GLTilemap.glVertexAttribute = null;
+openfl__$internal_renderer_opengl_GLTilemap.initialize = function(gl) {
+	if(openfl__$internal_renderer_opengl_GLTilemap.glProgram == null) {
+		var vertexSource = "\n\t\t\t\t\n\t\t\t\tattribute vec2 aVertexPosition;\n\t\t\t\tattribute vec2 aTexCoord;\n\t\t\t\tuniform mat4 uMatrix;\n\t\t\t\tvarying vec2 vTexCoord;\n\t\t\t\t\n\t\t\t\tvoid main (void) {\n\t\t\t\t\t\n\t\t\t\t\tvTexCoord = aTexCoord;\n\t\t\t\t\tgl_Position = uMatrix * vec4 (aVertexPosition, 0.0, 1.0);\n\t\t\t\t\t\n\t\t\t\t}\n\t\t\t\t\n\t\t\t";
+		var fragmentSource = "precision mediump float;" + "varying vec2 vTexCoord;\n\t\t\t\tuniform sampler2D uImage0;\n\t\t\t\t\n\t\t\t\tvoid main (void) {\n\t\t\t\t\t\n\t\t\t\t\tgl_FragColor = texture2D (uImage0, vTexCoord);\n\t\t\t\t\t\n\t\t\t\t}\n\t\t\t\t\n\t\t\t";
+		openfl__$internal_renderer_opengl_GLTilemap.glProgram = lime_utils_GLUtils.createProgram(vertexSource,fragmentSource);
+		openfl__$internal_renderer_opengl_GLTilemap.glVertexAttribute = gl.getAttribLocation(openfl__$internal_renderer_opengl_GLTilemap.glProgram,"aVertexPosition");
+		openfl__$internal_renderer_opengl_GLTilemap.glTextureAttribute = gl.getAttribLocation(openfl__$internal_renderer_opengl_GLTilemap.glProgram,"aTexCoord");
+		openfl__$internal_renderer_opengl_GLTilemap.glMatrixUniform = gl.getUniformLocation(openfl__$internal_renderer_opengl_GLTilemap.glProgram,"uMatrix");
+		openfl__$internal_renderer_opengl_GLTilemap.glImageUniform = gl.getUniformLocation(openfl__$internal_renderer_opengl_GLTilemap.glProgram,"uImage0");
+	}
+};
+openfl__$internal_renderer_opengl_GLTilemap.render = function(tilemap,renderSession) {
+	if(tilemap.__layers == null || tilemap.__layers.length == 0) {
+		return;
+	}
+	openfl__$internal_renderer_opengl_GLTilemap.glMatrix = lime_math__$Matrix4_Matrix4_$Impl_$.createOrtho(-tilemap.__renderTransform.tx,tilemap.stage.stageWidth - tilemap.__renderTransform.tx,tilemap.stage.stageHeight - tilemap.__renderTransform.ty,-tilemap.__renderTransform.ty,-1000,1000);
+	renderSession.spriteBatch.finish();
+	renderSession.shaderManager.setShader(null);
+	renderSession.blendModeManager.setBlendMode(null);
+	var gl = renderSession.gl;
+	openfl__$internal_renderer_opengl_GLTilemap.initialize(gl);
+	gl.useProgram(openfl__$internal_renderer_opengl_GLTilemap.glProgram);
+	gl.enableVertexAttribArray(openfl__$internal_renderer_opengl_GLTilemap.glVertexAttribute);
+	gl.enableVertexAttribArray(openfl__$internal_renderer_opengl_GLTilemap.glTextureAttribute);
+	gl.activeTexture(gl.TEXTURE0);
+	var tiles;
+	var count;
+	var bufferData;
+	var buffer;
+	var previousLength;
+	var offset;
+	var uvs;
+	var uv;
+	var cacheTileID = -1;
+	var tileWidth = 0;
+	var tileHeight = 0;
+	var tile;
+	var x;
+	var y;
+	var x2;
+	var y2;
+	var _g = 0;
+	var _g1 = tilemap.__layers;
+	while(_g < _g1.length) {
+		var layer = _g1[_g];
+		++_g;
+		if(layer.__tiles.length == 0 || layer.tileset == null || layer.tileset.bitmapData == null) {
+			continue;
+		}
+		gl.bindTexture(gl.TEXTURE_2D,layer.tileset.bitmapData.getTexture(gl));
+		tiles = layer.__tiles;
+		count = tiles.length;
+		uvs = layer.tileset.__uvs;
+		bufferData = layer.__bufferData;
+		if(bufferData == null || bufferData.length != count * 24) {
+			previousLength = 0;
+			if(bufferData == null) {
+				var elements = count * 24;
+				var this1;
+				if(elements != null) {
+					this1 = new Float32Array(elements);
+				} else {
+					this1 = null;
+				}
+				bufferData = this1;
+			} else {
+				previousLength = bufferData.length / 24 | 0;
+				var elements1 = count * 24;
+				var this2;
+				if(elements1 != null) {
+					this2 = new Float32Array(elements1);
+				} else {
+					this2 = null;
+				}
+				var data = this2;
+				var _g3 = 0;
+				var _g2 = bufferData.length;
+				while(_g3 < _g2) {
+					var i = _g3++;
+					data[i] = bufferData[i];
+				}
+				bufferData = data;
+			}
+			var _g31 = previousLength;
+			var _g21 = count;
+			while(_g31 < _g21) {
+				var i1 = _g31++;
+				uv = uvs[tiles[i1].id];
+				haxe_Log.trace(uv,{ fileName : "GLTilemap.hx", lineNumber : 154, className : "openfl._internal.renderer.opengl.GLTilemap", methodName : "render"});
+				x = uv.x;
+				y = uv.y;
+				x2 = uv.width;
+				y2 = uv.height;
+				offset = i1 * 24;
+				bufferData[offset + 2] = x;
+				bufferData[offset + 3] = y;
+				bufferData[offset + 6] = x2;
+				bufferData[offset + 7] = y;
+				bufferData[offset + 10] = x;
+				bufferData[offset + 11] = y2;
+				bufferData[offset + 14] = x;
+				bufferData[offset + 15] = y2;
+				bufferData[offset + 18] = x2;
+				bufferData[offset + 19] = y;
+				bufferData[offset + 22] = x2;
+				bufferData[offset + 23] = y2;
+			}
+			layer.__bufferData = bufferData;
+		}
+		if(layer.__buffer == null) {
+			layer.__buffer = gl.createBuffer();
+		}
+		gl.bindBuffer(gl.ARRAY_BUFFER,layer.__buffer);
+		var _g32 = 0;
+		var _g22 = count;
+		while(_g32 < _g22) {
+			var i2 = _g32++;
+			tile = tiles[i2];
+			if(tile.id != cacheTileID) {
+				tileWidth = layer.tileset.__rects[tile.id].width | 0;
+				tileHeight = layer.tileset.__rects[tile.id].height | 0;
+				cacheTileID = tile.id;
+			}
+			offset = i2 * 24;
+			x = tile.x;
+			y = tile.y;
+			x2 = x + tileWidth;
+			y2 = y + tileHeight;
+			bufferData[offset] = x;
+			bufferData[offset + 1] = y;
+			bufferData[offset + 4] = x2;
+			bufferData[offset + 5] = y;
+			bufferData[offset + 8] = x;
+			bufferData[offset + 9] = y2;
+			bufferData[offset + 12] = x;
+			bufferData[offset + 13] = y2;
+			bufferData[offset + 16] = x2;
+			bufferData[offset + 17] = y;
+			bufferData[offset + 20] = x2;
+			bufferData[offset + 21] = y2;
+		}
+		gl.bufferData(gl.ARRAY_BUFFER,bufferData,gl.DYNAMIC_DRAW);
+		gl.vertexAttribPointer(openfl__$internal_renderer_opengl_GLTilemap.glVertexAttribute,2,gl.FLOAT,false,16,0);
+		gl.vertexAttribPointer(openfl__$internal_renderer_opengl_GLTilemap.glTextureAttribute,2,gl.FLOAT,false,16,8);
+		gl.uniformMatrix4fv(openfl__$internal_renderer_opengl_GLTilemap.glMatrixUniform,false,openfl__$internal_renderer_opengl_GLTilemap.glMatrix);
+		gl.uniform1i(openfl__$internal_renderer_opengl_GLTilemap.glImageUniform,0);
+		gl.drawArrays(gl.TRIANGLES,0,tiles.length * 6);
+	}
+	gl.bindBuffer(gl.ARRAY_BUFFER,null);
+	gl.bindTexture(gl.TEXTURE_2D,null);
+	gl.disableVertexAttribArray(openfl__$internal_renderer_opengl_GLTilemap.glVertexAttribute);
+	gl.disableVertexAttribArray(openfl__$internal_renderer_opengl_GLTilemap.glTextureAttribute);
+	gl.useProgram(null);
+};
 var openfl__$internal_renderer_opengl_shaders2_Shader = function(gl) {
 	this.wrapT = 33071;
 	this.wrapS = 33071;
@@ -75936,6 +76403,430 @@ openfl_display__$StageScaleMode_StageScaleMode_$Impl_$.toString = function(value
 		return null;
 	}
 };
+var openfl_display_Tile = function(id,x,y) {
+	if(y == null) {
+		y = 0;
+	}
+	if(x == null) {
+		x = 0;
+	}
+	if(id == null) {
+		id = 0;
+	}
+	this.id = id;
+	this.x = x;
+	this.y = y;
+};
+$hxClasses["openfl.display.Tile"] = openfl_display_Tile;
+openfl_display_Tile.__name__ = ["openfl","display","Tile"];
+openfl_display_Tile.prototype = {
+	id: null
+	,x: null
+	,y: null
+	,__class__: openfl_display_Tile
+};
+var openfl_display_Tilemap = function(width,height) {
+	openfl_display_DisplayObject.call(this);
+	this.__width = width;
+	this.__height = height;
+	this.__layers = [];
+	this.numLayers = 0;
+	this.smoothing = true;
+};
+$hxClasses["openfl.display.Tilemap"] = openfl_display_Tilemap;
+openfl_display_Tilemap.__name__ = ["openfl","display","Tilemap"];
+openfl_display_Tilemap.__super__ = openfl_display_DisplayObject;
+openfl_display_Tilemap.prototype = $extend(openfl_display_DisplayObject.prototype,{
+	allowRotation: null
+	,allowScale: null
+	,allowTransform: null
+	,numLayers: null
+	,smoothing: null
+	,__width: null
+	,__height: null
+	,__layers: null
+	,addLayer: function(layer) {
+		this.__layers.push(layer);
+		this.numLayers++;
+		return layer;
+	}
+	,addLayerAt: function(layer,index) {
+		HxOverrides.remove(this.__layers,layer);
+		this.__layers.splice(index,0,layer);
+		this.numLayers = this.__layers.length;
+		return layer;
+	}
+	,contains: function(layer) {
+		return this.__layers.indexOf(layer) > -1;
+	}
+	,getLayerAt: function(index) {
+		if(index >= 0 && index < this.numLayers) {
+			return this.__layers[index];
+		}
+		return null;
+	}
+	,getLayerIndex: function(layer) {
+		var _g1 = 0;
+		var _g = this.__layers.length;
+		while(_g1 < _g) {
+			var i = _g1++;
+			if(this.__layers[i] == layer) {
+				return i;
+			}
+		}
+		return -1;
+	}
+	,removeLayer: function(layer) {
+		HxOverrides.remove(this.__layers,layer);
+		this.numLayers = this.__layers.length;
+		return layer;
+	}
+	,removeLayerAt: function(index) {
+		if(index >= 0 && index < this.numLayers) {
+			return this.removeLayer(this.__layers[index]);
+		}
+		return null;
+	}
+	,__getBounds: function(rect,matrix) {
+		var bounds = openfl_geom_Rectangle.__temp;
+		bounds.setTo(0,0,this.__width,this.__height);
+		bounds.__transform(bounds,matrix);
+		rect.__expand(bounds.x,bounds.y,bounds.width,bounds.height);
+	}
+	,__hitTest: function(x,y,shapeFlag,stack,interactiveOnly,hitObject) {
+		if(!hitObject.get_visible() || this.__isMask) {
+			return false;
+		}
+		if(this.get_mask() != null && !this.get_mask().__hitTestMask(x,y)) {
+			return false;
+		}
+		this.__getWorldTransform();
+		var _this = this.__worldTransform;
+		var norm = _this.a * _this.d - _this.b * _this.c;
+		var px = norm == 0 ? -_this.tx : 1.0 / norm * (_this.c * (_this.ty - y) + _this.d * (x - _this.tx));
+		var _this1 = this.__worldTransform;
+		var norm1 = _this1.a * _this1.d - _this1.b * _this1.c;
+		var py = norm1 == 0 ? -_this1.ty : 1.0 / norm1 * (_this1.a * (y - _this1.ty) + _this1.b * (_this1.tx - x));
+		if(px > 0 && py > 0 && px <= this.__width && py <= this.__height) {
+			if(stack != null && !interactiveOnly) {
+				stack.push(hitObject);
+			}
+			return true;
+		}
+		return false;
+	}
+	,__renderCanvas: function(renderSession) {
+		if(this.stage == null) {
+			return;
+		}
+		if(!(!this.__renderable || this.__worldAlpha <= 0)) {
+			var context = renderSession.context;
+			if(this.__mask != null) {
+				renderSession.maskManager.pushMask(this.__mask);
+			}
+			context.globalAlpha = this.__worldAlpha;
+			var transform = this.__renderTransform;
+			if(renderSession.roundPixels) {
+				context.setTransform(transform.a,transform.b,transform.c,transform.d,transform.tx | 0,transform.ty | 0);
+			} else {
+				context.setTransform(transform.a,transform.b,transform.c,transform.d,transform.tx,transform.ty);
+			}
+			if(!this.smoothing) {
+				context.mozImageSmoothingEnabled = false;
+				context.msImageSmoothingEnabled = false;
+				context.imageSmoothingEnabled = false;
+			}
+			var tileRect = null;
+			var cacheTileID = -1;
+			var tiles;
+			var count;
+			var tile;
+			var source;
+			var rects;
+			var _g = 0;
+			var _g1 = this.__layers;
+			while(_g < _g1.length) {
+				var layer = _g1[_g];
+				++_g;
+				if(layer.__tiles.length == 0 || layer.tileset == null || layer.tileset.bitmapData == null) {
+					continue;
+				}
+				layer.tileset.bitmapData.__sync();
+				source = layer.tileset.bitmapData.image.get_src();
+				tiles = layer.__tiles;
+				count = tiles.length;
+				rects = layer.tileset.__rects;
+				var _g3 = 0;
+				var _g2 = count;
+				while(_g3 < _g2) {
+					var i = _g3++;
+					tile = tiles[i];
+					if(tile.id != cacheTileID) {
+						tileRect = rects[tile.id];
+						cacheTileID = tile.id;
+					}
+					context.drawImage(source,tileRect.x,tileRect.y,tileRect.width,tileRect.height,tile.x,tile.y,tileRect.width,tileRect.height);
+				}
+			}
+			if(!this.smoothing) {
+				context.mozImageSmoothingEnabled = true;
+				context.msImageSmoothingEnabled = true;
+				context.imageSmoothingEnabled = true;
+			}
+			if(this.__mask != null) {
+				renderSession.maskManager.popMask();
+			}
+		}
+	}
+	,__renderFlash: function() {
+		if(this.stage == null) {
+			return;
+		}
+	}
+	,__renderGL: function(renderSession) {
+		if(this.stage == null) {
+			return;
+		}
+		if(!(this.__layers == null || this.__layers.length == 0)) {
+			openfl__$internal_renderer_opengl_GLTilemap.glMatrix = lime_math__$Matrix4_Matrix4_$Impl_$.createOrtho(-this.__renderTransform.tx,this.stage.stageWidth - this.__renderTransform.tx,this.stage.stageHeight - this.__renderTransform.ty,-this.__renderTransform.ty,-1000,1000);
+			renderSession.spriteBatch.finish();
+			renderSession.shaderManager.setShader(null);
+			renderSession.blendModeManager.setBlendMode(null);
+			var gl = renderSession.gl;
+			openfl__$internal_renderer_opengl_GLTilemap.initialize(gl);
+			gl.useProgram(openfl__$internal_renderer_opengl_GLTilemap.glProgram);
+			gl.enableVertexAttribArray(openfl__$internal_renderer_opengl_GLTilemap.glVertexAttribute);
+			gl.enableVertexAttribArray(openfl__$internal_renderer_opengl_GLTilemap.glTextureAttribute);
+			gl.activeTexture(gl.TEXTURE0);
+			var tiles;
+			var count;
+			var bufferData;
+			var buffer;
+			var previousLength;
+			var offset;
+			var uvs;
+			var uv;
+			var cacheTileID = -1;
+			var tileWidth = 0;
+			var tileHeight = 0;
+			var tile;
+			var x;
+			var y;
+			var x2;
+			var y2;
+			var _g = 0;
+			var _g1 = this.__layers;
+			while(_g < _g1.length) {
+				var layer = _g1[_g];
+				++_g;
+				if(layer.__tiles.length == 0 || layer.tileset == null || layer.tileset.bitmapData == null) {
+					continue;
+				}
+				gl.bindTexture(gl.TEXTURE_2D,layer.tileset.bitmapData.getTexture(gl));
+				tiles = layer.__tiles;
+				count = tiles.length;
+				uvs = layer.tileset.__uvs;
+				bufferData = layer.__bufferData;
+				if(bufferData == null || bufferData.length != count * 24) {
+					previousLength = 0;
+					if(bufferData == null) {
+						var elements = count * 24;
+						var this1;
+						if(elements != null) {
+							this1 = new Float32Array(elements);
+						} else {
+							this1 = null;
+						}
+						bufferData = this1;
+					} else {
+						previousLength = bufferData.length / 24 | 0;
+						var elements1 = count * 24;
+						var this2;
+						if(elements1 != null) {
+							this2 = new Float32Array(elements1);
+						} else {
+							this2 = null;
+						}
+						var data = this2;
+						var _g3 = 0;
+						var _g2 = bufferData.length;
+						while(_g3 < _g2) {
+							var i = _g3++;
+							data[i] = bufferData[i];
+						}
+						bufferData = data;
+					}
+					var _g31 = previousLength;
+					var _g21 = count;
+					while(_g31 < _g21) {
+						var i1 = _g31++;
+						uv = uvs[tiles[i1].id];
+						haxe_Log.trace(uv,{ fileName : "GLTilemap.hx", lineNumber : 154, className : "openfl._internal.renderer.opengl.GLTilemap", methodName : "render"});
+						x = uv.x;
+						y = uv.y;
+						x2 = uv.width;
+						y2 = uv.height;
+						offset = i1 * 24;
+						bufferData[offset + 2] = x;
+						bufferData[offset + 3] = y;
+						bufferData[offset + 6] = x2;
+						bufferData[offset + 7] = y;
+						bufferData[offset + 10] = x;
+						bufferData[offset + 11] = y2;
+						bufferData[offset + 14] = x;
+						bufferData[offset + 15] = y2;
+						bufferData[offset + 18] = x2;
+						bufferData[offset + 19] = y;
+						bufferData[offset + 22] = x2;
+						bufferData[offset + 23] = y2;
+					}
+					layer.__bufferData = bufferData;
+				}
+				if(layer.__buffer == null) {
+					layer.__buffer = gl.createBuffer();
+				}
+				gl.bindBuffer(gl.ARRAY_BUFFER,layer.__buffer);
+				var _g32 = 0;
+				var _g22 = count;
+				while(_g32 < _g22) {
+					var i2 = _g32++;
+					tile = tiles[i2];
+					if(tile.id != cacheTileID) {
+						tileWidth = layer.tileset.__rects[tile.id].width | 0;
+						tileHeight = layer.tileset.__rects[tile.id].height | 0;
+						cacheTileID = tile.id;
+					}
+					offset = i2 * 24;
+					x = tile.x;
+					y = tile.y;
+					x2 = x + tileWidth;
+					y2 = y + tileHeight;
+					bufferData[offset] = x;
+					bufferData[offset + 1] = y;
+					bufferData[offset + 4] = x2;
+					bufferData[offset + 5] = y;
+					bufferData[offset + 8] = x;
+					bufferData[offset + 9] = y2;
+					bufferData[offset + 12] = x;
+					bufferData[offset + 13] = y2;
+					bufferData[offset + 16] = x2;
+					bufferData[offset + 17] = y;
+					bufferData[offset + 20] = x2;
+					bufferData[offset + 21] = y2;
+				}
+				gl.bufferData(gl.ARRAY_BUFFER,bufferData,gl.DYNAMIC_DRAW);
+				gl.vertexAttribPointer(openfl__$internal_renderer_opengl_GLTilemap.glVertexAttribute,2,gl.FLOAT,false,16,0);
+				gl.vertexAttribPointer(openfl__$internal_renderer_opengl_GLTilemap.glTextureAttribute,2,gl.FLOAT,false,16,8);
+				gl.uniformMatrix4fv(openfl__$internal_renderer_opengl_GLTilemap.glMatrixUniform,false,openfl__$internal_renderer_opengl_GLTilemap.glMatrix);
+				gl.uniform1i(openfl__$internal_renderer_opengl_GLTilemap.glImageUniform,0);
+				gl.drawArrays(gl.TRIANGLES,0,tiles.length * 6);
+			}
+			gl.bindBuffer(gl.ARRAY_BUFFER,null);
+			gl.bindTexture(gl.TEXTURE_2D,null);
+			gl.disableVertexAttribArray(openfl__$internal_renderer_opengl_GLTilemap.glVertexAttribute);
+			gl.disableVertexAttribArray(openfl__$internal_renderer_opengl_GLTilemap.glTextureAttribute);
+			gl.useProgram(null);
+		}
+	}
+	,get_height: function() {
+		return this.__height;
+	}
+	,set_height: function(value) {
+		return this.__height = value | 0;
+	}
+	,get_width: function() {
+		return this.__width;
+	}
+	,set_width: function(value) {
+		return this.__width = value | 0;
+	}
+	,__class__: openfl_display_Tilemap
+});
+var openfl_display_TilemapLayer = function(tileset) {
+	this.tileset = tileset;
+	this.__tiles = [];
+	this.numTiles = 0;
+};
+$hxClasses["openfl.display.TilemapLayer"] = openfl_display_TilemapLayer;
+openfl_display_TilemapLayer.__name__ = ["openfl","display","TilemapLayer"];
+openfl_display_TilemapLayer.prototype = {
+	numTiles: null
+	,tileset: null
+	,__buffer: null
+	,__bufferData: null
+	,__dirty: null
+	,__tiles: null
+	,addTile: function(tile) {
+		this.__tiles.push(tile);
+		this.__dirty = true;
+		this.numTiles++;
+		return tile;
+	}
+	,addTiles: function(tiles) {
+		this.__tiles = this.__tiles.concat(tiles);
+		this.__dirty = true;
+		this.numTiles = this.__tiles.length;
+		return tiles;
+	}
+	,addTileAt: function(tile,index) {
+		HxOverrides.remove(this.__tiles,tile);
+		this.__tiles.splice(index,0,tile);
+		this.__dirty = true;
+		this.numTiles = this.__tiles.length;
+		return tile;
+	}
+	,contains: function(tile) {
+		return this.__tiles.indexOf(tile) > -1;
+	}
+	,getTileAt: function(index) {
+		if(index >= 0 && index < this.numTiles) {
+			return this.__tiles[index];
+		}
+		return null;
+	}
+	,getTileIndex: function(tile) {
+		var _g1 = 0;
+		var _g = this.__tiles.length;
+		while(_g1 < _g) {
+			var i = _g1++;
+			if(this.__tiles[i] == tile) {
+				return i;
+			}
+		}
+		return -1;
+	}
+	,removeTile: function(tile) {
+		HxOverrides.remove(this.__tiles,tile);
+		this.__dirty = true;
+		this.numTiles = this.__tiles.length;
+		return tile;
+	}
+	,removeTileAt: function(index) {
+		if(index >= 0 && index < this.numTiles) {
+			return this.removeTile(this.__tiles[index]);
+		}
+		return null;
+	}
+	,__class__: openfl_display_TilemapLayer
+};
+var openfl_display_Tileset = function(bitmapData) {
+	this.bitmapData = bitmapData;
+	this.__rects = [];
+	this.__uvs = [];
+};
+$hxClasses["openfl.display.Tileset"] = openfl_display_Tileset;
+openfl_display_Tileset.__name__ = ["openfl","display","Tileset"];
+openfl_display_Tileset.prototype = {
+	bitmapData: null
+	,__rects: null
+	,__uvs: null
+	,addRect: function(rect) {
+		this.__rects.push(rect);
+		this.__uvs.push(new openfl_geom_Rectangle(rect.x / this.bitmapData.width,rect.y / this.bitmapData.height,rect.get_right() / this.bitmapData.width,rect.get_bottom() / this.bitmapData.height));
+		return this.__rects.length - 1;
+	}
+	,__class__: openfl_display_Tileset
+};
 var openfl_display__$TriangleCulling_TriangleCulling_$Impl_$ = {};
 $hxClasses["openfl.display._TriangleCulling.TriangleCulling_Impl_"] = openfl_display__$TriangleCulling_TriangleCulling_$Impl_$;
 openfl_display__$TriangleCulling_TriangleCulling_$Impl_$.__name__ = ["openfl","display","_TriangleCulling","TriangleCulling_Impl_"];
@@ -83750,6 +84641,40 @@ openfl_utils__$CompressionAlgorithm_CompressionAlgorithm_$Impl_$.toString = func
 		return null;
 	}
 };
+var openfl_utils__$Dictionary_Dictionary_$Impl_$ = {};
+$hxClasses["openfl.utils._Dictionary.Dictionary_Impl_"] = openfl_utils__$Dictionary_Dictionary_$Impl_$;
+openfl_utils__$Dictionary_Dictionary_$Impl_$.__name__ = ["openfl","utils","_Dictionary","Dictionary_Impl_"];
+openfl_utils__$Dictionary_Dictionary_$Impl_$.get = function(this1,key) {
+	return this1.get(key);
+};
+openfl_utils__$Dictionary_Dictionary_$Impl_$.set = function(this1,key,value) {
+	this1.set(key,value);
+	return value;
+};
+openfl_utils__$Dictionary_Dictionary_$Impl_$.iterator = function(this1) {
+	return this1.keys();
+};
+openfl_utils__$Dictionary_Dictionary_$Impl_$.toStringMap = function(t,weakKeys) {
+	return new haxe_ds_StringMap();
+};
+openfl_utils__$Dictionary_Dictionary_$Impl_$.toIntMap = function(t,weakKeys) {
+	return new haxe_ds_IntMap();
+};
+openfl_utils__$Dictionary_Dictionary_$Impl_$.toEnumValueMapMap = function(t,weakKeys) {
+	return new haxe_ds_EnumValueMap();
+};
+openfl_utils__$Dictionary_Dictionary_$Impl_$.toObjectMap = function(t,weakKeys) {
+	return new haxe_ds_ObjectMap();
+};
+openfl_utils__$Dictionary_Dictionary_$Impl_$.fromStringMap = function(map) {
+	return map;
+};
+openfl_utils__$Dictionary_Dictionary_$Impl_$.fromIntMap = function(map) {
+	return map;
+};
+openfl_utils__$Dictionary_Dictionary_$Impl_$.fromObjectMap = function(map) {
+	return map;
+};
 var openfl_utils__$Endian_Endian_$Impl_$ = {};
 $hxClasses["openfl.utils._Endian.Endian_Impl_"] = openfl_utils__$Endian_Endian_$Impl_$;
 openfl_utils__$Endian_Endian_$Impl_$.__name__ = ["openfl","utils","_Endian","Endian_Impl_"];
@@ -83876,7 +84801,6 @@ states_GameOverPlayer.prototype = $extend(flixel_FlxState.prototype,{
 var states_GameState = function() {
 	this.resetPlaceCoin = false;
 	this.numberCoins = 0;
-	this.originalColor = new openfl_geom_ColorTransform();
 	flixel_FlxState.call(this);
 };
 $hxClasses["states.GameState"] = states_GameState;
@@ -83889,8 +84813,6 @@ states_GameState.prototype = $extend(flixel_FlxState.prototype,{
 	,projectilesPlayer: null
 	,projectilesGod: null
 	,traps: null
-	,actualTrap: null
-	,originalColor: null
 	,coins: null
 	,numberCoins: null
 	,resetPlaceCoin: null
@@ -83899,6 +84821,9 @@ states_GameState.prototype = $extend(flixel_FlxState.prototype,{
 	,textSkill: null
 	,stunText: null
 	,stunTextPlayer: null
+	,skillsGod: null
+	,skillsGodText: null
+	,skillsController: null
 	,skill1: null
 	,skill2: null
 	,create: function() {
@@ -83916,6 +84841,19 @@ states_GameState.prototype = $extend(flixel_FlxState.prototype,{
 		this.add(this.god);
 		GlobalGameData.player = this.god;
 		GlobalGameData.player2 = this.player;
+		GlobalGameData.map = this.map;
+		this.textSkill = new flixel_text_FlxText(1446,35,0,"",15);
+		this.add(this.textSkill);
+		this.textSkill.textField.set_multiline(true);
+		this.textSkill.textField.set_wordWrap(true);
+		this.textSkill.textField.set_width(150);
+		this.traps = new flixel_group_FlxTypedGroup();
+		this.add(this.traps);
+		this.skillsGod = new flixel_group_FlxTypedGroup();
+		this.add(this.skillsGod);
+		this.skillsGodText = new flixel_group_FlxTypedGroup();
+		this.add(this.skillsGodText);
+		this.skillsController = new gameObjects_SkillsController(this.skillsGod,this.textSkill,this.traps,this.skillsGodText);
 		this.setPlayerData();
 		this.setGodData();
 		flixel_FlxG.camera.setScrollBoundsRect(0,0,this.map.get_width(),this.map.get_height());
@@ -83927,44 +84865,15 @@ states_GameState.prototype = $extend(flixel_FlxState.prototype,{
 		_this.width = Width;
 		_this.height = Height;
 		this.setCoinsData();
-		this.textGame = new flixel_text_FlxText(50,50,0,"Objetos Jugador: " + this.player.get_coins() + "/" + this.coins.length,20);
+		this.player.setCoins(this.coins);
+		this.textGame = new flixel_text_FlxText(50,50,0,"Objetos Jugador: " + this.player.get_coinsCount() + "/" + this.coins.length,20);
 		this.add(this.textGame);
-		this.textSkill = new flixel_text_FlxText(1446,35,0,"",15);
-		this.add(this.textSkill);
-		this.textSkill.textField.set_multiline(true);
-		this.textSkill.textField.set_wordWrap(true);
-		this.textSkill.textField.set_width(150);
-		this.setGodSkillsInMap();
-		this.traps = new flixel_group_FlxTypedGroup();
-		this.add(this.traps);
 		this.stunText = new flixel_text_FlxText(50,50,0,"Inmovilizado",10);
 		this.stunText.set_visible(false);
 		this.add(this.stunText);
 		this.stunTextPlayer = new flixel_text_FlxText(50,50,0,"Inmovilizado",10);
 		this.stunTextPlayer.set_visible(false);
 		this.add(this.stunTextPlayer);
-	}
-	,setGodSkillsInMap: function() {
-		var textSkill1FlxText = new flixel_text_FlxText();
-		this.skill1 = new FlxButtonAnimationSkill("assets/balaplacebo.png",57,64,$bind(this,this.onClickSkill1),$bind(this,this.onClickSkill1Active),$bind(this,this.onOverSkill1),$bind(this,this.onRollOutSkill1),3,0,textSkill1FlxText);
-		this.skill1.setOver([1]);
-		this.skill1.setUp([0]);
-		this.skill1.setDown([2]);
-		this.skill1.setCooldown([3]);
-		this.skill1.setDisabled([4]);
-		this.skill1.setPosition(1740,50);
-		this.add(this.skill1);
-		this.add(textSkill1FlxText);
-		var textSkill2FlxText = new flixel_text_FlxText();
-		this.skill2 = new FlxButtonAnimationSkill("assets/balaplacebo.png",57,64,$bind(this,this.onClickSkill2),$bind(this,this.onClickSkill2Active),$bind(this,this.onOverSkill2),$bind(this,this.onRollOutSkill2),40,1,textSkill2FlxText);
-		this.skill2.setOver([1]);
-		this.skill2.setUp([0]);
-		this.skill2.setDown([2]);
-		this.skill2.setCooldown([3]);
-		this.skill2.setDisabled([4]);
-		this.skill2.setPosition(1825,50);
-		this.add(this.skill2);
-		this.add(textSkill2FlxText);
 	}
 	,setCoinsData: function() {
 		this.coins = new flixel_group_FlxTypedGroup();
@@ -84002,61 +84911,7 @@ states_GameState.prototype = $extend(flixel_FlxState.prototype,{
 			pro.kill();
 		}
 		this.god.set_projectiles(this.projectilesGod);
-	}
-	,onClickSkill1: function(aButton) {
-		this.resetSkill();
-		var _g = 0;
-		while(_g < 1) {
-			var i = _g++;
-			this.projectilesGod.members[i].revive();
-			this.projectilesGod.members[i].set_visible(false);
-		}
-		this.god.intanceProjectiles();
-		this.god.idSkill = this.skill1.id;
-	}
-	,onClickSkill1Active: function(aButton) {
-		this.resetSkill();
-	}
-	,onOverSkill1: function(aButton) {
-		this.textSkill.set_text("Dispara un proyectil en la dirección donde se haga click.    Cooldown: " + this.skill1.coolDown + "s");
-	}
-	,onRollOutSkill1: function(aButton) {
-	}
-	,onClickSkill2: function(aButton) {
-		this.resetSkill();
-		this.god.idSkill = this.skill2.id;
-		var trap = new gameObjects_Trap(flixel_FlxG.mouse.x,flixel_FlxG.mouse.y);
-		this.actualTrap = trap;
-		this.traps.add(trap);
-	}
-	,resetSkill: function() {
-		var _g = this.god.idSkill;
-		switch(_g) {
-		case 0:
-			var _g1 = 0;
-			while(_g1 < 1) {
-				var i = _g1++;
-				this.projectilesGod.members[i].kill();
-			}
-			this.skill1.activeButton = false;
-			this.skill1.animation.play("up");
-			break;
-		case 1:
-			this.traps.remove(this.actualTrap,true);
-			this.actualTrap.destroy();
-			this.skill2.activeButton = false;
-			this.skill2.animation.play("up");
-			break;
-		}
-		this.god.idSkill = -1;
-	}
-	,onClickSkill2Active: function(aButton) {
-		this.resetSkill();
-	}
-	,onOverSkill2: function(aButton) {
-		this.textSkill.set_text("Pone una trampa en una superficie que inmoviliza.    Cooldown: " + this.skill2.coolDown + "s");
-	}
-	,onRollOutSkill2: function(aButton) {
+		this.god.skillsController = this.skillsController;
 	}
 	,setCoinXAndYRandom: function(otherCoins,aCoin) {
 		var coinCoordinates = this.map.getTileCoords(2,true);
@@ -84065,7 +84920,7 @@ states_GameState.prototype = $extend(flixel_FlxState.prototype,{
 		var anX = coinCoordinates[index].x - aCoin.get_width() / 2;
 		var anY = coinCoordinates[index].y - aCoin.get_height() / 2;
 		if(!(otherCoins == null || otherCoins.length == 0)) {
-			while(this.thereIsACoinHere(anX,anY,otherCoins,192)) {
+			while(GlobalGameData.thereIsACoinHere(anX,anY,otherCoins,aCoin.get_width() * 6)) {
 				rand = Math.random();
 				index = Math.round(coinCoordinates.length * rand) - 1;
 				anX = coinCoordinates[index].x - aCoin.get_width() / 2;
@@ -84075,20 +84930,8 @@ states_GameState.prototype = $extend(flixel_FlxState.prototype,{
 		aCoin.set_x(anX);
 		aCoin.set_y(anY);
 	}
-	,thereIsACoinHere: function(anX,anY,otherCoins,aRad) {
-		var rad = aRad;
-		var aCoin = new flixel_group_FlxTypedGroupIterator(otherCoins.members,null);
-		while(aCoin.hasNext()) {
-			var aCoin1 = aCoin.next();
-			var coin1 = js_Boot.__cast(aCoin1 , gameObjects_Coin);
-			if(ToolsForUse.IsInsideCircle(anX,anY,coin1.x,coin1.y,rad)) {
-				return true;
-			}
-		}
-		return false;
-	}
 	,playerCollectedAllCoins: function() {
-		return this.player.get_coins() == this.numberCoins;
+		return this.player.get_coinsCount() == this.numberCoins;
 	}
 	,update: function(aDt) {
 		flixel_FlxState.prototype.update.call(this,aDt);
@@ -84100,7 +84943,7 @@ states_GameState.prototype = $extend(flixel_FlxState.prototype,{
 		flixel_FlxG.overlap(this.player,this.god,$bind(this,this.playerVsGod));
 		flixel_FlxG.overlap(this.player,this.traps,$bind(this,this.trapsVsPlayer));
 		if(this.playerCollectedAllCoins()) {
-			this.player.set_coins(0);
+			this.player.set_coinsCount(0);
 			var _g = 0;
 			while(_g < 2) {
 				var i = _g++;
@@ -84117,24 +84960,13 @@ states_GameState.prototype = $extend(flixel_FlxState.prototype,{
 			this.player.projCount = -1;
 			this.resetPlaceCoin = false;
 			this.shuffleCoins();
-			this.textGame.set_text("Objetos Jugador: " + this.player.get_coins() + "/" + this.coins.length);
+			this.textGame.set_text("Objetos Jugador: " + this.player.get_coinsCount() + "/" + this.coins.length);
 		}
 		var _this = flixel_FlxG.keys.justPressed;
 		if(_this.keyManager.checkStatus(27,_this.status)) {
 			var nextState = new states_MainMenu();
 			if(flixel_FlxG.game._state.switchTo(nextState)) {
 				flixel_FlxG.game._requestedState = nextState;
-			}
-		}
-		if(flixel_FlxG.mouse._leftButton.current == 2 && this.god.idSkill != -1) {
-			this.runGodSkill();
-		}
-		if(this.god.idSkill == this.skill2.id && this.actualTrap != null) {
-			this.actualTrap.setPosition(flixel_FlxG.mouse.x - 32,flixel_FlxG.mouse.y - 16);
-			if(!this.thereIsPlayer(64,flixel_FlxG.mouse.x,flixel_FlxG.mouse.y) && this.itsOnASurface(64,flixel_FlxG.mouse.x,flixel_FlxG.mouse.y - 16) && !this.thereIsACoinHere(flixel_FlxG.mouse.x,flixel_FlxG.mouse.y - 16,this.coins,64)) {
-				this.actualTrap.setColorTransform(0,1,0,0.8);
-			} else {
-				this.actualTrap.setColorTransform(1,0,0,0.8);
 			}
 		}
 		if(this.god.stateDuration != -1 && this.god.state == "Stunned") {
@@ -84159,49 +84991,9 @@ states_GameState.prototype = $extend(flixel_FlxState.prototype,{
 			this.setCoinXAndYRandom(this.coins,c);
 		}
 	}
-	,runGodSkill: function() {
-		if(!this.skill2.isTouchingButton() && !this.skill1.isTouchingButton()) {
-			var _g = this.god.idSkill;
-			switch(_g) {
-			case 0:
-				this.skill1.setActivation();
-				var proj = js_Boot.__cast(this.projectilesGod.members[0] , gameObjects_ProjectilePlayer);
-				proj.setPointToFollow(flixel_FlxG.mouse.x,flixel_FlxG.mouse.y);
-				proj.shoot(this.god.x + this.god.get_width() / 2,this.god.y + this.god.get_height() / 2);
-				this.god.idSkill = -1;
-				break;
-			case 1:
-				if(!this.thereIsPlayer(64,flixel_FlxG.mouse.x,flixel_FlxG.mouse.y) && this.itsOnASurface(64,flixel_FlxG.mouse.x,flixel_FlxG.mouse.y - 16) && !this.thereIsACoinHere(flixel_FlxG.mouse.x,flixel_FlxG.mouse.y - 16,this.coins,64)) {
-					this.god.idSkill = -1;
-					this.actualTrap.setColorTransform(1,1,1,1);
-					this.actualTrap.canCollide = true;
-					this.actualTrap = null;
-					this.skill2.setActivation();
-				}
-				break;
-			}
-		}
-	}
-	,thereIsPlayer: function(aSizeOfSurface,aX,aY) {
-		return ToolsForUse.IsInsideCircle(aX,aY,this.player.x + this.player.get_width() / 2,this.player.y + this.player.get_height() / 2,aSizeOfSurface + aSizeOfSurface / 2);
-	}
-	,itsOnASurface: function(aSizeOfSurface,aX,aY) {
-		var midSize = aSizeOfSurface / 2 | 0;
-		var midSize2 = midSize / 2 | 0;
-		if(this.map.getTile(aX / 32 | 0,aY / 32 | 0) == 0 || this.map.getTile(aX / 32 | 0,aY / 32 | 0) == 2) {
-			if(this.map.getTile((aX + midSize2) / 32 | 0,aY / 32 | 0) == 0 || this.map.getTile((aX + midSize2) / 32 | 0,aY / 32 | 0) == 2) {
-				if(this.map.getTile(aX / 32 | 0,(midSize / 2 + aY) / 32 | 0) != 0 && this.map.getTile(aX / 32 | 0,(midSize / 2 + aY) / 32 | 0) != 2) {
-					if(this.map.getTile((aX + midSize2) / 32 | 0,(midSize / 2 + aY) / 32 | 0) != 0 && this.map.getTile((aX + midSize2) / 32 | 0,(midSize / 2 + aY) / 32 | 0) != 2 && this.map.getTile((aX + midSize2) / 32 | 0,(midSize / 2 + aY) / 32 | 0) != 1) {
-						return true;
-					}
-				}
-			}
-		}
-		return false;
-	}
 	,playerVsCoins: function(aPlayer,aCoin) {
-		aPlayer.set_coins(aPlayer.get_coins() + 1);
-		this.textGame.set_text("Objetos Jugador: " + this.player.get_coins() + "/" + this.coins.length);
+		aPlayer.set_coinsCount(aPlayer.get_coinsCount() + 1);
+		this.textGame.set_text("Objetos Jugador: " + this.player.get_coinsCount() + "/" + this.coins.length);
 		aCoin.setPosition(0,0);
 		aCoin.kill();
 	}
@@ -84584,6 +85376,10 @@ flixel_FlxObject._secondSeparateFlxRect = (function($this) {
 	$r = rect;
 	return $r;
 }(this));
+GlobalGameData.tileIndexCoins = 2;
+GlobalGameData.tileIndexNonCollision = 0;
+GlobalGameData.tileIndexNonCollisionBlack = 1;
+GlobalGameData.tileSize = 32;
 StringTools.winMetaCharacters = [32,40,41,37,33,94,34,60,62,38,124,10,13,44,59];
 Xml.Element = 0;
 Xml.PCData = 1;
@@ -87445,8 +88241,5 @@ openfl_utils__$Endian_Endian_$Impl_$.BIG_ENDIAN = 0;
 openfl_utils__$Endian_Endian_$Impl_$.LITTLE_ENDIAN = 1;
 states_GameState.numberProjectilesPlayer = 2;
 states_GameState.numberTotalCoins = 2;
-states_GameState.tileIndexCoins = 2;
-states_GameState.tileIndexNonCollision = 0;
-states_GameState.tileIndexNonCollisionBlack = 1;
 ApplicationMain.main();
 })(typeof exports != "undefined" ? exports : typeof window != "undefined" ? window : typeof self != "undefined" ? self : this, typeof window != "undefined" ? window : typeof global != "undefined" ? global : typeof self != "undefined" ? self : this);
