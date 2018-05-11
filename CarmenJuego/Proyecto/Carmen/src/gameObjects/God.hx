@@ -80,8 +80,9 @@ class God extends FlxSprite
 
 		if (FlxG.mouse.justPressed && skillsController.idSkill !=-1)
 		{
+			trace("SKILL");
 			skillsController.runGodSkill(FlxG.mouse.x, FlxG.mouse.y, skillsController.idSkill);
-			skillsController.idSkill =-1;
+			
 		}
 
 		//PREGUNTAR

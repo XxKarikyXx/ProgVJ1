@@ -136,7 +136,6 @@ class SkillsController
 				idSkill =-1;
 				setUIPlacedTrapFromSkill2();
 				actualTrap.canCollide = true;
-
 				actualTrap = null;
 				mskill2.setActivation();
 
@@ -165,11 +164,14 @@ class SkillsController
 			{
 				case 0:
 					activateSkillWithId(aIdSkill);
-
+                    idSkill =-1;
 				case 1:
+					trace("comdition");
 					if (skill2ConditionToPutElement())
 					{
+						trace("true");
 						activateSkillWithId(aIdSkill);
+						idSkill =-1;
 					}
 			}
 		}

@@ -146,7 +146,7 @@ ApplicationMain.init = function() {
 	}
 };
 ApplicationMain.main = function() {
-	ApplicationMain.config = { build : "927", company : "TuMadre", file : "Carmen", fps : 60, name : "Carmen", orientation : "", packageName : "Carmen", version : "1.0.0", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : false, height : 1080, parameters : "{}", resizable : true, stencilBuffer : true, title : "Carmen", vsync : false, width : 1920, x : null, y : null}]};
+	ApplicationMain.config = { build : "930", company : "TuMadre", file : "Carmen", fps : 60, name : "Carmen", orientation : "", packageName : "Carmen", version : "1.0.0", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : false, height : 1080, parameters : "{}", resizable : true, stencilBuffer : true, title : "Carmen", vsync : false, width : 1920, x : null, y : null}]};
 };
 ApplicationMain.start = function() {
 	var hasMain = false;
@@ -6401,10 +6401,14 @@ SkillsController.prototype = {
 			switch(aIdSkill) {
 			case 0:
 				this.activateSkillWithId(aIdSkill);
+				this.idSkill = -1;
 				break;
 			case 1:
+				haxe_Log.trace("comdition",{ fileName : "SkillsController.hx", lineNumber : 169, className : "SkillsController", methodName : "runGodSkill"});
 				if(this.skill2ConditionToPutElement()) {
+					haxe_Log.trace("true",{ fileName : "SkillsController.hx", lineNumber : 172, className : "SkillsController", methodName : "runGodSkill"});
 					this.activateSkillWithId(aIdSkill);
+					this.idSkill = -1;
 				}
 				break;
 			}
@@ -45502,8 +45506,8 @@ gameObjects_God.prototype = $extend(flixel_FlxSprite.prototype,{
 			break;
 		}
 		if(flixel_FlxG.mouse._leftButton.current == 2 && this.skillsController.idSkill != -1) {
+			haxe_Log.trace("SKILL",{ fileName : "God.hx", lineNumber : 83, className : "gameObjects.God", methodName : "update"});
 			this.skillsController.runGodSkill(flixel_FlxG.mouse.x,flixel_FlxG.mouse.y,this.skillsController.idSkill);
-			this.skillsController.idSkill = -1;
 		}
 		this.skillsController.validateSkillsConditions();
 		if(this.velocity.x == 0 && this.velocity.y == 0) {
@@ -45550,7 +45554,7 @@ gameObjects_God.prototype = $extend(flixel_FlxSprite.prototype,{
 			this.state = "Normal";
 			this.stateDuration = -1;
 		} else {
-			haxe_Log.trace(this.stateDuration,{ fileName : "God.hx", lineNumber : 189, className : "gameObjects.God", methodName : "godIsStunned"});
+			haxe_Log.trace(this.stateDuration,{ fileName : "God.hx", lineNumber : 190, className : "gameObjects.God", methodName : "godIsStunned"});
 			this.stateDuration -= aDt;
 		}
 	}
