@@ -8,31 +8,30 @@ import flixel.text.FlxText;
  * ...
  * @author
  */
-class GameOverPlayer extends FlxState 
+class GameOverPlayer extends FlxState
 {
 
-	public function new() 
+	public function new()
 	{
 		super();
 	}
-	override public function create():Void 
+
+	override public function create():Void
 	{
 		add(new FlxText(500, 500, 0, "Gana Dios", 100));
 		add(new FlxText(600, 650, 0, "Presione ENTER para re iniciar", 20));
-		
-		
 	}
-	override public function update(elapsed:Float):Void 
+
+	override public function update(elapsed:Float):Void
 	{
 		super.update(elapsed);
 		if (FlxG.keys.justPressed.ENTER)
 		{
 			FlxG.switchState(new GameState());
 		}
-		
+
 		if (FlxG.keys.justPressed.ESCAPE)
 		{
-			
 			FlxG.switchState(new MainMenu());
 		}
 	}

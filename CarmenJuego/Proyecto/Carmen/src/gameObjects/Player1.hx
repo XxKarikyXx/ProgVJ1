@@ -15,35 +15,36 @@ import flixel.tile.FlxTilemap;
  */
 class Player1 extends FlxSprite
 {
-	var map:FlxTilemap;
-	var jumpOnAirCount:Int = 0;
-	@:isVar public var coinsCount(get, set):Int = 0;
-	@:isVar public var projectiles(default,set):FlxGroup;
-	@:isVar public var projCount = -1;
-	public var coins:FlxGroup;
+	var vJumpOnAirCount:Int = 0;
+	@:isVar public var vCoinsCount(get, set):Int = 0;
+	@:isVar public var vProjectiles(default,set):FlxGroup;
+	@:isVar public var vProjectilesCount:Int = -1;
+	public var vCoins:FlxGroup;
 
-		@:isVar public var state:String = CharacterStates.normalState;
-	@:isVar public var stateDuration:Float = -1;
-	
-	@:isVar public var jumpSound:FlxSound;
-	
-	public function new(X:Float, Y:Float, aMap:FlxTilemap)
+	@:isVar public var vState:String = CharacterStates.cNormalState;
+	@:isVar public var vStateDuration:Float = -1;
+
+	@:isVar public var vJumpSound:FlxSound;
+
+	static inline var cAccelerationx:Int = 1500;
+	static inline var cVelocityx:Int = 700;
+	static inline var cVelocityy:Int = 800;
+
+	public function new(aX:Float, aY:Float)
 	{
-		super(X, Y);
-		map = aMap;
-				jumpSound = FlxG.sound.load(AssetPaths.MarioJump__wav);  
-		//projectiles = aProjectiles;
+		super(aX, aY);
+
+		vJumpSound = FlxG.sound.load(AssetPaths.MarioJump__wav);
+
 		loadGraphic(AssetPaths.ariosheet__png, true, 128, 128);
 		animation.add("run", [20, 21, 22, 23, 24, 25, 26, 27, 28]);
 		animation.add("idle", [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18]);
 		animation.add("jump", [1,2,3]);
 		animation.add("fall", [1,2,3]);
-		//animation.add("wallHang", [11]);
-//setColorTransform(0.9, 0.5, 0.2);
-		animation.play("idle");
-//offset.x =-20;
 
-offset.y = 10;
+		animation.play("idle");
+
+		offset.y = 10;
 		offset.x = 37;
 		width = 55;
 		height = 120;
@@ -56,21 +57,20 @@ offset.y = 10;
 
 	public function intanceProjectiles()
 	{
-		projCount = 0;
+		vProjectilesCount = 0;
 
 	}
-	
+
 	public function setCoins(aCoins:FlxGroup)
 	{
-		
-		coins = aCoins;
-	}
-	
-	public function set_projectiles(aProjectiles:FlxGroup):FlxGroup
-	{
-		return projectiles = aProjectiles;
+
+		vCoins = aCoins;
 	}
 
+	public function set_vProjectiles(aProjectiles:FlxGroup):FlxGroup
+	{
+		return vProjectiles = aProjectiles;
+	}
 
 	public function create():Void
 	{
@@ -81,29 +81,27 @@ offset.y = 10;
 	{
 		acceleration.x = 0;
 		velocity.x = 0;
-		
-				switch(state){
-			case CharacterStates.normalState:
+
+		switch (vState)
+		{
+			case CharacterStates.cNormalState:
 				normalPlayerMovement(aDt);
-			case CharacterStates.stunnedState:
-				playerIsStunned(aDt);
+			case CharacterStates.cStunnedState:
+				playerStunned(aDt);
 		}
-
-
-
 
 		if (isTouching(FlxObject.FLOOR))
 		{
-			jumpOnAirCount = 0;
+			vJumpOnAirCount = 0;
 
 		}
 
 		if (FlxG.keys.justPressed.SPACE)
 		{
-			if (projectiles != null && projCount < projectiles.length && projCount !=-1)
+			if (vProjectiles != null && vProjectilesCount < vProjectiles.length && vProjectilesCount !=-1)
 			{
-				projCount = projCount + 1;
-				var pro:ProjectilePlayer = cast(projectiles.members[projCount-1], ProjectilePlayer);
+				vProjectilesCount = vProjectilesCount + 1;
+				var pro:ProjectilePlayer = cast(vProjectiles.members[vProjectilesCount-1], ProjectilePlayer);
 				pro.shoot(this.x+(this.width/2), this.y+(this.height/2));
 				pro.set_visible(true);
 			}
@@ -162,21 +160,21 @@ offset.y = 10;
 		super.update(aDt);
 
 	}
-	
+
 	function normalPlayerMovement(aDt:Float)
 	{
-		
-			if (FlxG.keys.pressed.A)
+
+		if (FlxG.keys.pressed.A)
 		{
-			acceleration.x =-1500;
-			velocity.x = -700;
+			acceleration.x =-cAccelerationx;
+			velocity.x = -cVelocityx;
 
 		}
 
 		if (FlxG.keys.pressed.D)
 		{
-			acceleration.x = 1500;
-			velocity.x = 700;
+			acceleration.x = cAccelerationx;
+			velocity.x = cVelocityx;
 
 		}
 
@@ -184,16 +182,16 @@ offset.y = 10;
 		{
 			if (isTouching(FlxObject.FLOOR))
 			{
-				velocity.y = -800;
-					jumpSound.play(true, 500);
+				velocity.y = -cVelocityy;
+				vJumpSound.play(true, 500);
 			}
 			else
 			{
-				if (jumpOnAirCount == 0)
+				if (vJumpOnAirCount == 0)
 				{
-						jumpSound.play(true, 500);
-					jumpOnAirCount = jumpOnAirCount + 1;
-					velocity.y = -800;
+					vJumpSound.play(true, 500);
+					vJumpOnAirCount = vJumpOnAirCount + 1;
+					velocity.y = -cVelocityy;
 
 				}
 				else
@@ -205,43 +203,28 @@ offset.y = 10;
 
 		}
 	}
-	function playerIsStunned(aDt:Float)
+	
+	function playerStunned(aDt:Float)
 	{
-		
-			if (stateDuration <= 0) {
-			state = CharacterStates.normalState;
-			stateDuration = -1;
-		} else{
-			trace(stateDuration);
-			stateDuration -= aDt;
-		}
-	}
-	function isWallHang():Int
-	{
-		var leftX:Float = x - 3;
-		var leftY:Float = y + (height/2);
-		if (map.getTile(Std.int(leftX / 32), Std.int(leftY / 32)) > 0)
+
+		if (vStateDuration <= 0)
 		{
-			return FlxObject.LEFT;
+			vState = CharacterStates.cNormalState;
+			vStateDuration = -1;
 		}
-
-		var rightX:Float = x +width + 3;
-		var rightY:Float = y + (height/2);
-		if (map.getTile(Std.int(rightX / 32), Std.int(rightY / 32)) > 0)
+		else
 		{
-			return FlxObject.RIGHT;
+			vStateDuration -= aDt;
 		}
-
-		return FlxObject.NONE;
 	}
 
-	public function set_coinsCount(value:Int):Int
+	public function set_vCoinsCount(value:Int):Int
 	{
-		return coinsCount = value;
+		return vCoinsCount = value;
 	}
 
-	public function get_coinsCount():Int
+	public function get_vCoinsCount():Int
 	{
-		return coinsCount;
+		return vCoinsCount;
 	}
 }

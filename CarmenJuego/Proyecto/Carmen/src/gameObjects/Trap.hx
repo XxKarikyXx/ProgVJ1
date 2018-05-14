@@ -7,19 +7,19 @@ import flixel.FlxSprite;
  */
 class Trap extends FlxSprite
 {
-	@:isVar public var canCollide:Bool = false;
+	@:isVar public var vCanCollide:Bool = false;
 	
-	public function new(?X:Float=0, ?Y:Float=0) 
+	public function new(?aX:Float=0, ?aY:Float=0) 
 	{
-		super(X, Y);
+		super(aX, aY);
 		loadGraphic(AssetPaths.ohno__jpg, true, 64, 32);
 		width = 64;
 		height = 32;
-
 	}
-	override public function update(elapsed:Float):Void 
+	
+	override public function update(aDt:Float):Void 
 	{
-		super.update(elapsed);
+		super.update(aDt);
 	}
 
 }

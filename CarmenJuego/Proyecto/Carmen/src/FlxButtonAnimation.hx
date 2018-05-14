@@ -7,45 +7,49 @@ import openfl.Assets;
 
 /**
  * ...
- * @author TuMadre
+ * @author ...
  */
 
 	
 class FlxButtonAnimation extends FlxSprite
 {
-    public var onPressed:FlxButtonAnimation->Void;
-	public var enabled:Bool = true;
-	private var isWithMouse:Bool = false;
+    public var vOnPressed:FlxButtonAnimation->Void;
+	public var vEnabled:Bool = true;
+	private var vIsWithMouse:Bool = false;
     
-    private var mDisplay:FlxSprite;
-    private var hMousePosition:FlxPoint;
+    private var vDisplay:FlxSprite;
+    private var vMousePosition:FlxPoint;
 
     
     public function new(aImagePath:String,aAnimationWidth:Int,aAnimationHeight:Int,?aOnPressed:FlxButtonAnimation->Void,?aWithMouse:Bool) 
     {
         super();
         loadGraphic(Assets.getBitmapData(aImagePath), true, aAnimationWidth, aAnimationHeight);
-        hMousePosition = new FlxPoint();
-        onPressed = aOnPressed;
-		isWithMouse = aWithMouse;
+        vMousePosition = new FlxPoint();
+        vOnPressed = aOnPressed;
+		vIsWithMouse = aWithMouse;
     }
+	
     public function setUp(aFrames:Array<Int>, aLoop:Bool=true,aFrameRate:Int=30):Void
     {
         animation.add("up", aFrames, aFrameRate, aLoop);
     }
+	
     public function setDown(aFrames:Array<Int>, aLoop:Bool=true,aFrameRate:Int=30):Void
     {
         animation.add("down", aFrames, aFrameRate, aLoop);
     }
+	
     public function setOver(aFrames:Array<Int>, aLoop:Bool=true,aFrameRate:Int=30):Void
     {
         animation.add("over", aFrames, aFrameRate, aLoop);
     }
+	
     override public function update(aDt:Float):Void 
     {
-		if(isWithMouse){
-        hMousePosition.set(FlxG.mouse.x, FlxG.mouse.y);
-        if (isOver(hMousePosition))//over the button
+		if(vIsWithMouse){
+        vMousePosition.set(FlxG.mouse.x, FlxG.mouse.y);
+        if (isOver(vMousePosition))
         {
             if (FlxG.mouse.pressed)
             {
@@ -55,9 +59,9 @@ class FlxButtonAnimation extends FlxSprite
             }
             if (isButtonClicked())
             {
-                if (onPressed != null)
+                if (vOnPressed != null)
                 {
-                    onPressed(this);
+                    vOnPressed(this);
                 }
             }
         }else {
@@ -68,20 +72,19 @@ class FlxButtonAnimation extends FlxSprite
     }
 	
 	public function isTouchingButton():Bool
-	{
-		
-	return isOver(hMousePosition);	
+	{		
+	return isOver(vMousePosition);	
 	}
+	
     private inline function isOver(aMousePosition:FlxPoint):Bool
     {
-        return overlapsPoint(hMousePosition);
+        return overlapsPoint(vMousePosition);
     }
+	
     private inline function isButtonClicked():Bool
     {
         return FlxG.mouse.justReleased;
     }
-	
-
-    
+	  
 }
 

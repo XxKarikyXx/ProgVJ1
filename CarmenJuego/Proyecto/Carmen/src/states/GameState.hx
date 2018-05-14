@@ -30,35 +30,31 @@ import states.GameWinPlayer;
  */
 class GameState extends FlxState
 {
-	var map:FlxTilemap;
-	var player:Player1;
-	var god:God;
-	var projectilesPlayer:FlxGroup;
-	var projectilesGod:FlxGroup;
+	var vMap:FlxTilemap;
+	var vPlayer:Player1;
+	var vGod:God;
+	var vProjectilesPlayer:FlxGroup;
+	var vProjectilesGod:FlxGroup;
 
-	var traps:FlxGroup;
+	var vTrapsGod:FlxGroup;
 
-	var backgroundSound:FlxSound;
+	var vBackgroundSound:FlxSound;
 
-	var coins:FlxGroup;
-	var numberCoins:Int = 0;
-	var resetPlaceCoin:Bool = false;
-	var background:FlxSprite;
-	var textGame:FlxText;
-	var textSkill:FlxText;
+	var vCoinsPlayer:FlxGroup;
+	var vResetPlaceCoin:Bool = false;
+	var vBackgroundSprite:FlxSprite;
+	var vTextGame:FlxText;
+	var vTextSkill:FlxText;
 
-	var stunText:FlxText;
-	var stunTextPlayer:FlxText;
+	var vStunTextGod:FlxText;
+	var vStunTextPlayer:FlxText;
 
-	static inline var numberProjectilesPlayer:Int = 2;
-	static inline var numberTotalCoins:Int = 2;
+	static inline var cNumberProjectilesPlayer:Int = 2;
+	static inline var cNumberTotalCoins:Int = 2;
 
-	var skillsGod:FlxGroup;
-	var skillsGodText:FlxGroup;
-	var skillsController:SkillsController;
-
-	var skill1:FlxButtonAnimationSkill;
-	var skill2:FlxButtonAnimationSkill;
+	var vSkillsGod:FlxGroup;
+	var vSkillsGodText:FlxGroup;
+	var vSkillsController:SkillsController;
 
 	public function new()
 	{
@@ -67,78 +63,77 @@ class GameState extends FlxState
 
 	override public function create():Void
 	{
-		background=new FlxSprite();
-		background.loadGraphic(AssetPaths.fondo_azul__png,false, 1920, 1080);
-		add(background);
-		map = new FlxTilemap();
-		map.loadMapFromCSV(AssetPaths.cosahermosa__csv, AssetPaths.tile_ladrillos__png, 32, 32);
-		map.setTileProperties(GlobalGameData.tileIndexCoins, FlxObject.NONE);
-		map.setTileProperties(GlobalGameData.tileIndexNonCollisionBlack, FlxObject.NONE);
-		add(map);
+		vBackgroundSprite=new FlxSprite();
+		vBackgroundSprite.loadGraphic(AssetPaths.fondo_azul__png,false, 1920, 1080);
+		add(vBackgroundSprite);
+		vMap = new FlxTilemap();
+		vMap.loadMapFromCSV(AssetPaths.cosahermosa__csv, AssetPaths.tile_ladrillos__png, 32, 32);
+		vMap.setTileProperties(GlobalGameData.cTileIndexCoins, FlxObject.NONE);
+		vMap.setTileProperties(GlobalGameData.cTileIndexNonCollisionBlack, FlxObject.NONE);
+		add(vMap);
 
-		backgroundSound=FlxG.sound.load(AssetPaths.LaMulanaOSV__wav);
-		add(backgroundSound);
-		backgroundSound.looped = true;
-		backgroundSound.play(true, 0);
+		vBackgroundSound=FlxG.sound.load(AssetPaths.LaMulanaOSV__wav);
+		add(vBackgroundSound);
+		vBackgroundSound.looped = true;
+		vBackgroundSound.play(true, 0);
 
-		player = new Player1(80, 900, map);
-		god = new God(1700, 950, map);
+		vPlayer = new Player1(80, 900);
+		vGod = new God(1700, 950);
 
-		add(player);
-		add(god);
-		GlobalGameData.player = god;
-		GlobalGameData.player2 = player;
-		GlobalGameData.map = map;
+		add(vPlayer);
+		add(vGod);
+		GlobalGameData.vGod = vGod;
+		GlobalGameData.vPlayer1 = vPlayer;
+		GlobalGameData.vMap = vMap;
 
-		textSkill = new FlxText(1446, 35, 0, "", 15);
-		add(textSkill);
-		textSkill.textField.multiline = true;
-		textSkill.textField.wordWrap = true;
-		textSkill.textField.width = 150;
+		vTextSkill = new FlxText(1446, 35, 0, "", 15);
+		add(vTextSkill);
+		vTextSkill.textField.multiline = true;
+		vTextSkill.textField.wordWrap = true;
+		vTextSkill.textField.width = 150;
 
-		traps = new FlxGroup();
+		vTrapsGod = new FlxGroup();
 
 
-		skillsGod = new FlxGroup();
-		add(skillsGod);
+		vSkillsGod = new FlxGroup();
+		add(vSkillsGod);
 		
-				add(traps);
+				add(vTrapsGod);
 
-		skillsGodText = new FlxGroup();
-		add(skillsGodText);
-		skillsController = new SkillsController(skillsGod, textSkill, traps, skillsGodText);
+		vSkillsGodText = new FlxGroup();
+		add(vSkillsGodText);
+		vSkillsController = new SkillsController(vSkillsGod, vTextSkill, vTrapsGod, vSkillsGodText);
 
 		setPlayerData();
 		setGodData();
 
-		FlxG.camera.setScrollBoundsRect(0, 0, map.width, map.height);
-		FlxG.worldBounds.set(0, 0, map.width, map.height);
+		FlxG.camera.setScrollBoundsRect(0, 0, vMap.width, vMap.height);
+		FlxG.worldBounds.set(0, 0, vMap.width, vMap.height);
 
 		setCoinsData();
-		player.setCoins(coins);
+		vPlayer.setCoins(vCoinsPlayer);
 
-		textGame = new FlxText(50, 50, 0, "Objetos Jugador: " + player.coinsCount + "/" + coins.length, 20);
-		add(textGame);
+		vTextGame = new FlxText(50, 50, 0, "Objetos Jugador: " + vPlayer.vCoinsCount + "/" + vCoinsPlayer.length, 20);
+		add(vTextGame);
 
-		stunText = new FlxText(50, 50, 0, "Inmovilizado", 10);
-		stunText.set_visible(false);
-		add(stunText);
+		vStunTextGod = new FlxText(50, 50, 0, "Inmovilizado", 10);
+		vStunTextGod.set_visible(false);
+		add(vStunTextGod);
 
-		stunTextPlayer = new FlxText(50, 50, 0, "Inmovilizado", 10);
-		stunTextPlayer.set_visible(false);
-		add(stunTextPlayer);
+		vStunTextPlayer = new FlxText(50, 50, 0, "Inmovilizado", 10);
+		vStunTextPlayer.set_visible(false);
+		add(vStunTextPlayer);
 	}
 
 	public function setCoinsData()
 	{
-		coins = new FlxGroup();
-		add(coins);
-		for (i in 0...numberTotalCoins)
+		vCoinsPlayer = new FlxGroup();
+		add(vCoinsPlayer);
+		for (i in 0...cNumberTotalCoins)
 		{
 			var c:Coin = new Coin(0, 0);
-			setCoinXAndYRandom(coins, c);
-			coins.add(c);
-			numberCoins = numberCoins + 1;
+			setCoinXAndYRandom(vCoinsPlayer, c);
+			vCoinsPlayer.add(c);
 		}
 
 	}
@@ -146,40 +141,40 @@ class GameState extends FlxState
 	public function setPlayerData()
 	{
 
-		projectilesPlayer = new FlxGroup();
-		add(projectilesPlayer);
-		for (i in 0...numberProjectilesPlayer)
+		vProjectilesPlayer = new FlxGroup();
+		add(vProjectilesPlayer);
+		for (i in 0...cNumberProjectilesPlayer)
 		{
-			var pro:ProjectilePlayer = new ProjectilePlayer(GlobalGameData.player,4,550);
-			projectilesPlayer.add(pro);
+			var pro:ProjectilePlayer = new ProjectilePlayer(GlobalGameData.vGod,4,550);
+			vProjectilesPlayer.add(pro);
 			pro.kill();
 		}
 
-		player.set_projectiles(projectilesPlayer);
-		add(player.jumpSound);
-		GlobalGameData.player2 = player;
+		vPlayer.set_vProjectiles(vProjectilesPlayer);
+		add(vPlayer.vJumpSound);
+		GlobalGameData.vPlayer1 = vPlayer;
 	}
 
 	public function setGodData()
 	{
 
-		projectilesGod = new FlxGroup();
-		add(projectilesGod);
+		vProjectilesGod = new FlxGroup();
+		add(vProjectilesGod);
 		for (i in 0...1)
 		{
-			var pro:ProjectilePlayer = new ProjectilePlayer(GlobalGameData.player2,0);
-			projectilesGod.add(pro);
+			var pro:ProjectilePlayer = new ProjectilePlayer(GlobalGameData.vPlayer1,0);
+			vProjectilesGod.add(pro);
 			pro.kill();
 		}
 
-		god.set_projectiles(projectilesGod);
-		god.skillsController = this.skillsController;
+		vGod.set_vProjectiles(vProjectilesGod);
+		vGod.vSkillsController = this.vSkillsController;
 	}
 
 	public function setCoinXAndYRandom(otherCoins:FlxGroup,aCoin:Coin):Void
 	{
 
-		var coinCoordinates:Array<FlxPoint> = map.getTileCoords(GlobalGameData.tileIndexCoins, true);
+		var coinCoordinates:Array<FlxPoint> = vMap.getTileCoords(GlobalGameData.cTileIndexCoins, true);
 
 		var rand:Float = Math.random();
 		var index:Int = Math.round(coinCoordinates.length * rand)-1;
@@ -214,49 +209,49 @@ class GameState extends FlxState
 	public function playerCollectedAllCoins():Bool
 	{
 
-		return player.coinsCount == numberCoins;
+		return vPlayer.vCoinsCount == cNumberTotalCoins;
 	}
 	override public function update(aDt:Float):Void
 	{
 
 		super.update(aDt);
 
-		FlxG.collide(map, player);
-		FlxG.collide(map, god);
+		FlxG.collide(vMap, vPlayer);
+		FlxG.collide(vMap, vGod);
 
-		FlxG.overlap(player, coins, playerVsCoins);
-		FlxG.overlap(projectilesPlayer, god, projectilesVsGod);
-		FlxG.overlap(projectilesGod, player, projectilesVsPlayer);
-		FlxG.overlap(player, god, playerVsGod);
-		FlxG.overlap(player, traps, trapsVsPlayer);
+		FlxG.overlap(vPlayer, vCoinsPlayer, playerVsCoins);
+		FlxG.overlap(vProjectilesPlayer, vGod, projectilesVsGod);
+		FlxG.overlap(vProjectilesGod, vPlayer, projectilesVsPlayer);
+		FlxG.overlap(vPlayer, vGod, playerVsGod);
+		FlxG.overlap(vPlayer, vTrapsGod, trapsVsPlayer);
 
 		if (playerCollectedAllCoins())
 		{
 
-			player.coinsCount = 0;
+			vPlayer.vCoinsCount = 0;
 
-			for (i in 0...numberProjectilesPlayer)
+			for (i in 0...cNumberProjectilesPlayer)
 			{
-				projectilesPlayer.members[i].revive();
-				projectilesPlayer.members[i].set_visible(false);
+				vProjectilesPlayer.members[i].revive();
+				vProjectilesPlayer.members[i].set_visible(false);
 			}
 
-			player.intanceProjectiles();
-			resetPlaceCoin = true;
+			vPlayer.intanceProjectiles();
+			vResetPlaceCoin = true;
 		}
 
-		if (player.projCount !=-1)
+		if (vPlayer.vProjectilesCount !=-1)
 		{
-			textGame.text="¡Jugador puede matar a Dios (Espacio)! - Tiros: " + (projectilesPlayer.length-player.projCount) + "/" + projectilesPlayer.length;
+			vTextGame.text="¡Jugador puede matar a Dios (Espacio)! - Tiros: " + (vProjectilesPlayer.length-vPlayer.vProjectilesCount) + "/" + vProjectilesPlayer.length;
 
 		}
 
-		if (projectilesPlayer!=null&&projectilesPlayer.countDead()==2&&god.exists&&resetPlaceCoin)
+		if (vProjectilesPlayer!=null&&vProjectilesPlayer.countDead()==2&&vGod.exists&&vResetPlaceCoin)
 		{
-			player.projCount =-1;
-			resetPlaceCoin = false;
+			vPlayer.vProjectilesCount =-1;
+			vResetPlaceCoin = false;
 			shuffleCoins();
-			textGame.text="Objetos Jugador: " + player.coinsCount + "/" + coins.length;
+			vTextGame.text="Objetos Jugador: " + vPlayer.vCoinsCount + "/" + vCoinsPlayer.length;
 		}
 
 		if (FlxG.keys.justPressed.ESCAPE)
@@ -265,44 +260,43 @@ class GameState extends FlxState
 			FlxG.switchState(new MainMenu());
 		}
 
-		//OJITO
-		if (god.stateDuration!=-1&&god.state==CharacterStates.stunnedState)
+		if (vGod.vStateDuration!=-1&&vGod.vState==CharacterStates.cStunnedState)
 		{
-			stunText.set_visible(true);
-			stunText.setPosition(god.x+(god.width/2)-(stunText.width/2), god.y);
+			vStunTextGod.set_visible(true);
+			vStunTextGod.setPosition(vGod.x+(vGod.width/2)-(vStunTextGod.width/2), vGod.y);
 		}
 		else{
-			stunText.set_visible(false);
+			vStunTextGod.set_visible(false);
 		}
 
-		//OJITO
-		if (player.stateDuration!=-1&&player.state==CharacterStates.normalState)
+
+		if (vPlayer.vStateDuration!=-1&&vPlayer.vState==CharacterStates.cStunnedState)
 		{
-			stunTextPlayer.set_visible(true);
-			stunTextPlayer.setPosition(player.x+(player.width/2)-(stunTextPlayer.width/2), player.y);
+			vStunTextPlayer.set_visible(true);
+			vStunTextPlayer.setPosition(vPlayer.x+(vPlayer.width/2)-(vStunTextPlayer.width/2), vPlayer.y);
 		}
 		else{
-			stunTextPlayer.set_visible(false);
+			vStunTextPlayer.set_visible(false);
 		}
 	}
 
 	function shuffleCoins()
 	{
 
-		for (i in 0...numberTotalCoins)
+		for (i in 0...cNumberTotalCoins)
 		{
-			coins.members[i].revive();
-			var c:Coin =cast(coins.members[i],Coin);
+			vCoinsPlayer.members[i].revive();
+			var c:Coin =cast(vCoinsPlayer.members[i],Coin);
 
-			setCoinXAndYRandom(coins,c);
+			setCoinXAndYRandom(vCoinsPlayer,c);
 
 		}
 	}
 
 	function playerVsCoins(aPlayer:Player1, aCoin:Coin)
 	{
-		aPlayer.coinsCount = aPlayer.coinsCount + 1;
-		textGame.text = "Objetos Jugador: " + player.coinsCount + "/" + coins.length;
+		aPlayer.vCoinsCount = aPlayer.vCoinsCount + 1;
+		vTextGame.text = "Objetos Jugador: " + vPlayer.vCoinsCount + "/" + vCoinsPlayer.length;
 		aCoin.setPosition(0, 0);
 		aCoin.kill();
 
@@ -310,17 +304,17 @@ class GameState extends FlxState
 
 	function trapsVsPlayer(aPlayer:Player1, aTrap:Trap)
 	{
-		if (aTrap.canCollide)
+		if (aTrap.vCanCollide)
 		{
-			aPlayer.state = "Stunned";
-			aPlayer.stateDuration = 2;
-			traps.remove(aTrap, true);
+			aPlayer.vState = "Stunned";
+			aPlayer.vStateDuration = 2;
+			vTrapsGod.remove(aTrap, true);
 			aTrap.destroy();
 		}
 	}
 	function projectilesVsGod(aProjectile:ProjectilePlayer, aGod:God)
 	{
-		if (aProjectile.target!=null&&aProjectile.target==aGod)
+		if (aProjectile.vTarget!=null&&aProjectile.vTarget==aGod)
 		{
 			FlxG.switchState(new GameWinPlayer());
 		}
@@ -329,7 +323,7 @@ class GameState extends FlxState
 
 	function projectilesVsPlayer(aProjectile:ProjectilePlayer, aPlayer:Player1)
 	{
-		if (aProjectile.target!=null&&aProjectile.target!=god)
+		if (aProjectile.vTarget!=null&&aProjectile.vTarget!=vGod)
 		{
 			FlxG.switchState(new GameOverPlayer());
 		}
@@ -337,8 +331,8 @@ class GameState extends FlxState
 
 	function playerVsGod(aPlayer:Player1, aGod:God)
 	{
-		aGod.state = "Stunned";
-		aGod.stateDuration = 3;
+		aGod.vState = "Stunned";
+		aGod.vStateDuration = 3;
 	}
 
 	override public function destroy():Void

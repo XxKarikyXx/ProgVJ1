@@ -15,26 +15,25 @@ import flixel.tile.FlxTilemap;
  */
 class God extends FlxSprite
 {
-	var map:FlxTilemap;
-	@:isVar public var projectiles(default,set):FlxGroup;
-	@:isVar public var projCount = -1;
+	@:isVar public var vProjectiles(default, set):FlxGroup;
+	@:isVar public var vProjCount(default,default):Int = -1;
 
-	@:isVar public var state:String = CharacterStates.normalState;
-	@:isVar public var stateDuration:Float = -1;
-	public var skillsController(default,default):SkillsController;
+	@:isVar public var vState(default,default):String = CharacterStates.cNormalState;
+	@:isVar public var vStateDuration(default,default):Float = -1;
+	@:isVar public var vSkillsController(default, default):SkillsController;
 
-	public function new(X:Float, Y:Float, aMap:FlxTilemap)
+	static inline var cAccelerationy:Int = 1100;
+	static inline var cAccelerationx:Int = 1100;
+	static inline var cVelocityx:Int = 540;
+	static inline var cVelocityy:Int = 540;
+
+	public function new(aX:Float, aY:Float)
 	{
-		super(X, Y);
-		map = aMap;
-		//projectiles = aProjectiles;
+		super(aX, aY);
 		loadGraphic(AssetPaths.fantasmaDiosSheet__png, true, 80, 80);
 		animation.add("run", [0, 1, 2, 3, 4, 5, 6, 7,8,9,10,11,12,13,14,15], 30);
 		animation.add("idle", [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], 30);
 		set_alpha(0.5);
-		//animation.add("jump", [1]);
-		//animation.add("fall", [0]);
-		//animation.add("wallHang", [11]);
 
 		animation.play("idle");
 
@@ -51,17 +50,12 @@ class God extends FlxSprite
 	{
 
 	}
-	
-		public function intanceProjectiles(){
-		projCount = 0;
+
+	public function intanceProjectiles()
+	{
+		vProjCount = 0;
 
 	}
-	
-		public function set_projectiles(aProjectiles:FlxGroup):FlxGroup
-	{
-		return projectiles = aProjectiles;
-	}
-	
 
 	override public function update(aDt:Float):Void
 	{
@@ -69,28 +63,22 @@ class God extends FlxSprite
 		velocity.x = 0;
 		acceleration.y = 0;
 		velocity.y = 0;
-		
-		switch(state){
-			case CharacterStates.normalState:
-				normalGodMovement(aDt);
-			case CharacterStates.stunnedState:
-				godIsStunned(aDt);
-		}
 
-
-		if (FlxG.mouse.justPressed && skillsController.idSkill !=-1)
+		switch (vState)
 		{
-			trace("SKILL");
-			skillsController.runGodSkill(FlxG.mouse.x, FlxG.mouse.y, skillsController.idSkill);
-			
+			case CharacterStates.cNormalState:
+				normalGodMovement(aDt);
+			case CharacterStates.cStunnedState:
+				godStunned(aDt);
 		}
 
-		//PREGUNTAR
-		skillsController.validateSkillsConditions();
-		
+		if (FlxG.mouse.justPressed && vSkillsController.vIdSkill !=-1)
+		{
+			vSkillsController.runGodSkill(FlxG.mouse.x, FlxG.mouse.y, vSkillsController.vIdSkill);
+		}
 
-		
-		
+		vSkillsController.validateSkillsConditions();
+
 		if (velocity.x == 0 && velocity.y == 0)
 		{
 			animation.play("idle");
@@ -99,40 +87,16 @@ class God extends FlxSprite
 		{
 			if (velocity.y != 0)
 			{
-				if (velocity.y > 0)
-				{
-					//animation.play("fall");
 
-				}
-				else
-				{
-
-				//	animation.play("jump");
-				}
 			}
 			else
 			{
 				if (velocity.x != 0)
 				{
 					animation.play("run");
-					if (acceleration.x == 0)
-					{
-
-					//	animation.play("fall");
-					}
-					if (velocity.x * acceleration.x < 0)
-					{
-						//animation.play("fall");
-
-					}
 				}
 
 			}
-			
-			
-			
-
-
 		}
 
 		if (acceleration.x > 0)
@@ -145,52 +109,58 @@ class God extends FlxSprite
 			flipX = true;
 		}
 
-		
 		super.update(aDt);
 
 	}
-	
+
 	function normalGodMovement(aDt:Float):Void
 	{
 		if (FlxG.keys.pressed.LEFT)
 		{
-			acceleration.x =-1100;
-			velocity.x = -550;
+			acceleration.x =-cAccelerationx;
+			velocity.x = -cVelocityx;
 
 		}
 
 		if (FlxG.keys.pressed.RIGHT)
 		{
-			acceleration.x = 1100;
-			velocity.x = 550;
+			acceleration.x = cAccelerationx;
+			velocity.x = cVelocityx;
 
 		}
 
 		if (FlxG.keys.pressed.UP)
 		{
-			acceleration.y = -1100;
-			velocity.y = -550;
+			acceleration.y = -cAccelerationy;
+			velocity.y = -cVelocityy;
 
 		}
 
 		if (FlxG.keys.pressed.DOWN)
 		{
-			acceleration.y = 1100;
-			velocity.y = 550;
+			acceleration.y = cAccelerationy;
+			velocity.y = cVelocityy;
 
 		}
 	}
-	
-	function godIsStunned(aDt:Float):Void
+
+	function godStunned(aDt:Float):Void
 	{
-		if (stateDuration <= 0) {
-			state = CharacterStates.normalState;
-			stateDuration = -1;
-		} else{
-			trace(stateDuration);
-			stateDuration -= aDt;
+		if (vStateDuration <= 0)
+		{
+			vState = CharacterStates.cNormalState;
+			vStateDuration = -1;
 		}
-		
+		else{
+			trace(vStateDuration);
+			vStateDuration -= aDt;
+		}
+
+	}
+
+	public function set_vProjectiles(value:FlxGroup):FlxGroup
+	{
+		return vProjectiles = value;
 	}
 
 }

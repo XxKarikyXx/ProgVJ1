@@ -11,25 +11,24 @@ import flixel.tile.FlxTilemap;
 
 /**
  * ...
- * @author 
+ * @author
  */
 class Coin extends FlxSprite
 {
-	
-	public function new(?X:Float=0, ?Y:Float=0) 
+
+	public function new(?aX:Float=0, ?aY:Float=0)
 	{
-		super(0, 0);
+		super(aX, aY);
 		frames = FlxAtlasFrames.fromSparrow("img/Sheets/moneda.png", "img/Sheets/moneda.xml");
 		animation.addByPrefix("giro", "monedagiro_", 12);
 
 		animation.play("giro");
 		width = 32;
 		height = 32;
-		//offset.set(11, 7);
 	}
-	override public function update(elapsed:Float):Void 
+	override public function update(aDt:Float):Void
 	{
-		super.update(elapsed);
+		super.update(aDt);
 	}
 
 }

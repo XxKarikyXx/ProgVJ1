@@ -16,7 +16,7 @@ import openfl.text.TextFieldAutoSize;
 class MainMenuInstructions extends FlxState
 {
 
-	private var back:FlxButton;
+	private var vBack:FlxButton;
 
 	public function new()
 	{
@@ -24,8 +24,6 @@ class MainMenuInstructions extends FlxState
 	}
 	override public function create():Void
 	{
-		//"assets/fonts/grapple.ttf"
-
 		var mp:FlxText = new FlxText(0, 100, 0, "Instrucciones", 70);
 		mp.screenCenter(X);
 		add(mp);
@@ -50,9 +48,9 @@ class MainMenuInstructions extends FlxState
 		add(backTxt);
 
 	}
-	override public function update(elapsed:Float):Void
+	override public function update(aDt:Float):Void
 	{
-		super.update(elapsed);
+		super.update(aDt);
 
 		if (FlxG.keys.justPressed.ESCAPE)
 		{
@@ -61,11 +59,5 @@ class MainMenuInstructions extends FlxState
 		}
 
 	}
-
-	/*
-		private function clickBack(aButton:FlxButtonAnimation):Void
-		{
-			FlxG.switchState(new MainMenu());
-		}*/
 
 }

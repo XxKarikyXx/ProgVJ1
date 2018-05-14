@@ -18,11 +18,11 @@ import states.MainMenuInstructions;
 class MainMenu extends FlxState
 {
 
-	var playButton:FlxButtonAnimation;
-	var instructionsButton:FlxButtonAnimation;
-	var exitButton:FlxButtonAnimation;
-	var maxIndex = 2;
-	
+	var vPlayButton:FlxButtonAnimation;
+	var vInstructionsButton:FlxButtonAnimation;
+	var vExitButton:FlxButtonAnimation;
+	var vMaxIndexForButtons = 2;
+
 	private var index = 0;
 
 	public function new()
@@ -31,147 +31,137 @@ class MainMenu extends FlxState
 	}
 	override public function create():Void
 	{
-		//"assets/fonts/grapple.ttf"
-		//Std.int(FlxG.width / 4), Std.int(FlxG.height / 6)
-		
 		var spacerY:Float = 50;
 		var spacerYTitle:Float = 150;
-		
+
 		var mp:FlxText = new FlxText(0, 100, 0, "Menú Principal", 70);
 		mp.screenCenter(X);
 		add(mp);
 
-		 playButton = new FlxButtonAnimation(AssetPaths.button__png, 80, 20, onClickPlay);//la animacion de chivito boy
-		playButton.setSize(Std.int(FlxG.width / 3), Std.int(FlxG.height / 9));
-		playButton.setOver([1]);
-		playButton.setUp([0]);
-		playButton.setDown([2]);
-		playButton.setPosition((FlxG.width / 2)-(playButton.width/2), mp.height+spacerYTitle+(playButton.height/2));
-		playButton.setGraphicSize(Std.int(FlxG.width / 3), Std.int(FlxG.height / 9));
-		add(playButton);
-		playButton.updateHitbox();
+		vPlayButton = new FlxButtonAnimation(AssetPaths.button__png, 80, 20, onClickPlay);
+		vPlayButton.setSize(Std.int(FlxG.width / 3), Std.int(FlxG.height / 9));
+		vPlayButton.setOver([1]);
+		vPlayButton.setUp([0]);
+		vPlayButton.setDown([2]);
+		vPlayButton.setPosition((FlxG.width / 2)-(vPlayButton.width/2), mp.height+spacerYTitle+(vPlayButton.height/2));
+		vPlayButton.setGraphicSize(Std.int(FlxG.width / 3), Std.int(FlxG.height / 9));
+		add(vPlayButton);
+		vPlayButton.updateHitbox();
 
 		var labelPlayButton:FlxText = new FlxText();
 		labelPlayButton.text = "Jugar";
 		labelPlayButton.allowCollisions = FlxObject.NONE;
 		labelPlayButton.setFormat(65, FlxColor.BLACK, FlxTextAlign.CENTER);
-		labelPlayButton.y =(mp.height+spacerYTitle)+(playButton.height/2)+(labelPlayButton.height/4);
+		labelPlayButton.y =(mp.height+spacerYTitle)+(vPlayButton.height/2)+(labelPlayButton.height/4);
 		labelPlayButton.x = (FlxG.width / 2)-(labelPlayButton.width/2);
 		add(labelPlayButton);
-		
-		
-		
-		
-		 instructionsButton= new FlxButtonAnimation(AssetPaths.button__png, 80, 20, onClickInstructions);//la animacion de chivito boy
-		instructionsButton.setSize(Std.int(FlxG.width / 3), Std.int(FlxG.height / 9));
-		instructionsButton.setOver([1]);
-		instructionsButton.setUp([0]);
-		instructionsButton.setDown([2]);
-		instructionsButton.setPosition((FlxG.width / 2)-(instructionsButton.width/2), mp.height+spacerYTitle+(instructionsButton.height/2)+spacerY+Std.int(FlxG.height / 9));
-		instructionsButton.setGraphicSize(Std.int(FlxG.width / 3), Std.int(FlxG.height / 9));
-		add(instructionsButton);
-		instructionsButton.updateHitbox();
+
+		vInstructionsButton= new FlxButtonAnimation(AssetPaths.button__png, 80, 20, onClickInstructions);//la animacion de chivito boy
+		vInstructionsButton.setSize(Std.int(FlxG.width / 3), Std.int(FlxG.height / 9));
+		vInstructionsButton.setOver([1]);
+		vInstructionsButton.setUp([0]);
+		vInstructionsButton.setDown([2]);
+		vInstructionsButton.setPosition((FlxG.width / 2)-(vInstructionsButton.width/2), mp.height+spacerYTitle+(vInstructionsButton.height/2)+spacerY+Std.int(FlxG.height / 9));
+		vInstructionsButton.setGraphicSize(Std.int(FlxG.width / 3), Std.int(FlxG.height / 9));
+		add(vInstructionsButton);
+		vInstructionsButton.updateHitbox();
 
 		var labelInstructionsButton:FlxText = new FlxText();
 		labelInstructionsButton.text = "Instrucciones";
 		labelInstructionsButton.allowCollisions = FlxObject.NONE;
 		labelInstructionsButton.setFormat(65, FlxColor.BLACK, FlxTextAlign.CENTER);
-		labelInstructionsButton.y =(mp.height+spacerYTitle)+(instructionsButton.height/2)+(labelInstructionsButton.height/4)+spacerY+Std.int(FlxG.height / 9);
+		labelInstructionsButton.y =(mp.height+spacerYTitle)+(vInstructionsButton.height/2)+(labelInstructionsButton.height/4)+spacerY+Std.int(FlxG.height / 9);
 		labelInstructionsButton.x = (FlxG.width / 2)-(labelInstructionsButton.width/2);
 		add(labelInstructionsButton);
 
-
-		
-	 exitButton= new FlxButtonAnimation(AssetPaths.button__png, 80, 20, onClickExit);//la animacion de chivito boy
-		exitButton.setSize(Std.int(FlxG.width / 3), Std.int(FlxG.height / 9));
-		exitButton.setOver([1]);
-		exitButton.setUp([0]);
-		exitButton.setDown([2]);
-		exitButton.setPosition((FlxG.width / 2)-(exitButton.width/2), mp.height+spacerYTitle+(exitButton.height/2)+(spacerY*2)+Std.int(FlxG.height / 9)*2);
-		exitButton.setGraphicSize(Std.int(FlxG.width / 3), Std.int(FlxG.height / 9));
-		add(exitButton);
-		exitButton.updateHitbox();
+		vExitButton= new FlxButtonAnimation(AssetPaths.button__png, 80, 20, onClickExit);
+		vExitButton.setSize(Std.int(FlxG.width / 3), Std.int(FlxG.height / 9));
+		vExitButton.setOver([1]);
+		vExitButton.setUp([0]);
+		vExitButton.setDown([2]);
+		vExitButton.setPosition((FlxG.width / 2)-(vExitButton.width/2), mp.height+spacerYTitle+(vExitButton.height/2)+(spacerY*2)+Std.int(FlxG.height / 9)*2);
+		vExitButton.setGraphicSize(Std.int(FlxG.width / 3), Std.int(FlxG.height / 9));
+		add(vExitButton);
+		vExitButton.updateHitbox();
 
 		var labelExitButton:FlxText = new FlxText();
 		labelExitButton.text = "Salir";
 		labelExitButton.allowCollisions = FlxObject.NONE;
 		labelExitButton.setFormat(65, FlxColor.BLACK, FlxTextAlign.CENTER);
-		labelExitButton.y =(mp.height+spacerYTitle)+(exitButton.height/2)+(labelExitButton.height/4)+(spacerY*2)+Std.int(FlxG.height / 9)*2;
+		labelExitButton.y =(mp.height+spacerYTitle)+(vExitButton.height/2)+(labelExitButton.height/4)+(spacerY*2)+Std.int(FlxG.height / 9)*2;
 		labelExitButton.x = (FlxG.width / 2)-(labelExitButton.width/2);
 		add(labelExitButton);
-		
+
 		#if html5
-				exitButton.visible = false;		
-		maxIndex = 1;
+		vExitButton.visible = false;
+		vMaxIndexForButtons = 1;
 		#end
-		
-		playButton.animation.play("over");
+
+		vPlayButton.animation.play("over");
 	}
 
-	override public function update(elapsed:Float):Void
+	override public function update(aDt:Float):Void
 	{
-		super.update(elapsed);
-		
+		super.update(aDt);
 
-			if (FlxG.keys.justPressed.DOWN && index<maxIndex )
+		if (FlxG.keys.justPressed.DOWN && index<vMaxIndexForButtons )
+		{
+			index = index + 1;
+
+		}
+
+		if (FlxG.keys.justPressed.UP && index>0 )
+		{
+			index = index - 1;
+
+		}
+
+		if (FlxG.keys.justPressed.DOWN ||FlxG.keys.justPressed.UP)
+		{
+			vPlayButton.animation.play("up");
+			vInstructionsButton.animation.play("up");
+			vExitButton.animation.play("up");
+			switch (index)
 			{
-				index = index + 1;
+				case 0:
+					vPlayButton.animation.play("over");
+
+				case 1:
+					vInstructionsButton.animation.play("over");
+
+				case 2:
+					vExitButton.animation.play("over");
 
 			}
+		}
 
-			if (FlxG.keys.justPressed.UP && index>0 )
+		if (FlxG.keys.justPressed.ENTER)
+		{
+			vPlayButton.animation.play("up");
+			vInstructionsButton.animation.play("up");
+			vExitButton.animation.play("up");
+			switch (index)
 			{
-				index = index - 1;
+				case 0:
+					vPlayButton.animation.play("down");
+					onClickPlay(vPlayButton);
+
+				case 1:
+					vInstructionsButton.animation.play("down");
+					onClickInstructions(vInstructionsButton);
+
+				case 2:
+					vExitButton.animation.play("down");
+					onClickExit(vExitButton);
 
 			}
-
-			if (FlxG.keys.justPressed.DOWN ||FlxG.keys.justPressed.UP)
-			{
-			playButton.animation.play("up");
-						instructionsButton.animation.play("up");
-						exitButton.animation.play("up");
-				switch (index)
-				{
-					case 0:
-						playButton.animation.play("over");
-
-					case 1:
-						instructionsButton.animation.play("over");
-
-					case 2:
-						exitButton.animation.play("over");
-
-				}
-			}
-
-			if (FlxG.keys.justPressed.ENTER)
-			{
-			playButton.animation.play("up");
-						instructionsButton.animation.play("up");
-						exitButton.animation.play("up");
-				switch (index)
-				{
-					case 0:
-						playButton.animation.play("down");
-						onClickPlay(playButton);
-
-					case 1:
-						instructionsButton.animation.play("down");
-						onClickInstructions(instructionsButton);
-
-					case 2:
-						exitButton.animation.play("down");
-						onClickExit(exitButton);
-
-				}
-			}
+		}
 	}
 
 	private function onClickPlay(aButton:FlxButtonAnimation):Void
 	{
 		FlxG.switchState(new GameState());
 	}
-
 
 	private function onClickInstructions(aButton:FlxButtonAnimation):Void
 	{
@@ -181,7 +171,7 @@ class MainMenu extends FlxState
 	private function onClickExit(aButton:FlxButtonAnimation):Void
 	{
 		System.exit(0);
-		exitButton.animation.play("up");
+		vExitButton.animation.play("up");
 	}
 
 }

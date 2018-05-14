@@ -14,63 +14,66 @@ import flixel.FlxG;
 //
 class ProjectilePlayer extends FlxSprite
 {
-	var followBool:Bool = false;
-	@:isVar public var target(default,set):FlxSprite;
-	var followTime:Float = 0;	
-	var velocityProj:Int = 600;
-	var followTimeTotal = 0;
-	
-	var followPointBool = false;
-	
-	var xPoint:Float = 0;
-	var yPoint:Float = 0;
+	var vFollowBool:Bool = false;
+	@:isVar public var vTarget(default,set):FlxSprite;
+	var vFollowTime:Float = 0;
 
-	public function new(atarget:FlxSprite,?aFollowTime:Int,?aVelocity:Int=600)
+	public var vVelocityProjectile:Int = 600;
+	var vFollowTimeTotal = 0;
+
+	var vFollowPointBool = false;
+
+	var vXPoint:Float = 0;
+	var vYPoint:Float = 0;
+
+	public function new(aTarget:FlxSprite,?aFollowTime:Int,?aVelocity:Int=600)
 	{
 		super();
-		target = atarget;
+
+		vTarget = aTarget;
 		makeGraphic(10, 10);
 		velocity.x =0;
 		velocity.y = 0;
-		
-		velocityProj = aVelocity;
-		followTime = aFollowTime;
-		followTimeTotal = aFollowTime;
+
+		vVelocityProjectile = aVelocity;
+		vFollowTime = aFollowTime;
+		vFollowTimeTotal = aFollowTime;
 		var a = new FlxTimer();
-		
-		//a.start(1, function(_) { trace('hola'); }, 0);
-	}
-	public function set_target(atarget:FlxSprite):FlxSprite
-	{
-		return target = atarget;
-		
 	}
 
-	override public function update(elapsed:Float):Void
+	public function set_vTarget(atarget:FlxSprite):FlxSprite
 	{
-		super.update(elapsed);
-		
-		if (followBool)
+		return vTarget = atarget;
+
+	}
+
+	override public function update(aDt:Float):Void
+	{
+		super.update(aDt);
+
+		if (vFollowBool)
 		{
-			if(!followPointBool){
-			followTarget();
-			}else
+			if (!vFollowPointBool)
+			{
+				followTarget();
+			}
+			else
 			{
 				followPoint();
-				
 			}
-			
+
 		}
 
-		if (followTime<=0 &&followBool)
+		if (vFollowTime<=0 &&vFollowBool)
 		{
 
-			followBool = false;
-			followTime = followTimeTotal;
-		}else
+			vFollowBool = false;
+			vFollowTime = vFollowTimeTotal;
+		}
+		else
 		{
-			
-			followTime = followTime-elapsed;
+
+			vFollowTime = vFollowTime-aDt;
 		}
 
 		if (x<0 || x>FlxG.width||y<0||y>FlxG.height)
@@ -83,45 +86,47 @@ class ProjectilePlayer extends FlxSprite
 
 	public function shoot(ax:Float, ay:Float)
 	{
-        reset(ax, ay);
-		followTime = followTimeTotal;
-		followBool = true;
+		reset(ax, ay);
+		vFollowTime = vFollowTimeTotal;
+		vFollowBool = true;
 		this.set_visible(true);
 	}
-	
+
 	public function setPointToFollow(axTo:Float, ayTo:Float)
 	{
-		xPoint = axTo;
-          yPoint=ayTo;
-		followPointBool = true;
+		vXPoint = axTo;
+		vYPoint=ayTo;
+		vFollowPointBool = true;
 	}
 
 	private function followTarget()
 	{
-		var target:FlxSprite = target;
-		var deltaX:Float = (target.x+target.width*0.5) - (x+width*0.5);
-		var deltaY:Float = (target.y + target.height * 0.5) -(y + height * 0.5);
-setVelocityWithDeltas(deltaX, deltaY);
+		if (vTarget!=null)
+		{
+			var target:FlxSprite = vTarget;
+			var deltaX:Float = (vTarget.x+vTarget.width*0.5) - (x+width*0.5);
+			var deltaY:Float = (vTarget.y + vTarget.height * 0.5) -(y + height * 0.5);
+			setVelocityWithDeltas(deltaX, deltaY);
+		}
 
 	}
-	
-		private function followPoint()
+
+	private function followPoint()
 	{
-		var deltaX:Float = (xPoint+0.5) - (x+0.5);
-		var deltaY:Float = (yPoint + 0.5) -(y + 0.5);
-setVelocityWithDeltas(deltaX, deltaY);
-
+		var deltaX:Float = (vXPoint+0.5) - (x+0.5);
+		var deltaY:Float = (vYPoint + 0.5) -(y + 0.5);
+		setVelocityWithDeltas(deltaX, deltaY);
 
 	}
-	
+
 	private function setVelocityWithDeltas(aDeltaX:Float,aDeltaY:Float)
 	{
-	var deltaX = aDeltaX;
-	var deltaY =	aDeltaY;
-	var length = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+		var deltaX = aDeltaX;
+		var deltaY =	aDeltaY;
+		var length = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
 		deltaX /= length;
 		deltaY /= length;
-		velocity.x = deltaX * velocityProj;
-		velocity.y = deltaY * velocityProj;
+		velocity.x = deltaX * vVelocityProjectile;
+		velocity.y = deltaY * vVelocityProjectile;
 	}
 }

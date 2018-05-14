@@ -9,52 +9,56 @@ import openfl.Lib;
 
 /**
  * ...
- * @author TuMadre
+ * @author ...
  */
 
 class FlxButtonAnimationSkill extends FlxButtonAnimation
 {
-	@:isVar public  var id:Int = 0;
-	@:isVar public  var coolDown:Int = 0;
-	private var timerCoolDown:Float = 0;
-	@:isVar public var activeButton:Bool = false;
-	public var onPressedActive:FlxButtonAnimation->Void;
-	public var onRollOut:FlxButtonAnimation->Void;
-	public var onOver:FlxButtonAnimation->Void;
-	@:isVar public var label:FlxText;
+	@:isVar public  var vId:Int = 0;
+	@:isVar public  var vCoolDown:Int = 0;
+	private var vTimerCoolDown:Float = 0;
+	@:isVar public var vActiveButton:Bool = false;
+	public var vOnPressedActive:FlxButtonAnimation->Void;
+	public var vOnRollOut:FlxButtonAnimation->Void;
+	public var vOnOver:FlxButtonAnimation->Void;
+	@:isVar public var vLabel:FlxText;
 
 	public function new(aImagePath:String,aAnimationWidth:Int,aAnimationHeight:Int,?aOnPressed:FlxButtonAnimation->Void,?aOnPressedActive:FlxButtonAnimation->Void,?aOnOver:FlxButtonAnimation->Void,?aOnRollOut:FlxButtonAnimation->Void,?aCoolDown:Int,?aId:Int,?aLabel:FlxText)
 	{
 		super(aImagePath,aAnimationWidth,aAnimationHeight,aOnPressed,true);
 
-		onPressedActive = aOnPressedActive;
-		onRollOut = aOnRollOut;
-		onOver = aOnOver;
-		coolDown = aCoolDown;
-		timerCoolDown = 0;
-		id = aId;
-label = aLabel;
-if(label != null){
-label.fieldWidth = this.width;
-		label.setFormat(20, FlxColor.WHITE);
-		label.alpha = 0.5;
-		label.set_visible(false);
-}
-updateLabel("");
+		vOnPressedActive = aOnPressedActive;
+		vOnRollOut = aOnRollOut;
+		vOnOver = aOnOver;
+		vCoolDown = aCoolDown;
+		vTimerCoolDown = 0;
+		vId = aId;
+		vLabel = aLabel;
+		if (vLabel != null)
+		{
+			vLabel.fieldWidth = this.width;
+			vLabel.setFormat(20, FlxColor.WHITE);
+			vLabel.alpha = 0.5;
+			vLabel.set_visible(false);
+		}
+		updateLabel("");
 	}
 
 	public function updateLabel(atext:String)
 	{
-		if (label != null){
-		label.setPosition(this.x, this.y);		
-		label.text = atext;
-		
+		if (vLabel != null)
+		{
+			vLabel.setPosition(this.x, this.y);
+			vLabel.text = atext;
+
 		}
 	}
+	
 	public function setCooldown(aFrames:Array<Int>, aLoop:Bool=true,aFrameRate:Int=30):Void
 	{
 		animation.add("cooldown", aFrames, aFrameRate, aLoop);
 	}
+	
 	public function setDisabled(aFrames:Array<Int>, aLoop:Bool=true,aFrameRate:Int=30):Void
 	{
 		animation.add("disabled", aFrames, aFrameRate, aLoop);
@@ -62,45 +66,45 @@ updateLabel("");
 
 	public function setActivation()
 	{
-		timerCoolDown = coolDown;
-		activeButton = true;
+		vTimerCoolDown = vCoolDown;
+		vActiveButton = true;
 		animation.play("cooldown");
-		label.text = "";
-		label.set_visible(true);
-		//   onPressed(this);
-
+		vLabel.text = "";
+		vLabel.set_visible(true);
 	}
+
 	override public function update(aDt:Float):Void
 	{
-		if (isWithMouse)
+		if (vIsWithMouse)
 		{
-			hMousePosition.set(FlxG.mouse.x, FlxG.mouse.y);
-			if (timerCoolDown>0)
+			vMousePosition.set(FlxG.mouse.x, FlxG.mouse.y);
+			if (vTimerCoolDown>0)
 			{
-				updateLabel(Std.int(timerCoolDown+1)+"");
-				activeButton = false;
-				timerCoolDown = timerCoolDown - aDt;
-				if (isOver(hMousePosition))
+				updateLabel(Std.int(vTimerCoolDown+1)+"");
+				vActiveButton = false;
+				vTimerCoolDown = vTimerCoolDown - aDt;
+				if (isOver(vMousePosition))
 				{
-					onOver(this);
-				}else
+					vOnOver(this);
+				}
+				else
 				{
-					onRollOut(this);
+					vOnRollOut(this);
 				}
 			}
 			else
 			{
-label.set_visible(false);
-				if (isOver(hMousePosition))
+				vLabel.set_visible(false);
+				if (isOver(vMousePosition))
 				{
-					onOver(this);
-					if (FlxG.mouse.pressed&&!activeButton)
+					vOnOver(this);
+					if (FlxG.mouse.pressed&&!vActiveButton)
 					{
 						animation.play("down");
 					}
 					else
 					{
-						if (!activeButton)
+						if (!vActiveButton)
 						{
 							animation.play("over");
 						}
@@ -108,23 +112,26 @@ label.set_visible(false);
 					if (isButtonClicked())
 					{
 
-						if (!activeButton)
+						if (!vActiveButton)
 						{
-							activeButton = true;
-							if (onPressed != null)
+							trace("Im not active yet");
+							vActiveButton = true;
+							if (vOnPressed != null)
 							{
-								onPressed(this);
+								vOnPressed(this);
 							}
+							trace("Actived");
 							animation.play("disabled");
 						}
 						else
 						{
-
-							activeButton = false;
-							if (onPressedActive != null)
+trace("Im actived");
+							vActiveButton = false;
+							if (vOnPressedActive != null)
 							{
-								onPressedActive(this);
+								vOnPressedActive(this);
 							}
+							trace("Not actived");
 							animation.play("up");
 						}
 
@@ -133,8 +140,8 @@ label.set_visible(false);
 				}
 				else
 				{
-					onRollOut(this);
-					if (!activeButton)
+					vOnRollOut(this);
+					if (!vActiveButton)
 					{
 						animation.play("up");
 					}

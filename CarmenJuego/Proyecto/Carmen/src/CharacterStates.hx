@@ -2,13 +2,13 @@ package;
 
 /**
  * ...
- * @author TuMadre
+ * @author ...
  */
 class CharacterStates 
 {
 
-	public static inline var stunnedState:String = "Stunned";
-	public static inline var normalState:String = "Normal";
+	public static inline var cStunnedState:String = "Stunned";
+	public static inline var cNormalState:String = "Normal";
 	
 	public function new() 
 	{
