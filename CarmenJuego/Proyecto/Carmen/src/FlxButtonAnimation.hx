@@ -17,7 +17,6 @@ class FlxButtonAnimation extends FlxSprite
 	public var vEnabled:Bool = true;
 	private var vIsWithMouse:Bool = false;
     
-    private var vDisplay:FlxSprite;
     private var vMousePosition:FlxPoint;
 
     

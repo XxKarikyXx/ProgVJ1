@@ -12,21 +12,28 @@ import openfl.Lib;
  * @author ...
  */
 
-class FlxButtonAnimationSkill extends FlxButtonAnimation
+class FlxButtonAnimationSkill extends FlxSprite
 {
 	@:isVar public  var vId:Int = 0;
 	@:isVar public  var vCoolDown:Int = 0;
 	private var vTimerCoolDown:Float = 0;
 	@:isVar public var vActiveButton:Bool = false;
-	public var vOnPressedActive:FlxButtonAnimation->Void;
-	public var vOnOver:FlxButtonAnimation->Void;
+	public var vOnPressedActive:FlxButtonAnimationSkill->Void;
+	public var vOnOver:FlxButtonAnimationSkill->Void;
 	@:isVar public var vLabel:FlxText;
 	public var vTextDescription:String;
+	
+	 public var vOnPressed:FlxButtonAnimationSkill->Void;
+	public var vEnabled:Bool = true;
+    
+    private var vMousePosition:FlxPoint;
 
-	public function new(aImagePath:String,aAnimationWidth:Int,aAnimationHeight:Int,?aOnPressed:FlxButtonAnimation->Void,?aOnPressedActive:FlxButtonAnimation->Void,?aOnOver:FlxButtonAnimation->Void,?aCoolDown:Int,?aId:Int,?aLabel:FlxText,?aSkillTextDescription:String)
+	public function new(aImagePath:String,aAnimationWidth:Int,aAnimationHeight:Int,?aOnPressed:FlxButtonAnimationSkill->Void,?aOnPressedActive:FlxButtonAnimationSkill->Void,?aOnOver:FlxButtonAnimationSkill->Void,?aCoolDown:Int,?aId:Int,?aLabel:FlxText,?aSkillTextDescription:String)
 	{
-		super(aImagePath,aAnimationWidth,aAnimationHeight,aOnPressed,true);
-
+         super();
+        loadGraphic(Assets.getBitmapData(aImagePath), true, aAnimationWidth, aAnimationHeight);
+        vMousePosition = new FlxPoint();
+        vOnPressed = aOnPressed;
 		vOnPressedActive = aOnPressedActive;
 		vOnOver = aOnOver;
 		vCoolDown = aCoolDown;
@@ -64,6 +71,21 @@ class FlxButtonAnimationSkill extends FlxButtonAnimation
 		animation.add("disabled", aFrames, aFrameRate, aLoop);
 	}
 
+	    public function setUp(aFrames:Array<Int>, aLoop:Bool=true,aFrameRate:Int=30):Void
+    {
+        animation.add("up", aFrames, aFrameRate, aLoop);
+    }
+	
+    public function setDown(aFrames:Array<Int>, aLoop:Bool=true,aFrameRate:Int=30):Void
+    {
+        animation.add("down", aFrames, aFrameRate, aLoop);
+    }
+	
+    public function setOver(aFrames:Array<Int>, aLoop:Bool=true,aFrameRate:Int=30):Void
+    {
+        animation.add("over", aFrames, aFrameRate, aLoop);
+    }
+	
 	public function setActivation()
 	{
 		vTimerCoolDown = vCoolDown;
@@ -75,8 +97,6 @@ class FlxButtonAnimationSkill extends FlxButtonAnimation
 
 	override public function update(aDt:Float):Void
 	{
-		if (vIsWithMouse)
-		{
 			vMousePosition.set(FlxG.mouse.x, FlxG.mouse.y);
 			if (vTimerCoolDown>0)
 			{
@@ -147,9 +167,25 @@ class FlxButtonAnimationSkill extends FlxButtonAnimation
 					}
 				}
 			}
-		}
-		//  super.update(aDt);
+		
+		super.update(aDt);
 	}
+	
+	
+	public function isTouchingButton():Bool
+	{		
+	return isOver(vMousePosition);	
+	}
+	
+    private inline function isOver(aMousePosition:FlxPoint):Bool
+    {
+        return overlapsPoint(vMousePosition);
+    }
+	
+    private inline function isButtonClicked():Bool
+    {
+        return FlxG.mouse.justReleased;
+    }
 
 }
 

@@ -68,7 +68,7 @@ class SkillsController
 		vSkillsCountDownText.add(textSkill2FlxText);
 	}
 
-	public function onClickSkill1(aButton:FlxButtonAnimation):Void
+	public function onClickSkill1(aButton:FlxButtonAnimationSkill):Void
 	{
 		resetSkill(vIdSkill);
 		for (i in 0...1)
@@ -78,39 +78,39 @@ class SkillsController
 		}
 
 		intanceProjectiles();
-		vIdSkill = vSkill1.vId;
+		vIdSkill = aButton.vId;
 
 	}
 
-	public function onClickSkill1Active(aButton:FlxButtonAnimation):Void
+	public function onClickSkill1Active(aButton:FlxButtonAnimationSkill):Void
 	{
 		resetSkill(vIdSkill);
 	}
 
-	public function onOverSkill1(aButton:FlxButtonAnimation):Void
+	public function onOverSkill1(aButton:FlxButtonAnimationSkill):Void
 	{
-		vTextSkillDescription.text = vSkill1.vTextDescription;
+		vTextSkillDescription.text = aButton.vTextDescription;
 	}
 
-	public function onClickSkill2(aButton:FlxButtonAnimation):Void
+	public function onClickSkill2(aButton:FlxButtonAnimationSkill):Void
 	{
 		resetSkill(vIdSkill);
 
-		vIdSkill = vSkill2.vId;
+		vIdSkill = aButton.vId;
 		var trap = new Trap(FlxG.mouse.x, FlxG.mouse.y);
 		vActualTrap = trap;
 		setUINotPossiblePlaceToPutTrapFromSkill2();
 		vTraps.add(trap);
 	}
 
-	public function onClickSkill2Active(aButton:FlxButtonAnimation):Void
+	public function onClickSkill2Active(aButton:FlxButtonAnimationSkill):Void
 	{
 		resetSkill(vIdSkill);
 	}
 
-	public function onOverSkill2(aButton:FlxButtonAnimation):Void
+	public function onOverSkill2(aButton:FlxButtonAnimationSkill):Void
 	{
-		vTextSkillDescription.text = vSkill2.vTextDescription;
+		vTextSkillDescription.text = aButton.vTextDescription;
 	}
 
 	public function thereAreSkillsTouching():Bool
