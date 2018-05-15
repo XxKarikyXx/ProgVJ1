@@ -102,9 +102,10 @@ class GameState extends FlxState
 
 		vSkillsGodText = new FlxGroup();
 		add(vSkillsGodText);
-		vSkillsController = new SkillsController(vSkillsGod, vTextSkill, vTrapsGod, vSkillsGodText);
-
+		vSkillsController = new SkillsController();
+		
 		setPlayerData();
+		setSkillsControllerData();
 		setGodData();
 
 		FlxG.camera.setScrollBoundsRect(0, 0, vMap.width, vMap.height);
@@ -138,6 +139,25 @@ class GameState extends FlxState
 
 	}
 
+	public function setSkillsControllerData()
+	{
+vSkillsController.set_vSkills(vSkillsGod);
+vSkillsController.set_vTextSkillDescription(vTextSkill);
+vSkillsController.set_vTraps(vTrapsGod);
+vSkillsController.set_vSkillsCountDownText(vSkillsGodText);
+vSkillsController.createAndAddSkills();
+
+		vProjectilesGod = new FlxGroup();
+		add(vProjectilesGod);
+		for (i in 0...1)
+		{
+			var pro:ProjectilePlayer = new ProjectilePlayer(GlobalGameData.vPlayer1,0);
+			vProjectilesGod.add(pro);
+			pro.kill();
+		}
+
+		vSkillsController.set_vProjectiles(vProjectilesGod);
+	}
 	public function setPlayerData()
 	{
 
@@ -157,17 +177,6 @@ class GameState extends FlxState
 
 	public function setGodData()
 	{
-
-		vProjectilesGod = new FlxGroup();
-		add(vProjectilesGod);
-		for (i in 0...1)
-		{
-			var pro:ProjectilePlayer = new ProjectilePlayer(GlobalGameData.vPlayer1,0);
-			vProjectilesGod.add(pro);
-			pro.kill();
-		}
-
-		vGod.set_vProjectiles(vProjectilesGod);
 		vGod.vSkillsController = this.vSkillsController;
 	}
 

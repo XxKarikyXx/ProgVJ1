@@ -19,19 +19,19 @@ class FlxButtonAnimationSkill extends FlxButtonAnimation
 	private var vTimerCoolDown:Float = 0;
 	@:isVar public var vActiveButton:Bool = false;
 	public var vOnPressedActive:FlxButtonAnimation->Void;
-	public var vOnRollOut:FlxButtonAnimation->Void;
 	public var vOnOver:FlxButtonAnimation->Void;
 	@:isVar public var vLabel:FlxText;
+	public var vTextDescription:String;
 
-	public function new(aImagePath:String,aAnimationWidth:Int,aAnimationHeight:Int,?aOnPressed:FlxButtonAnimation->Void,?aOnPressedActive:FlxButtonAnimation->Void,?aOnOver:FlxButtonAnimation->Void,?aOnRollOut:FlxButtonAnimation->Void,?aCoolDown:Int,?aId:Int,?aLabel:FlxText)
+	public function new(aImagePath:String,aAnimationWidth:Int,aAnimationHeight:Int,?aOnPressed:FlxButtonAnimation->Void,?aOnPressedActive:FlxButtonAnimation->Void,?aOnOver:FlxButtonAnimation->Void,?aCoolDown:Int,?aId:Int,?aLabel:FlxText,?aSkillTextDescription:String)
 	{
 		super(aImagePath,aAnimationWidth,aAnimationHeight,aOnPressed,true);
 
 		vOnPressedActive = aOnPressedActive;
-		vOnRollOut = aOnRollOut;
 		vOnOver = aOnOver;
 		vCoolDown = aCoolDown;
 		vTimerCoolDown = 0;
+		vTextDescription = aSkillTextDescription;
 		vId = aId;
 		vLabel = aLabel;
 		if (vLabel != null)
@@ -53,12 +53,12 @@ class FlxButtonAnimationSkill extends FlxButtonAnimation
 
 		}
 	}
-	
+
 	public function setCooldown(aFrames:Array<Int>, aLoop:Bool=true,aFrameRate:Int=30):Void
 	{
 		animation.add("cooldown", aFrames, aFrameRate, aLoop);
 	}
-	
+
 	public function setDisabled(aFrames:Array<Int>, aLoop:Bool=true,aFrameRate:Int=30):Void
 	{
 		animation.add("disabled", aFrames, aFrameRate, aLoop);
@@ -89,7 +89,7 @@ class FlxButtonAnimationSkill extends FlxButtonAnimation
 				}
 				else
 				{
-					vOnRollOut(this);
+					//vOnRollOut(this);
 				}
 			}
 			else
@@ -125,7 +125,7 @@ class FlxButtonAnimationSkill extends FlxButtonAnimation
 						}
 						else
 						{
-trace("Im actived");
+							trace("Im actived");
 							vActiveButton = false;
 							if (vOnPressedActive != null)
 							{
@@ -140,7 +140,7 @@ trace("Im actived");
 				}
 				else
 				{
-					vOnRollOut(this);
+					//onRollOut();
 					if (!vActiveButton)
 					{
 						animation.play("up");

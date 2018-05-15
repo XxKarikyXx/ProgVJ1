@@ -146,7 +146,7 @@ ApplicationMain.init = function() {
 	}
 };
 ApplicationMain.main = function() {
-	ApplicationMain.config = { build : "953", company : "TuMadre", file : "Carmen", fps : 60, name : "Carmen", orientation : "", packageName : "Carmen", version : "1.0.0", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : false, height : 1080, parameters : "{}", resizable : true, stencilBuffer : true, title : "Carmen", vsync : false, width : 1920, x : null, y : null}]};
+	ApplicationMain.config = { build : "963", company : "TuMadre", file : "Carmen", fps : 60, name : "Carmen", orientation : "", packageName : "Carmen", version : "1.0.0", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : false, height : 1080, parameters : "{}", resizable : true, stencilBuffer : true, title : "Carmen", vsync : false, width : 1920, x : null, y : null}]};
 };
 ApplicationMain.start = function() {
 	var hasMain = false;
@@ -5779,17 +5779,17 @@ FlxButtonAnimation.prototype = $extend(flixel_FlxSprite.prototype,{
 	}
 	,__class__: FlxButtonAnimation
 });
-var FlxButtonAnimationSkill = function(aImagePath,aAnimationWidth,aAnimationHeight,aOnPressed,aOnPressedActive,aOnOver,aOnRollOut,aCoolDown,aId,aLabel) {
+var FlxButtonAnimationSkill = function(aImagePath,aAnimationWidth,aAnimationHeight,aOnPressed,aOnPressedActive,aOnOver,aCoolDown,aId,aLabel,aSkillTextDescription) {
 	this.vActiveButton = false;
 	this.vTimerCoolDown = 0;
 	this.vCoolDown = 0;
 	this.vId = 0;
 	FlxButtonAnimation.call(this,aImagePath,aAnimationWidth,aAnimationHeight,aOnPressed,true);
 	this.vOnPressedActive = aOnPressedActive;
-	this.vOnRollOut = aOnRollOut;
 	this.vOnOver = aOnOver;
 	this.vCoolDown = aCoolDown;
 	this.vTimerCoolDown = 0;
+	this.vTextDescription = aSkillTextDescription;
 	this.vId = aId;
 	this.vLabel = aLabel;
 	if(this.vLabel != null) {
@@ -5809,9 +5809,9 @@ FlxButtonAnimationSkill.prototype = $extend(FlxButtonAnimation.prototype,{
 	,vTimerCoolDown: null
 	,vActiveButton: null
 	,vOnPressedActive: null
-	,vOnRollOut: null
 	,vOnOver: null
 	,vLabel: null
+	,vTextDescription: null
 	,updateLabel: function(atext) {
 		if(this.vLabel != null) {
 			this.vLabel.setPosition(this.x,this.y);
@@ -5853,8 +5853,6 @@ FlxButtonAnimationSkill.prototype = $extend(FlxButtonAnimation.prototype,{
 				var aMousePosition = this.vMousePosition;
 				if(this.overlapsPoint(this.vMousePosition)) {
 					this.vOnOver(this);
-				} else {
-					this.vOnRollOut(this);
 				}
 			} else {
 				this.vLabel.set_visible(false);
@@ -5892,11 +5890,8 @@ FlxButtonAnimationSkill.prototype = $extend(FlxButtonAnimation.prototype,{
 							this.animation.play("up");
 						}
 					}
-				} else {
-					this.vOnRollOut(this);
-					if(!this.vActiveButton) {
-						this.animation.play("up");
-					}
+				} else if(!this.vActiveButton) {
+					this.animation.play("up");
 				}
 			}
 		}
@@ -6290,13 +6285,9 @@ Reflect.makeVarArgs = function(f) {
 		return f(a);
 	};
 };
-var SkillsController = function(aSkills,aText,atraps,aTexts) {
+var SkillsController = function() {
+	this.vProjCount = -1;
 	this.vIdSkill = -1;
-	this.vSkills = aSkills;
-	this.vTextSkillDescription = aText;
-	this.vTraps = atraps;
-	this.vSkillsCountDownText = aTexts;
-	this.createAndAddSkills();
 };
 $hxClasses["SkillsController"] = SkillsController;
 SkillsController.__name__ = ["SkillsController"];
@@ -6308,49 +6299,50 @@ SkillsController.prototype = {
 	,vSkill2: null
 	,vIdSkill: null
 	,vTraps: null
+	,vProjectiles: null
+	,vProjCount: null
 	,vActualTrap: null
+	,intanceProjectiles: function() {
+		this.vProjCount = 0;
+	}
 	,createAndAddSkills: function() {
 		var textSkill1FlxText = new flixel_text_FlxText();
-		this.vSkill1 = new FlxButtonAnimationSkill("assets/img/Skills/balaplacebo.png",57,64,$bind(this,this.onClickSkill1),$bind(this,this.onClickSkill1Active),$bind(this,this.onOverSkill1),$bind(this,this.onRollOutSkill1),3,0,textSkill1FlxText);
+		this.vSkill1 = new FlxButtonAnimationSkill("assets/img/Skills/balaplacebo.png",57,64,$bind(this,this.onClickSkill1),$bind(this,this.onClickSkill1Active),$bind(this,this.onOverSkill1),3,0,textSkill1FlxText,"Dispara un proyectil en la dirección donde se haga click.    Cooldown: 3s");
 		this.vSkill1.setOver([1]);
 		this.vSkill1.setUp([0]);
 		this.vSkill1.setDown([2]);
 		this.vSkill1.setCooldown([3]);
 		this.vSkill1.setDisabled([4]);
 		this.vSkill1.setPosition(1740,50);
-		this.vSkills.add(this.vSkill1);
-		this.vSkillsCountDownText.add(textSkill1FlxText);
+		this.get_vSkills().add(this.vSkill1);
+		this.get_vSkillsCountDownText().add(textSkill1FlxText);
 		var textSkill2FlxText = new flixel_text_FlxText();
-		this.vSkill2 = new FlxButtonAnimationSkill("assets/img/Skills/balaplacebo.png",57,64,$bind(this,this.onClickSkill2),$bind(this,this.onClickSkill2Active),$bind(this,this.onOverSkill2),$bind(this,this.onRollOutSkill2),40,1,textSkill2FlxText);
+		this.vSkill2 = new FlxButtonAnimationSkill("assets/img/Skills/balaplacebo.png",57,64,$bind(this,this.onClickSkill2),$bind(this,this.onClickSkill2Active),$bind(this,this.onOverSkill2),40,1,textSkill2FlxText,"Pone una trampa en una superficie que inmoviliza.    Cooldown: 40s");
 		this.vSkill2.setOver([1]);
 		this.vSkill2.setUp([0]);
 		this.vSkill2.setDown([2]);
 		this.vSkill2.setCooldown([3]);
 		this.vSkill2.setDisabled([4]);
 		this.vSkill2.setPosition(1825,50);
-		this.vSkills.add(this.vSkill2);
-		this.vSkillsCountDownText.add(textSkill2FlxText);
+		this.get_vSkills().add(this.vSkill2);
+		this.get_vSkillsCountDownText().add(textSkill2FlxText);
 	}
 	,onClickSkill1: function(aButton) {
 		this.resetSkill(this.vIdSkill);
-		haxe_Log.trace(this.vIdSkill + "active skillllll",{ fileName : "SkillsController.hx", lineNumber : 68, className : "SkillsController", methodName : "onClickSkill1"});
 		var _g = 0;
 		while(_g < 1) {
 			var i = _g++;
-			GlobalGameData.vGod.vProjectiles.members[i].revive();
-			GlobalGameData.vGod.vProjectiles.members[i].set_visible(false);
+			this.get_vProjectiles().members[i].revive();
+			this.get_vProjectiles().members[i].set_visible(false);
 		}
-		GlobalGameData.vGod.intanceProjectiles();
+		this.intanceProjectiles();
 		this.vIdSkill = this.vSkill1.vId;
 	}
 	,onClickSkill1Active: function(aButton) {
-		haxe_Log.trace("active skill 1",{ fileName : "SkillsController.hx", lineNumber : 82, className : "SkillsController", methodName : "onClickSkill1Active"});
 		this.resetSkill(this.vIdSkill);
 	}
 	,onOverSkill1: function(aButton) {
-		this.vTextSkillDescription.set_text("Dispara un proyectil en la dirección donde se haga click.    Cooldown: " + this.vSkill1.vCoolDown + "s");
-	}
-	,onRollOutSkill1: function(aButton) {
+		this.get_vTextSkillDescription().set_text(this.vSkill1.vTextDescription);
 	}
 	,onClickSkill2: function(aButton) {
 		this.resetSkill(this.vIdSkill);
@@ -6358,16 +6350,13 @@ SkillsController.prototype = {
 		var trap = new gameObjects_Trap(flixel_FlxG.mouse.x,flixel_FlxG.mouse.y);
 		this.vActualTrap = trap;
 		this.setUINotPossiblePlaceToPutTrapFromSkill2();
-		this.vTraps.add(trap);
+		this.get_vTraps().add(trap);
 	}
 	,onClickSkill2Active: function(aButton) {
-		haxe_Log.trace("active skill 2",{ fileName : "SkillsController.hx", lineNumber : 109, className : "SkillsController", methodName : "onClickSkill2Active"});
 		this.resetSkill(this.vIdSkill);
 	}
 	,onOverSkill2: function(aButton) {
-		this.vTextSkillDescription.set_text("Pone una trampa en una superficie que inmoviliza.    Cooldown: " + this.vSkill2.vCoolDown + "s");
-	}
-	,onRollOutSkill2: function(aButton) {
+		this.get_vTextSkillDescription().set_text(this.vSkill2.vTextDescription);
 	}
 	,thereAreSkillsTouching: function() {
 		if(!this.vSkill2.isTouchingButton()) {
@@ -6377,11 +6366,10 @@ SkillsController.prototype = {
 		}
 	}
 	,activateSkillWithId: function(aIdSkill) {
-		haxe_Log.trace(aIdSkill + "skillllll to reset",{ fileName : "SkillsController.hx", lineNumber : 130, className : "SkillsController", methodName : "activateSkillWithId"});
 		switch(aIdSkill) {
 		case 0:
 			this.vSkill1.setActivation();
-			var proj = js_Boot.__cast(GlobalGameData.vGod.vProjectiles.members[0] , gameObjects_ProjectilePlayer);
+			var proj = js_Boot.__cast(this.get_vProjectiles().members[0] , gameObjects_ProjectilePlayer);
 			proj.setPointToFollow(flixel_FlxG.mouse.x,flixel_FlxG.mouse.y);
 			proj.shoot(GlobalGameData.vGod.x + GlobalGameData.vGod.get_width() / 2,GlobalGameData.vGod.y + GlobalGameData.vGod.get_height() / 2);
 			aIdSkill = -1;
@@ -6431,20 +6419,19 @@ SkillsController.prototype = {
 		}
 	}
 	,resetSkill: function(aIdSkill) {
-		haxe_Log.trace("skill to reset" + aIdSkill,{ fileName : "SkillsController.hx", lineNumber : 205, className : "SkillsController", methodName : "resetSkill"});
 		switch(aIdSkill) {
 		case 0:
 			var _g = 0;
 			while(_g < 1) {
 				var i = _g++;
-				GlobalGameData.vGod.vProjectiles.members[i].kill();
+				this.get_vProjectiles().members[i].kill();
 			}
 			this.vSkill1.vActiveButton = false;
 			this.vSkill1.animation.play("up");
 			this.vIdSkill = -1;
 			break;
 		case 1:
-			this.vTraps.remove(this.vActualTrap,true);
+			this.get_vTraps().remove(this.vActualTrap,true);
 			this.vActualTrap.destroy();
 			this.vSkill2.vActiveButton = false;
 			this.vSkill2.animation.play("up");
@@ -6462,7 +6449,38 @@ SkillsController.prototype = {
 			return false;
 		}
 	}
+	,get_vTraps: function() {
+		return this.vTraps;
+	}
+	,set_vTraps: function(value) {
+		return this.vTraps = value;
+	}
+	,get_vProjectiles: function() {
+		return this.vProjectiles;
+	}
+	,set_vProjectiles: function(value) {
+		return this.vProjectiles = value;
+	}
+	,get_vSkills: function() {
+		return this.vSkills;
+	}
+	,set_vSkills: function(value) {
+		return this.vSkills = value;
+	}
+	,get_vTextSkillDescription: function() {
+		return this.vTextSkillDescription;
+	}
+	,set_vTextSkillDescription: function(value) {
+		return this.vTextSkillDescription = value;
+	}
+	,get_vSkillsCountDownText: function() {
+		return this.vSkillsCountDownText;
+	}
+	,set_vSkillsCountDownText: function(value) {
+		return this.vSkillsCountDownText = value;
+	}
 	,__class__: SkillsController
+	,__properties__: {set_vProjectiles:"set_vProjectiles",get_vProjectiles:"get_vProjectiles",set_vTraps:"set_vTraps",get_vTraps:"get_vTraps",set_vTextSkillDescription:"set_vTextSkillDescription",get_vTextSkillDescription:"get_vTextSkillDescription",set_vSkillsCountDownText:"set_vSkillsCountDownText",get_vSkillsCountDownText:"get_vSkillsCountDownText",set_vSkills:"set_vSkills",get_vSkills:"get_vSkills"}
 };
 var Std = function() { };
 $hxClasses["Std"] = Std;
@@ -45466,7 +45484,6 @@ gameObjects_Coin.prototype = $extend(flixel_FlxSprite.prototype,{
 var gameObjects_God = function(aX,aY) {
 	this.vStateDuration = -1;
 	this.vState = "Normal";
-	this.vProjCount = -1;
 	flixel_FlxSprite.call(this,aX,aY);
 	this.loadGraphic("assets/img/Sheets/fantasmaDiosSheet.png",true,80,80);
 	this.animation.add("run",[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],30);
@@ -45484,15 +45501,10 @@ $hxClasses["gameObjects.God"] = gameObjects_God;
 gameObjects_God.__name__ = ["gameObjects","God"];
 gameObjects_God.__super__ = flixel_FlxSprite;
 gameObjects_God.prototype = $extend(flixel_FlxSprite.prototype,{
-	vProjectiles: null
-	,vProjCount: null
-	,vState: null
+	vState: null
 	,vStateDuration: null
 	,vSkillsController: null
 	,create: function() {
-	}
-	,intanceProjectiles: function() {
-		this.vProjCount = 0;
 	}
 	,update: function(aDt) {
 		this.acceleration.set_x(0);
@@ -45554,15 +45566,11 @@ gameObjects_God.prototype = $extend(flixel_FlxSprite.prototype,{
 			this.vState = "Normal";
 			this.vStateDuration = -1;
 		} else {
-			haxe_Log.trace(this.vStateDuration,{ fileName : "God.hx", lineNumber : 155, className : "gameObjects.God", methodName : "godStunned"});
+			haxe_Log.trace(this.vStateDuration,{ fileName : "God.hx", lineNumber : 147, className : "gameObjects.God", methodName : "godStunned"});
 			this.vStateDuration -= aDt;
 		}
 	}
-	,set_vProjectiles: function(value) {
-		return this.vProjectiles = value;
-	}
 	,__class__: gameObjects_God
-	,__properties__: $extend(flixel_FlxSprite.prototype.__properties__,{set_vProjectiles:"set_vProjectiles"})
 });
 var gameObjects_Player1 = function(aX,aY) {
 	this.vStateDuration = -1;
@@ -84910,8 +84918,9 @@ states_GameState.prototype = $extend(flixel_FlxState.prototype,{
 		this.add(this.vTrapsGod);
 		this.vSkillsGodText = new flixel_group_FlxTypedGroup();
 		this.add(this.vSkillsGodText);
-		this.vSkillsController = new SkillsController(this.vSkillsGod,this.vTextSkill,this.vTrapsGod,this.vSkillsGodText);
+		this.vSkillsController = new SkillsController();
 		this.setPlayerData();
+		this.setSkillsControllerData();
 		this.setGodData();
 		flixel_FlxG.camera.setScrollBoundsRect(0,0,this.vMap.get_width(),this.vMap.get_height());
 		var _this = flixel_FlxG.worldBounds;
@@ -84943,6 +84952,23 @@ states_GameState.prototype = $extend(flixel_FlxState.prototype,{
 			this.vCoinsPlayer.add(c);
 		}
 	}
+	,setSkillsControllerData: function() {
+		this.vSkillsController.set_vSkills(this.vSkillsGod);
+		this.vSkillsController.set_vTextSkillDescription(this.vTextSkill);
+		this.vSkillsController.set_vTraps(this.vTrapsGod);
+		this.vSkillsController.set_vSkillsCountDownText(this.vSkillsGodText);
+		this.vSkillsController.createAndAddSkills();
+		this.vProjectilesGod = new flixel_group_FlxTypedGroup();
+		this.add(this.vProjectilesGod);
+		var _g = 0;
+		while(_g < 1) {
+			var i = _g++;
+			var pro = new gameObjects_ProjectilePlayer(GlobalGameData.vPlayer1,0);
+			this.vProjectilesGod.add(pro);
+			pro.kill();
+		}
+		this.vSkillsController.set_vProjectiles(this.vProjectilesGod);
+	}
 	,setPlayerData: function() {
 		this.vProjectilesPlayer = new flixel_group_FlxTypedGroup();
 		this.add(this.vProjectilesPlayer);
@@ -84958,16 +84984,6 @@ states_GameState.prototype = $extend(flixel_FlxState.prototype,{
 		GlobalGameData.vPlayer1 = this.vPlayer;
 	}
 	,setGodData: function() {
-		this.vProjectilesGod = new flixel_group_FlxTypedGroup();
-		this.add(this.vProjectilesGod);
-		var _g = 0;
-		while(_g < 1) {
-			var i = _g++;
-			var pro = new gameObjects_ProjectilePlayer(GlobalGameData.vPlayer1,0);
-			this.vProjectilesGod.add(pro);
-			pro.kill();
-		}
-		this.vGod.set_vProjectiles(this.vProjectilesGod);
 		this.vGod.vSkillsController = this.vSkillsController;
 	}
 	,setCoinXAndYRandom: function(otherCoins,aCoin) {

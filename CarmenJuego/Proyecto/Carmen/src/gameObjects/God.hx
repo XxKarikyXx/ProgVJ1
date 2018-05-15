@@ -15,9 +15,6 @@ import flixel.tile.FlxTilemap;
  */
 class God extends FlxSprite
 {
-	@:isVar public var vProjectiles(default, set):FlxGroup;
-	@:isVar public var vProjCount(default,default):Int = -1;
-
 	@:isVar public var vState(default,default):String = CharacterStates.cNormalState;
 	@:isVar public var vStateDuration(default,default):Float = -1;
 	@:isVar public var vSkillsController(default, default):SkillsController;
@@ -51,11 +48,6 @@ class God extends FlxSprite
 
 	}
 
-	public function intanceProjectiles()
-	{
-		vProjCount = 0;
-
-	}
 
 	override public function update(aDt:Float):Void
 	{
@@ -158,9 +150,5 @@ class God extends FlxSprite
 
 	}
 
-	public function set_vProjectiles(value:FlxGroup):FlxGroup
-	{
-		return vProjectiles = value;
-	}
 
 }
