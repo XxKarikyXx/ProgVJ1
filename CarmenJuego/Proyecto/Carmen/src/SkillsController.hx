@@ -31,8 +31,8 @@ class SkillsController
 
 	@:isVar public var vActualTrap:Trap;
 
-	public static inline var idSkill1 = 0;
-	public static inline var idSkill2 = 1;
+	public static inline var cIdSkill1 = 0;
+	public static inline var cIdSkill2 = 1;
 
 	public function new()
 	{
@@ -46,7 +46,7 @@ class SkillsController
 	public function createAndAddSkills():Void
 	{
 		var textSkill1FlxText:FlxText = new FlxText();
-		vSkill1 = new FlxButtonAnimationSkill(AssetPaths.balaplacebo__png, 57, 64, onClickSkill1,onClickSkill1Active,onOverSkill1,3,idSkill1,textSkill1FlxText,"Dispara un proyectil en la dirección donde se haga click.    Cooldown: 3s");
+		vSkill1 = new FlxButtonAnimationSkill(AssetPaths.balaplacebo__png, 57, 64, onClickSkill1,onClickSkill1Active,onOverSkill1,3,cIdSkill1,textSkill1FlxText,"Dispara un proyectil en la dirección donde se haga click.    Cooldown: 3s");
 		vSkill1.setOver([1]);
 		vSkill1.setUp([0]);
 		vSkill1.setDown([2]);
@@ -57,7 +57,7 @@ class SkillsController
 		vSkillsCountDownText.add(textSkill1FlxText);
 
 		var textSkill2FlxText:FlxText = new FlxText();
-		vSkill2 = new FlxButtonAnimationSkill(AssetPaths.balaplacebo__png, 57, 64, onClickSkill2,onClickSkill2Active,onOverSkill2,40,idSkill2,textSkill2FlxText,"Pone una trampa en una superficie que inmoviliza.    Cooldown: 40s");
+		vSkill2 = new FlxButtonAnimationSkill(AssetPaths.balaplacebo__png, 57, 64, onClickSkill2,onClickSkill2Active,onOverSkill2,40,cIdSkill2,textSkill2FlxText,"Pone una trampa en una superficie que inmoviliza.    Cooldown: 40s");
 		vSkill2.setOver([1]);
 		vSkill2.setUp([0]);
 		vSkill2.setDown([2]);
@@ -122,14 +122,14 @@ class SkillsController
 	{
 		switch (aIdSkill)
 		{
-			case idSkill1:
+			case cIdSkill1:
 				vIdSkill =-1;
 				vSkill1.setActivation();
 				var proj:ProjectilePlayer = cast(vProjectiles.members[0], ProjectilePlayer);
 				proj.setPointToFollow(FlxG.mouse.x,FlxG.mouse.y);
 				proj.shoot(GlobalGameData.vGod.x+(GlobalGameData.vGod.width/2), GlobalGameData.vGod.y+(GlobalGameData.vGod.height/2));
 
-			case idSkill2:
+			case cIdSkill2:
 				vIdSkill =-1;
 				setUIPlacedTrapFromSkill2();
 				vActualTrap.vCanCollide = true;
@@ -159,10 +159,10 @@ class SkillsController
 		{
 			switch (aIdSkill)
 			{
-				case idSkill1:
+				case cIdSkill1:
 					activateSkillWithId(aIdSkill);
 					vIdSkill =-1;
-				case idSkill2:
+				case cIdSkill2:
 					if (skill2ConditionToPutElement())
 					{
 						activateSkillWithId(aIdSkill);
@@ -193,7 +193,7 @@ class SkillsController
 	{
 		switch (aIdSkill)
 		{
-			case idSkill1:
+			case cIdSkill1:
 				for (i in 0...1)
 				{
 					vProjectiles.members[i].kill();
@@ -201,7 +201,7 @@ class SkillsController
 				vSkill1.vActiveButton = false;
 				vSkill1.animation.play("up");
 				vIdSkill = -1;
-			case idSkill2:
+			case cIdSkill2:
 				vTraps.remove(vActualTrap, true);
 				vActualTrap.destroy();
 				vSkill2.vActiveButton = false;
