@@ -150,5 +150,4 @@ class God extends FlxSprite
 
 	}
 
-
 }
