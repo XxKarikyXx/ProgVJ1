@@ -24,10 +24,13 @@ class SkillsController
 
 	var vSkill1:SkillLogic;
 	var vSkill2:SkillLogic;
+	var vSkill3:SkillLogic;
 
 	@:isVar public var vActiveSkill(default,default):SkillLogic;
 
 	@:isVar public var vTraps(get, set):FlxGroup;
+	
+	@:isVar public var vBombs(get, set):FlxGroup;
 
 	@:isVar public var vProjectiles(get, set):FlxGroup;
 
@@ -44,7 +47,7 @@ class SkillsController
 		skill1.setDown([2]);
 		skill1.setCooldown([3]);
 		skill1.setDisabled([4]);
-		skill1.setPosition(1740, 50);
+		skill1.setPosition(1655, 50);
 		vSkills.add(skill1);
 		vSkillsCountDownText.add(textSkill1FlxText);
 
@@ -60,7 +63,7 @@ class SkillsController
 		skill2.setDown([2]);
 		skill2.setCooldown([3]);
 		skill2.setDisabled([4]);
-		skill2.setPosition(1825, 50);
+		skill2.setPosition(1740, 50);
 		vSkills.add(skill2);
 		vSkillsCountDownText.add(textSkill2FlxText);
 
@@ -68,6 +71,22 @@ class SkillsController
 		skillTrap.vSkillButton = skill2;
 		skillTrap.vTraps = vTraps;
 		vSkill2 = skillTrap;
+		
+		var textSkill3FlxText:FlxText = new FlxText();
+		var skill3:FlxButtonAnimationSkill = new FlxButtonAnimationSkill(AssetPaths.balaplacebo__png, 57, 64, onClickSkill3,onClickSkillActive,onOverSkill3,8,textSkill3FlxText);
+		skill3.setOver([1]);
+		skill3.setUp([0]);
+		skill3.setDown([2]);
+		skill3.setCooldown([3]);
+		skill3.setDisabled([4]);
+		skill3.setPosition(1825, 50);
+		vSkills.add(skill3);
+		vSkillsCountDownText.add(textSkill3FlxText);
+
+		var skillBomb:SkillLogicBomb= new SkillLogicBomb("Tira una bomba que pega bien duro al que toca. Cooldown: 8s");
+		skillBomb.vSkillButton = skill3;
+		skillBomb.vBombs = vBombs;
+		vSkill3 = skillBomb;
 	}
 
 	public function onClickSkill1(aButton:FlxButtonAnimationSkill):Void
@@ -75,6 +94,18 @@ class SkillsController
 		onClickSkillActive(aButton);
 		vSkill1.preparationSkill();
 		vActiveSkill = vSkill1;
+	}
+	
+	public function onClickSkill3(aButton:FlxButtonAnimationSkill):Void
+	{
+		onClickSkillActive(aButton);
+		vSkill1.preparationSkill();
+		vActiveSkill = vSkill3;
+	}
+	
+	public function onOverSkill3(aButton:FlxButtonAnimationSkill):Void
+	{
+		vTextSkillDescription.text = vSkill3.vTextDescription;
 	}
 
 	public function onClickSkillActive(aButton:FlxButtonAnimationSkill):Void
@@ -179,6 +210,16 @@ class SkillsController
 	public function set_vSkillsCountDownText(value:FlxGroup):FlxGroup
 	{
 		return vSkillsCountDownText = value;
+	}
+	
+	public function get_vBombs():FlxGroup 
+	{
+		return vBombs;
+	}
+	
+	public function set_vBombs(value:FlxGroup):FlxGroup 
+	{
+		return vBombs = value;
 	}
 
 }

@@ -11,6 +11,7 @@ import flixel.system.FlxSound;
 import flixel.text.FlxText;
 import flixel.tile.FlxTilemap;
 import flixel.util.FlxColor;
+import gameObjects.Bomb;
 import gameObjects.Player1;
 import gameObjects.God;
 import gameObjects.Coin;
@@ -37,6 +38,7 @@ class GameState extends FlxState
 	var vProjectilesGod:FlxGroup;
 
 	var vTrapsGod:FlxGroup;
+	var vBombsGod:FlxGroup;
 
 	var vBackgroundSound:FlxSound;
 
@@ -93,12 +95,14 @@ class GameState extends FlxState
 		vTextSkill.textField.width = 150;
 
 		vTrapsGod = new FlxGroup();
+		vBombsGod = new FlxGroup();
 
 
 		vSkillsGod = new FlxGroup();
 		add(vSkillsGod);
 		
 				add(vTrapsGod);
+				add(vBombsGod);
 
 		vSkillsGodText = new FlxGroup();
 		add(vSkillsGodText);
@@ -145,6 +149,7 @@ vSkillsController.set_vSkills(vSkillsGod);
 vSkillsController.set_vTextSkillDescription(vTextSkill);
 vSkillsController.set_vTraps(vTrapsGod);
 vSkillsController.set_vSkillsCountDownText(vSkillsGodText);
+vSkillsController.set_vBombs(vBombsGod);
 
 		vProjectilesGod = new FlxGroup();
 		add(vProjectilesGod);
@@ -228,12 +233,14 @@ vSkillsController.set_vSkillsCountDownText(vSkillsGodText);
 
 		FlxG.collide(vMap, vPlayer);
 		FlxG.collide(vMap, vGod);
+		FlxG.collide(vMap, vBombsGod, mapVsBombs);
 
 		FlxG.overlap(vPlayer, vCoinsPlayer, playerVsCoins);
 		FlxG.overlap(vProjectilesPlayer, vGod, projectilesVsGod);
 		FlxG.overlap(vProjectilesGod, vPlayer, projectilesVsPlayer);
 		FlxG.overlap(vPlayer, vGod, playerVsGod);
 		FlxG.overlap(vPlayer, vTrapsGod, trapsVsPlayer);
+		FlxG.overlap(vPlayer, vBombsGod, bombsVsPlayer);
 
 		if (playerCollectedAllCoins())
 		{
@@ -316,12 +323,26 @@ vSkillsController.set_vSkillsCountDownText(vSkillsGodText);
 	{
 		if (aTrap.vCanCollide)
 		{
-			aPlayer.vState = "Stunned";
+			aPlayer.vState = CharacterStates.cStunnedState;
 			aPlayer.vStateDuration = 2;
 			vTrapsGod.remove(aTrap, true);
 			aTrap.destroy();
 		}
 	}
+	
+	function mapVsBombs(aMap:FlxTilemap, aBomb:Bomb)
+	{
+		vBombsGod.remove(aBomb, true);
+		aBomb.destroy();
+	}
+	
+	function bombsVsPlayer(aPlayer:Player1, aBomb:Bomb)
+	{
+		vBombsGod.remove(aBomb, true);
+		aBomb.destroy();
+		FlxG.switchState(new GameOverPlayer());
+	}
+	
 	function projectilesVsGod(aProjectile:ProjectilePlayer, aGod:God)
 	{
 		if (aProjectile.vTarget!=null&&aProjectile.vTarget==aGod)

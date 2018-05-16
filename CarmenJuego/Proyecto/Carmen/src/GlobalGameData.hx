@@ -32,7 +32,7 @@ class GlobalGameData
 
 	public static function thereIsPlayer(aSizeOfSurface:Float,aX:Int,aY:Int):Bool
 	{
-		return ToolsForUse.IsInsideCircle(aX,aY,vPlayer1.x+(vPlayer1.width/2), vPlayer1.y+(vPlayer1.height/2),aSizeOfSurface+(aSizeOfSurface/2));
+		return ToolsForUse.IsInsideCircle(aX,aY,vPlayer1.x+(vPlayer1.width/2), vPlayer1.y+(vPlayer1.height/2),aSizeOfSurface);
 	}
 
 	public static function itsOnASurface(aSizeOfSurface:Float,aX:Int,aY:Int):Bool

@@ -146,7 +146,7 @@ ApplicationMain.init = function() {
 	}
 };
 ApplicationMain.main = function() {
-	ApplicationMain.config = { build : "1008", company : "TuMadre", file : "Carmen", fps : 60, name : "Carmen", orientation : "", packageName : "Carmen", version : "1.0.0", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : false, height : 1080, parameters : "{}", resizable : true, stencilBuffer : true, title : "Carmen", vsync : false, width : 1920, x : null, y : null}]};
+	ApplicationMain.config = { build : "1026", company : "TuMadre", file : "Carmen", fps : 60, name : "Carmen", orientation : "", packageName : "Carmen", version : "1.0.0", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : false, height : 1080, parameters : "{}", resizable : true, stencilBuffer : true, title : "Carmen", vsync : false, width : 1920, x : null, y : null}]};
 };
 ApplicationMain.start = function() {
 	var hasMain = false;
@@ -5947,7 +5947,7 @@ GlobalGameData.clear = function() {
 	GlobalGameData.vMap = null;
 };
 GlobalGameData.thereIsPlayer = function(aSizeOfSurface,aX,aY) {
-	return ToolsForUse.IsInsideCircle(aX,aY,GlobalGameData.vPlayer1.x + GlobalGameData.vPlayer1.get_width() / 2,GlobalGameData.vPlayer1.y + GlobalGameData.vPlayer1.get_height() / 2,aSizeOfSurface + aSizeOfSurface / 2);
+	return ToolsForUse.IsInsideCircle(aX,aY,GlobalGameData.vPlayer1.x + GlobalGameData.vPlayer1.get_width() / 2,GlobalGameData.vPlayer1.y + GlobalGameData.vPlayer1.get_height() / 2,aSizeOfSurface);
 };
 GlobalGameData.itsOnASurface = function(aSizeOfSurface,aX,aY) {
 	var midSize = aSizeOfSurface / 2 | 0;
@@ -45298,6 +45298,32 @@ flixel_util_helpers_FlxRangeBounds.prototype = {
 	}
 	,__class__: flixel_util_helpers_FlxRangeBounds
 };
+var gameObjects_Bomb = function(aX,aY,aRad) {
+	if(aRad == null) {
+		aRad = 0;
+	}
+	if(aY == null) {
+		aY = 0;
+	}
+	if(aX == null) {
+		aX = 0;
+	}
+	this.vCanCollide = true;
+	flixel_FlxSprite.call(this,aX,aY);
+	this.makeGraphic(aRad * 2,aRad * 2,0,true);
+	flixel_util_FlxSpriteUtil.drawCircle(this,aRad,aRad,aRad,-65536);
+	this.velocity.set_y(800);
+};
+$hxClasses["gameObjects.Bomb"] = gameObjects_Bomb;
+gameObjects_Bomb.__name__ = ["gameObjects","Bomb"];
+gameObjects_Bomb.__super__ = flixel_FlxSprite;
+gameObjects_Bomb.prototype = $extend(flixel_FlxSprite.prototype,{
+	vCanCollide: null
+	,update: function(aDt) {
+		flixel_FlxSprite.prototype.update.call(this,aDt);
+	}
+	,__class__: gameObjects_Bomb
+});
 var gameObjects_Coin = function(aX,aY) {
 	if(aY == null) {
 		aY = 0;
@@ -84690,6 +84716,62 @@ skill_SkillLogic.prototype = {
 	}
 	,__class__: skill_SkillLogic
 };
+var skill_SkillLogicBomb = function(aTextDescription) {
+	this.vActualBomb = null;
+	this.bombRadius = 21;
+	skill_SkillLogic.call(this);
+	this.vTextDescription = aTextDescription;
+};
+$hxClasses["skill.SkillLogicBomb"] = skill_SkillLogicBomb;
+skill_SkillLogicBomb.__name__ = ["skill","SkillLogicBomb"];
+skill_SkillLogicBomb.__super__ = skill_SkillLogic;
+skill_SkillLogicBomb.prototype = $extend(skill_SkillLogic.prototype,{
+	vBombs: null
+	,godCenterX: null
+	,godCenterY: null
+	,bombRadius: null
+	,vActualBomb: null
+	,preparationSkill: function() {
+		this.setUINotPossibleToDropBomb();
+	}
+	,skillExecution: function() {
+		if(this.skillConditionToDropBomb()) {
+			this.resetGodColor();
+			this.vActualBomb = new gameObjects_Bomb(this.godCenterX - this.bombRadius,this.godCenterY - this.bombRadius,this.bombRadius);
+			this.vSkillButton.setActivation();
+			this.vBombs.add(this.vActualBomb);
+			return true;
+		} else {
+			return false;
+		}
+	}
+	,skillReset: function() {
+		this.resetGodColor();
+	}
+	,skillUpdateValidation: function() {
+		if(this.skillConditionToDropBomb()) {
+			this.setUIPossibleToDropBomb();
+		} else {
+			this.setUINotPossibleToDropBomb();
+		}
+	}
+	,setUINotPossibleToDropBomb: function() {
+		GlobalGameData.vGod.setColorTransform(1,0,0,0.5);
+	}
+	,setUIPossibleToDropBomb: function() {
+		GlobalGameData.vGod.setColorTransform(0,1,0,0.5);
+	}
+	,resetGodColor: function() {
+		GlobalGameData.vGod.setColorTransform(1,1,1,0.5);
+	}
+	,skillConditionToDropBomb: function() {
+		this.godCenterX = GlobalGameData.vGod.x + GlobalGameData.vGod.get_width() / 2 | 0;
+		this.godCenterY = GlobalGameData.vGod.y + GlobalGameData.vGod.get_height() / 2 | 0;
+		var thereIsAPlayer = GlobalGameData.thereIsPlayer(GlobalGameData.vPlayer1.get_height() * 2,this.godCenterX,this.godCenterY);
+		return !thereIsAPlayer;
+	}
+	,__class__: skill_SkillLogicBomb
+});
 var skill_SkillLogicProjectil = function(aTextDescription) {
 	skill_SkillLogic.call(this);
 	this.vTextDescription = aTextDescription;
@@ -84798,8 +84880,10 @@ skill_SkillsController.prototype = {
 	,vTextSkillDescription: null
 	,vSkill1: null
 	,vSkill2: null
+	,vSkill3: null
 	,vActiveSkill: null
 	,vTraps: null
+	,vBombs: null
 	,vProjectiles: null
 	,createAndAddSkills: function() {
 		var textSkill1FlxText = new flixel_text_FlxText();
@@ -84809,7 +84893,7 @@ skill_SkillsController.prototype = {
 		skill1.setDown([2]);
 		skill1.setCooldown([3]);
 		skill1.setDisabled([4]);
-		skill1.setPosition(1740,50);
+		skill1.setPosition(1655,50);
 		this.get_vSkills().add(skill1);
 		this.get_vSkillsCountDownText().add(textSkill1FlxText);
 		var skillProjectil = new skill_SkillLogicProjectil("Dispara un proyectil en la dirección donde se haga click.    Cooldown: 3s");
@@ -84823,18 +84907,40 @@ skill_SkillsController.prototype = {
 		skill2.setDown([2]);
 		skill2.setCooldown([3]);
 		skill2.setDisabled([4]);
-		skill2.setPosition(1825,50);
+		skill2.setPosition(1740,50);
 		this.get_vSkills().add(skill2);
 		this.get_vSkillsCountDownText().add(textSkill2FlxText);
 		var skillTrap = new skill_SkillLogicTrap("Pone una trampa en una superficie que inmoviliza.    Cooldown: 40s");
 		skillTrap.vSkillButton = skill2;
 		skillTrap.vTraps = this.get_vTraps();
 		this.vSkill2 = skillTrap;
+		var textSkill3FlxText = new flixel_text_FlxText();
+		var skill3 = new FlxButtonAnimationSkill("assets/img/Skills/balaplacebo.png",57,64,$bind(this,this.onClickSkill3),$bind(this,this.onClickSkillActive),$bind(this,this.onOverSkill3),8,textSkill3FlxText);
+		skill3.setOver([1]);
+		skill3.setUp([0]);
+		skill3.setDown([2]);
+		skill3.setCooldown([3]);
+		skill3.setDisabled([4]);
+		skill3.setPosition(1825,50);
+		this.get_vSkills().add(skill3);
+		this.get_vSkillsCountDownText().add(textSkill3FlxText);
+		var skillBomb = new skill_SkillLogicBomb("Tira una bomba que pega bien duro al que toca. Cooldown: 8s");
+		skillBomb.vSkillButton = skill3;
+		skillBomb.vBombs = this.get_vBombs();
+		this.vSkill3 = skillBomb;
 	}
 	,onClickSkill1: function(aButton) {
 		this.onClickSkillActive(aButton);
 		this.vSkill1.preparationSkill();
 		this.vActiveSkill = this.vSkill1;
+	}
+	,onClickSkill3: function(aButton) {
+		this.onClickSkillActive(aButton);
+		this.vSkill1.preparationSkill();
+		this.vActiveSkill = this.vSkill3;
+	}
+	,onOverSkill3: function(aButton) {
+		this.get_vTextSkillDescription().set_text(this.vSkill3.vTextDescription);
 	}
 	,onClickSkillActive: function(aButton) {
 		if(this.vActiveSkill != null) {
@@ -84905,8 +85011,14 @@ skill_SkillsController.prototype = {
 	,set_vSkillsCountDownText: function(value) {
 		return this.vSkillsCountDownText = value;
 	}
+	,get_vBombs: function() {
+		return this.vBombs;
+	}
+	,set_vBombs: function(value) {
+		return this.vBombs = value;
+	}
 	,__class__: skill_SkillsController
-	,__properties__: {set_vProjectiles:"set_vProjectiles",get_vProjectiles:"get_vProjectiles",set_vTraps:"set_vTraps",get_vTraps:"get_vTraps",set_vTextSkillDescription:"set_vTextSkillDescription",get_vTextSkillDescription:"get_vTextSkillDescription",set_vSkillsCountDownText:"set_vSkillsCountDownText",get_vSkillsCountDownText:"get_vSkillsCountDownText",set_vSkills:"set_vSkills",get_vSkills:"get_vSkills"}
+	,__properties__: {set_vProjectiles:"set_vProjectiles",get_vProjectiles:"get_vProjectiles",set_vBombs:"set_vBombs",get_vBombs:"get_vBombs",set_vTraps:"set_vTraps",get_vTraps:"get_vTraps",set_vTextSkillDescription:"set_vTextSkillDescription",get_vTextSkillDescription:"get_vTextSkillDescription",set_vSkillsCountDownText:"set_vSkillsCountDownText",get_vSkillsCountDownText:"get_vSkillsCountDownText",set_vSkills:"set_vSkills",get_vSkills:"get_vSkills"}
 };
 var states_GameOverPlayer = function() {
 	flixel_FlxState.call(this);
@@ -84952,6 +85064,7 @@ states_GameState.prototype = $extend(flixel_FlxState.prototype,{
 	,vProjectilesPlayer: null
 	,vProjectilesGod: null
 	,vTrapsGod: null
+	,vBombsGod: null
 	,vBackgroundSound: null
 	,vCoinsPlayer: null
 	,vResetPlaceCoin: null
@@ -84989,9 +85102,11 @@ states_GameState.prototype = $extend(flixel_FlxState.prototype,{
 		this.vTextSkill.textField.set_wordWrap(true);
 		this.vTextSkill.textField.set_width(150);
 		this.vTrapsGod = new flixel_group_FlxTypedGroup();
+		this.vBombsGod = new flixel_group_FlxTypedGroup();
 		this.vSkillsGod = new flixel_group_FlxTypedGroup();
 		this.add(this.vSkillsGod);
 		this.add(this.vTrapsGod);
+		this.add(this.vBombsGod);
 		this.vSkillsGodText = new flixel_group_FlxTypedGroup();
 		this.add(this.vSkillsGodText);
 		this.vSkillsController = new skill_SkillsController();
@@ -85033,6 +85148,7 @@ states_GameState.prototype = $extend(flixel_FlxState.prototype,{
 		this.vSkillsController.set_vTextSkillDescription(this.vTextSkill);
 		this.vSkillsController.set_vTraps(this.vTrapsGod);
 		this.vSkillsController.set_vSkillsCountDownText(this.vSkillsGodText);
+		this.vSkillsController.set_vBombs(this.vBombsGod);
 		this.vProjectilesGod = new flixel_group_FlxTypedGroup();
 		this.add(this.vProjectilesGod);
 		var _g = 0;
@@ -85086,11 +85202,13 @@ states_GameState.prototype = $extend(flixel_FlxState.prototype,{
 		flixel_FlxState.prototype.update.call(this,aDt);
 		flixel_FlxG.overlap(this.vMap,this.vPlayer,null,flixel_FlxObject.separate);
 		flixel_FlxG.overlap(this.vMap,this.vGod,null,flixel_FlxObject.separate);
+		flixel_FlxG.overlap(this.vMap,this.vBombsGod,$bind(this,this.mapVsBombs),flixel_FlxObject.separate);
 		flixel_FlxG.overlap(this.vPlayer,this.vCoinsPlayer,$bind(this,this.playerVsCoins));
 		flixel_FlxG.overlap(this.vProjectilesPlayer,this.vGod,$bind(this,this.projectilesVsGod));
 		flixel_FlxG.overlap(this.vProjectilesGod,this.vPlayer,$bind(this,this.projectilesVsPlayer));
 		flixel_FlxG.overlap(this.vPlayer,this.vGod,$bind(this,this.playerVsGod));
 		flixel_FlxG.overlap(this.vPlayer,this.vTrapsGod,$bind(this,this.trapsVsPlayer));
+		flixel_FlxG.overlap(this.vPlayer,this.vBombsGod,$bind(this,this.bombsVsPlayer));
 		if(this.playerCollectedAllCoins()) {
 			this.vPlayer.set_vCoinsCount(0);
 			var _g = 0;
@@ -85152,6 +85270,18 @@ states_GameState.prototype = $extend(flixel_FlxState.prototype,{
 			aPlayer.vStateDuration = 2;
 			this.vTrapsGod.remove(aTrap,true);
 			aTrap.destroy();
+		}
+	}
+	,mapVsBombs: function(aMap,aBomb) {
+		this.vBombsGod.remove(aBomb,true);
+		aBomb.destroy();
+	}
+	,bombsVsPlayer: function(aPlayer,aBomb) {
+		this.vBombsGod.remove(aBomb,true);
+		aBomb.destroy();
+		var nextState = new states_GameOverPlayer();
+		if(flixel_FlxG.game._state.switchTo(nextState)) {
+			flixel_FlxG.game._requestedState = nextState;
 		}
 	}
 	,projectilesVsGod: function(aProjectile,aGod) {
