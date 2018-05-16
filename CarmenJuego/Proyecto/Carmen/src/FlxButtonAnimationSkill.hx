@@ -14,21 +14,19 @@ import openfl.Lib;
 
 class FlxButtonAnimationSkill extends FlxSprite
 {
-	@:isVar public  var vId:Int = 0;
 	@:isVar public  var vCoolDown:Int = 0;
 	private var vTimerCoolDown:Float = 0;
 	@:isVar public var vActiveButton:Bool = false;
 	public var vOnPressedActive:FlxButtonAnimationSkill->Void;
 	public var vOnOver:FlxButtonAnimationSkill->Void;
 	@:isVar public var vLabel:FlxText;
-	public var vTextDescription:String;
 	
 	 public var vOnPressed:FlxButtonAnimationSkill->Void;
 	public var vEnabled:Bool = true;
     
     private var vMousePosition:FlxPoint;
 
-	public function new(aImagePath:String,aAnimationWidth:Int,aAnimationHeight:Int,?aOnPressed:FlxButtonAnimationSkill->Void,?aOnPressedActive:FlxButtonAnimationSkill->Void,?aOnOver:FlxButtonAnimationSkill->Void,?aCoolDown:Int,?aId:Int,?aLabel:FlxText,?aSkillTextDescription:String)
+	public function new(aImagePath:String,aAnimationWidth:Int,aAnimationHeight:Int,?aOnPressed:FlxButtonAnimationSkill->Void,?aOnPressedActive:FlxButtonAnimationSkill->Void,?aOnOver:FlxButtonAnimationSkill->Void,?aCoolDown:Int,?aLabel:FlxText)
 	{
          super();
         loadGraphic(Assets.getBitmapData(aImagePath), true, aAnimationWidth, aAnimationHeight);
@@ -38,8 +36,6 @@ class FlxButtonAnimationSkill extends FlxSprite
 		vOnOver = aOnOver;
 		vCoolDown = aCoolDown;
 		vTimerCoolDown = 0;
-		vTextDescription = aSkillTextDescription;
-		vId = aId;
 		vLabel = aLabel;
 		if (vLabel != null)
 		{

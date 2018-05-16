@@ -15,7 +15,7 @@ import gameObjects.Player1;
 import gameObjects.God;
 import gameObjects.Coin;
 import gameObjects.ProjectilePlayer;
-import SkillsController;
+import skill.SkillsController;
 import gameObjects.Trap;
 import openfl.Assets;
 import flixel.FlxSprite;
@@ -54,7 +54,7 @@ class GameState extends FlxState
 
 	var vSkillsGod:FlxGroup;
 	var vSkillsGodText:FlxGroup;
-	var vSkillsController:SkillsController;
+	var vSkillsController:skill.SkillsController;
 
 	public function new()
 	{
@@ -102,7 +102,7 @@ class GameState extends FlxState
 
 		vSkillsGodText = new FlxGroup();
 		add(vSkillsGodText);
-		vSkillsController = new SkillsController();
+		vSkillsController = new skill.SkillsController();
 		
 		setPlayerData();
 		setSkillsControllerData();
@@ -145,7 +145,6 @@ vSkillsController.set_vSkills(vSkillsGod);
 vSkillsController.set_vTextSkillDescription(vTextSkill);
 vSkillsController.set_vTraps(vTrapsGod);
 vSkillsController.set_vSkillsCountDownText(vSkillsGodText);
-vSkillsController.createAndAddSkills();
 
 		vProjectilesGod = new FlxGroup();
 		add(vProjectilesGod);
@@ -157,6 +156,8 @@ vSkillsController.createAndAddSkills();
 		}
 
 		vSkillsController.set_vProjectiles(vProjectilesGod);
+		
+		vSkillsController.createAndAddSkills();
 	}
 	public function setPlayerData()
 	{

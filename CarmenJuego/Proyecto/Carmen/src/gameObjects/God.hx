@@ -1,6 +1,6 @@
 package gameObjects;
 
-import SkillsController;
+import skill.SkillsController;
 import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.FlxSprite;
@@ -17,7 +17,7 @@ class God extends FlxSprite
 {
 	@:isVar public var vState(default,default):String = CharacterStates.cNormalState;
 	@:isVar public var vStateDuration(default,default):Float = -1;
-	@:isVar public var vSkillsController(default, default):SkillsController;
+	@:isVar public var vSkillsController(default, default):skill.SkillsController;
 
 	static inline var cAccelerationy:Int = 1100;
 	static inline var cAccelerationx:Int = 1100;
@@ -64,9 +64,9 @@ class God extends FlxSprite
 				godStunned(aDt);
 		}
 
-		if (FlxG.mouse.justPressed && vSkillsController.vIdSkill !=-1)
+		if (FlxG.mouse.justPressed && vSkillsController.vActiveSkill!=null)
 		{
-			vSkillsController.runGodSkill(FlxG.mouse.x, FlxG.mouse.y, vSkillsController.vIdSkill);
+			vSkillsController.runGodSkill(FlxG.mouse.x, FlxG.mouse.y);
 		}
 
 		vSkillsController.validateSkillsConditions();

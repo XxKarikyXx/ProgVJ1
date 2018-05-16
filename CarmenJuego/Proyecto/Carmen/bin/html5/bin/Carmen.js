@@ -146,7 +146,7 @@ ApplicationMain.init = function() {
 	}
 };
 ApplicationMain.main = function() {
-	ApplicationMain.config = { build : "969", company : "TuMadre", file : "Carmen", fps : 60, name : "Carmen", orientation : "", packageName : "Carmen", version : "1.0.0", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : false, height : 1080, parameters : "{}", resizable : true, stencilBuffer : true, title : "Carmen", vsync : false, width : 1920, x : null, y : null}]};
+	ApplicationMain.config = { build : "1008", company : "TuMadre", file : "Carmen", fps : 60, name : "Carmen", orientation : "", packageName : "Carmen", version : "1.0.0", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : false, height : 1080, parameters : "{}", resizable : true, stencilBuffer : true, title : "Carmen", vsync : false, width : 1920, x : null, y : null}]};
 };
 ApplicationMain.start = function() {
 	var hasMain = false;
@@ -5778,12 +5778,11 @@ FlxButtonAnimation.prototype = $extend(flixel_FlxSprite.prototype,{
 	}
 	,__class__: FlxButtonAnimation
 });
-var FlxButtonAnimationSkill = function(aImagePath,aAnimationWidth,aAnimationHeight,aOnPressed,aOnPressedActive,aOnOver,aCoolDown,aId,aLabel,aSkillTextDescription) {
+var FlxButtonAnimationSkill = function(aImagePath,aAnimationWidth,aAnimationHeight,aOnPressed,aOnPressedActive,aOnOver,aCoolDown,aLabel) {
 	this.vEnabled = true;
 	this.vActiveButton = false;
 	this.vTimerCoolDown = 0;
 	this.vCoolDown = 0;
-	this.vId = 0;
 	flixel_FlxSprite.call(this);
 	this.loadGraphic(openfl_Assets.getBitmapData(aImagePath),true,aAnimationWidth,aAnimationHeight);
 	this.vMousePosition = new flixel_math_FlxPoint();
@@ -5792,8 +5791,6 @@ var FlxButtonAnimationSkill = function(aImagePath,aAnimationWidth,aAnimationHeig
 	this.vOnOver = aOnOver;
 	this.vCoolDown = aCoolDown;
 	this.vTimerCoolDown = 0;
-	this.vTextDescription = aSkillTextDescription;
-	this.vId = aId;
 	this.vLabel = aLabel;
 	if(this.vLabel != null) {
 		this.vLabel.set_fieldWidth(this.get_width());
@@ -5807,14 +5804,12 @@ $hxClasses["FlxButtonAnimationSkill"] = FlxButtonAnimationSkill;
 FlxButtonAnimationSkill.__name__ = ["FlxButtonAnimationSkill"];
 FlxButtonAnimationSkill.__super__ = flixel_FlxSprite;
 FlxButtonAnimationSkill.prototype = $extend(flixel_FlxSprite.prototype,{
-	vId: null
-	,vCoolDown: null
+	vCoolDown: null
 	,vTimerCoolDown: null
 	,vActiveButton: null
 	,vOnPressedActive: null
 	,vOnOver: null
 	,vLabel: null
-	,vTextDescription: null
 	,vOnPressed: null
 	,vEnabled: null
 	,vMousePosition: null
@@ -5905,20 +5900,20 @@ FlxButtonAnimationSkill.prototype = $extend(flixel_FlxSprite.prototype,{
 				}
 				if(flixel_FlxG.mouse._leftButton.current == -1) {
 					if(!this.vActiveButton) {
-						haxe_Log.trace("Im not active yet",{ fileName : "FlxButtonAnimationSkill.hx", lineNumber : 137, className : "FlxButtonAnimationSkill", methodName : "update"});
+						haxe_Log.trace("Im not active yet",{ fileName : "FlxButtonAnimationSkill.hx", lineNumber : 133, className : "FlxButtonAnimationSkill", methodName : "update"});
 						this.vActiveButton = true;
 						if(this.vOnPressed != null) {
 							this.vOnPressed(this);
 						}
-						haxe_Log.trace("Actived",{ fileName : "FlxButtonAnimationSkill.hx", lineNumber : 143, className : "FlxButtonAnimationSkill", methodName : "update"});
+						haxe_Log.trace("Actived",{ fileName : "FlxButtonAnimationSkill.hx", lineNumber : 139, className : "FlxButtonAnimationSkill", methodName : "update"});
 						this.animation.play("disabled");
 					} else {
-						haxe_Log.trace("Im actived",{ fileName : "FlxButtonAnimationSkill.hx", lineNumber : 148, className : "FlxButtonAnimationSkill", methodName : "update"});
+						haxe_Log.trace("Im actived",{ fileName : "FlxButtonAnimationSkill.hx", lineNumber : 144, className : "FlxButtonAnimationSkill", methodName : "update"});
 						this.vActiveButton = false;
 						if(this.vOnPressedActive != null) {
 							this.vOnPressedActive(this);
 						}
-						haxe_Log.trace("Not actived",{ fileName : "FlxButtonAnimationSkill.hx", lineNumber : 154, className : "FlxButtonAnimationSkill", methodName : "update"});
+						haxe_Log.trace("Not actived",{ fileName : "FlxButtonAnimationSkill.hx", lineNumber : 150, className : "FlxButtonAnimationSkill", methodName : "update"});
 						this.animation.play("up");
 					}
 				}
@@ -6326,203 +6321,6 @@ Reflect.makeVarArgs = function(f) {
 		var a = Array.prototype.slice.call(arguments);
 		return f(a);
 	};
-};
-var SkillsController = function() {
-	this.vProjCount = -1;
-	this.vIdSkill = -1;
-};
-$hxClasses["SkillsController"] = SkillsController;
-SkillsController.__name__ = ["SkillsController"];
-SkillsController.prototype = {
-	vSkills: null
-	,vSkillsCountDownText: null
-	,vTextSkillDescription: null
-	,vSkill1: null
-	,vSkill2: null
-	,vIdSkill: null
-	,vTraps: null
-	,vProjectiles: null
-	,vProjCount: null
-	,vActualTrap: null
-	,intanceProjectiles: function() {
-		this.vProjCount = 0;
-	}
-	,createAndAddSkills: function() {
-		var textSkill1FlxText = new flixel_text_FlxText();
-		this.vSkill1 = new FlxButtonAnimationSkill("assets/img/Skills/balaplacebo.png",57,64,$bind(this,this.onClickSkill1),$bind(this,this.onClickSkill1Active),$bind(this,this.onOverSkill1),3,0,textSkill1FlxText,"Dispara un proyectil en la dirección donde se haga click.    Cooldown: 3s");
-		this.vSkill1.setOver([1]);
-		this.vSkill1.setUp([0]);
-		this.vSkill1.setDown([2]);
-		this.vSkill1.setCooldown([3]);
-		this.vSkill1.setDisabled([4]);
-		this.vSkill1.setPosition(1740,50);
-		this.get_vSkills().add(this.vSkill1);
-		this.get_vSkillsCountDownText().add(textSkill1FlxText);
-		var textSkill2FlxText = new flixel_text_FlxText();
-		this.vSkill2 = new FlxButtonAnimationSkill("assets/img/Skills/balaplacebo.png",57,64,$bind(this,this.onClickSkill2),$bind(this,this.onClickSkill2Active),$bind(this,this.onOverSkill2),40,1,textSkill2FlxText,"Pone una trampa en una superficie que inmoviliza.    Cooldown: 40s");
-		this.vSkill2.setOver([1]);
-		this.vSkill2.setUp([0]);
-		this.vSkill2.setDown([2]);
-		this.vSkill2.setCooldown([3]);
-		this.vSkill2.setDisabled([4]);
-		this.vSkill2.setPosition(1825,50);
-		this.get_vSkills().add(this.vSkill2);
-		this.get_vSkillsCountDownText().add(textSkill2FlxText);
-	}
-	,onClickSkill1: function(aButton) {
-		this.resetSkill(this.vIdSkill);
-		var _g = 0;
-		while(_g < 1) {
-			var i = _g++;
-			this.get_vProjectiles().members[i].revive();
-			this.get_vProjectiles().members[i].set_visible(false);
-		}
-		this.intanceProjectiles();
-		this.vIdSkill = aButton.vId;
-	}
-	,onClickSkill1Active: function(aButton) {
-		this.resetSkill(this.vIdSkill);
-	}
-	,onOverSkill1: function(aButton) {
-		this.get_vTextSkillDescription().set_text(aButton.vTextDescription);
-	}
-	,onClickSkill2: function(aButton) {
-		this.resetSkill(this.vIdSkill);
-		this.vIdSkill = aButton.vId;
-		var trap = new gameObjects_Trap(flixel_FlxG.mouse.x,flixel_FlxG.mouse.y);
-		this.vActualTrap = trap;
-		this.setUINotPossiblePlaceToPutTrapFromSkill2();
-		this.get_vTraps().add(trap);
-	}
-	,onClickSkill2Active: function(aButton) {
-		this.resetSkill(this.vIdSkill);
-	}
-	,onOverSkill2: function(aButton) {
-		this.get_vTextSkillDescription().set_text(aButton.vTextDescription);
-	}
-	,thereAreSkillsTouching: function() {
-		if(!this.vSkill2.isTouchingButton()) {
-			return this.vSkill1.isTouchingButton();
-		} else {
-			return true;
-		}
-	}
-	,activateSkillWithId: function(aIdSkill) {
-		switch(aIdSkill) {
-		case 0:
-			this.vIdSkill = -1;
-			this.vSkill1.setActivation();
-			var proj = js_Boot.__cast(this.get_vProjectiles().members[0] , gameObjects_ProjectilePlayer);
-			proj.setPointToFollow(flixel_FlxG.mouse.x,flixel_FlxG.mouse.y);
-			proj.shoot(GlobalGameData.vGod.x + GlobalGameData.vGod.get_width() / 2,GlobalGameData.vGod.y + GlobalGameData.vGod.get_height() / 2);
-			break;
-		case 1:
-			this.vIdSkill = -1;
-			this.setUIPlacedTrapFromSkill2();
-			this.vActualTrap.vCanCollide = true;
-			this.vActualTrap = null;
-			this.vSkill2.setActivation();
-			break;
-		}
-	}
-	,setUINotPossiblePlaceToPutTrapFromSkill2: function() {
-		this.vActualTrap.setColorTransform(1,0,0,0.8);
-	}
-	,setUIPossiblePlaceToPutTrapFromSkill2: function() {
-		this.vActualTrap.setColorTransform(0,1,0,0.8);
-	}
-	,setUIPlacedTrapFromSkill2: function() {
-		this.vActualTrap.setColorTransform(1,1,1,1);
-	}
-	,runGodSkill: function(aX,aY,aIdSkill) {
-		if(!this.thereAreSkillsTouching()) {
-			switch(aIdSkill) {
-			case 0:
-				this.activateSkillWithId(aIdSkill);
-				this.vIdSkill = -1;
-				break;
-			case 1:
-				if(this.skill2ConditionToPutElement()) {
-					this.activateSkillWithId(aIdSkill);
-					this.vIdSkill = -1;
-				}
-				break;
-			}
-		}
-	}
-	,validateSkillsConditions: function() {
-		if(this.vIdSkill == this.vSkill2.vId && this.vActualTrap != null) {
-			this.vActualTrap.setPosition(flixel_FlxG.mouse.x - this.vActualTrap.get_width() / 2,flixel_FlxG.mouse.y - this.vActualTrap.get_height() / 2);
-			if(this.skill2ConditionToPutElement()) {
-				this.setUIPossiblePlaceToPutTrapFromSkill2();
-			} else {
-				this.setUINotPossiblePlaceToPutTrapFromSkill2();
-			}
-		}
-	}
-	,resetSkill: function(aIdSkill) {
-		switch(aIdSkill) {
-		case 0:
-			var _g = 0;
-			while(_g < 1) {
-				var i = _g++;
-				this.get_vProjectiles().members[i].kill();
-			}
-			this.vSkill1.vActiveButton = false;
-			this.vSkill1.animation.play("up");
-			this.vIdSkill = -1;
-			break;
-		case 1:
-			this.get_vTraps().remove(this.vActualTrap,true);
-			this.vActualTrap.destroy();
-			this.vSkill2.vActiveButton = false;
-			this.vSkill2.animation.play("up");
-			this.vIdSkill = -1;
-			break;
-		}
-	}
-	,skill2ConditionToPutElement: function() {
-		var thereIsAPlayer = GlobalGameData.thereIsPlayer(3 * this.vActualTrap.get_width() / 2,flixel_FlxG.mouse.x,flixel_FlxG.mouse.y);
-		var isOnSurface = GlobalGameData.itsOnASurface(this.vActualTrap.get_width(),flixel_FlxG.mouse.x,flixel_FlxG.mouse.y - this.vActualTrap.get_height() / 2 | 0);
-		var thereIsACoin = GlobalGameData.thereIsACoinHere(flixel_FlxG.mouse.x,flixel_FlxG.mouse.y - this.vActualTrap.get_height() / 2,GlobalGameData.vPlayer1.vCoins,3 * this.vActualTrap.get_width() / 2);
-		if(this.vActualTrap != null && !thereIsAPlayer && isOnSurface) {
-			return !thereIsACoin;
-		} else {
-			return false;
-		}
-	}
-	,get_vTraps: function() {
-		return this.vTraps;
-	}
-	,set_vTraps: function(value) {
-		return this.vTraps = value;
-	}
-	,get_vProjectiles: function() {
-		return this.vProjectiles;
-	}
-	,set_vProjectiles: function(value) {
-		return this.vProjectiles = value;
-	}
-	,get_vSkills: function() {
-		return this.vSkills;
-	}
-	,set_vSkills: function(value) {
-		return this.vSkills = value;
-	}
-	,get_vTextSkillDescription: function() {
-		return this.vTextSkillDescription;
-	}
-	,set_vTextSkillDescription: function(value) {
-		return this.vTextSkillDescription = value;
-	}
-	,get_vSkillsCountDownText: function() {
-		return this.vSkillsCountDownText;
-	}
-	,set_vSkillsCountDownText: function(value) {
-		return this.vSkillsCountDownText = value;
-	}
-	,__class__: SkillsController
-	,__properties__: {set_vProjectiles:"set_vProjectiles",get_vProjectiles:"get_vProjectiles",set_vTraps:"set_vTraps",get_vTraps:"get_vTraps",set_vTextSkillDescription:"set_vTextSkillDescription",get_vTextSkillDescription:"get_vTextSkillDescription",set_vSkillsCountDownText:"set_vSkillsCountDownText",get_vSkillsCountDownText:"get_vSkillsCountDownText",set_vSkills:"set_vSkills",get_vSkills:"get_vSkills"}
 };
 var Std = function() { };
 $hxClasses["Std"] = Std;
@@ -45562,8 +45360,8 @@ gameObjects_God.prototype = $extend(flixel_FlxSprite.prototype,{
 			this.godStunned(aDt);
 			break;
 		}
-		if(flixel_FlxG.mouse._leftButton.current == 2 && this.vSkillsController.vIdSkill != -1) {
-			this.vSkillsController.runGodSkill(flixel_FlxG.mouse.x,flixel_FlxG.mouse.y,this.vSkillsController.vIdSkill);
+		if(flixel_FlxG.mouse._leftButton.current == 2 && this.vSkillsController.vActiveSkill != null) {
+			this.vSkillsController.runGodSkill(flixel_FlxG.mouse.x,flixel_FlxG.mouse.y);
 		}
 		this.vSkillsController.validateSkillsConditions();
 		if(this.velocity.x == 0 && this.velocity.y == 0) {
@@ -84874,6 +84672,242 @@ haxe_lang_Iterable.prototype = {
 	iterator: null
 	,__class__: haxe_lang_Iterable
 };
+var skill_SkillLogic = function() {
+};
+$hxClasses["skill.SkillLogic"] = skill_SkillLogic;
+skill_SkillLogic.__name__ = ["skill","SkillLogic"];
+skill_SkillLogic.prototype = {
+	vTextDescription: null
+	,vSkillButton: null
+	,preparationSkill: function() {
+	}
+	,skillExecution: function() {
+		return true;
+	}
+	,skillReset: function() {
+	}
+	,skillUpdateValidation: function() {
+	}
+	,__class__: skill_SkillLogic
+};
+var skill_SkillLogicProjectil = function(aTextDescription) {
+	skill_SkillLogic.call(this);
+	this.vTextDescription = aTextDescription;
+};
+$hxClasses["skill.SkillLogicProjectil"] = skill_SkillLogicProjectil;
+skill_SkillLogicProjectil.__name__ = ["skill","SkillLogicProjectil"];
+skill_SkillLogicProjectil.__super__ = skill_SkillLogic;
+skill_SkillLogicProjectil.prototype = $extend(skill_SkillLogic.prototype,{
+	vProjectiles: null
+	,preparationSkill: function() {
+		var _g = 0;
+		while(_g < 1) {
+			var i = _g++;
+			this.vProjectiles.members[i].revive();
+			this.vProjectiles.members[i].set_visible(false);
+		}
+	}
+	,skillExecution: function() {
+		this.vSkillButton.setActivation();
+		var proj = js_Boot.__cast(this.vProjectiles.members[0] , gameObjects_ProjectilePlayer);
+		proj.setPointToFollow(flixel_FlxG.mouse.x,flixel_FlxG.mouse.y);
+		proj.shoot(GlobalGameData.vGod.x + GlobalGameData.vGod.get_width() / 2,GlobalGameData.vGod.y + GlobalGameData.vGod.get_height() / 2);
+		return true;
+	}
+	,skillReset: function() {
+		var _g = 0;
+		while(_g < 1) {
+			var i = _g++;
+			this.vProjectiles.members[i].kill();
+		}
+	}
+	,skillUpdateValidation: function() {
+	}
+	,__class__: skill_SkillLogicProjectil
+});
+var skill_SkillLogicTrap = function(aTextDescription) {
+	skill_SkillLogic.call(this);
+	this.vTextDescription = aTextDescription;
+};
+$hxClasses["skill.SkillLogicTrap"] = skill_SkillLogicTrap;
+skill_SkillLogicTrap.__name__ = ["skill","SkillLogicTrap"];
+skill_SkillLogicTrap.__super__ = skill_SkillLogic;
+skill_SkillLogicTrap.prototype = $extend(skill_SkillLogic.prototype,{
+	vTraps: null
+	,vActualTrap: null
+	,preparationSkill: function() {
+		var trap = new gameObjects_Trap(flixel_FlxG.mouse.x,flixel_FlxG.mouse.y);
+		this.vActualTrap = trap;
+		this.vActualTrap.setPosition(flixel_FlxG.mouse.x - this.vActualTrap.get_width() / 2,flixel_FlxG.mouse.y - this.vActualTrap.get_height() / 2);
+		this.setUINotPossiblePlaceToPutTrapFromSkill2();
+		this.vTraps.add(trap);
+	}
+	,skillExecution: function() {
+		if(this.skill2ConditionToPutElement()) {
+			this.setUIPlacedTrapFromSkill2();
+			this.vActualTrap.vCanCollide = true;
+			this.vActualTrap = null;
+			this.vSkillButton.setActivation();
+			return true;
+		} else {
+			return false;
+		}
+	}
+	,skillReset: function() {
+		this.vTraps.remove(this.vActualTrap,true);
+		this.vActualTrap.destroy();
+	}
+	,skillUpdateValidation: function() {
+		if(this.vActualTrap != null) {
+			this.vActualTrap.setPosition(flixel_FlxG.mouse.x - this.vActualTrap.get_width() / 2,flixel_FlxG.mouse.y - this.vActualTrap.get_height() / 2);
+			if(this.skill2ConditionToPutElement()) {
+				this.setUIPossiblePlaceToPutTrapFromSkill2();
+			} else {
+				this.setUINotPossiblePlaceToPutTrapFromSkill2();
+			}
+		}
+	}
+	,setUINotPossiblePlaceToPutTrapFromSkill2: function() {
+		this.vActualTrap.setColorTransform(1,0,0,0.8);
+	}
+	,setUIPossiblePlaceToPutTrapFromSkill2: function() {
+		this.vActualTrap.setColorTransform(0,1,0,0.8);
+	}
+	,setUIPlacedTrapFromSkill2: function() {
+		this.vActualTrap.setColorTransform(1,1,1,1);
+	}
+	,skill2ConditionToPutElement: function() {
+		var thereIsAPlayer = GlobalGameData.thereIsPlayer(3 * this.vActualTrap.get_width() / 2,flixel_FlxG.mouse.x,flixel_FlxG.mouse.y);
+		var isOnSurface = GlobalGameData.itsOnASurface(this.vActualTrap.get_width(),flixel_FlxG.mouse.x,flixel_FlxG.mouse.y - this.vActualTrap.get_height() / 2 | 0);
+		var thereIsACoin = GlobalGameData.thereIsACoinHere(flixel_FlxG.mouse.x,flixel_FlxG.mouse.y - this.vActualTrap.get_height() / 2,GlobalGameData.vPlayer1.vCoins,3 * this.vActualTrap.get_width() / 2);
+		if(this.vActualTrap != null && !thereIsAPlayer && isOnSurface) {
+			return !thereIsACoin;
+		} else {
+			return false;
+		}
+	}
+	,__class__: skill_SkillLogicTrap
+});
+var skill_SkillsController = function() {
+};
+$hxClasses["skill.SkillsController"] = skill_SkillsController;
+skill_SkillsController.__name__ = ["skill","SkillsController"];
+skill_SkillsController.prototype = {
+	vSkills: null
+	,vSkillsCountDownText: null
+	,vTextSkillDescription: null
+	,vSkill1: null
+	,vSkill2: null
+	,vActiveSkill: null
+	,vTraps: null
+	,vProjectiles: null
+	,createAndAddSkills: function() {
+		var textSkill1FlxText = new flixel_text_FlxText();
+		var skill1 = new FlxButtonAnimationSkill("assets/img/Skills/balaplacebo.png",57,64,$bind(this,this.onClickSkill1),$bind(this,this.onClickSkillActive),$bind(this,this.onOverSkill1),3,textSkill1FlxText);
+		skill1.setOver([1]);
+		skill1.setUp([0]);
+		skill1.setDown([2]);
+		skill1.setCooldown([3]);
+		skill1.setDisabled([4]);
+		skill1.setPosition(1740,50);
+		this.get_vSkills().add(skill1);
+		this.get_vSkillsCountDownText().add(textSkill1FlxText);
+		var skillProjectil = new skill_SkillLogicProjectil("Dispara un proyectil en la dirección donde se haga click.    Cooldown: 3s");
+		skillProjectil.vSkillButton = skill1;
+		skillProjectil.vProjectiles = this.get_vProjectiles();
+		this.vSkill1 = skillProjectil;
+		var textSkill2FlxText = new flixel_text_FlxText();
+		var skill2 = new FlxButtonAnimationSkill("assets/img/Skills/balaplacebo.png",57,64,$bind(this,this.onClickSkill2),$bind(this,this.onClickSkillActive),$bind(this,this.onOverSkill2),40,textSkill2FlxText);
+		skill2.setOver([1]);
+		skill2.setUp([0]);
+		skill2.setDown([2]);
+		skill2.setCooldown([3]);
+		skill2.setDisabled([4]);
+		skill2.setPosition(1825,50);
+		this.get_vSkills().add(skill2);
+		this.get_vSkillsCountDownText().add(textSkill2FlxText);
+		var skillTrap = new skill_SkillLogicTrap("Pone una trampa en una superficie que inmoviliza.    Cooldown: 40s");
+		skillTrap.vSkillButton = skill2;
+		skillTrap.vTraps = this.get_vTraps();
+		this.vSkill2 = skillTrap;
+	}
+	,onClickSkill1: function(aButton) {
+		this.onClickSkillActive(aButton);
+		this.vSkill1.preparationSkill();
+		this.vActiveSkill = this.vSkill1;
+	}
+	,onClickSkillActive: function(aButton) {
+		if(this.vActiveSkill != null) {
+			this.vActiveSkill.skillReset();
+			this.vActiveSkill.vSkillButton.vActiveButton = false;
+			this.vActiveSkill.vSkillButton.animation.play("up");
+			this.vActiveSkill = null;
+		}
+	}
+	,onOverSkill1: function(aButton) {
+		this.get_vTextSkillDescription().set_text(this.vSkill1.vTextDescription);
+	}
+	,onClickSkill2: function(aButton) {
+		this.onClickSkillActive(aButton);
+		this.vSkill2.preparationSkill();
+		this.vActiveSkill = this.vSkill2;
+	}
+	,onOverSkill2: function(aButton) {
+		this.get_vTextSkillDescription().set_text(this.vSkill2.vTextDescription);
+	}
+	,thereAreSkillsTouching: function() {
+		if(!this.vSkill2.vSkillButton.isTouchingButton()) {
+			return this.vSkill1.vSkillButton.isTouchingButton();
+		} else {
+			return true;
+		}
+	}
+	,runGodSkill: function(aX,aY) {
+		if(!this.thereAreSkillsTouching()) {
+			var reset = this.vActiveSkill.skillExecution();
+			if(reset) {
+				this.vActiveSkill = null;
+			}
+		}
+	}
+	,validateSkillsConditions: function() {
+		if(this.vActiveSkill != null) {
+			this.vActiveSkill.skillUpdateValidation();
+		}
+	}
+	,get_vTraps: function() {
+		return this.vTraps;
+	}
+	,set_vTraps: function(value) {
+		return this.vTraps = value;
+	}
+	,get_vProjectiles: function() {
+		return this.vProjectiles;
+	}
+	,set_vProjectiles: function(value) {
+		return this.vProjectiles = value;
+	}
+	,get_vSkills: function() {
+		return this.vSkills;
+	}
+	,set_vSkills: function(value) {
+		return this.vSkills = value;
+	}
+	,get_vTextSkillDescription: function() {
+		return this.vTextSkillDescription;
+	}
+	,set_vTextSkillDescription: function(value) {
+		return this.vTextSkillDescription = value;
+	}
+	,get_vSkillsCountDownText: function() {
+		return this.vSkillsCountDownText;
+	}
+	,set_vSkillsCountDownText: function(value) {
+		return this.vSkillsCountDownText = value;
+	}
+	,__class__: skill_SkillsController
+	,__properties__: {set_vProjectiles:"set_vProjectiles",get_vProjectiles:"get_vProjectiles",set_vTraps:"set_vTraps",get_vTraps:"get_vTraps",set_vTextSkillDescription:"set_vTextSkillDescription",get_vTextSkillDescription:"get_vTextSkillDescription",set_vSkillsCountDownText:"set_vSkillsCountDownText",get_vSkillsCountDownText:"get_vSkillsCountDownText",set_vSkills:"set_vSkills",get_vSkills:"get_vSkills"}
+};
 var states_GameOverPlayer = function() {
 	flixel_FlxState.call(this);
 };
@@ -84960,7 +84994,7 @@ states_GameState.prototype = $extend(flixel_FlxState.prototype,{
 		this.add(this.vTrapsGod);
 		this.vSkillsGodText = new flixel_group_FlxTypedGroup();
 		this.add(this.vSkillsGodText);
-		this.vSkillsController = new SkillsController();
+		this.vSkillsController = new skill_SkillsController();
 		this.setPlayerData();
 		this.setSkillsControllerData();
 		this.setGodData();
@@ -84999,7 +85033,6 @@ states_GameState.prototype = $extend(flixel_FlxState.prototype,{
 		this.vSkillsController.set_vTextSkillDescription(this.vTextSkill);
 		this.vSkillsController.set_vTraps(this.vTrapsGod);
 		this.vSkillsController.set_vSkillsCountDownText(this.vSkillsGodText);
-		this.vSkillsController.createAndAddSkills();
 		this.vProjectilesGod = new flixel_group_FlxTypedGroup();
 		this.add(this.vProjectilesGod);
 		var _g = 0;
@@ -85010,6 +85043,7 @@ states_GameState.prototype = $extend(flixel_FlxState.prototype,{
 			pro.kill();
 		}
 		this.vSkillsController.set_vProjectiles(this.vProjectilesGod);
+		this.vSkillsController.createAndAddSkills();
 	}
 	,setPlayerData: function() {
 		this.vProjectilesPlayer = new flixel_group_FlxTypedGroup();
@@ -85497,8 +85531,6 @@ GlobalGameData.cTileIndexCoins = 2;
 GlobalGameData.cTileIndexNonCollision = 0;
 GlobalGameData.cTileIndexNonCollisionBlack = 1;
 GlobalGameData.cTileSize = 32;
-SkillsController.idSkill1 = 0;
-SkillsController.idSkill2 = 1;
 StringTools.winMetaCharacters = [32,40,41,37,33,94,34,60,62,38,124,10,13,44,59];
 Xml.Element = 0;
 Xml.PCData = 1;
