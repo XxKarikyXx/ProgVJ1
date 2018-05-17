@@ -1,6 +1,6 @@
 package skill;
 
-import skill.SkillLogic;
+import skill.ISkillLogic;
 import skill.SkillLogicProjectil;
 import skill.SkillLogicTrap;
 import flixel.FlxG;
@@ -22,11 +22,11 @@ class SkillsController
 	@:isVar public var vSkillsCountDownText(get, set):FlxGroup;
 	@:isVar public var vTextSkillDescription(get, set):FlxText;
 
-	var vSkill1:SkillLogic;
-	var vSkill2:SkillLogic;
-	var vSkill3:SkillLogic;
+	var vSkill1:ISkillLogic;
+	var vSkill2:ISkillLogic;
+	var vSkill3:ISkillLogic;
 
-	@:isVar public var vActiveSkill(default,default):SkillLogic;
+	@:isVar public var vActiveSkill(default,default):ISkillLogic;
 
 	@:isVar public var vTraps(get, set):FlxGroup;
 	

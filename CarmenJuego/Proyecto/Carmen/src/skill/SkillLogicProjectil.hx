@@ -1,5 +1,5 @@
 package skill;
-import skill.SkillLogic;
+import skill.ISkillLogic;
 import flixel.FlxG;
 import flixel.group.FlxGroup;
 import flixel.text.FlxText;
@@ -10,7 +10,7 @@ import gameObjects.ProjectilePlayer;
  * @author ...
  */
 
-class SkillLogicProjectil implements SkillLogic
+class SkillLogicProjectil implements ISkillLogic
 {
 	@:isVar public var vProjectiles(default, default):FlxGroup;
 		public var vTextDescription:String;	

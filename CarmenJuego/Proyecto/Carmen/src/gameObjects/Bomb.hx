@@ -5,7 +5,7 @@ using flixel.util.FlxSpriteUtil;
 
 /**
  * ...
- * @author TuMadre
+ * @author ...
  */
 class Bomb extends FlxSprite
 {
@@ -16,11 +16,9 @@ class Bomb extends FlxSprite
 		super(aX, aY);
 		makeGraphic(aRad*2, aRad*2, FlxColor.TRANSPARENT, true);
 		FlxSpriteUtil.drawCircle(this, aRad, aRad, aRad, FlxColor.RED);
-		velocity.y = 800;
-		
+		velocity.y = 800;		
 	}
-	
-	
+		
 	override public function update(aDt:Float):Void 
 	{
 		super.update(aDt);

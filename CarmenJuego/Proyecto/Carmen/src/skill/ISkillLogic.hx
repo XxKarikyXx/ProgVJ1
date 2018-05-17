@@ -6,7 +6,7 @@ import flixel.text.FlxText;
  * ...
  * @author ...
  */
-interface SkillLogic
+interface ISkillLogic
 {
 	public var vTextDescription:String;
 	public var vSkillButton:FlxButtonAnimationSkill;

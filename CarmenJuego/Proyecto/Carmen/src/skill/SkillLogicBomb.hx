@@ -4,9 +4,9 @@ import gameObjects.Bomb;
 
 /**
  * ...
- * @author TuMadre
+ * @author ...
  */
-class SkillLogicBomb implements SkillLogic
+class SkillLogicBomb implements ISkillLogic
 {
 
 	@:isVar public var vBombs(default, default):FlxGroup;

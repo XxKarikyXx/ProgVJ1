@@ -1,5 +1,5 @@
 package skill;
-import skill.SkillLogic;
+import skill.ISkillLogic;
 import flixel.FlxG;
 import flixel.group.FlxGroup;
 import flixel.text.FlxText;
@@ -9,7 +9,7 @@ import gameObjects.Trap;
  * ...
  * @author ...
  */
-class SkillLogicTrap implements SkillLogic
+class SkillLogicTrap implements ISkillLogic
 {
 	@:isVar public var vTraps(default, default):FlxGroup;
 		public var vTextDescription:String;	
