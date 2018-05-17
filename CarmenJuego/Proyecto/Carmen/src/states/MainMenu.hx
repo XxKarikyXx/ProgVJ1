@@ -1,5 +1,6 @@
 package states;
 
+import auxiliar.FlxButtonAnimation;
 import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.FlxState;
@@ -18,9 +19,9 @@ import states.MainMenuInstructions;
 class MainMenu extends FlxState
 {
 
-	var vPlayButton:FlxButtonAnimation;
-	var vInstructionsButton:FlxButtonAnimation;
-	var vExitButton:FlxButtonAnimation;
+	var vPlayButton:auxiliar.FlxButtonAnimation;
+	var vInstructionsButton:auxiliar.FlxButtonAnimation;
+	var vExitButton:auxiliar.FlxButtonAnimation;
 	var vMaxIndexForButtons = 2;
 
 	private var index = 0;
@@ -38,7 +39,7 @@ class MainMenu extends FlxState
 		mp.screenCenter(X);
 		add(mp);
 
-		vPlayButton = new FlxButtonAnimation(AssetPaths.button__png, 80, 20, onClickPlay);
+		vPlayButton = new auxiliar.FlxButtonAnimation(AssetPaths.button__png, 80, 20, onClickPlay);
 		vPlayButton.setSize(Std.int(FlxG.width / 3), Std.int(FlxG.height / 9));
 		vPlayButton.setOver([1]);
 		vPlayButton.setUp([0]);
@@ -56,7 +57,7 @@ class MainMenu extends FlxState
 		labelPlayButton.x = (FlxG.width / 2)-(labelPlayButton.width/2);
 		add(labelPlayButton);
 
-		vInstructionsButton= new FlxButtonAnimation(AssetPaths.button__png, 80, 20, onClickInstructions);//la animacion de chivito boy
+		vInstructionsButton= new auxiliar.FlxButtonAnimation(AssetPaths.button__png, 80, 20, onClickInstructions);//la animacion de chivito boy
 		vInstructionsButton.setSize(Std.int(FlxG.width / 3), Std.int(FlxG.height / 9));
 		vInstructionsButton.setOver([1]);
 		vInstructionsButton.setUp([0]);
@@ -74,7 +75,7 @@ class MainMenu extends FlxState
 		labelInstructionsButton.x = (FlxG.width / 2)-(labelInstructionsButton.width/2);
 		add(labelInstructionsButton);
 
-		vExitButton= new FlxButtonAnimation(AssetPaths.button__png, 80, 20, onClickExit);
+		vExitButton= new auxiliar.FlxButtonAnimation(AssetPaths.button__png, 80, 20, onClickExit);
 		vExitButton.setSize(Std.int(FlxG.width / 3), Std.int(FlxG.height / 9));
 		vExitButton.setOver([1]);
 		vExitButton.setUp([0]);
@@ -158,17 +159,17 @@ class MainMenu extends FlxState
 		}
 	}
 
-	private function onClickPlay(aButton:FlxButtonAnimation):Void
+	private function onClickPlay(aButton:auxiliar.FlxButtonAnimation):Void
 	{
 		FlxG.switchState(new GameState());
 	}
 
-	private function onClickInstructions(aButton:FlxButtonAnimation):Void
+	private function onClickInstructions(aButton:auxiliar.FlxButtonAnimation):Void
 	{
 		FlxG.switchState(new MainMenuInstructions());
 	}
 
-	private function onClickExit(aButton:FlxButtonAnimation):Void
+	private function onClickExit(aButton:auxiliar.FlxButtonAnimation):Void
 	{
 		System.exit(0);
 		vExitButton.animation.play("up");

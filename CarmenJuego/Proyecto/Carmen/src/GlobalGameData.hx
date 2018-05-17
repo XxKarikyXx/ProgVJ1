@@ -1,4 +1,5 @@
 package;
+import auxiliar.ToolsForUse;
 import flixel.group.FlxGroup;
 import flixel.tile.FlxTilemap;
 import gameObjects.Coin;
@@ -32,7 +33,7 @@ class GlobalGameData
 
 	public static function thereIsPlayer(aSizeOfSurface:Float,aX:Int,aY:Int):Bool
 	{
-		return ToolsForUse.IsInsideCircle(aX,aY,vPlayer1.x+(vPlayer1.width/2), vPlayer1.y+(vPlayer1.height/2),aSizeOfSurface);
+		return auxiliar.ToolsForUse.IsInsideCircle(aX,aY,vPlayer1.x+(vPlayer1.width/2), vPlayer1.y+(vPlayer1.height/2),aSizeOfSurface);
 	}
 
 	public static function itsOnASurface(aSizeOfSurface:Float,aX:Int,aY:Int):Bool
@@ -69,7 +70,7 @@ class GlobalGameData
 
 			var coin1:Coin = cast (aCoin, Coin);
 
-			if (ToolsForUse.IsInsideCircle(anX,anY,coin1.x, coin1.y, rad))
+			if (auxiliar.ToolsForUse.IsInsideCircle(anX,anY,coin1.x, coin1.y, rad))
 			{
 				return true;
 			}
