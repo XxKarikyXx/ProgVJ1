@@ -146,7 +146,7 @@ ApplicationMain.init = function() {
 	}
 };
 ApplicationMain.main = function() {
-	ApplicationMain.config = { build : "1026", company : "TuMadre", file : "Carmen", fps : 60, name : "Carmen", orientation : "", packageName : "Carmen", version : "1.0.0", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : false, height : 1080, parameters : "{}", resizable : true, stencilBuffer : true, title : "Carmen", vsync : false, width : 1920, x : null, y : null}]};
+	ApplicationMain.config = { build : "1035", company : "TuMadre", file : "Carmen", fps : 60, name : "Carmen", orientation : "", packageName : "Carmen", version : "1.0.0", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : false, height : 1080, parameters : "{}", resizable : true, stencilBuffer : true, title : "Carmen", vsync : false, width : 1920, x : null, y : null}]};
 };
 ApplicationMain.start = function() {
 	var hasMain = false;
@@ -84698,39 +84698,34 @@ haxe_lang_Iterable.prototype = {
 	iterator: null
 	,__class__: haxe_lang_Iterable
 };
-var skill_SkillLogic = function() {
-};
+var skill_SkillLogic = function() { };
 $hxClasses["skill.SkillLogic"] = skill_SkillLogic;
 skill_SkillLogic.__name__ = ["skill","SkillLogic"];
 skill_SkillLogic.prototype = {
 	vTextDescription: null
 	,vSkillButton: null
-	,preparationSkill: function() {
-	}
-	,skillExecution: function() {
-		return true;
-	}
-	,skillReset: function() {
-	}
-	,skillUpdateValidation: function() {
-	}
+	,preparationSkill: null
+	,skillExecution: null
+	,skillReset: null
+	,skillUpdateValidation: null
 	,__class__: skill_SkillLogic
 };
 var skill_SkillLogicBomb = function(aTextDescription) {
 	this.vActualBomb = null;
 	this.bombRadius = 21;
-	skill_SkillLogic.call(this);
 	this.vTextDescription = aTextDescription;
 };
 $hxClasses["skill.SkillLogicBomb"] = skill_SkillLogicBomb;
 skill_SkillLogicBomb.__name__ = ["skill","SkillLogicBomb"];
-skill_SkillLogicBomb.__super__ = skill_SkillLogic;
-skill_SkillLogicBomb.prototype = $extend(skill_SkillLogic.prototype,{
+skill_SkillLogicBomb.__interfaces__ = [skill_SkillLogic];
+skill_SkillLogicBomb.prototype = {
 	vBombs: null
 	,godCenterX: null
 	,godCenterY: null
 	,bombRadius: null
 	,vActualBomb: null
+	,vTextDescription: null
+	,vSkillButton: null
 	,preparationSkill: function() {
 		this.setUINotPossibleToDropBomb();
 	}
@@ -84771,16 +84766,17 @@ skill_SkillLogicBomb.prototype = $extend(skill_SkillLogic.prototype,{
 		return !thereIsAPlayer;
 	}
 	,__class__: skill_SkillLogicBomb
-});
+};
 var skill_SkillLogicProjectil = function(aTextDescription) {
-	skill_SkillLogic.call(this);
 	this.vTextDescription = aTextDescription;
 };
 $hxClasses["skill.SkillLogicProjectil"] = skill_SkillLogicProjectil;
 skill_SkillLogicProjectil.__name__ = ["skill","SkillLogicProjectil"];
-skill_SkillLogicProjectil.__super__ = skill_SkillLogic;
-skill_SkillLogicProjectil.prototype = $extend(skill_SkillLogic.prototype,{
+skill_SkillLogicProjectil.__interfaces__ = [skill_SkillLogic];
+skill_SkillLogicProjectil.prototype = {
 	vProjectiles: null
+	,vTextDescription: null
+	,vSkillButton: null
 	,preparationSkill: function() {
 		var _g = 0;
 		while(_g < 1) {
@@ -84806,16 +84802,17 @@ skill_SkillLogicProjectil.prototype = $extend(skill_SkillLogic.prototype,{
 	,skillUpdateValidation: function() {
 	}
 	,__class__: skill_SkillLogicProjectil
-});
+};
 var skill_SkillLogicTrap = function(aTextDescription) {
-	skill_SkillLogic.call(this);
 	this.vTextDescription = aTextDescription;
 };
 $hxClasses["skill.SkillLogicTrap"] = skill_SkillLogicTrap;
 skill_SkillLogicTrap.__name__ = ["skill","SkillLogicTrap"];
-skill_SkillLogicTrap.__super__ = skill_SkillLogic;
-skill_SkillLogicTrap.prototype = $extend(skill_SkillLogic.prototype,{
+skill_SkillLogicTrap.__interfaces__ = [skill_SkillLogic];
+skill_SkillLogicTrap.prototype = {
 	vTraps: null
+	,vTextDescription: null
+	,vSkillButton: null
 	,vActualTrap: null
 	,preparationSkill: function() {
 		var trap = new gameObjects_Trap(flixel_FlxG.mouse.x,flixel_FlxG.mouse.y);
@@ -84869,7 +84866,7 @@ skill_SkillLogicTrap.prototype = $extend(skill_SkillLogic.prototype,{
 		}
 	}
 	,__class__: skill_SkillLogicTrap
-});
+};
 var skill_SkillsController = function() {
 };
 $hxClasses["skill.SkillsController"] = skill_SkillsController;

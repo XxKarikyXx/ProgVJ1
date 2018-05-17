@@ -9,18 +9,19 @@ import gameObjects.Trap;
  * ...
  * @author ...
  */
-class SkillLogicTrap extends SkillLogic
+class SkillLogicTrap implements SkillLogic
 {
 	@:isVar public var vTraps(default, default):FlxGroup;
+		public var vTextDescription:String;	
+	public var vSkillButton:FlxButtonAnimationSkill;
 	var vActualTrap:Trap;
 
 	public function new(aTextDescription:String)
 	{
-		super();
 		vTextDescription = aTextDescription;
 	}
 
-	override public function preparationSkill():Void
+	public function preparationSkill():Void
 	{
 		var trap = new Trap(FlxG.mouse.x, FlxG.mouse.y);
 		vActualTrap = trap;
@@ -29,7 +30,7 @@ class SkillLogicTrap extends SkillLogic
 		vTraps.add(trap);
 	}
 
-	override public function skillExecution():Bool
+	public function skillExecution():Bool
 	{
 		if (skill2ConditionToPutElement())
 		{
@@ -45,13 +46,13 @@ class SkillLogicTrap extends SkillLogic
 		}
 	}
 
-	override	public function skillReset():Void
+	public function skillReset():Void
 	{
 		vTraps.remove(vActualTrap, true);
 		vActualTrap.destroy();
 	}
 
-	override	public function skillUpdateValidation():Void
+	public function skillUpdateValidation():Void
 	{
 		if (vActualTrap!=null)
 		{

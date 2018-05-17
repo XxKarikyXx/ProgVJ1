@@ -6,7 +6,7 @@ import gameObjects.Bomb;
  * ...
  * @author TuMadre
  */
-class SkillLogicBomb extends SkillLogic
+class SkillLogicBomb implements SkillLogic
 {
 
 	@:isVar public var vBombs(default, default):FlxGroup;
@@ -14,19 +14,20 @@ class SkillLogicBomb extends SkillLogic
 	var godCenterY:Int;
 	var bombRadius:Int=21;
 	var vActualBomb = null;
+		public var vTextDescription:String;	
+	public var vSkillButton:FlxButtonAnimationSkill;
 
 	public function new(aTextDescription:String)
 	{
-		super();
 		vTextDescription = aTextDescription;
 	}
 
-	override public function preparationSkill():Void
+	 public function preparationSkill():Void
 	{				
 		setUINotPossibleToDropBomb();
 	}
 
-	override public function skillExecution():Bool
+	public function skillExecution():Bool
 	{
 		if (skillConditionToDropBomb())
 		{
@@ -42,12 +43,12 @@ class SkillLogicBomb extends SkillLogic
 		}
 	}
 
-	override	public function skillReset():Void
+	public function skillReset():Void
 	{
 		resetGodColor();
 	}
 
-	override	public function skillUpdateValidation():Void
+	public function skillUpdateValidation():Void
 	{
 			if (skillConditionToDropBomb())
 			{

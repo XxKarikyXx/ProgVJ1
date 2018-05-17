@@ -10,17 +10,18 @@ import gameObjects.ProjectilePlayer;
  * @author ...
  */
 
-class SkillLogicProjectil extends SkillLogic
+class SkillLogicProjectil implements SkillLogic
 {
 	@:isVar public var vProjectiles(default, default):FlxGroup;
+		public var vTextDescription:String;	
+	public var vSkillButton:FlxButtonAnimationSkill;
 
 	public function new(aTextDescription:String)
 	{
-		super();
 		vTextDescription = aTextDescription;
 	}
 
-	override public function preparationSkill():Void
+	 public function preparationSkill():Void
 	{
 		for (i in 0...1)
 		{
@@ -29,7 +30,7 @@ class SkillLogicProjectil extends SkillLogic
 		}
 	}
 
-	override public function skillExecution():Bool
+	public function skillExecution():Bool
 	{
 		vSkillButton.setActivation();
 		var proj:ProjectilePlayer = cast(vProjectiles.members[0], ProjectilePlayer);
@@ -38,7 +39,7 @@ class SkillLogicProjectil extends SkillLogic
 		return true;
 	}
 
-	override public function skillReset():Void
+	 public function skillReset():Void
 	{
 		for (i in 0...1)
 		{
@@ -46,7 +47,7 @@ class SkillLogicProjectil extends SkillLogic
 		}
 	}
 
-	override public function skillUpdateValidation():Void
+	public function skillUpdateValidation():Void
 	{
 	}
 

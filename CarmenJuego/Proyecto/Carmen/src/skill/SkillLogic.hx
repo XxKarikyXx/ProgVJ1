@@ -6,34 +6,17 @@ import flixel.text.FlxText;
  * ...
  * @author ...
  */
-class SkillLogic 
+interface SkillLogic
 {
 	public var vTextDescription:String;
-	
 	public var vSkillButton:FlxButtonAnimationSkill;
-	
-	public function new()
-	{
 
-	}
+	public  function preparationSkill():Void;
 
-	
-	public  function preparationSkill():Void
-	{
-	}
+	public function skillExecution():Bool;
 
-	public function skillExecution():Bool
-	{
-		return true;
-	}
+	public  function skillReset():Void;
 
-		public  function skillReset():Void
-	{
-	}
-	
-		public function skillUpdateValidation():Void
-	{
-	}
-
+	public function skillUpdateValidation():Void;
 
 }
