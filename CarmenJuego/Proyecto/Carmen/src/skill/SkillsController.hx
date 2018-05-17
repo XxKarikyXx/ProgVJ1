@@ -99,7 +99,7 @@ class SkillsController
 	public function onClickSkill3(aButton:FlxButtonAnimationSkill):Void
 	{
 		onClickSkillActive(aButton);
-		vSkill1.preparationSkill();
+		vSkill3.preparationSkill();
 		vActiveSkill = vSkill3;
 	}
 	
@@ -138,7 +138,7 @@ class SkillsController
 
 	public function thereAreSkillsTouching():Bool
 	{
-		return vSkill2.vSkillButton.isTouchingButton() || vSkill1.vSkillButton.isTouchingButton();
+		return vSkill2.vSkillButton.isTouchingButton() || vSkill1.vSkillButton.isTouchingButton()|| vSkill3.vSkillButton.isTouchingButton();
 	}
 
 	public function runGodSkill(aX:Int,aY:Int):Void

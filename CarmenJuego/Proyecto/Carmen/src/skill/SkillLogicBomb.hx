@@ -24,7 +24,7 @@ class SkillLogicBomb implements SkillLogic
 
 	 public function preparationSkill():Void
 	{				
-		setUINotPossibleToDropBomb();
+	
 	}
 
 	public function skillExecution():Bool

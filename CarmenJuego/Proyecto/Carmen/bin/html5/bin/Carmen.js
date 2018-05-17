@@ -146,7 +146,7 @@ ApplicationMain.init = function() {
 	}
 };
 ApplicationMain.main = function() {
-	ApplicationMain.config = { build : "1035", company : "TuMadre", file : "Carmen", fps : 60, name : "Carmen", orientation : "", packageName : "Carmen", version : "1.0.0", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : false, height : 1080, parameters : "{}", resizable : true, stencilBuffer : true, title : "Carmen", vsync : false, width : 1920, x : null, y : null}]};
+	ApplicationMain.config = { build : "1038", company : "TuMadre", file : "Carmen", fps : 60, name : "Carmen", orientation : "", packageName : "Carmen", version : "1.0.0", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : false, height : 1080, parameters : "{}", resizable : true, stencilBuffer : true, title : "Carmen", vsync : false, width : 1920, x : null, y : null}]};
 };
 ApplicationMain.start = function() {
 	var hasMain = false;
@@ -84727,7 +84727,6 @@ skill_SkillLogicBomb.prototype = {
 	,vTextDescription: null
 	,vSkillButton: null
 	,preparationSkill: function() {
-		this.setUINotPossibleToDropBomb();
 	}
 	,skillExecution: function() {
 		if(this.skillConditionToDropBomb()) {
@@ -84933,7 +84932,7 @@ skill_SkillsController.prototype = {
 	}
 	,onClickSkill3: function(aButton) {
 		this.onClickSkillActive(aButton);
-		this.vSkill1.preparationSkill();
+		this.vSkill3.preparationSkill();
 		this.vActiveSkill = this.vSkill3;
 	}
 	,onOverSkill3: function(aButton) {
@@ -84959,8 +84958,8 @@ skill_SkillsController.prototype = {
 		this.get_vTextSkillDescription().set_text(this.vSkill2.vTextDescription);
 	}
 	,thereAreSkillsTouching: function() {
-		if(!this.vSkill2.vSkillButton.isTouchingButton()) {
-			return this.vSkill1.vSkillButton.isTouchingButton();
+		if(!(this.vSkill2.vSkillButton.isTouchingButton() || this.vSkill1.vSkillButton.isTouchingButton())) {
+			return this.vSkill3.vSkillButton.isTouchingButton();
 		} else {
 			return true;
 		}
