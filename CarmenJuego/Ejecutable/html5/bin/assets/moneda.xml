@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
 <!-- $TexturePacker:SmartUpdate:fbf95e98805da8575c6cdc222fdc9310:f7c3f8ca6acbf4a513b607d212f7ba42:4f0b4d9a73c55693808824b8a01a4fde$ -->
-<TextureAtlas imagePath="monedagiro.png" width="768" height="128">
+<TextureAtlas imagePath="moneda.png" width="768" height="128">
     <SubTexture name="monedagiro_1" x="0" y="0" width="128" height="128"/>
     <SubTexture name="monedagiro_2" x="128" y="0" width="128" height="128"/>
     <SubTexture name="monedagiro_3" x="256" y="0" width="128" height="128"/>

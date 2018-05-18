@@ -146,7 +146,7 @@ ApplicationMain.init = function() {
 	}
 };
 ApplicationMain.main = function() {
-	ApplicationMain.config = { build : "1040", company : "...", file : "Carmen", fps : 60, name : "Carmen", orientation : "", packageName : "Carmen", version : "1.0.0", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : false, height : 1080, parameters : "{}", resizable : true, stencilBuffer : true, title : "Carmen", vsync : false, width : 1920, x : null, y : null}]};
+	ApplicationMain.config = { build : "1039", company : "...", file : "Carmen", fps : 60, name : "Carmen", orientation : "", packageName : "Carmen", version : "1.0.0", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : false, height : 1080, parameters : "{}", resizable : true, stencilBuffer : true, title : "Carmen", vsync : false, width : 1920, x : null, y : null}]};
 };
 ApplicationMain.start = function() {
 	var hasMain = false;
@@ -3352,1049 +3352,6 @@ EReg.prototype = {
 	}
 	,__class__: EReg
 };
-var GlobalGameData = function() { };
-$hxClasses["GlobalGameData"] = GlobalGameData;
-GlobalGameData.__name__ = ["GlobalGameData"];
-GlobalGameData.vGod = null;
-GlobalGameData.vPlayer1 = null;
-GlobalGameData.vMap = null;
-GlobalGameData.clear = function() {
-	GlobalGameData.vGod = null;
-	GlobalGameData.vPlayer1 = null;
-	GlobalGameData.vMap = null;
-};
-GlobalGameData.thereIsPlayer = function(aSizeOfSurface,aX,aY) {
-	return auxiliar_ToolsForUse.IsInsideCircle(aX,aY,GlobalGameData.vPlayer1.x + GlobalGameData.vPlayer1.get_width() / 2,GlobalGameData.vPlayer1.y + GlobalGameData.vPlayer1.get_height() / 2,aSizeOfSurface);
-};
-GlobalGameData.itsOnASurface = function(aSizeOfSurface,aX,aY) {
-	var midSize = aSizeOfSurface / 2 | 0;
-	var midSize2 = midSize / 2 | 0;
-	if(GlobalGameData.vMap.getTile(aX / 32 | 0,aY / 32 | 0) == 0 || GlobalGameData.vMap.getTile(aX / 32 | 0,aY / 32 | 0) == 2) {
-		if(GlobalGameData.vMap.getTile((aX + midSize2) / 32 | 0,aY / 32 | 0) == 0 || GlobalGameData.vMap.getTile((aX + midSize2) / 32 | 0,aY / 32 | 0) == 2) {
-			if(GlobalGameData.vMap.getTile(aX / 32 | 0,(midSize / 2 + aY) / 32 | 0) != 0 && GlobalGameData.vMap.getTile(aX / 32 | 0,(midSize / 2 + aY) / 32 | 0) != 2) {
-				if(GlobalGameData.vMap.getTile((aX + midSize2) / 32 | 0,(midSize / 2 + aY) / 32 | 0) != 0 && GlobalGameData.vMap.getTile((aX + midSize2) / 32 | 0,(midSize / 2 + aY) / 32 | 0) != 2 && GlobalGameData.vMap.getTile((aX + midSize2) / 32 | 0,(midSize / 2 + aY) / 32 | 0) != 1) {
-					return true;
-				}
-			}
-		}
-	}
-	return false;
-};
-GlobalGameData.thereIsACoinHere = function(anX,anY,otherCoins,aRad) {
-	var rad = aRad;
-	var aCoin = new flixel_group_FlxTypedGroupIterator(otherCoins.members,null);
-	while(aCoin.hasNext()) {
-		var aCoin1 = aCoin.next();
-		var coin1 = js_Boot.__cast(aCoin1 , gameObjects_Coin);
-		if(auxiliar_ToolsForUse.IsInsideCircle(anX,anY,coin1.x,coin1.y,rad)) {
-			return true;
-		}
-	}
-	return false;
-};
-var HxOverrides = function() { };
-$hxClasses["HxOverrides"] = HxOverrides;
-HxOverrides.__name__ = ["HxOverrides"];
-HxOverrides.strDate = function(s) {
-	var _g = s.length;
-	switch(_g) {
-	case 8:
-		var k = s.split(":");
-		var d = new Date();
-		d["setTime"](0);
-		d["setUTCHours"](k[0]);
-		d["setUTCMinutes"](k[1]);
-		d["setUTCSeconds"](k[2]);
-		return d;
-	case 10:
-		var k1 = s.split("-");
-		return new Date(k1[0],k1[1] - 1,k1[2],0,0,0);
-	case 19:
-		var k2 = s.split(" ");
-		var y = k2[0].split("-");
-		var t = k2[1].split(":");
-		return new Date(y[0],y[1] - 1,y[2],t[0],t[1],t[2]);
-	default:
-		throw new js__$Boot_HaxeError("Invalid date format : " + s);
-	}
-};
-HxOverrides.cca = function(s,index) {
-	var x = s.charCodeAt(index);
-	if(x != x) {
-		return undefined;
-	}
-	return x;
-};
-HxOverrides.substr = function(s,pos,len) {
-	if(len == null) {
-		len = s.length;
-	} else if(len < 0) {
-		if(pos == 0) {
-			len = s.length + len;
-		} else {
-			return "";
-		}
-	}
-	return s.substr(pos,len);
-};
-HxOverrides.remove = function(a,obj) {
-	var i = a.indexOf(obj);
-	if(i == -1) {
-		return false;
-	}
-	a.splice(i,1);
-	return true;
-};
-HxOverrides.iter = function(a) {
-	return { cur : 0, arr : a, hasNext : function() {
-		return this.cur < this.arr.length;
-	}, next : function() {
-		return this.arr[this.cur++];
-	}};
-};
-var Lambda = function() { };
-$hxClasses["Lambda"] = Lambda;
-Lambda.__name__ = ["Lambda"];
-Lambda.array = function(it) {
-	var a = [];
-	var i = $iterator(it)();
-	while(i.hasNext()) {
-		var i1 = i.next();
-		a.push(i1);
-	}
-	return a;
-};
-var List = function() {
-	this.length = 0;
-};
-$hxClasses["List"] = List;
-List.__name__ = ["List"];
-List.prototype = {
-	h: null
-	,q: null
-	,length: null
-	,add: function(item) {
-		var x = new _$List_ListNode(item,null);
-		if(this.h == null) {
-			this.h = x;
-		} else {
-			this.q.next = x;
-		}
-		this.q = x;
-		this.length++;
-	}
-	,pop: function() {
-		if(this.h == null) {
-			return null;
-		}
-		var x = this.h.item;
-		this.h = this.h.next;
-		if(this.h == null) {
-			this.q = null;
-		}
-		this.length--;
-		return x;
-	}
-	,iterator: function() {
-		return new _$List_ListIterator(this.h);
-	}
-	,__class__: List
-};
-var _$List_ListNode = function(item,next) {
-	this.item = item;
-	this.next = next;
-};
-$hxClasses["_List.ListNode"] = _$List_ListNode;
-_$List_ListNode.__name__ = ["_List","ListNode"];
-_$List_ListNode.prototype = {
-	item: null
-	,next: null
-	,__class__: _$List_ListNode
-};
-var _$List_ListIterator = function(head) {
-	this.head = head;
-};
-$hxClasses["_List.ListIterator"] = _$List_ListIterator;
-_$List_ListIterator.__name__ = ["_List","ListIterator"];
-_$List_ListIterator.prototype = {
-	head: null
-	,hasNext: function() {
-		return this.head != null;
-	}
-	,next: function() {
-		var val = this.head.item;
-		this.head = this.head.next;
-		return val;
-	}
-	,__class__: _$List_ListIterator
-};
-Math.__name__ = ["Math"];
-var NMEPreloader = function() {
-	openfl_display_Sprite.call(this);
-	var backgroundColor = this.getBackgroundColor();
-	var r = backgroundColor >> 16 & 255;
-	var g = backgroundColor >> 8 & 255;
-	var b = backgroundColor & 255;
-	var perceivedLuminosity = 0.299 * r + 0.587 * g + 0.114 * b;
-	var color = 0;
-	if(perceivedLuminosity < 70) {
-		color = 16777215;
-	}
-	var x = 30;
-	var height = 7;
-	var y = this.getHeight() / 2 - height / 2;
-	var width = this.getWidth() - x * 2;
-	var padding = 2;
-	this.outline = new openfl_display_Sprite();
-	this.outline.get_graphics().beginFill(color,0.07);
-	this.outline.get_graphics().drawRect(0,0,width,height);
-	this.outline.set_x(x);
-	this.outline.set_y(y);
-	this.addChild(this.outline);
-	this.progress = new openfl_display_Sprite();
-	this.progress.get_graphics().beginFill(color,0.35);
-	this.progress.get_graphics().drawRect(0,0,width - padding * 2,height - padding * 2);
-	this.progress.set_x(x + padding);
-	this.progress.set_y(y + padding);
-	this.progress.set_scaleX(0);
-	this.addChild(this.progress);
-};
-$hxClasses["NMEPreloader"] = NMEPreloader;
-NMEPreloader.__name__ = ["NMEPreloader"];
-NMEPreloader.__super__ = openfl_display_Sprite;
-NMEPreloader.prototype = $extend(openfl_display_Sprite.prototype,{
-	outline: null
-	,progress: null
-	,getBackgroundColor: function() {
-		return 0;
-	}
-	,getHeight: function() {
-		var height = 1080;
-		if(height > 0) {
-			return height;
-		} else {
-			return openfl_Lib.current.stage.stageHeight;
-		}
-	}
-	,getWidth: function() {
-		var width = 1920;
-		if(width > 0) {
-			return width;
-		} else {
-			return openfl_Lib.current.stage.stageWidth;
-		}
-	}
-	,onInit: function() {
-	}
-	,onLoaded: function() {
-		this.dispatchEvent(new openfl_events_Event("complete"));
-	}
-	,onUpdate: function(bytesLoaded,bytesTotal) {
-		var percentLoaded = bytesLoaded / bytesTotal;
-		if(percentLoaded > 1) {
-			percentLoaded = 1;
-		}
-		this.progress.set_scaleX(percentLoaded);
-	}
-	,__class__: NMEPreloader
-});
-var Reflect = function() { };
-$hxClasses["Reflect"] = Reflect;
-Reflect.__name__ = ["Reflect"];
-Reflect.hasField = function(o,field) {
-	return Object.prototype.hasOwnProperty.call(o,field);
-};
-Reflect.field = function(o,field) {
-	try {
-		return o[field];
-	} catch( e ) {
-		haxe_CallStack.lastException = e;
-		return null;
-	}
-};
-Reflect.setField = function(o,field,value) {
-	o[field] = value;
-};
-Reflect.getProperty = function(o,field) {
-	var tmp;
-	if(o == null) {
-		return null;
-	} else {
-		var tmp1;
-		if(o.__properties__) {
-			tmp = o.__properties__["get_" + field];
-			tmp1 = tmp;
-		} else {
-			tmp1 = false;
-		}
-		if(tmp1) {
-			return o[tmp]();
-		} else {
-			return o[field];
-		}
-	}
-};
-Reflect.setProperty = function(o,field,value) {
-	var tmp;
-	var tmp1;
-	if(o.__properties__) {
-		tmp = o.__properties__["set_" + field];
-		tmp1 = tmp;
-	} else {
-		tmp1 = false;
-	}
-	if(tmp1) {
-		o[tmp](value);
-	} else {
-		o[field] = value;
-	}
-};
-Reflect.callMethod = function(o,func,args) {
-	return func.apply(o,args);
-};
-Reflect.fields = function(o) {
-	var a = [];
-	if(o != null) {
-		var hasOwnProperty = Object.prototype.hasOwnProperty;
-		for( var f in o ) {
-		if(f != "__id__" && f != "hx__closures__" && hasOwnProperty.call(o,f)) {
-			a.push(f);
-		}
-		}
-	}
-	return a;
-};
-Reflect.isFunction = function(f) {
-	if(typeof(f) == "function") {
-		return !(f.__name__ || f.__ename__);
-	} else {
-		return false;
-	}
-};
-Reflect.compare = function(a,b) {
-	if(a == b) {
-		return 0;
-	} else if(a > b) {
-		return 1;
-	} else {
-		return -1;
-	}
-};
-Reflect.compareMethods = function(f1,f2) {
-	if(f1 == f2) {
-		return true;
-	}
-	if(!Reflect.isFunction(f1) || !Reflect.isFunction(f2)) {
-		return false;
-	}
-	if(f1.scope == f2.scope && f1.method == f2.method) {
-		return f1.method != null;
-	} else {
-		return false;
-	}
-};
-Reflect.isObject = function(v) {
-	if(v == null) {
-		return false;
-	}
-	var t = typeof(v);
-	if(!(t == "string" || t == "object" && v.__enum__ == null)) {
-		if(t == "function") {
-			return (v.__name__ || v.__ename__) != null;
-		} else {
-			return false;
-		}
-	} else {
-		return true;
-	}
-};
-Reflect.isEnumValue = function(v) {
-	if(v != null) {
-		return v.__enum__ != null;
-	} else {
-		return false;
-	}
-};
-Reflect.deleteField = function(o,field) {
-	if(!Object.prototype.hasOwnProperty.call(o,field)) {
-		return false;
-	}
-	delete(o[field]);
-	return true;
-};
-Reflect.copy = function(o) {
-	var o2 = { };
-	var _g = 0;
-	var _g1 = Reflect.fields(o);
-	while(_g < _g1.length) {
-		var f = _g1[_g];
-		++_g;
-		o2[f] = Reflect.field(o,f);
-	}
-	return o2;
-};
-Reflect.makeVarArgs = function(f) {
-	return function() {
-		var a = Array.prototype.slice.call(arguments);
-		return f(a);
-	};
-};
-var Std = function() { };
-$hxClasses["Std"] = Std;
-Std.__name__ = ["Std"];
-Std["is"] = function(v,t) {
-	return js_Boot.__instanceof(v,t);
-};
-Std.instance = function(value,c) {
-	if((value instanceof c)) {
-		return value;
-	} else {
-		return null;
-	}
-};
-Std.string = function(s) {
-	return js_Boot.__string_rec(s,"");
-};
-Std["int"] = function(x) {
-	return x | 0;
-};
-Std.parseInt = function(x) {
-	var v = parseInt(x,10);
-	if(v == 0 && (HxOverrides.cca(x,1) == 120 || HxOverrides.cca(x,1) == 88)) {
-		v = parseInt(x);
-	}
-	if(isNaN(v)) {
-		return null;
-	}
-	return v;
-};
-Std.parseFloat = function(x) {
-	return parseFloat(x);
-};
-Std.random = function(x) {
-	if(x <= 0) {
-		return 0;
-	} else {
-		return Math.floor(Math.random() * x);
-	}
-};
-var StringBuf = function() {
-	this.b = "";
-};
-$hxClasses["StringBuf"] = StringBuf;
-StringBuf.__name__ = ["StringBuf"];
-StringBuf.prototype = {
-	b: null
-	,__class__: StringBuf
-};
-var StringTools = function() { };
-$hxClasses["StringTools"] = StringTools;
-StringTools.__name__ = ["StringTools"];
-StringTools.urlEncode = function(s) {
-	return encodeURIComponent(s);
-};
-StringTools.urlDecode = function(s) {
-	return decodeURIComponent(s.split("+").join(" "));
-};
-StringTools.htmlEscape = function(s,quotes) {
-	s = s.split("&").join("&amp;").split("<").join("&lt;").split(">").join("&gt;");
-	if(quotes) {
-		return s.split("\"").join("&quot;").split("'").join("&#039;");
-	} else {
-		return s;
-	}
-};
-StringTools.htmlUnescape = function(s) {
-	return s.split("&gt;").join(">").split("&lt;").join("<").split("&quot;").join("\"").split("&#039;").join("'").split("&amp;").join("&");
-};
-StringTools.startsWith = function(s,start) {
-	if(s.length >= start.length) {
-		return HxOverrides.substr(s,0,start.length) == start;
-	} else {
-		return false;
-	}
-};
-StringTools.endsWith = function(s,end) {
-	var elen = end.length;
-	var slen = s.length;
-	if(slen >= elen) {
-		return HxOverrides.substr(s,slen - elen,elen) == end;
-	} else {
-		return false;
-	}
-};
-StringTools.isSpace = function(s,pos) {
-	var c = HxOverrides.cca(s,pos);
-	if(!(c > 8 && c < 14)) {
-		return c == 32;
-	} else {
-		return true;
-	}
-};
-StringTools.ltrim = function(s) {
-	var l = s.length;
-	var r = 0;
-	while(r < l && StringTools.isSpace(s,r)) ++r;
-	if(r > 0) {
-		return HxOverrides.substr(s,r,l - r);
-	} else {
-		return s;
-	}
-};
-StringTools.rtrim = function(s) {
-	var l = s.length;
-	var r = 0;
-	while(r < l && StringTools.isSpace(s,l - r - 1)) ++r;
-	if(r > 0) {
-		return HxOverrides.substr(s,0,l - r);
-	} else {
-		return s;
-	}
-};
-StringTools.trim = function(s) {
-	return StringTools.ltrim(StringTools.rtrim(s));
-};
-StringTools.lpad = function(s,c,l) {
-	if(c.length <= 0) {
-		return s;
-	}
-	while(s.length < l) s = c + s;
-	return s;
-};
-StringTools.rpad = function(s,c,l) {
-	if(c.length <= 0) {
-		return s;
-	}
-	while(s.length < l) s += c;
-	return s;
-};
-StringTools.replace = function(s,sub,by) {
-	return s.split(sub).join(by);
-};
-StringTools.hex = function(n,digits) {
-	var s = "";
-	var hexChars = "0123456789ABCDEF";
-	while(true) {
-		s = hexChars.charAt(n & 15) + s;
-		n >>>= 4;
-		if(!(n > 0)) {
-			break;
-		}
-	}
-	if(digits != null) {
-		while(s.length < digits) s = "0" + s;
-	}
-	return s;
-};
-StringTools.fastCodeAt = function(s,index) {
-	return s.charCodeAt(index);
-};
-StringTools.isEof = function(c) {
-	return c != c;
-};
-StringTools.quoteUnixArg = function(argument) {
-	if(argument == "") {
-		return "''";
-	}
-	if(!new EReg("[^a-zA-Z0-9_@%+=:,./-]","").match(argument)) {
-		return argument;
-	}
-	return "'" + StringTools.replace(argument,"'","'\"'\"'") + "'";
-};
-StringTools.quoteWinArg = function(argument,escapeMetaCharacters) {
-	if(!new EReg("^[^ \t\\\\\"]+$","").match(argument)) {
-		var result_b = "";
-		var needquote = argument.indexOf(" ") != -1 || argument.indexOf("\t") != -1 || argument == "";
-		if(needquote) {
-			result_b += "\"";
-		}
-		var bs_buf = new StringBuf();
-		var _g1 = 0;
-		var _g = argument.length;
-		while(_g1 < _g) {
-			var i = _g1++;
-			var _g2 = HxOverrides.cca(argument,i);
-			if(_g2 == null) {
-				var c = _g2;
-				if(bs_buf.b.length > 0) {
-					result_b += Std.string(bs_buf.b);
-					bs_buf = new StringBuf();
-				}
-				result_b += String.fromCharCode(c);
-			} else {
-				switch(_g2) {
-				case 34:
-					var bs = bs_buf.b;
-					result_b += bs == null ? "null" : "" + bs;
-					result_b += bs == null ? "null" : "" + bs;
-					bs_buf = new StringBuf();
-					result_b += "\\\"";
-					break;
-				case 92:
-					bs_buf.b += "\\";
-					break;
-				default:
-					var c1 = _g2;
-					if(bs_buf.b.length > 0) {
-						result_b += Std.string(bs_buf.b);
-						bs_buf = new StringBuf();
-					}
-					result_b += String.fromCharCode(c1);
-				}
-			}
-		}
-		result_b += Std.string(bs_buf.b);
-		if(needquote) {
-			result_b += Std.string(bs_buf.b);
-			result_b += "\"";
-		}
-		argument = result_b;
-	}
-	if(escapeMetaCharacters) {
-		var result_b1 = "";
-		var _g11 = 0;
-		var _g3 = argument.length;
-		while(_g11 < _g3) {
-			var i1 = _g11++;
-			var c2 = HxOverrides.cca(argument,i1);
-			if(StringTools.winMetaCharacters.indexOf(c2) >= 0) {
-				result_b1 += "^";
-			}
-			result_b1 += String.fromCharCode(c2);
-		}
-		return result_b1;
-	} else {
-		return argument;
-	}
-};
-var ValueType = $hxClasses["ValueType"] = { __ename__ : ["ValueType"], __constructs__ : ["TNull","TInt","TFloat","TBool","TObject","TFunction","TClass","TEnum","TUnknown"] };
-ValueType.TNull = ["TNull",0];
-ValueType.TNull.toString = $estr;
-ValueType.TNull.__enum__ = ValueType;
-ValueType.TInt = ["TInt",1];
-ValueType.TInt.toString = $estr;
-ValueType.TInt.__enum__ = ValueType;
-ValueType.TFloat = ["TFloat",2];
-ValueType.TFloat.toString = $estr;
-ValueType.TFloat.__enum__ = ValueType;
-ValueType.TBool = ["TBool",3];
-ValueType.TBool.toString = $estr;
-ValueType.TBool.__enum__ = ValueType;
-ValueType.TObject = ["TObject",4];
-ValueType.TObject.toString = $estr;
-ValueType.TObject.__enum__ = ValueType;
-ValueType.TFunction = ["TFunction",5];
-ValueType.TFunction.toString = $estr;
-ValueType.TFunction.__enum__ = ValueType;
-ValueType.TClass = function(c) { var $x = ["TClass",6,c]; $x.__enum__ = ValueType; $x.toString = $estr; return $x; };
-ValueType.TEnum = function(e) { var $x = ["TEnum",7,e]; $x.__enum__ = ValueType; $x.toString = $estr; return $x; };
-ValueType.TUnknown = ["TUnknown",8];
-ValueType.TUnknown.toString = $estr;
-ValueType.TUnknown.__enum__ = ValueType;
-ValueType.__empty_constructs__ = [ValueType.TNull,ValueType.TInt,ValueType.TFloat,ValueType.TBool,ValueType.TObject,ValueType.TFunction,ValueType.TUnknown];
-var Type = function() { };
-$hxClasses["Type"] = Type;
-Type.__name__ = ["Type"];
-Type.getClass = function(o) {
-	if(o == null) {
-		return null;
-	} else {
-		return js_Boot.getClass(o);
-	}
-};
-Type.getEnum = function(o) {
-	if(o == null) {
-		return null;
-	}
-	return o.__enum__;
-};
-Type.getSuperClass = function(c) {
-	return c.__super__;
-};
-Type.getClassName = function(c) {
-	var a = c.__name__;
-	if(a == null) {
-		return null;
-	}
-	return a.join(".");
-};
-Type.getEnumName = function(e) {
-	var a = e.__ename__;
-	return a.join(".");
-};
-Type.resolveClass = function(name) {
-	var cl = $hxClasses[name];
-	if(cl == null || !cl.__name__) {
-		return null;
-	}
-	return cl;
-};
-Type.resolveEnum = function(name) {
-	var e = $hxClasses[name];
-	if(e == null || !e.__ename__) {
-		return null;
-	}
-	return e;
-};
-Type.createInstance = function(cl,args) {
-	var _g = args.length;
-	switch(_g) {
-	case 0:
-		return new cl();
-	case 1:
-		return new cl(args[0]);
-	case 2:
-		return new cl(args[0],args[1]);
-	case 3:
-		return new cl(args[0],args[1],args[2]);
-	case 4:
-		return new cl(args[0],args[1],args[2],args[3]);
-	case 5:
-		return new cl(args[0],args[1],args[2],args[3],args[4]);
-	case 6:
-		return new cl(args[0],args[1],args[2],args[3],args[4],args[5]);
-	case 7:
-		return new cl(args[0],args[1],args[2],args[3],args[4],args[5],args[6]);
-	case 8:
-		return new cl(args[0],args[1],args[2],args[3],args[4],args[5],args[6],args[7]);
-	case 9:
-		return new cl(args[0],args[1],args[2],args[3],args[4],args[5],args[6],args[7],args[8]);
-	case 10:
-		return new cl(args[0],args[1],args[2],args[3],args[4],args[5],args[6],args[7],args[8],args[9]);
-	case 11:
-		return new cl(args[0],args[1],args[2],args[3],args[4],args[5],args[6],args[7],args[8],args[9],args[10]);
-	case 12:
-		return new cl(args[0],args[1],args[2],args[3],args[4],args[5],args[6],args[7],args[8],args[9],args[10],args[11]);
-	case 13:
-		return new cl(args[0],args[1],args[2],args[3],args[4],args[5],args[6],args[7],args[8],args[9],args[10],args[11],args[12]);
-	case 14:
-		return new cl(args[0],args[1],args[2],args[3],args[4],args[5],args[6],args[7],args[8],args[9],args[10],args[11],args[12],args[13]);
-	default:
-		throw new js__$Boot_HaxeError("Too many arguments");
-	}
-};
-Type.createEmptyInstance = function(cl) {
-	function empty() {}; empty.prototype = cl.prototype;
-	return new empty();
-};
-Type.createEnum = function(e,constr,params) {
-	var f = Reflect.field(e,constr);
-	if(f == null) {
-		throw new js__$Boot_HaxeError("No such constructor " + constr);
-	}
-	if(Reflect.isFunction(f)) {
-		if(params == null) {
-			throw new js__$Boot_HaxeError("Constructor " + constr + " need parameters");
-		}
-		return f.apply(e,params);
-	}
-	if(params != null && params.length != 0) {
-		throw new js__$Boot_HaxeError("Constructor " + constr + " does not need parameters");
-	}
-	return f;
-};
-Type.createEnumIndex = function(e,index,params) {
-	var c = e.__constructs__[index];
-	if(c == null) {
-		throw new js__$Boot_HaxeError(index + " is not a valid enum constructor index");
-	}
-	return Type.createEnum(e,c,params);
-};
-Type.getInstanceFields = function(c) {
-	var a = [];
-	for(var i in c.prototype) a.push(i);
-	HxOverrides.remove(a,"__class__");
-	HxOverrides.remove(a,"__properties__");
-	return a;
-};
-Type.getClassFields = function(c) {
-	var a = Reflect.fields(c);
-	HxOverrides.remove(a,"__name__");
-	HxOverrides.remove(a,"__interfaces__");
-	HxOverrides.remove(a,"__properties__");
-	HxOverrides.remove(a,"__super__");
-	HxOverrides.remove(a,"__meta__");
-	HxOverrides.remove(a,"prototype");
-	return a;
-};
-Type.getEnumConstructs = function(e) {
-	return e.__constructs__.slice();
-};
-Type["typeof"] = function(v) {
-	var _g = typeof(v);
-	switch(_g) {
-	case "boolean":
-		return ValueType.TBool;
-	case "function":
-		if(v.__name__ || v.__ename__) {
-			return ValueType.TObject;
-		}
-		return ValueType.TFunction;
-	case "number":
-		if(Math.ceil(v) == v % 2147483648.0) {
-			return ValueType.TInt;
-		}
-		return ValueType.TFloat;
-	case "object":
-		if(v == null) {
-			return ValueType.TNull;
-		}
-		var e = v.__enum__;
-		if(e != null) {
-			return ValueType.TEnum(e);
-		}
-		var c = js_Boot.getClass(v);
-		if(c != null) {
-			return ValueType.TClass(c);
-		}
-		return ValueType.TObject;
-	case "string":
-		return ValueType.TClass(String);
-	case "undefined":
-		return ValueType.TNull;
-	default:
-		return ValueType.TUnknown;
-	}
-};
-Type.enumEq = function(a,b) {
-	if(a == b) {
-		return true;
-	}
-	try {
-		if(a[0] != b[0]) {
-			return false;
-		}
-		var _g1 = 2;
-		var _g = a.length;
-		while(_g1 < _g) {
-			var i = _g1++;
-			if(!Type.enumEq(a[i],b[i])) {
-				return false;
-			}
-		}
-		var e = a.__enum__;
-		if(e != b.__enum__ || e == null) {
-			return false;
-		}
-	} catch( e1 ) {
-		haxe_CallStack.lastException = e1;
-		return false;
-	}
-	return true;
-};
-Type.enumConstructor = function(e) {
-	return e[0];
-};
-Type.enumParameters = function(e) {
-	return e.slice(2);
-};
-Type.enumIndex = function(e) {
-	return e[1];
-};
-Type.allEnums = function(e) {
-	return e.__empty_constructs__;
-};
-var _$UInt_UInt_$Impl_$ = {};
-$hxClasses["_UInt.UInt_Impl_"] = _$UInt_UInt_$Impl_$;
-_$UInt_UInt_$Impl_$.__name__ = ["_UInt","UInt_Impl_"];
-_$UInt_UInt_$Impl_$.gt = function(a,b) {
-	var aNeg = a < 0;
-	var bNeg = b < 0;
-	if(aNeg != bNeg) {
-		return aNeg;
-	} else {
-		return a > b;
-	}
-};
-_$UInt_UInt_$Impl_$.toFloat = function(this1) {
-	var $int = this1;
-	if($int < 0) {
-		return 4294967296.0 + $int;
-	} else {
-		return $int + 0.0;
-	}
-};
-var Xml = function(nodeType) {
-	this.nodeType = nodeType;
-	this.children = [];
-	this.attributeMap = new haxe_ds_StringMap();
-};
-$hxClasses["Xml"] = Xml;
-Xml.__name__ = ["Xml"];
-Xml.parse = function(str) {
-	return haxe_xml_Parser.parse(str);
-};
-Xml.createElement = function(name) {
-	var xml = new Xml(Xml.Element);
-	if(xml.nodeType != Xml.Element) {
-		throw new js__$Boot_HaxeError("Bad node type, expected Element but found " + xml.nodeType);
-	}
-	xml.nodeName = name;
-	return xml;
-};
-Xml.createPCData = function(data) {
-	var xml = new Xml(Xml.PCData);
-	if(xml.nodeType == Xml.Document || xml.nodeType == Xml.Element) {
-		throw new js__$Boot_HaxeError("Bad node type, unexpected " + xml.nodeType);
-	}
-	xml.nodeValue = data;
-	return xml;
-};
-Xml.createCData = function(data) {
-	var xml = new Xml(Xml.CData);
-	if(xml.nodeType == Xml.Document || xml.nodeType == Xml.Element) {
-		throw new js__$Boot_HaxeError("Bad node type, unexpected " + xml.nodeType);
-	}
-	xml.nodeValue = data;
-	return xml;
-};
-Xml.createComment = function(data) {
-	var xml = new Xml(Xml.Comment);
-	if(xml.nodeType == Xml.Document || xml.nodeType == Xml.Element) {
-		throw new js__$Boot_HaxeError("Bad node type, unexpected " + xml.nodeType);
-	}
-	xml.nodeValue = data;
-	return xml;
-};
-Xml.createDocType = function(data) {
-	var xml = new Xml(Xml.DocType);
-	if(xml.nodeType == Xml.Document || xml.nodeType == Xml.Element) {
-		throw new js__$Boot_HaxeError("Bad node type, unexpected " + xml.nodeType);
-	}
-	xml.nodeValue = data;
-	return xml;
-};
-Xml.createProcessingInstruction = function(data) {
-	var xml = new Xml(Xml.ProcessingInstruction);
-	if(xml.nodeType == Xml.Document || xml.nodeType == Xml.Element) {
-		throw new js__$Boot_HaxeError("Bad node type, unexpected " + xml.nodeType);
-	}
-	xml.nodeValue = data;
-	return xml;
-};
-Xml.createDocument = function() {
-	return new Xml(Xml.Document);
-};
-Xml.prototype = {
-	nodeType: null
-	,nodeName: null
-	,nodeValue: null
-	,parent: null
-	,children: null
-	,attributeMap: null
-	,get: function(att) {
-		if(this.nodeType != Xml.Element) {
-			throw new js__$Boot_HaxeError("Bad node type, expected Element but found " + this.nodeType);
-		}
-		var _this = this.attributeMap;
-		if(__map_reserved[att] != null) {
-			return _this.getReserved(att);
-		} else {
-			return _this.h[att];
-		}
-	}
-	,set: function(att,value) {
-		if(this.nodeType != Xml.Element) {
-			throw new js__$Boot_HaxeError("Bad node type, expected Element but found " + this.nodeType);
-		}
-		var _this = this.attributeMap;
-		if(__map_reserved[att] != null) {
-			_this.setReserved(att,value);
-		} else {
-			_this.h[att] = value;
-		}
-	}
-	,exists: function(att) {
-		if(this.nodeType != Xml.Element) {
-			throw new js__$Boot_HaxeError("Bad node type, expected Element but found " + this.nodeType);
-		}
-		var _this = this.attributeMap;
-		if(__map_reserved[att] != null) {
-			return _this.existsReserved(att);
-		} else {
-			return _this.h.hasOwnProperty(att);
-		}
-	}
-	,elements: function() {
-		if(this.nodeType != Xml.Document && this.nodeType != Xml.Element) {
-			throw new js__$Boot_HaxeError("Bad node type, expected Element or Document but found " + this.nodeType);
-		}
-		var _g = [];
-		var _g1 = 0;
-		var _g2 = this.children;
-		while(_g1 < _g2.length) {
-			var child = _g2[_g1];
-			++_g1;
-			if(child.nodeType == Xml.Element) {
-				_g.push(child);
-			}
-		}
-		var ret = _g;
-		return HxOverrides.iter(ret);
-	}
-	,elementsNamed: function(name) {
-		if(this.nodeType != Xml.Document && this.nodeType != Xml.Element) {
-			throw new js__$Boot_HaxeError("Bad node type, expected Element or Document but found " + this.nodeType);
-		}
-		var _g = [];
-		var _g1 = 0;
-		var _g2 = this.children;
-		while(_g1 < _g2.length) {
-			var child = _g2[_g1];
-			++_g1;
-			var tmp;
-			if(child.nodeType == Xml.Element) {
-				if(child.nodeType != Xml.Element) {
-					throw new js__$Boot_HaxeError("Bad node type, expected Element but found " + child.nodeType);
-				}
-				tmp = child.nodeName == name;
-			} else {
-				tmp = false;
-			}
-			if(tmp) {
-				_g.push(child);
-			}
-		}
-		var ret = _g;
-		return HxOverrides.iter(ret);
-	}
-	,firstElement: function() {
-		if(this.nodeType != Xml.Document && this.nodeType != Xml.Element) {
-			throw new js__$Boot_HaxeError("Bad node type, expected Element or Document but found " + this.nodeType);
-		}
-		var _g = 0;
-		var _g1 = this.children;
-		while(_g < _g1.length) {
-			var child = _g1[_g];
-			++_g;
-			if(child.nodeType == Xml.Element) {
-				return child;
-			}
-		}
-		return null;
-	}
-	,addChild: function(x) {
-		if(this.nodeType != Xml.Document && this.nodeType != Xml.Element) {
-			throw new js__$Boot_HaxeError("Bad node type, expected Element or Document but found " + this.nodeType);
-		}
-		if(x.parent != null) {
-			x.parent.removeChild(x);
-		}
-		this.children.push(x);
-		x.parent = this;
-	}
-	,removeChild: function(x) {
-		if(this.nodeType != Xml.Document && this.nodeType != Xml.Element) {
-			throw new js__$Boot_HaxeError("Bad node type, expected Element or Document but found " + this.nodeType);
-		}
-		if(HxOverrides.remove(this.children,x)) {
-			x.parent = null;
-			return true;
-		}
-		return false;
-	}
-	,__class__: Xml
-};
 var flixel_util_IFlxDestroyable = function() { };
 $hxClasses["flixel.util.IFlxDestroyable"] = flixel_util_IFlxDestroyable;
 flixel_util_IFlxDestroyable.__name__ = ["flixel","util","IFlxDestroyable"];
@@ -6743,7 +5700,7 @@ flixel_FlxSprite.prototype = $extend(flixel_FlxObject.prototype,{
 	,__class__: flixel_FlxSprite
 	,__properties__: $extend(flixel_FlxObject.prototype.__properties__,{set_clipRect:"set_clipRect",set_color:"set_color",set_blend:"set_blend",set_flipY:"set_flipY",set_flipX:"set_flipX",set_facing:"set_facing",set_alpha:"set_alpha",set_graphic:"set_graphic",set_frames:"set_frames",set_frame:"set_frame",set_pixels:"set_pixels",get_pixels:"get_pixels",set_antialiasing:"set_antialiasing",set_useFramePixels:"set_useFramePixels"})
 });
-var auxiliar_FlxButtonAnimation = function(aImagePath,aAnimationWidth,aAnimationHeight,aOnPressed,aWithMouse) {
+var FlxButtonAnimation = function(aImagePath,aAnimationWidth,aAnimationHeight,aOnPressed,aWithMouse) {
 	this.vIsWithMouse = false;
 	this.vEnabled = true;
 	flixel_FlxSprite.call(this);
@@ -6752,10 +5709,10 @@ var auxiliar_FlxButtonAnimation = function(aImagePath,aAnimationWidth,aAnimation
 	this.vOnPressed = aOnPressed;
 	this.vIsWithMouse = aWithMouse;
 };
-$hxClasses["auxiliar.FlxButtonAnimation"] = auxiliar_FlxButtonAnimation;
-auxiliar_FlxButtonAnimation.__name__ = ["auxiliar","FlxButtonAnimation"];
-auxiliar_FlxButtonAnimation.__super__ = flixel_FlxSprite;
-auxiliar_FlxButtonAnimation.prototype = $extend(flixel_FlxSprite.prototype,{
+$hxClasses["FlxButtonAnimation"] = FlxButtonAnimation;
+FlxButtonAnimation.__name__ = ["FlxButtonAnimation"];
+FlxButtonAnimation.__super__ = flixel_FlxSprite;
+FlxButtonAnimation.prototype = $extend(flixel_FlxSprite.prototype,{
 	vOnPressed: null
 	,vEnabled: null
 	,vIsWithMouse: null
@@ -6819,17 +5776,1217 @@ auxiliar_FlxButtonAnimation.prototype = $extend(flixel_FlxSprite.prototype,{
 	,isButtonClicked: function() {
 		return flixel_FlxG.mouse._leftButton.current == -1;
 	}
-	,__class__: auxiliar_FlxButtonAnimation
+	,__class__: FlxButtonAnimation
 });
-var auxiliar_ToolsForUse = function() { };
-$hxClasses["auxiliar.ToolsForUse"] = auxiliar_ToolsForUse;
-auxiliar_ToolsForUse.__name__ = ["auxiliar","ToolsForUse"];
-auxiliar_ToolsForUse.IsInsideCircle = function(centeraX,centeraY,aX,aY,aRad) {
+var FlxButtonAnimationSkill = function(aImagePath,aAnimationWidth,aAnimationHeight,aOnPressed,aOnPressedActive,aOnOver,aCoolDown,aLabel) {
+	this.vEnabled = true;
+	this.vActiveButton = false;
+	this.vTimerCoolDown = 0;
+	this.vCoolDown = 0;
+	flixel_FlxSprite.call(this);
+	this.loadGraphic(openfl_Assets.getBitmapData(aImagePath),true,aAnimationWidth,aAnimationHeight);
+	this.vMousePosition = new flixel_math_FlxPoint();
+	this.vOnPressed = aOnPressed;
+	this.vOnPressedActive = aOnPressedActive;
+	this.vOnOver = aOnOver;
+	this.vCoolDown = aCoolDown;
+	this.vTimerCoolDown = 0;
+	this.vLabel = aLabel;
+	if(this.vLabel != null) {
+		this.vLabel.set_fieldWidth(this.get_width());
+		this.vLabel.setFormat(null,20,-1);
+		this.vLabel.set_alpha(0.5);
+		this.vLabel.set_visible(false);
+	}
+	this.updateLabel("");
+};
+$hxClasses["FlxButtonAnimationSkill"] = FlxButtonAnimationSkill;
+FlxButtonAnimationSkill.__name__ = ["FlxButtonAnimationSkill"];
+FlxButtonAnimationSkill.__super__ = flixel_FlxSprite;
+FlxButtonAnimationSkill.prototype = $extend(flixel_FlxSprite.prototype,{
+	vCoolDown: null
+	,vTimerCoolDown: null
+	,vActiveButton: null
+	,vOnPressedActive: null
+	,vOnOver: null
+	,vLabel: null
+	,vOnPressed: null
+	,vEnabled: null
+	,vMousePosition: null
+	,updateLabel: function(atext) {
+		if(this.vLabel != null) {
+			this.vLabel.setPosition(this.x,this.y);
+			this.vLabel.set_text(atext);
+		}
+	}
+	,setCooldown: function(aFrames,aLoop,aFrameRate) {
+		if(aFrameRate == null) {
+			aFrameRate = 30;
+		}
+		if(aLoop == null) {
+			aLoop = true;
+		}
+		this.animation.add("cooldown",aFrames,aFrameRate,aLoop);
+	}
+	,setDisabled: function(aFrames,aLoop,aFrameRate) {
+		if(aFrameRate == null) {
+			aFrameRate = 30;
+		}
+		if(aLoop == null) {
+			aLoop = true;
+		}
+		this.animation.add("disabled",aFrames,aFrameRate,aLoop);
+	}
+	,setUp: function(aFrames,aLoop,aFrameRate) {
+		if(aFrameRate == null) {
+			aFrameRate = 30;
+		}
+		if(aLoop == null) {
+			aLoop = true;
+		}
+		this.animation.add("up",aFrames,aFrameRate,aLoop);
+	}
+	,setDown: function(aFrames,aLoop,aFrameRate) {
+		if(aFrameRate == null) {
+			aFrameRate = 30;
+		}
+		if(aLoop == null) {
+			aLoop = true;
+		}
+		this.animation.add("down",aFrames,aFrameRate,aLoop);
+	}
+	,setOver: function(aFrames,aLoop,aFrameRate) {
+		if(aFrameRate == null) {
+			aFrameRate = 30;
+		}
+		if(aLoop == null) {
+			aLoop = true;
+		}
+		this.animation.add("over",aFrames,aFrameRate,aLoop);
+	}
+	,setActivation: function() {
+		this.vTimerCoolDown = this.vCoolDown;
+		this.vActiveButton = true;
+		this.animation.play("cooldown");
+		this.vLabel.set_text("");
+		this.vLabel.set_visible(true);
+	}
+	,update: function(aDt) {
+		this.vMousePosition.set(flixel_FlxG.mouse.x,flixel_FlxG.mouse.y);
+		if(this.vTimerCoolDown > 0) {
+			this.updateLabel((this.vTimerCoolDown + 1 | 0) + "");
+			this.vActiveButton = false;
+			this.vTimerCoolDown -= aDt;
+			var aMousePosition = this.vMousePosition;
+			if(this.overlapsPoint(this.vMousePosition)) {
+				this.vOnOver(this);
+			}
+		} else {
+			this.vLabel.set_visible(false);
+			var aMousePosition1 = this.vMousePosition;
+			if(this.overlapsPoint(this.vMousePosition)) {
+				this.vOnOver(this);
+				var tmp;
+				var _this = flixel_FlxG.mouse._leftButton;
+				if(_this.current == 1 || _this.current == 2) {
+					tmp = !this.vActiveButton;
+				} else {
+					tmp = false;
+				}
+				if(tmp) {
+					this.animation.play("down");
+				} else if(!this.vActiveButton) {
+					this.animation.play("over");
+				}
+				if(flixel_FlxG.mouse._leftButton.current == -1) {
+					if(!this.vActiveButton) {
+						haxe_Log.trace("Im not active yet",{ fileName : "FlxButtonAnimationSkill.hx", lineNumber : 133, className : "FlxButtonAnimationSkill", methodName : "update"});
+						this.vActiveButton = true;
+						if(this.vOnPressed != null) {
+							this.vOnPressed(this);
+						}
+						haxe_Log.trace("Actived",{ fileName : "FlxButtonAnimationSkill.hx", lineNumber : 139, className : "FlxButtonAnimationSkill", methodName : "update"});
+						this.animation.play("disabled");
+					} else {
+						haxe_Log.trace("Im actived",{ fileName : "FlxButtonAnimationSkill.hx", lineNumber : 144, className : "FlxButtonAnimationSkill", methodName : "update"});
+						this.vActiveButton = false;
+						if(this.vOnPressedActive != null) {
+							this.vOnPressedActive(this);
+						}
+						haxe_Log.trace("Not actived",{ fileName : "FlxButtonAnimationSkill.hx", lineNumber : 150, className : "FlxButtonAnimationSkill", methodName : "update"});
+						this.animation.play("up");
+					}
+				}
+			} else if(!this.vActiveButton) {
+				this.animation.play("up");
+			}
+		}
+		flixel_FlxSprite.prototype.update.call(this,aDt);
+	}
+	,isTouchingButton: function() {
+		var aMousePosition = this.vMousePosition;
+		return this.overlapsPoint(this.vMousePosition);
+	}
+	,isOver: function(aMousePosition) {
+		return this.overlapsPoint(this.vMousePosition);
+	}
+	,isButtonClicked: function() {
+		return flixel_FlxG.mouse._leftButton.current == -1;
+	}
+	,__class__: FlxButtonAnimationSkill
+});
+var GlobalGameData = function() { };
+$hxClasses["GlobalGameData"] = GlobalGameData;
+GlobalGameData.__name__ = ["GlobalGameData"];
+GlobalGameData.vGod = null;
+GlobalGameData.vPlayer1 = null;
+GlobalGameData.vMap = null;
+GlobalGameData.clear = function() {
+	GlobalGameData.vGod = null;
+	GlobalGameData.vPlayer1 = null;
+	GlobalGameData.vMap = null;
+};
+GlobalGameData.thereIsPlayer = function(aSizeOfSurface,aX,aY) {
+	return ToolsForUse.IsInsideCircle(aX,aY,GlobalGameData.vPlayer1.x + GlobalGameData.vPlayer1.get_width() / 2,GlobalGameData.vPlayer1.y + GlobalGameData.vPlayer1.get_height() / 2,aSizeOfSurface);
+};
+GlobalGameData.itsOnASurface = function(aSizeOfSurface,aX,aY) {
+	var midSize = aSizeOfSurface / 2 | 0;
+	var midSize2 = midSize / 2 | 0;
+	if(GlobalGameData.vMap.getTile(aX / 32 | 0,aY / 32 | 0) == 0 || GlobalGameData.vMap.getTile(aX / 32 | 0,aY / 32 | 0) == 2) {
+		if(GlobalGameData.vMap.getTile((aX + midSize2) / 32 | 0,aY / 32 | 0) == 0 || GlobalGameData.vMap.getTile((aX + midSize2) / 32 | 0,aY / 32 | 0) == 2) {
+			if(GlobalGameData.vMap.getTile(aX / 32 | 0,(midSize / 2 + aY) / 32 | 0) != 0 && GlobalGameData.vMap.getTile(aX / 32 | 0,(midSize / 2 + aY) / 32 | 0) != 2) {
+				if(GlobalGameData.vMap.getTile((aX + midSize2) / 32 | 0,(midSize / 2 + aY) / 32 | 0) != 0 && GlobalGameData.vMap.getTile((aX + midSize2) / 32 | 0,(midSize / 2 + aY) / 32 | 0) != 2 && GlobalGameData.vMap.getTile((aX + midSize2) / 32 | 0,(midSize / 2 + aY) / 32 | 0) != 1) {
+					return true;
+				}
+			}
+		}
+	}
+	return false;
+};
+GlobalGameData.thereIsACoinHere = function(anX,anY,otherCoins,aRad) {
+	var rad = aRad;
+	var aCoin = new flixel_group_FlxTypedGroupIterator(otherCoins.members,null);
+	while(aCoin.hasNext()) {
+		var aCoin1 = aCoin.next();
+		var coin1 = js_Boot.__cast(aCoin1 , gameObjects_Coin);
+		if(ToolsForUse.IsInsideCircle(anX,anY,coin1.x,coin1.y,rad)) {
+			return true;
+		}
+	}
+	return false;
+};
+var HxOverrides = function() { };
+$hxClasses["HxOverrides"] = HxOverrides;
+HxOverrides.__name__ = ["HxOverrides"];
+HxOverrides.strDate = function(s) {
+	var _g = s.length;
+	switch(_g) {
+	case 8:
+		var k = s.split(":");
+		var d = new Date();
+		d["setTime"](0);
+		d["setUTCHours"](k[0]);
+		d["setUTCMinutes"](k[1]);
+		d["setUTCSeconds"](k[2]);
+		return d;
+	case 10:
+		var k1 = s.split("-");
+		return new Date(k1[0],k1[1] - 1,k1[2],0,0,0);
+	case 19:
+		var k2 = s.split(" ");
+		var y = k2[0].split("-");
+		var t = k2[1].split(":");
+		return new Date(y[0],y[1] - 1,y[2],t[0],t[1],t[2]);
+	default:
+		throw new js__$Boot_HaxeError("Invalid date format : " + s);
+	}
+};
+HxOverrides.cca = function(s,index) {
+	var x = s.charCodeAt(index);
+	if(x != x) {
+		return undefined;
+	}
+	return x;
+};
+HxOverrides.substr = function(s,pos,len) {
+	if(len == null) {
+		len = s.length;
+	} else if(len < 0) {
+		if(pos == 0) {
+			len = s.length + len;
+		} else {
+			return "";
+		}
+	}
+	return s.substr(pos,len);
+};
+HxOverrides.remove = function(a,obj) {
+	var i = a.indexOf(obj);
+	if(i == -1) {
+		return false;
+	}
+	a.splice(i,1);
+	return true;
+};
+HxOverrides.iter = function(a) {
+	return { cur : 0, arr : a, hasNext : function() {
+		return this.cur < this.arr.length;
+	}, next : function() {
+		return this.arr[this.cur++];
+	}};
+};
+var Lambda = function() { };
+$hxClasses["Lambda"] = Lambda;
+Lambda.__name__ = ["Lambda"];
+Lambda.array = function(it) {
+	var a = [];
+	var i = $iterator(it)();
+	while(i.hasNext()) {
+		var i1 = i.next();
+		a.push(i1);
+	}
+	return a;
+};
+var List = function() {
+	this.length = 0;
+};
+$hxClasses["List"] = List;
+List.__name__ = ["List"];
+List.prototype = {
+	h: null
+	,q: null
+	,length: null
+	,add: function(item) {
+		var x = new _$List_ListNode(item,null);
+		if(this.h == null) {
+			this.h = x;
+		} else {
+			this.q.next = x;
+		}
+		this.q = x;
+		this.length++;
+	}
+	,pop: function() {
+		if(this.h == null) {
+			return null;
+		}
+		var x = this.h.item;
+		this.h = this.h.next;
+		if(this.h == null) {
+			this.q = null;
+		}
+		this.length--;
+		return x;
+	}
+	,iterator: function() {
+		return new _$List_ListIterator(this.h);
+	}
+	,__class__: List
+};
+var _$List_ListNode = function(item,next) {
+	this.item = item;
+	this.next = next;
+};
+$hxClasses["_List.ListNode"] = _$List_ListNode;
+_$List_ListNode.__name__ = ["_List","ListNode"];
+_$List_ListNode.prototype = {
+	item: null
+	,next: null
+	,__class__: _$List_ListNode
+};
+var _$List_ListIterator = function(head) {
+	this.head = head;
+};
+$hxClasses["_List.ListIterator"] = _$List_ListIterator;
+_$List_ListIterator.__name__ = ["_List","ListIterator"];
+_$List_ListIterator.prototype = {
+	head: null
+	,hasNext: function() {
+		return this.head != null;
+	}
+	,next: function() {
+		var val = this.head.item;
+		this.head = this.head.next;
+		return val;
+	}
+	,__class__: _$List_ListIterator
+};
+Math.__name__ = ["Math"];
+var NMEPreloader = function() {
+	openfl_display_Sprite.call(this);
+	var backgroundColor = this.getBackgroundColor();
+	var r = backgroundColor >> 16 & 255;
+	var g = backgroundColor >> 8 & 255;
+	var b = backgroundColor & 255;
+	var perceivedLuminosity = 0.299 * r + 0.587 * g + 0.114 * b;
+	var color = 0;
+	if(perceivedLuminosity < 70) {
+		color = 16777215;
+	}
+	var x = 30;
+	var height = 7;
+	var y = this.getHeight() / 2 - height / 2;
+	var width = this.getWidth() - x * 2;
+	var padding = 2;
+	this.outline = new openfl_display_Sprite();
+	this.outline.get_graphics().beginFill(color,0.07);
+	this.outline.get_graphics().drawRect(0,0,width,height);
+	this.outline.set_x(x);
+	this.outline.set_y(y);
+	this.addChild(this.outline);
+	this.progress = new openfl_display_Sprite();
+	this.progress.get_graphics().beginFill(color,0.35);
+	this.progress.get_graphics().drawRect(0,0,width - padding * 2,height - padding * 2);
+	this.progress.set_x(x + padding);
+	this.progress.set_y(y + padding);
+	this.progress.set_scaleX(0);
+	this.addChild(this.progress);
+};
+$hxClasses["NMEPreloader"] = NMEPreloader;
+NMEPreloader.__name__ = ["NMEPreloader"];
+NMEPreloader.__super__ = openfl_display_Sprite;
+NMEPreloader.prototype = $extend(openfl_display_Sprite.prototype,{
+	outline: null
+	,progress: null
+	,getBackgroundColor: function() {
+		return 0;
+	}
+	,getHeight: function() {
+		var height = 1080;
+		if(height > 0) {
+			return height;
+		} else {
+			return openfl_Lib.current.stage.stageHeight;
+		}
+	}
+	,getWidth: function() {
+		var width = 1920;
+		if(width > 0) {
+			return width;
+		} else {
+			return openfl_Lib.current.stage.stageWidth;
+		}
+	}
+	,onInit: function() {
+	}
+	,onLoaded: function() {
+		this.dispatchEvent(new openfl_events_Event("complete"));
+	}
+	,onUpdate: function(bytesLoaded,bytesTotal) {
+		var percentLoaded = bytesLoaded / bytesTotal;
+		if(percentLoaded > 1) {
+			percentLoaded = 1;
+		}
+		this.progress.set_scaleX(percentLoaded);
+	}
+	,__class__: NMEPreloader
+});
+var Reflect = function() { };
+$hxClasses["Reflect"] = Reflect;
+Reflect.__name__ = ["Reflect"];
+Reflect.hasField = function(o,field) {
+	return Object.prototype.hasOwnProperty.call(o,field);
+};
+Reflect.field = function(o,field) {
+	try {
+		return o[field];
+	} catch( e ) {
+		haxe_CallStack.lastException = e;
+		return null;
+	}
+};
+Reflect.setField = function(o,field,value) {
+	o[field] = value;
+};
+Reflect.getProperty = function(o,field) {
+	var tmp;
+	if(o == null) {
+		return null;
+	} else {
+		var tmp1;
+		if(o.__properties__) {
+			tmp = o.__properties__["get_" + field];
+			tmp1 = tmp;
+		} else {
+			tmp1 = false;
+		}
+		if(tmp1) {
+			return o[tmp]();
+		} else {
+			return o[field];
+		}
+	}
+};
+Reflect.setProperty = function(o,field,value) {
+	var tmp;
+	var tmp1;
+	if(o.__properties__) {
+		tmp = o.__properties__["set_" + field];
+		tmp1 = tmp;
+	} else {
+		tmp1 = false;
+	}
+	if(tmp1) {
+		o[tmp](value);
+	} else {
+		o[field] = value;
+	}
+};
+Reflect.callMethod = function(o,func,args) {
+	return func.apply(o,args);
+};
+Reflect.fields = function(o) {
+	var a = [];
+	if(o != null) {
+		var hasOwnProperty = Object.prototype.hasOwnProperty;
+		for( var f in o ) {
+		if(f != "__id__" && f != "hx__closures__" && hasOwnProperty.call(o,f)) {
+			a.push(f);
+		}
+		}
+	}
+	return a;
+};
+Reflect.isFunction = function(f) {
+	if(typeof(f) == "function") {
+		return !(f.__name__ || f.__ename__);
+	} else {
+		return false;
+	}
+};
+Reflect.compare = function(a,b) {
+	if(a == b) {
+		return 0;
+	} else if(a > b) {
+		return 1;
+	} else {
+		return -1;
+	}
+};
+Reflect.compareMethods = function(f1,f2) {
+	if(f1 == f2) {
+		return true;
+	}
+	if(!Reflect.isFunction(f1) || !Reflect.isFunction(f2)) {
+		return false;
+	}
+	if(f1.scope == f2.scope && f1.method == f2.method) {
+		return f1.method != null;
+	} else {
+		return false;
+	}
+};
+Reflect.isObject = function(v) {
+	if(v == null) {
+		return false;
+	}
+	var t = typeof(v);
+	if(!(t == "string" || t == "object" && v.__enum__ == null)) {
+		if(t == "function") {
+			return (v.__name__ || v.__ename__) != null;
+		} else {
+			return false;
+		}
+	} else {
+		return true;
+	}
+};
+Reflect.isEnumValue = function(v) {
+	if(v != null) {
+		return v.__enum__ != null;
+	} else {
+		return false;
+	}
+};
+Reflect.deleteField = function(o,field) {
+	if(!Object.prototype.hasOwnProperty.call(o,field)) {
+		return false;
+	}
+	delete(o[field]);
+	return true;
+};
+Reflect.copy = function(o) {
+	var o2 = { };
+	var _g = 0;
+	var _g1 = Reflect.fields(o);
+	while(_g < _g1.length) {
+		var f = _g1[_g];
+		++_g;
+		o2[f] = Reflect.field(o,f);
+	}
+	return o2;
+};
+Reflect.makeVarArgs = function(f) {
+	return function() {
+		var a = Array.prototype.slice.call(arguments);
+		return f(a);
+	};
+};
+var Std = function() { };
+$hxClasses["Std"] = Std;
+Std.__name__ = ["Std"];
+Std["is"] = function(v,t) {
+	return js_Boot.__instanceof(v,t);
+};
+Std.instance = function(value,c) {
+	if((value instanceof c)) {
+		return value;
+	} else {
+		return null;
+	}
+};
+Std.string = function(s) {
+	return js_Boot.__string_rec(s,"");
+};
+Std["int"] = function(x) {
+	return x | 0;
+};
+Std.parseInt = function(x) {
+	var v = parseInt(x,10);
+	if(v == 0 && (HxOverrides.cca(x,1) == 120 || HxOverrides.cca(x,1) == 88)) {
+		v = parseInt(x);
+	}
+	if(isNaN(v)) {
+		return null;
+	}
+	return v;
+};
+Std.parseFloat = function(x) {
+	return parseFloat(x);
+};
+Std.random = function(x) {
+	if(x <= 0) {
+		return 0;
+	} else {
+		return Math.floor(Math.random() * x);
+	}
+};
+var StringBuf = function() {
+	this.b = "";
+};
+$hxClasses["StringBuf"] = StringBuf;
+StringBuf.__name__ = ["StringBuf"];
+StringBuf.prototype = {
+	b: null
+	,__class__: StringBuf
+};
+var StringTools = function() { };
+$hxClasses["StringTools"] = StringTools;
+StringTools.__name__ = ["StringTools"];
+StringTools.urlEncode = function(s) {
+	return encodeURIComponent(s);
+};
+StringTools.urlDecode = function(s) {
+	return decodeURIComponent(s.split("+").join(" "));
+};
+StringTools.htmlEscape = function(s,quotes) {
+	s = s.split("&").join("&amp;").split("<").join("&lt;").split(">").join("&gt;");
+	if(quotes) {
+		return s.split("\"").join("&quot;").split("'").join("&#039;");
+	} else {
+		return s;
+	}
+};
+StringTools.htmlUnescape = function(s) {
+	return s.split("&gt;").join(">").split("&lt;").join("<").split("&quot;").join("\"").split("&#039;").join("'").split("&amp;").join("&");
+};
+StringTools.startsWith = function(s,start) {
+	if(s.length >= start.length) {
+		return HxOverrides.substr(s,0,start.length) == start;
+	} else {
+		return false;
+	}
+};
+StringTools.endsWith = function(s,end) {
+	var elen = end.length;
+	var slen = s.length;
+	if(slen >= elen) {
+		return HxOverrides.substr(s,slen - elen,elen) == end;
+	} else {
+		return false;
+	}
+};
+StringTools.isSpace = function(s,pos) {
+	var c = HxOverrides.cca(s,pos);
+	if(!(c > 8 && c < 14)) {
+		return c == 32;
+	} else {
+		return true;
+	}
+};
+StringTools.ltrim = function(s) {
+	var l = s.length;
+	var r = 0;
+	while(r < l && StringTools.isSpace(s,r)) ++r;
+	if(r > 0) {
+		return HxOverrides.substr(s,r,l - r);
+	} else {
+		return s;
+	}
+};
+StringTools.rtrim = function(s) {
+	var l = s.length;
+	var r = 0;
+	while(r < l && StringTools.isSpace(s,l - r - 1)) ++r;
+	if(r > 0) {
+		return HxOverrides.substr(s,0,l - r);
+	} else {
+		return s;
+	}
+};
+StringTools.trim = function(s) {
+	return StringTools.ltrim(StringTools.rtrim(s));
+};
+StringTools.lpad = function(s,c,l) {
+	if(c.length <= 0) {
+		return s;
+	}
+	while(s.length < l) s = c + s;
+	return s;
+};
+StringTools.rpad = function(s,c,l) {
+	if(c.length <= 0) {
+		return s;
+	}
+	while(s.length < l) s += c;
+	return s;
+};
+StringTools.replace = function(s,sub,by) {
+	return s.split(sub).join(by);
+};
+StringTools.hex = function(n,digits) {
+	var s = "";
+	var hexChars = "0123456789ABCDEF";
+	while(true) {
+		s = hexChars.charAt(n & 15) + s;
+		n >>>= 4;
+		if(!(n > 0)) {
+			break;
+		}
+	}
+	if(digits != null) {
+		while(s.length < digits) s = "0" + s;
+	}
+	return s;
+};
+StringTools.fastCodeAt = function(s,index) {
+	return s.charCodeAt(index);
+};
+StringTools.isEof = function(c) {
+	return c != c;
+};
+StringTools.quoteUnixArg = function(argument) {
+	if(argument == "") {
+		return "''";
+	}
+	if(!new EReg("[^a-zA-Z0-9_@%+=:,./-]","").match(argument)) {
+		return argument;
+	}
+	return "'" + StringTools.replace(argument,"'","'\"'\"'") + "'";
+};
+StringTools.quoteWinArg = function(argument,escapeMetaCharacters) {
+	if(!new EReg("^[^ \t\\\\\"]+$","").match(argument)) {
+		var result_b = "";
+		var needquote = argument.indexOf(" ") != -1 || argument.indexOf("\t") != -1 || argument == "";
+		if(needquote) {
+			result_b += "\"";
+		}
+		var bs_buf = new StringBuf();
+		var _g1 = 0;
+		var _g = argument.length;
+		while(_g1 < _g) {
+			var i = _g1++;
+			var _g2 = HxOverrides.cca(argument,i);
+			if(_g2 == null) {
+				var c = _g2;
+				if(bs_buf.b.length > 0) {
+					result_b += Std.string(bs_buf.b);
+					bs_buf = new StringBuf();
+				}
+				result_b += String.fromCharCode(c);
+			} else {
+				switch(_g2) {
+				case 34:
+					var bs = bs_buf.b;
+					result_b += bs == null ? "null" : "" + bs;
+					result_b += bs == null ? "null" : "" + bs;
+					bs_buf = new StringBuf();
+					result_b += "\\\"";
+					break;
+				case 92:
+					bs_buf.b += "\\";
+					break;
+				default:
+					var c1 = _g2;
+					if(bs_buf.b.length > 0) {
+						result_b += Std.string(bs_buf.b);
+						bs_buf = new StringBuf();
+					}
+					result_b += String.fromCharCode(c1);
+				}
+			}
+		}
+		result_b += Std.string(bs_buf.b);
+		if(needquote) {
+			result_b += Std.string(bs_buf.b);
+			result_b += "\"";
+		}
+		argument = result_b;
+	}
+	if(escapeMetaCharacters) {
+		var result_b1 = "";
+		var _g11 = 0;
+		var _g3 = argument.length;
+		while(_g11 < _g3) {
+			var i1 = _g11++;
+			var c2 = HxOverrides.cca(argument,i1);
+			if(StringTools.winMetaCharacters.indexOf(c2) >= 0) {
+				result_b1 += "^";
+			}
+			result_b1 += String.fromCharCode(c2);
+		}
+		return result_b1;
+	} else {
+		return argument;
+	}
+};
+var ToolsForUse = function() { };
+$hxClasses["ToolsForUse"] = ToolsForUse;
+ToolsForUse.__name__ = ["ToolsForUse"];
+ToolsForUse.IsInsideCircle = function(centeraX,centeraY,aX,aY,aRad) {
 	var ecuationA = Math.pow(centeraX - aX,2) + Math.pow(centeraY - aY,2);
 	if(Math.sqrt(ecuationA) < aRad) {
 		return true;
 	}
 	return false;
+};
+var ValueType = $hxClasses["ValueType"] = { __ename__ : ["ValueType"], __constructs__ : ["TNull","TInt","TFloat","TBool","TObject","TFunction","TClass","TEnum","TUnknown"] };
+ValueType.TNull = ["TNull",0];
+ValueType.TNull.toString = $estr;
+ValueType.TNull.__enum__ = ValueType;
+ValueType.TInt = ["TInt",1];
+ValueType.TInt.toString = $estr;
+ValueType.TInt.__enum__ = ValueType;
+ValueType.TFloat = ["TFloat",2];
+ValueType.TFloat.toString = $estr;
+ValueType.TFloat.__enum__ = ValueType;
+ValueType.TBool = ["TBool",3];
+ValueType.TBool.toString = $estr;
+ValueType.TBool.__enum__ = ValueType;
+ValueType.TObject = ["TObject",4];
+ValueType.TObject.toString = $estr;
+ValueType.TObject.__enum__ = ValueType;
+ValueType.TFunction = ["TFunction",5];
+ValueType.TFunction.toString = $estr;
+ValueType.TFunction.__enum__ = ValueType;
+ValueType.TClass = function(c) { var $x = ["TClass",6,c]; $x.__enum__ = ValueType; $x.toString = $estr; return $x; };
+ValueType.TEnum = function(e) { var $x = ["TEnum",7,e]; $x.__enum__ = ValueType; $x.toString = $estr; return $x; };
+ValueType.TUnknown = ["TUnknown",8];
+ValueType.TUnknown.toString = $estr;
+ValueType.TUnknown.__enum__ = ValueType;
+ValueType.__empty_constructs__ = [ValueType.TNull,ValueType.TInt,ValueType.TFloat,ValueType.TBool,ValueType.TObject,ValueType.TFunction,ValueType.TUnknown];
+var Type = function() { };
+$hxClasses["Type"] = Type;
+Type.__name__ = ["Type"];
+Type.getClass = function(o) {
+	if(o == null) {
+		return null;
+	} else {
+		return js_Boot.getClass(o);
+	}
+};
+Type.getEnum = function(o) {
+	if(o == null) {
+		return null;
+	}
+	return o.__enum__;
+};
+Type.getSuperClass = function(c) {
+	return c.__super__;
+};
+Type.getClassName = function(c) {
+	var a = c.__name__;
+	if(a == null) {
+		return null;
+	}
+	return a.join(".");
+};
+Type.getEnumName = function(e) {
+	var a = e.__ename__;
+	return a.join(".");
+};
+Type.resolveClass = function(name) {
+	var cl = $hxClasses[name];
+	if(cl == null || !cl.__name__) {
+		return null;
+	}
+	return cl;
+};
+Type.resolveEnum = function(name) {
+	var e = $hxClasses[name];
+	if(e == null || !e.__ename__) {
+		return null;
+	}
+	return e;
+};
+Type.createInstance = function(cl,args) {
+	var _g = args.length;
+	switch(_g) {
+	case 0:
+		return new cl();
+	case 1:
+		return new cl(args[0]);
+	case 2:
+		return new cl(args[0],args[1]);
+	case 3:
+		return new cl(args[0],args[1],args[2]);
+	case 4:
+		return new cl(args[0],args[1],args[2],args[3]);
+	case 5:
+		return new cl(args[0],args[1],args[2],args[3],args[4]);
+	case 6:
+		return new cl(args[0],args[1],args[2],args[3],args[4],args[5]);
+	case 7:
+		return new cl(args[0],args[1],args[2],args[3],args[4],args[5],args[6]);
+	case 8:
+		return new cl(args[0],args[1],args[2],args[3],args[4],args[5],args[6],args[7]);
+	case 9:
+		return new cl(args[0],args[1],args[2],args[3],args[4],args[5],args[6],args[7],args[8]);
+	case 10:
+		return new cl(args[0],args[1],args[2],args[3],args[4],args[5],args[6],args[7],args[8],args[9]);
+	case 11:
+		return new cl(args[0],args[1],args[2],args[3],args[4],args[5],args[6],args[7],args[8],args[9],args[10]);
+	case 12:
+		return new cl(args[0],args[1],args[2],args[3],args[4],args[5],args[6],args[7],args[8],args[9],args[10],args[11]);
+	case 13:
+		return new cl(args[0],args[1],args[2],args[3],args[4],args[5],args[6],args[7],args[8],args[9],args[10],args[11],args[12]);
+	case 14:
+		return new cl(args[0],args[1],args[2],args[3],args[4],args[5],args[6],args[7],args[8],args[9],args[10],args[11],args[12],args[13]);
+	default:
+		throw new js__$Boot_HaxeError("Too many arguments");
+	}
+};
+Type.createEmptyInstance = function(cl) {
+	function empty() {}; empty.prototype = cl.prototype;
+	return new empty();
+};
+Type.createEnum = function(e,constr,params) {
+	var f = Reflect.field(e,constr);
+	if(f == null) {
+		throw new js__$Boot_HaxeError("No such constructor " + constr);
+	}
+	if(Reflect.isFunction(f)) {
+		if(params == null) {
+			throw new js__$Boot_HaxeError("Constructor " + constr + " need parameters");
+		}
+		return f.apply(e,params);
+	}
+	if(params != null && params.length != 0) {
+		throw new js__$Boot_HaxeError("Constructor " + constr + " does not need parameters");
+	}
+	return f;
+};
+Type.createEnumIndex = function(e,index,params) {
+	var c = e.__constructs__[index];
+	if(c == null) {
+		throw new js__$Boot_HaxeError(index + " is not a valid enum constructor index");
+	}
+	return Type.createEnum(e,c,params);
+};
+Type.getInstanceFields = function(c) {
+	var a = [];
+	for(var i in c.prototype) a.push(i);
+	HxOverrides.remove(a,"__class__");
+	HxOverrides.remove(a,"__properties__");
+	return a;
+};
+Type.getClassFields = function(c) {
+	var a = Reflect.fields(c);
+	HxOverrides.remove(a,"__name__");
+	HxOverrides.remove(a,"__interfaces__");
+	HxOverrides.remove(a,"__properties__");
+	HxOverrides.remove(a,"__super__");
+	HxOverrides.remove(a,"__meta__");
+	HxOverrides.remove(a,"prototype");
+	return a;
+};
+Type.getEnumConstructs = function(e) {
+	return e.__constructs__.slice();
+};
+Type["typeof"] = function(v) {
+	var _g = typeof(v);
+	switch(_g) {
+	case "boolean":
+		return ValueType.TBool;
+	case "function":
+		if(v.__name__ || v.__ename__) {
+			return ValueType.TObject;
+		}
+		return ValueType.TFunction;
+	case "number":
+		if(Math.ceil(v) == v % 2147483648.0) {
+			return ValueType.TInt;
+		}
+		return ValueType.TFloat;
+	case "object":
+		if(v == null) {
+			return ValueType.TNull;
+		}
+		var e = v.__enum__;
+		if(e != null) {
+			return ValueType.TEnum(e);
+		}
+		var c = js_Boot.getClass(v);
+		if(c != null) {
+			return ValueType.TClass(c);
+		}
+		return ValueType.TObject;
+	case "string":
+		return ValueType.TClass(String);
+	case "undefined":
+		return ValueType.TNull;
+	default:
+		return ValueType.TUnknown;
+	}
+};
+Type.enumEq = function(a,b) {
+	if(a == b) {
+		return true;
+	}
+	try {
+		if(a[0] != b[0]) {
+			return false;
+		}
+		var _g1 = 2;
+		var _g = a.length;
+		while(_g1 < _g) {
+			var i = _g1++;
+			if(!Type.enumEq(a[i],b[i])) {
+				return false;
+			}
+		}
+		var e = a.__enum__;
+		if(e != b.__enum__ || e == null) {
+			return false;
+		}
+	} catch( e1 ) {
+		haxe_CallStack.lastException = e1;
+		return false;
+	}
+	return true;
+};
+Type.enumConstructor = function(e) {
+	return e[0];
+};
+Type.enumParameters = function(e) {
+	return e.slice(2);
+};
+Type.enumIndex = function(e) {
+	return e[1];
+};
+Type.allEnums = function(e) {
+	return e.__empty_constructs__;
+};
+var _$UInt_UInt_$Impl_$ = {};
+$hxClasses["_UInt.UInt_Impl_"] = _$UInt_UInt_$Impl_$;
+_$UInt_UInt_$Impl_$.__name__ = ["_UInt","UInt_Impl_"];
+_$UInt_UInt_$Impl_$.gt = function(a,b) {
+	var aNeg = a < 0;
+	var bNeg = b < 0;
+	if(aNeg != bNeg) {
+		return aNeg;
+	} else {
+		return a > b;
+	}
+};
+_$UInt_UInt_$Impl_$.toFloat = function(this1) {
+	var $int = this1;
+	if($int < 0) {
+		return 4294967296.0 + $int;
+	} else {
+		return $int + 0.0;
+	}
+};
+var Xml = function(nodeType) {
+	this.nodeType = nodeType;
+	this.children = [];
+	this.attributeMap = new haxe_ds_StringMap();
+};
+$hxClasses["Xml"] = Xml;
+Xml.__name__ = ["Xml"];
+Xml.parse = function(str) {
+	return haxe_xml_Parser.parse(str);
+};
+Xml.createElement = function(name) {
+	var xml = new Xml(Xml.Element);
+	if(xml.nodeType != Xml.Element) {
+		throw new js__$Boot_HaxeError("Bad node type, expected Element but found " + xml.nodeType);
+	}
+	xml.nodeName = name;
+	return xml;
+};
+Xml.createPCData = function(data) {
+	var xml = new Xml(Xml.PCData);
+	if(xml.nodeType == Xml.Document || xml.nodeType == Xml.Element) {
+		throw new js__$Boot_HaxeError("Bad node type, unexpected " + xml.nodeType);
+	}
+	xml.nodeValue = data;
+	return xml;
+};
+Xml.createCData = function(data) {
+	var xml = new Xml(Xml.CData);
+	if(xml.nodeType == Xml.Document || xml.nodeType == Xml.Element) {
+		throw new js__$Boot_HaxeError("Bad node type, unexpected " + xml.nodeType);
+	}
+	xml.nodeValue = data;
+	return xml;
+};
+Xml.createComment = function(data) {
+	var xml = new Xml(Xml.Comment);
+	if(xml.nodeType == Xml.Document || xml.nodeType == Xml.Element) {
+		throw new js__$Boot_HaxeError("Bad node type, unexpected " + xml.nodeType);
+	}
+	xml.nodeValue = data;
+	return xml;
+};
+Xml.createDocType = function(data) {
+	var xml = new Xml(Xml.DocType);
+	if(xml.nodeType == Xml.Document || xml.nodeType == Xml.Element) {
+		throw new js__$Boot_HaxeError("Bad node type, unexpected " + xml.nodeType);
+	}
+	xml.nodeValue = data;
+	return xml;
+};
+Xml.createProcessingInstruction = function(data) {
+	var xml = new Xml(Xml.ProcessingInstruction);
+	if(xml.nodeType == Xml.Document || xml.nodeType == Xml.Element) {
+		throw new js__$Boot_HaxeError("Bad node type, unexpected " + xml.nodeType);
+	}
+	xml.nodeValue = data;
+	return xml;
+};
+Xml.createDocument = function() {
+	return new Xml(Xml.Document);
+};
+Xml.prototype = {
+	nodeType: null
+	,nodeName: null
+	,nodeValue: null
+	,parent: null
+	,children: null
+	,attributeMap: null
+	,get: function(att) {
+		if(this.nodeType != Xml.Element) {
+			throw new js__$Boot_HaxeError("Bad node type, expected Element but found " + this.nodeType);
+		}
+		var _this = this.attributeMap;
+		if(__map_reserved[att] != null) {
+			return _this.getReserved(att);
+		} else {
+			return _this.h[att];
+		}
+	}
+	,set: function(att,value) {
+		if(this.nodeType != Xml.Element) {
+			throw new js__$Boot_HaxeError("Bad node type, expected Element but found " + this.nodeType);
+		}
+		var _this = this.attributeMap;
+		if(__map_reserved[att] != null) {
+			_this.setReserved(att,value);
+		} else {
+			_this.h[att] = value;
+		}
+	}
+	,exists: function(att) {
+		if(this.nodeType != Xml.Element) {
+			throw new js__$Boot_HaxeError("Bad node type, expected Element but found " + this.nodeType);
+		}
+		var _this = this.attributeMap;
+		if(__map_reserved[att] != null) {
+			return _this.existsReserved(att);
+		} else {
+			return _this.h.hasOwnProperty(att);
+		}
+	}
+	,elements: function() {
+		if(this.nodeType != Xml.Document && this.nodeType != Xml.Element) {
+			throw new js__$Boot_HaxeError("Bad node type, expected Element or Document but found " + this.nodeType);
+		}
+		var _g = [];
+		var _g1 = 0;
+		var _g2 = this.children;
+		while(_g1 < _g2.length) {
+			var child = _g2[_g1];
+			++_g1;
+			if(child.nodeType == Xml.Element) {
+				_g.push(child);
+			}
+		}
+		var ret = _g;
+		return HxOverrides.iter(ret);
+	}
+	,elementsNamed: function(name) {
+		if(this.nodeType != Xml.Document && this.nodeType != Xml.Element) {
+			throw new js__$Boot_HaxeError("Bad node type, expected Element or Document but found " + this.nodeType);
+		}
+		var _g = [];
+		var _g1 = 0;
+		var _g2 = this.children;
+		while(_g1 < _g2.length) {
+			var child = _g2[_g1];
+			++_g1;
+			var tmp;
+			if(child.nodeType == Xml.Element) {
+				if(child.nodeType != Xml.Element) {
+					throw new js__$Boot_HaxeError("Bad node type, expected Element but found " + child.nodeType);
+				}
+				tmp = child.nodeName == name;
+			} else {
+				tmp = false;
+			}
+			if(tmp) {
+				_g.push(child);
+			}
+		}
+		var ret = _g;
+		return HxOverrides.iter(ret);
+	}
+	,firstElement: function() {
+		if(this.nodeType != Xml.Document && this.nodeType != Xml.Element) {
+			throw new js__$Boot_HaxeError("Bad node type, expected Element or Document but found " + this.nodeType);
+		}
+		var _g = 0;
+		var _g1 = this.children;
+		while(_g < _g1.length) {
+			var child = _g1[_g];
+			++_g;
+			if(child.nodeType == Xml.Element) {
+				return child;
+			}
+		}
+		return null;
+	}
+	,addChild: function(x) {
+		if(this.nodeType != Xml.Document && this.nodeType != Xml.Element) {
+			throw new js__$Boot_HaxeError("Bad node type, expected Element or Document but found " + this.nodeType);
+		}
+		if(x.parent != null) {
+			x.parent.removeChild(x);
+		}
+		this.children.push(x);
+		x.parent = this;
+	}
+	,removeChild: function(x) {
+		if(this.nodeType != Xml.Document && this.nodeType != Xml.Element) {
+			throw new js__$Boot_HaxeError("Bad node type, expected Element or Document but found " + this.nodeType);
+		}
+		if(HxOverrides.remove(this.children,x)) {
+			x.parent = null;
+			return true;
+		}
+		return false;
+	}
+	,__class__: Xml
 };
 var flixel_IFlxBasic = function() { };
 $hxClasses["flixel.IFlxBasic"] = flixel_IFlxBasic;
@@ -84541,163 +84698,6 @@ haxe_lang_Iterable.prototype = {
 	iterator: null
 	,__class__: haxe_lang_Iterable
 };
-var skill_FlxButtonAnimationSkill = function(aImagePath,aAnimationWidth,aAnimationHeight,aOnPressed,aOnPressedActive,aOnOver,aCoolDown,aLabel) {
-	this.vEnabled = true;
-	this.vActiveButton = false;
-	this.vTimerCoolDown = 0;
-	this.vCoolDown = 0;
-	flixel_FlxSprite.call(this);
-	this.loadGraphic(openfl_Assets.getBitmapData(aImagePath),true,aAnimationWidth,aAnimationHeight);
-	this.vMousePosition = new flixel_math_FlxPoint();
-	this.vOnPressed = aOnPressed;
-	this.vOnPressedActive = aOnPressedActive;
-	this.vOnOver = aOnOver;
-	this.vCoolDown = aCoolDown;
-	this.vTimerCoolDown = 0;
-	this.vLabel = aLabel;
-	if(this.vLabel != null) {
-		this.vLabel.set_fieldWidth(this.get_width());
-		this.vLabel.setFormat(null,20,-1);
-		this.vLabel.set_alpha(0.5);
-		this.vLabel.set_visible(false);
-	}
-	this.updateLabel("");
-};
-$hxClasses["skill.FlxButtonAnimationSkill"] = skill_FlxButtonAnimationSkill;
-skill_FlxButtonAnimationSkill.__name__ = ["skill","FlxButtonAnimationSkill"];
-skill_FlxButtonAnimationSkill.__super__ = flixel_FlxSprite;
-skill_FlxButtonAnimationSkill.prototype = $extend(flixel_FlxSprite.prototype,{
-	vCoolDown: null
-	,vTimerCoolDown: null
-	,vActiveButton: null
-	,vOnPressedActive: null
-	,vOnOver: null
-	,vLabel: null
-	,vOnPressed: null
-	,vEnabled: null
-	,vMousePosition: null
-	,updateLabel: function(atext) {
-		if(this.vLabel != null) {
-			this.vLabel.setPosition(this.x,this.y);
-			this.vLabel.set_text(atext);
-		}
-	}
-	,setCooldown: function(aFrames,aLoop,aFrameRate) {
-		if(aFrameRate == null) {
-			aFrameRate = 30;
-		}
-		if(aLoop == null) {
-			aLoop = true;
-		}
-		this.animation.add("cooldown",aFrames,aFrameRate,aLoop);
-	}
-	,setDisabled: function(aFrames,aLoop,aFrameRate) {
-		if(aFrameRate == null) {
-			aFrameRate = 30;
-		}
-		if(aLoop == null) {
-			aLoop = true;
-		}
-		this.animation.add("disabled",aFrames,aFrameRate,aLoop);
-	}
-	,setUp: function(aFrames,aLoop,aFrameRate) {
-		if(aFrameRate == null) {
-			aFrameRate = 30;
-		}
-		if(aLoop == null) {
-			aLoop = true;
-		}
-		this.animation.add("up",aFrames,aFrameRate,aLoop);
-	}
-	,setDown: function(aFrames,aLoop,aFrameRate) {
-		if(aFrameRate == null) {
-			aFrameRate = 30;
-		}
-		if(aLoop == null) {
-			aLoop = true;
-		}
-		this.animation.add("down",aFrames,aFrameRate,aLoop);
-	}
-	,setOver: function(aFrames,aLoop,aFrameRate) {
-		if(aFrameRate == null) {
-			aFrameRate = 30;
-		}
-		if(aLoop == null) {
-			aLoop = true;
-		}
-		this.animation.add("over",aFrames,aFrameRate,aLoop);
-	}
-	,setActivation: function() {
-		this.vTimerCoolDown = this.vCoolDown;
-		this.vActiveButton = true;
-		this.animation.play("cooldown");
-		this.vLabel.set_text("");
-		this.vLabel.set_visible(true);
-	}
-	,update: function(aDt) {
-		this.vMousePosition.set(flixel_FlxG.mouse.x,flixel_FlxG.mouse.y);
-		if(this.vTimerCoolDown > 0) {
-			this.updateLabel((this.vTimerCoolDown + 1 | 0) + "");
-			this.vActiveButton = false;
-			this.vTimerCoolDown -= aDt;
-			var aMousePosition = this.vMousePosition;
-			if(this.overlapsPoint(this.vMousePosition)) {
-				this.vOnOver(this);
-			}
-		} else {
-			this.vLabel.set_visible(false);
-			var aMousePosition1 = this.vMousePosition;
-			if(this.overlapsPoint(this.vMousePosition)) {
-				this.vOnOver(this);
-				var tmp;
-				var _this = flixel_FlxG.mouse._leftButton;
-				if(_this.current == 1 || _this.current == 2) {
-					tmp = !this.vActiveButton;
-				} else {
-					tmp = false;
-				}
-				if(tmp) {
-					this.animation.play("down");
-				} else if(!this.vActiveButton) {
-					this.animation.play("over");
-				}
-				if(flixel_FlxG.mouse._leftButton.current == -1) {
-					if(!this.vActiveButton) {
-						haxe_Log.trace("Im not active yet",{ fileName : "FlxButtonAnimationSkill.hx", lineNumber : 133, className : "skill.FlxButtonAnimationSkill", methodName : "update"});
-						this.vActiveButton = true;
-						if(this.vOnPressed != null) {
-							this.vOnPressed(this);
-						}
-						haxe_Log.trace("Actived",{ fileName : "FlxButtonAnimationSkill.hx", lineNumber : 139, className : "skill.FlxButtonAnimationSkill", methodName : "update"});
-						this.animation.play("disabled");
-					} else {
-						haxe_Log.trace("Im actived",{ fileName : "FlxButtonAnimationSkill.hx", lineNumber : 144, className : "skill.FlxButtonAnimationSkill", methodName : "update"});
-						this.vActiveButton = false;
-						if(this.vOnPressedActive != null) {
-							this.vOnPressedActive(this);
-						}
-						haxe_Log.trace("Not actived",{ fileName : "FlxButtonAnimationSkill.hx", lineNumber : 150, className : "skill.FlxButtonAnimationSkill", methodName : "update"});
-						this.animation.play("up");
-					}
-				}
-			} else if(!this.vActiveButton) {
-				this.animation.play("up");
-			}
-		}
-		flixel_FlxSprite.prototype.update.call(this,aDt);
-	}
-	,isTouchingButton: function() {
-		var aMousePosition = this.vMousePosition;
-		return this.overlapsPoint(this.vMousePosition);
-	}
-	,isOver: function(aMousePosition) {
-		return this.overlapsPoint(this.vMousePosition);
-	}
-	,isButtonClicked: function() {
-		return flixel_FlxG.mouse._leftButton.current == -1;
-	}
-	,__class__: skill_FlxButtonAnimationSkill
-});
 var skill_ISkillLogic = function() { };
 $hxClasses["skill.ISkillLogic"] = skill_ISkillLogic;
 skill_ISkillLogic.__name__ = ["skill","ISkillLogic"];
@@ -84883,7 +84883,7 @@ skill_SkillsController.prototype = {
 	,vProjectiles: null
 	,createAndAddSkills: function() {
 		var textSkill1FlxText = new flixel_text_FlxText();
-		var skill1 = new skill_FlxButtonAnimationSkill("assets/img/Skills/balaplacebo.png",57,64,$bind(this,this.onClickSkill1),$bind(this,this.onClickSkillActive),$bind(this,this.onOverSkill1),3,textSkill1FlxText);
+		var skill1 = new FlxButtonAnimationSkill("assets/img/Skills/balaplacebo.png",57,64,$bind(this,this.onClickSkill1),$bind(this,this.onClickSkillActive),$bind(this,this.onOverSkill1),3,textSkill1FlxText);
 		skill1.setOver([1]);
 		skill1.setUp([0]);
 		skill1.setDown([2]);
@@ -84897,7 +84897,7 @@ skill_SkillsController.prototype = {
 		skillProjectil.vProjectiles = this.get_vProjectiles();
 		this.vSkill1 = skillProjectil;
 		var textSkill2FlxText = new flixel_text_FlxText();
-		var skill2 = new skill_FlxButtonAnimationSkill("assets/img/Skills/balaplacebo.png",57,64,$bind(this,this.onClickSkill2),$bind(this,this.onClickSkillActive),$bind(this,this.onOverSkill2),40,textSkill2FlxText);
+		var skill2 = new FlxButtonAnimationSkill("assets/img/Skills/balaplacebo.png",57,64,$bind(this,this.onClickSkill2),$bind(this,this.onClickSkillActive),$bind(this,this.onOverSkill2),40,textSkill2FlxText);
 		skill2.setOver([1]);
 		skill2.setUp([0]);
 		skill2.setDown([2]);
@@ -84911,7 +84911,7 @@ skill_SkillsController.prototype = {
 		skillTrap.vTraps = this.get_vTraps();
 		this.vSkill2 = skillTrap;
 		var textSkill3FlxText = new flixel_text_FlxText();
-		var skill3 = new skill_FlxButtonAnimationSkill("assets/img/Skills/balaplacebo.png",57,64,$bind(this,this.onClickSkill3),$bind(this,this.onClickSkillActive),$bind(this,this.onOverSkill3),8,textSkill3FlxText);
+		var skill3 = new FlxButtonAnimationSkill("assets/img/Skills/balaplacebo.png",57,64,$bind(this,this.onClickSkill3),$bind(this,this.onClickSkillActive),$bind(this,this.onOverSkill3),8,textSkill3FlxText);
 		skill3.setOver([1]);
 		skill3.setUp([0]);
 		skill3.setDown([2]);
@@ -85355,7 +85355,7 @@ states_MainMenu.prototype = $extend(flixel_FlxState.prototype,{
 		var mp = new flixel_text_FlxText(0,100,0,"Menú Principal",70);
 		mp.screenCenter(flixel_util_FlxAxes.X);
 		this.add(mp);
-		this.vPlayButton = new auxiliar_FlxButtonAnimation("assets/img/button.png",80,20,$bind(this,this.onClickPlay));
+		this.vPlayButton = new FlxButtonAnimation("assets/img/button.png",80,20,$bind(this,this.onClickPlay));
 		this.vPlayButton.setSize(flixel_FlxG.width / 3 | 0,flixel_FlxG.height / 9 | 0);
 		this.vPlayButton.setOver([1]);
 		this.vPlayButton.setUp([0]);
@@ -85371,7 +85371,7 @@ states_MainMenu.prototype = $extend(flixel_FlxState.prototype,{
 		labelPlayButton.set_y(mp.get_height() + spacerYTitle + this.vPlayButton.get_height() / 2 + labelPlayButton.get_height() / 4);
 		labelPlayButton.set_x(flixel_FlxG.width / 2 - labelPlayButton.get_width() / 2);
 		this.add(labelPlayButton);
-		this.vInstructionsButton = new auxiliar_FlxButtonAnimation("assets/img/button.png",80,20,$bind(this,this.onClickInstructions));
+		this.vInstructionsButton = new FlxButtonAnimation("assets/img/button.png",80,20,$bind(this,this.onClickInstructions));
 		this.vInstructionsButton.setSize(flixel_FlxG.width / 3 | 0,flixel_FlxG.height / 9 | 0);
 		this.vInstructionsButton.setOver([1]);
 		this.vInstructionsButton.setUp([0]);
@@ -85387,7 +85387,7 @@ states_MainMenu.prototype = $extend(flixel_FlxState.prototype,{
 		labelInstructionsButton.set_y(mp.get_height() + spacerYTitle + this.vInstructionsButton.get_height() / 2 + labelInstructionsButton.get_height() / 4 + spacerY + (flixel_FlxG.height / 9 | 0));
 		labelInstructionsButton.set_x(flixel_FlxG.width / 2 - labelInstructionsButton.get_width() / 2);
 		this.add(labelInstructionsButton);
-		this.vExitButton = new auxiliar_FlxButtonAnimation("assets/img/button.png",80,20,$bind(this,this.onClickExit));
+		this.vExitButton = new FlxButtonAnimation("assets/img/button.png",80,20,$bind(this,this.onClickExit));
 		this.vExitButton.setSize(flixel_FlxG.width / 3 | 0,flixel_FlxG.height / 9 | 0);
 		this.vExitButton.setOver([1]);
 		this.vExitButton.setUp([0]);
@@ -85615,18 +85615,6 @@ AssetPaths.MarioJump__wav = "assets/sound/MarioJump.wav";
 CharacterStates.cStunnedState = "Stunned";
 CharacterStates.cNormalState = "Normal";
 openfl_text_Font.__registeredFonts = [];
-GlobalGameData.cTileIndexCoins = 2;
-GlobalGameData.cTileIndexNonCollision = 0;
-GlobalGameData.cTileIndexNonCollisionBlack = 1;
-GlobalGameData.cTileSize = 32;
-StringTools.winMetaCharacters = [32,40,41,37,33,94,34,60,62,38,124,10,13,44,59];
-Xml.Element = 0;
-Xml.PCData = 1;
-Xml.CData = 2;
-Xml.Comment = 3;
-Xml.DocType = 4;
-Xml.ProcessingInstruction = 5;
-Xml.Document = 6;
 flixel_FlxBasic.activeCount = 0;
 flixel_FlxBasic.visibleCount = 0;
 flixel_math_FlxRect._pool = new flixel_util_FlxPool_$flixel_$math_$FlxRect(flixel_math_FlxRect);
@@ -85665,6 +85653,18 @@ flixel_FlxObject._secondSeparateFlxRect = (function($this) {
 	$r = rect;
 	return $r;
 }(this));
+GlobalGameData.cTileIndexCoins = 2;
+GlobalGameData.cTileIndexNonCollision = 0;
+GlobalGameData.cTileIndexNonCollisionBlack = 1;
+GlobalGameData.cTileSize = 32;
+StringTools.winMetaCharacters = [32,40,41,37,33,94,34,60,62,38,124,10,13,44,59];
+Xml.Element = 0;
+Xml.PCData = 1;
+Xml.CData = 2;
+Xml.Comment = 3;
+Xml.DocType = 4;
+Xml.ProcessingInstruction = 5;
+Xml.Document = 6;
 flixel_math_FlxPoint._pool = new flixel_util_FlxPool_$flixel_$math_$FlxPoint(flixel_math_FlxPoint);
 openfl_display_LoaderInfo.__rootURL = window.document.URL;
 openfl_system_ApplicationDomain.currentDomain = new openfl_system_ApplicationDomain(null);
