@@ -86,4 +86,3 @@ class FlxButtonAnimation extends FlxSprite
     }
 	  
 }
-

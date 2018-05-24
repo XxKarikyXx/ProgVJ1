@@ -3,7 +3,7 @@ import flixel.FlxSprite;
 
 /**
  * ...
- * @author ...
+ * @author TuMadre
  */
 class Trap extends FlxSprite
 {

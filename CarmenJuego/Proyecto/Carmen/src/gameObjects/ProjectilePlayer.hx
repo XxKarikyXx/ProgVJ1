@@ -11,7 +11,6 @@ import flixel.FlxG;
  * @author ...
  */
 
-//
 class ProjectilePlayer extends FlxSprite
 {
 	var vFollowBool:Bool = false;

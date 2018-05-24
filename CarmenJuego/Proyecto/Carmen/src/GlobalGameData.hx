@@ -1,5 +1,4 @@
 package;
-import auxiliar.ToolsForUse;
 import flixel.group.FlxGroup;
 import flixel.tile.FlxTilemap;
 import gameObjects.Coin;

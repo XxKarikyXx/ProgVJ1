@@ -4,7 +4,7 @@ import gameObjects.Bomb;
 
 /**
  * ...
- * @author ...
+ * @author TuMadre
  */
 class SkillLogicBomb implements ISkillLogic
 {
