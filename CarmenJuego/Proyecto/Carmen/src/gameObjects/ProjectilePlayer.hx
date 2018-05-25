@@ -128,4 +128,9 @@ class ProjectilePlayer extends FlxSprite
 		velocity.x = deltaX * vVelocityProjectile;
 		velocity.y = deltaY * vVelocityProjectile;
 	}
+	
+		override public function destroy():Void
+	{
+		super.destroy();
+	}
 }

@@ -1,5 +1,6 @@
 package gameObjects;
 
+import auxiliar.AssetPaths;
 import skill.SkillsController;
 import flixel.FlxG;
 import flixel.FlxObject;
@@ -149,5 +150,8 @@ class God extends FlxSprite
 		}
 
 	}
-
+	override public function destroy():Void
+	{
+		super.destroy();
+	}
 }

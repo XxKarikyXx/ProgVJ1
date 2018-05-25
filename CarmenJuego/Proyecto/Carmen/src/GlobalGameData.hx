@@ -17,11 +17,11 @@ class GlobalGameData
 	public static var vPlayer1:Player1;
 	public static var vMap:FlxTilemap;
 
-	public static inline var  cTileIndexCoins = 2;
-	public static inline var  cTileIndexNonCollision = 0;
-	public static inline var  cTileIndexNonCollisionBlack = 1;
+	public static inline var  cTileIndexCoins:Int = 2;
+	public static inline var  cTileIndexNonCollision:Int = 0;
+	public static inline var  cTileIndexNonCollisionBlack:Int = 1;
 
-	public static inline var cTileSize = 32;
+	public static inline var cTileSize:Int = 32;
 
 	public static function clear():Void
 	{
@@ -77,5 +77,6 @@ class GlobalGameData
 		}
 		return false;
 	}
+
 
 }

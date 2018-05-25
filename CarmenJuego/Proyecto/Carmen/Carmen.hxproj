@@ -39,7 +39,28 @@
   </haxelib>
   <!-- Class files to compile (other referenced classes will automatically be included) -->
   <compileTargets>
-    <!-- example: <compile path="..." /> -->
+    <compile path="src\auxiliar\FlxButtonAnimation.hx" />
+    <compile path="src\auxiliar\ToolsForUse.hx" />
+    <compile path="src\gameObjects\Trap.hx" />
+    <compile path="src\gameObjects\Coin.hx" />
+    <compile path="src\gameObjects\God.hx" />
+    <compile path="src\gameObjects\Player1.hx" />
+    <compile path="src\gameObjects\ProjectilePlayer.hx" />
+    <compile path="src\gameObjects\Bomb.hx" />
+    <compile path="src\skill\FlxButtonAnimationSkill.hx" />
+    <compile path="src\skill\ISkillLogic.hx" />
+    <compile path="src\skill\SkillLogicBomb.hx" />
+    <compile path="src\skill\SkillLogicProjectil.hx" />
+    <compile path="src\skill\SkillLogicTrap.hx" />
+    <compile path="src\skill\SkillsController.hx" />
+    <compile path="src\states\GameOverPlayer.hx" />
+    <compile path="src\states\MainMenuInstructions.hx" />
+    <compile path="src\states\GameState.hx" />
+    <compile path="src\states\GameWinPlayer.hx" />
+    <compile path="src\states\MainMenu.hx" />
+    <compile path="src\CharacterStates.hx" />
+    <compile path="src\GlobalGameData.hx" />
+    <compile path="src\Main.hx" />
   </compileTargets>
   <!-- Paths to exclude from the Project Explorer tree -->
   <hiddenPaths>

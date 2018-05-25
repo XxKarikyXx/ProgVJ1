@@ -1,9 +1,10 @@
 package gameObjects;
+import auxiliar.AssetPaths;
 import flixel.FlxSprite;
 
 /**
  * ...
- * @author TuMadre
+ * @author ...
  */
 class Trap extends FlxSprite
 {
@@ -20,6 +21,11 @@ class Trap extends FlxSprite
 	override public function update(aDt:Float):Void 
 	{
 		super.update(aDt);
+	}
+	
+		override public function destroy():Void
+	{
+		super.destroy();
 	}
 
 }

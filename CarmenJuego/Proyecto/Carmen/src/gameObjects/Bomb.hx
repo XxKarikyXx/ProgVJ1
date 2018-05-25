@@ -24,5 +24,8 @@ class Bomb extends FlxSprite
 		super.update(aDt);
 	}
 
-	
+		override public function destroy():Void
+	{
+		super.destroy();
+	}
 }

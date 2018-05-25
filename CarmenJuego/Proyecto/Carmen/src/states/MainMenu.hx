@@ -1,16 +1,13 @@
 package states;
 
+import auxiliar.AssetPaths;
 import auxiliar.FlxButtonAnimation;
 import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.FlxState;
 import flixel.text.FlxText;
-import flixel.ui.FlxButton;
 import flixel.util.FlxColor;
-import openfl.geom.Rectangle;
 import openfl.system.System;
-import openfl.text.TextFieldAutoSize;
-import states.MainMenuInstructions;
 
 /**
  * ...
@@ -22,9 +19,9 @@ class MainMenu extends FlxState
 	var vPlayButton:FlxButtonAnimation;
 	var vInstructionsButton:FlxButtonAnimation;
 	var vExitButton:FlxButtonAnimation;
-	var vMaxIndexForButtons = 2;
+	var vMaxIndexForButtons:Int = 2;
 
-	private var index = 0;
+	private var vIndex:Int = 0;
 
 	public function new()
 	{
@@ -105,15 +102,15 @@ class MainMenu extends FlxState
 	{
 		super.update(aDt);
 
-		if (FlxG.keys.justPressed.DOWN && index<vMaxIndexForButtons )
+		if (FlxG.keys.justPressed.DOWN && vIndex<vMaxIndexForButtons )
 		{
-			index = index + 1;
+			vIndex = vIndex + 1;
 
 		}
 
-		if (FlxG.keys.justPressed.UP && index>0 )
+		if (FlxG.keys.justPressed.UP && vIndex>0 )
 		{
-			index = index - 1;
+			vIndex = vIndex - 1;
 
 		}
 
@@ -122,7 +119,7 @@ class MainMenu extends FlxState
 			vPlayButton.animation.play("up");
 			vInstructionsButton.animation.play("up");
 			vExitButton.animation.play("up");
-			switch (index)
+			switch (vIndex)
 			{
 				case 0:
 					vPlayButton.animation.play("over");
@@ -141,7 +138,7 @@ class MainMenu extends FlxState
 			vPlayButton.animation.play("up");
 			vInstructionsButton.animation.play("up");
 			vExitButton.animation.play("up");
-			switch (index)
+			switch (vIndex)
 			{
 				case 0:
 					vPlayButton.animation.play("down");
@@ -175,4 +172,8 @@ class MainMenu extends FlxState
 		vExitButton.animation.play("up");
 	}
 
+	override public function destroy():Void
+	{
+		super.destroy();
+	}
 }

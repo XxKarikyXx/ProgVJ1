@@ -1,5 +1,5 @@
 package skill;
-import skill.ISkillLogic;
+
 import flixel.FlxG;
 import flixel.group.FlxGroup;
 import flixel.text.FlxText;

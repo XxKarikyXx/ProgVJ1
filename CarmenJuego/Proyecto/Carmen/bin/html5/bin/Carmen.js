@@ -146,7 +146,7 @@ ApplicationMain.init = function() {
 	}
 };
 ApplicationMain.main = function() {
-	ApplicationMain.config = { build : "1058", company : "..", file : "Carmen", fps : 60, name : "Carmen", orientation : "", packageName : "Carmen", version : "1.0.0", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : false, height : 1080, parameters : "{}", resizable : true, stencilBuffer : true, title : "Carmen", vsync : false, width : 1920, x : null, y : null}]};
+	ApplicationMain.config = { build : "1088", company : "..", file : "Carmen", fps : 60, name : "Carmen", orientation : "", packageName : "Carmen", version : "1.0.0", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : false, height : 1080, parameters : "{}", resizable : true, stencilBuffer : true, title : "Carmen", vsync : false, width : 1920, x : null, y : null}]};
 };
 ApplicationMain.start = function() {
 	var hasMain = false;
@@ -2212,9 +2212,6 @@ DocumentClass.__super__ = Main;
 DocumentClass.prototype = $extend(Main.prototype,{
 	__class__: DocumentClass
 });
-var AssetPaths = function() { };
-$hxClasses["AssetPaths"] = AssetPaths;
-AssetPaths.__name__ = ["AssetPaths"];
 var CharacterStates = function() {
 };
 $hxClasses["CharacterStates"] = CharacterStates;
@@ -4395,6 +4392,9 @@ Xml.prototype = {
 	}
 	,__class__: Xml
 };
+var auxiliar_AssetPaths = function() { };
+$hxClasses["auxiliar.AssetPaths"] = auxiliar_AssetPaths;
+auxiliar_AssetPaths.__name__ = ["auxiliar","AssetPaths"];
 var flixel_util_IFlxDestroyable = function() { };
 $hxClasses["flixel.util.IFlxDestroyable"] = flixel_util_IFlxDestroyable;
 flixel_util_IFlxDestroyable.__name__ = ["flixel","util","IFlxDestroyable"];
@@ -6818,6 +6818,9 @@ auxiliar_FlxButtonAnimation.prototype = $extend(flixel_FlxSprite.prototype,{
 	}
 	,isButtonClicked: function() {
 		return flixel_FlxG.mouse._leftButton.current == -1;
+	}
+	,destroy: function() {
+		flixel_FlxSprite.prototype.destroy.call(this);
 	}
 	,__class__: auxiliar_FlxButtonAnimation
 });
@@ -45165,6 +45168,9 @@ gameObjects_Bomb.prototype = $extend(flixel_FlxSprite.prototype,{
 	,update: function(aDt) {
 		flixel_FlxSprite.prototype.update.call(this,aDt);
 	}
+	,destroy: function() {
+		flixel_FlxSprite.prototype.destroy.call(this);
+	}
 	,__class__: gameObjects_Bomb
 });
 var gameObjects_Coin = function(aX,aY) {
@@ -45187,6 +45193,9 @@ gameObjects_Coin.__super__ = flixel_FlxSprite;
 gameObjects_Coin.prototype = $extend(flixel_FlxSprite.prototype,{
 	update: function(aDt) {
 		flixel_FlxSprite.prototype.update.call(this,aDt);
+	}
+	,destroy: function() {
+		flixel_FlxSprite.prototype.destroy.call(this);
 	}
 	,__class__: gameObjects_Coin
 });
@@ -45275,9 +45284,12 @@ gameObjects_God.prototype = $extend(flixel_FlxSprite.prototype,{
 			this.vState = "Normal";
 			this.vStateDuration = -1;
 		} else {
-			haxe_Log.trace(this.vStateDuration,{ fileName : "God.hx", lineNumber : 147, className : "gameObjects.God", methodName : "godStunned"});
+			haxe_Log.trace(this.vStateDuration,{ fileName : "God.hx", lineNumber : 148, className : "gameObjects.God", methodName : "godStunned"});
 			this.vStateDuration -= aDt;
 		}
+	}
+	,destroy: function() {
+		flixel_FlxSprite.prototype.destroy.call(this);
 	}
 	,__class__: gameObjects_God
 });
@@ -45411,6 +45423,9 @@ gameObjects_Player1.prototype = $extend(flixel_FlxSprite.prototype,{
 	,get_vCoinsCount: function() {
 		return this.vCoinsCount;
 	}
+	,destroy: function() {
+		flixel_FlxSprite.prototype.destroy.call(this);
+	}
 	,__class__: gameObjects_Player1
 	,__properties__: $extend(flixel_FlxSprite.prototype.__properties__,{set_vProjectiles:"set_vProjectiles",set_vCoinsCount:"set_vCoinsCount",get_vCoinsCount:"get_vCoinsCount"})
 });
@@ -45504,6 +45519,9 @@ gameObjects_ProjectilePlayer.prototype = $extend(flixel_FlxSprite.prototype,{
 		this.velocity.set_x(deltaX * this.vVelocityProjectile);
 		this.velocity.set_y(deltaY * this.vVelocityProjectile);
 	}
+	,destroy: function() {
+		flixel_FlxSprite.prototype.destroy.call(this);
+	}
 	,__class__: gameObjects_ProjectilePlayer
 	,__properties__: $extend(flixel_FlxSprite.prototype.__properties__,{set_vTarget:"set_vTarget"})
 });
@@ -45527,6 +45545,9 @@ gameObjects_Trap.prototype = $extend(flixel_FlxSprite.prototype,{
 	vCanCollide: null
 	,update: function(aDt) {
 		flixel_FlxSprite.prototype.update.call(this,aDt);
+	}
+	,destroy: function() {
+		flixel_FlxSprite.prototype.destroy.call(this);
 	}
 	,__class__: gameObjects_Trap
 });
@@ -84696,6 +84717,9 @@ skill_FlxButtonAnimationSkill.prototype = $extend(flixel_FlxSprite.prototype,{
 	,isButtonClicked: function() {
 		return flixel_FlxG.mouse._leftButton.current == -1;
 	}
+	,destroy: function() {
+		flixel_FlxSprite.prototype.destroy.call(this);
+	}
 	,__class__: skill_FlxButtonAnimationSkill
 });
 var skill_ISkillLogic = function() { };
@@ -85044,6 +85068,9 @@ states_GameOverPlayer.prototype = $extend(flixel_FlxState.prototype,{
 			}
 		}
 	}
+	,destroy: function() {
+		flixel_FlxState.prototype.destroy.call(this);
+	}
 	,__class__: states_GameOverPlayer
 });
 var states_GameState = function() {
@@ -85333,10 +85360,13 @@ states_GameWinPlayer.prototype = $extend(flixel_FlxState.prototype,{
 			}
 		}
 	}
+	,destroy: function() {
+		flixel_FlxState.prototype.destroy.call(this);
+	}
 	,__class__: states_GameWinPlayer
 });
 var states_MainMenu = function() {
-	this.index = 0;
+	this.vIndex = 0;
 	this.vMaxIndexForButtons = 2;
 	flixel_FlxState.call(this);
 };
@@ -85348,7 +85378,7 @@ states_MainMenu.prototype = $extend(flixel_FlxState.prototype,{
 	,vInstructionsButton: null
 	,vExitButton: null
 	,vMaxIndexForButtons: null
-	,index: null
+	,vIndex: null
 	,create: function() {
 		var spacerY = 50;
 		var spacerYTitle = 150;
@@ -85412,22 +85442,22 @@ states_MainMenu.prototype = $extend(flixel_FlxState.prototype,{
 		var tmp;
 		var _this = flixel_FlxG.keys.justPressed;
 		if(_this.keyManager.checkStatus(40,_this.status)) {
-			tmp = this.index < this.vMaxIndexForButtons;
+			tmp = this.vIndex < this.vMaxIndexForButtons;
 		} else {
 			tmp = false;
 		}
 		if(tmp) {
-			this.index += 1;
+			this.vIndex += 1;
 		}
 		var tmp1;
 		var _this1 = flixel_FlxG.keys.justPressed;
 		if(_this1.keyManager.checkStatus(38,_this1.status)) {
-			tmp1 = this.index > 0;
+			tmp1 = this.vIndex > 0;
 		} else {
 			tmp1 = false;
 		}
 		if(tmp1) {
-			this.index -= 1;
+			this.vIndex -= 1;
 		}
 		var tmp2;
 		var _this2 = flixel_FlxG.keys.justPressed;
@@ -85441,7 +85471,7 @@ states_MainMenu.prototype = $extend(flixel_FlxState.prototype,{
 			this.vPlayButton.animation.play("up");
 			this.vInstructionsButton.animation.play("up");
 			this.vExitButton.animation.play("up");
-			var _g = this.index;
+			var _g = this.vIndex;
 			switch(_g) {
 			case 0:
 				this.vPlayButton.animation.play("over");
@@ -85459,7 +85489,7 @@ states_MainMenu.prototype = $extend(flixel_FlxState.prototype,{
 			this.vPlayButton.animation.play("up");
 			this.vInstructionsButton.animation.play("up");
 			this.vExitButton.animation.play("up");
-			var _g1 = this.index;
+			var _g1 = this.vIndex;
 			switch(_g1) {
 			case 0:
 				this.vPlayButton.animation.play("down");
@@ -85491,6 +85521,9 @@ states_MainMenu.prototype = $extend(flixel_FlxState.prototype,{
 	,onClickExit: function(aButton) {
 		openfl_system_System.exit(0);
 		this.vExitButton.animation.play("up");
+	}
+	,destroy: function() {
+		flixel_FlxState.prototype.destroy.call(this);
 	}
 	,__class__: states_MainMenu
 });
@@ -85531,6 +85564,9 @@ states_MainMenuInstructions.prototype = $extend(flixel_FlxState.prototype,{
 				flixel_FlxG.game._requestedState = nextState;
 			}
 		}
+	}
+	,destroy: function() {
+		flixel_FlxState.prototype.destroy.call(this);
 	}
 	,__class__: states_MainMenuInstructions
 });
@@ -85593,25 +85629,6 @@ openfl_display_DisplayObject.__instanceCount = 0;
 openfl_display_DisplayObject.__worldRenderDirty = 0;
 openfl_display_DisplayObject.__worldTransformDirty = 0;
 openfl_display_DisplayObject.__cacheAsBitmapMode = false;
-AssetPaths.button__png = "assets/img/button.png";
-AssetPaths.julia__png = "assets/img/julia.png";
-AssetPaths.ohno__jpg = "assets/img/ohno.jpg";
-AssetPaths.ariosheet__png = "assets/img/Sheets/ariosheet.png";
-AssetPaths.fantasmaDiosSheet__png = "assets/img/Sheets/fantasmaDiosSheet.png";
-AssetPaths.IdleSheet__png = "assets/img/Sheets/IdleSheet.png";
-AssetPaths.moneda__png = "assets/img/Sheets/moneda.png";
-AssetPaths.monedagiro__png = "assets/img/Sheets/monedagiro.png";
-AssetPaths.RunningSheet__png = "assets/img/Sheets/RunningSheet.png";
-AssetPaths.SheetCaida__png = "assets/img/Sheets/SheetCaida.png";
-AssetPaths.SheetSalto__png = "assets/img/Sheets/SheetSalto.png";
-AssetPaths.balaplacebo__png = "assets/img/Skills/balaplacebo.png";
-AssetPaths.cosahermosa__csv = "assets/map/cosahermosa.csv";
-AssetPaths.fondo_azul__png = "assets/map/fondo_azul.png";
-AssetPaths.mapCSV_map2_specials__csv = "assets/map/mapCSV_map2_specials.csv";
-AssetPaths.mapCSV_map2_tiles__csv = "assets/map/mapCSV_map2_tiles.csv";
-AssetPaths.tile_ladrillos__png = "assets/map/tile_ladrillos.png";
-AssetPaths.LaMulanaOSV__wav = "assets/sound/LaMulanaOSV.wav";
-AssetPaths.MarioJump__wav = "assets/sound/MarioJump.wav";
 CharacterStates.cStunnedState = "Stunned";
 CharacterStates.cNormalState = "Normal";
 openfl_text_Font.__registeredFonts = [];
@@ -85627,6 +85644,25 @@ Xml.Comment = 3;
 Xml.DocType = 4;
 Xml.ProcessingInstruction = 5;
 Xml.Document = 6;
+auxiliar_AssetPaths.button__png = "assets/img/button.png";
+auxiliar_AssetPaths.julia__png = "assets/img/julia.png";
+auxiliar_AssetPaths.ohno__jpg = "assets/img/ohno.jpg";
+auxiliar_AssetPaths.ariosheet__png = "assets/img/Sheets/ariosheet.png";
+auxiliar_AssetPaths.fantasmaDiosSheet__png = "assets/img/Sheets/fantasmaDiosSheet.png";
+auxiliar_AssetPaths.IdleSheet__png = "assets/img/Sheets/IdleSheet.png";
+auxiliar_AssetPaths.moneda__png = "assets/img/Sheets/moneda.png";
+auxiliar_AssetPaths.monedagiro__png = "assets/img/Sheets/monedagiro.png";
+auxiliar_AssetPaths.RunningSheet__png = "assets/img/Sheets/RunningSheet.png";
+auxiliar_AssetPaths.SheetCaida__png = "assets/img/Sheets/SheetCaida.png";
+auxiliar_AssetPaths.SheetSalto__png = "assets/img/Sheets/SheetSalto.png";
+auxiliar_AssetPaths.balaplacebo__png = "assets/img/Skills/balaplacebo.png";
+auxiliar_AssetPaths.cosahermosa__csv = "assets/map/cosahermosa.csv";
+auxiliar_AssetPaths.fondo_azul__png = "assets/map/fondo_azul.png";
+auxiliar_AssetPaths.mapCSV_map2_specials__csv = "assets/map/mapCSV_map2_specials.csv";
+auxiliar_AssetPaths.mapCSV_map2_tiles__csv = "assets/map/mapCSV_map2_tiles.csv";
+auxiliar_AssetPaths.tile_ladrillos__png = "assets/map/tile_ladrillos.png";
+auxiliar_AssetPaths.LaMulanaOSV__wav = "assets/sound/LaMulanaOSV.wav";
+auxiliar_AssetPaths.MarioJump__wav = "assets/sound/MarioJump.wav";
 flixel_FlxBasic.activeCount = 0;
 flixel_FlxBasic.visibleCount = 0;
 flixel_math_FlxRect._pool = new flixel_util_FlxPool_$flixel_$math_$FlxRect(flixel_math_FlxRect);

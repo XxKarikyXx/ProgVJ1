@@ -183,6 +183,10 @@ class FlxButtonAnimationSkill extends FlxSprite
         return FlxG.mouse.justReleased;
     }
 
+		override public function destroy():Void
+	{
+		super.destroy();
+	}
 }
 
 

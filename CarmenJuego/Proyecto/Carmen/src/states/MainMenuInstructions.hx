@@ -4,10 +4,6 @@ import flixel.FlxG;
 import flixel.FlxState;
 import flixel.text.FlxText;
 import flixel.ui.FlxButton;
-import flixel.util.FlxColor;
-import openfl.geom.Rectangle;
-import openfl.system.System;
-import openfl.text.TextFieldAutoSize;
 
 /**
  * ...
@@ -58,6 +54,11 @@ class MainMenuInstructions extends FlxState
 			FlxG.switchState(new MainMenu());
 		}
 
+	}
+	
+	override public function destroy():Void
+	{
+		super.destroy();
 	}
 
 }

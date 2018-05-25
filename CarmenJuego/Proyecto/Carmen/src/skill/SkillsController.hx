@@ -1,8 +1,7 @@
 package skill;
 
-import skill.ISkillLogic;
-import skill.SkillLogicProjectil;
-import skill.SkillLogicTrap;
+
+import auxiliar.AssetPaths;
 import flixel.FlxG;
 import flixel.group.FlxGroup;
 import flixel.text.FlxText;

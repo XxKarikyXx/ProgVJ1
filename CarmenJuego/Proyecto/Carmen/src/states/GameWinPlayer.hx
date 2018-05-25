@@ -33,4 +33,9 @@ class GameWinPlayer extends FlxState
 			FlxG.switchState(new MainMenu());
 		}
 	}
+	
+	override public function destroy():Void
+	{
+		super.destroy();
+	}
 }

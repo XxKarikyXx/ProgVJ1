@@ -1,29 +1,22 @@
 package states ;
-import flash.geom.ColorTransform;
-import flixel.FlxBasic;
-import flixel.FlxCamera;
+import auxiliar.AssetPaths;
 import flixel.FlxG;
 import flixel.FlxObject;
+import flixel.FlxSprite;
 import flixel.FlxState;
+import flixel.group.FlxGroup;
 import flixel.math.FlxPoint;
-import flixel.system.FlxAssets.FlxSoundAsset;
 import flixel.system.FlxSound;
 import flixel.text.FlxText;
 import flixel.tile.FlxTilemap;
-import flixel.util.FlxColor;
 import gameObjects.Bomb;
-import gameObjects.Player1;
-import gameObjects.God;
 import gameObjects.Coin;
+import gameObjects.God;
+import gameObjects.Player1;
 import gameObjects.ProjectilePlayer;
-import skill.SkillsController;
 import gameObjects.Trap;
-import openfl.Assets;
-import flixel.FlxSprite;
-import flixel.graphics.frames.FlxAtlasFrames;
-import flixel.system.FlxAssets.FlxGraphicAsset;
-import flixel.group.FlxGroup;
-import states.GameWinPlayer;
+import skill.SkillsController;
+
 
 /**
  * ...

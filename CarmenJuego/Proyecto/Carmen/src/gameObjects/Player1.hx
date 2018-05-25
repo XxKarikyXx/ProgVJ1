@@ -1,5 +1,6 @@
 package gameObjects;
 
+import auxiliar.AssetPaths;
 import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.FlxSprite;
@@ -226,5 +227,10 @@ class Player1 extends FlxSprite
 	public function get_vCoinsCount():Int
 	{
 		return vCoinsCount;
+	}
+	
+		override public function destroy():Void
+	{
+		super.destroy();
 	}
 }
