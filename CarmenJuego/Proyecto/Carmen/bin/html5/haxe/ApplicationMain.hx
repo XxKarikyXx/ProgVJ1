@@ -1,285 +1,30 @@
-#if !macro
+package;
 
+
+#if macro
+import haxe.macro.Compiler;
+import haxe.macro.Context;
+import haxe.macro.Expr;
+#end
 
 @:access(lime.app.Application)
-@:access(lime.Assets)
+@:access(lime.system.System)
 @:access(openfl.display.Stage)
 
 
-class ApplicationMain {
+@:dox(hide) class ApplicationMain {
 	
 	
-	public static var config:lime.app.Config;
-	public static var preloader:openfl.display.Preloader;
-	
-	
-	public static function create ():Void {
-		
-		var app = new openfl.display.Application ();
-		app.create (config);
-		
-		var display = new NMEPreloader ();
-		
-		preloader = new openfl.display.Preloader (display);
-		app.setPreloader (preloader);
-		preloader.onComplete.add (init);
-		preloader.create (config);
-		
-		#if (js && html5)
-		var urls = [];
-		var types = [];
-		
-		
-		urls.push ("flixel/sounds/beep.ogg");
-		types.push (lime.Assets.AssetType.SOUND);
-		
-		
-		urls.push ("flixel/sounds/flixel.ogg");
-		types.push (lime.Assets.AssetType.SOUND);
-		
-		
-		urls.push ("Nokia Cellphone FC Small");
-		types.push (lime.Assets.AssetType.FONT);
-		
-		
-		urls.push ("Monsterrat");
-		types.push (lime.Assets.AssetType.FONT);
-		
-		
-		urls.push ("flixel/images/ui/button.png");
-		types.push (lime.Assets.AssetType.IMAGE);
-		
-		
-		urls.push ("flixel/images/logo/default.png");
-		types.push (lime.Assets.AssetType.IMAGE);
-		
-		
-		urls.push ("img/button.png");
-		types.push (lime.Assets.AssetType.IMAGE);
-		
-		
-		urls.push ("img/julia.png");
-		types.push (lime.Assets.AssetType.IMAGE);
-		
-		
-		urls.push ("img/julia.xml");
-		types.push (lime.Assets.AssetType.TEXT);
-		
-		
-		urls.push ("img/ohno.jpg");
-		types.push (lime.Assets.AssetType.IMAGE);
-		
-		
-		urls.push ("img/Sheets/ariosheet.png");
-		types.push (lime.Assets.AssetType.IMAGE);
-		
-		
-		urls.push ("img/Sheets/fantasmaDiosSheet.png");
-		types.push (lime.Assets.AssetType.IMAGE);
-		
-		
-		urls.push ("img/Sheets/IdleSheet.png");
-		types.push (lime.Assets.AssetType.IMAGE);
-		
-		
-		urls.push ("img/Sheets/moneda.png");
-		types.push (lime.Assets.AssetType.IMAGE);
-		
-		
-		urls.push ("img/Sheets/moneda.xml");
-		types.push (lime.Assets.AssetType.TEXT);
-		
-		
-		urls.push ("img/Sheets/monedagiro.png");
-		types.push (lime.Assets.AssetType.IMAGE);
-		
-		
-		urls.push ("img/Sheets/monedagiro.xml");
-		types.push (lime.Assets.AssetType.TEXT);
-		
-		
-		urls.push ("img/Sheets/RunningSheet.png");
-		types.push (lime.Assets.AssetType.IMAGE);
-		
-		
-		urls.push ("img/Sheets/SheetCaida.png");
-		types.push (lime.Assets.AssetType.IMAGE);
-		
-		
-		urls.push ("img/Sheets/SheetSalto.png");
-		types.push (lime.Assets.AssetType.IMAGE);
-		
-		
-		urls.push ("img/Skills/balaplacebo.png");
-		types.push (lime.Assets.AssetType.IMAGE);
-		
-		
-		urls.push ("assets/img/button.png");
-		types.push (lime.Assets.AssetType.IMAGE);
-		
-		
-		urls.push ("assets/img/julia.png");
-		types.push (lime.Assets.AssetType.IMAGE);
-		
-		
-		urls.push ("assets/img/julia.xml");
-		types.push (lime.Assets.AssetType.TEXT);
-		
-		
-		urls.push ("assets/img/ohno.jpg");
-		types.push (lime.Assets.AssetType.IMAGE);
-		
-		
-		urls.push ("assets/img/Sheets/ariosheet.png");
-		types.push (lime.Assets.AssetType.IMAGE);
-		
-		
-		urls.push ("assets/img/Sheets/fantasmaDiosSheet.png");
-		types.push (lime.Assets.AssetType.IMAGE);
-		
-		
-		urls.push ("assets/img/Sheets/IdleSheet.png");
-		types.push (lime.Assets.AssetType.IMAGE);
-		
-		
-		urls.push ("assets/img/Sheets/moneda.png");
-		types.push (lime.Assets.AssetType.IMAGE);
-		
-		
-		urls.push ("assets/img/Sheets/moneda.xml");
-		types.push (lime.Assets.AssetType.TEXT);
-		
-		
-		urls.push ("assets/img/Sheets/monedagiro.png");
-		types.push (lime.Assets.AssetType.IMAGE);
-		
-		
-		urls.push ("assets/img/Sheets/monedagiro.xml");
-		types.push (lime.Assets.AssetType.TEXT);
-		
-		
-		urls.push ("assets/img/Sheets/RunningSheet.png");
-		types.push (lime.Assets.AssetType.IMAGE);
-		
-		
-		urls.push ("assets/img/Sheets/SheetCaida.png");
-		types.push (lime.Assets.AssetType.IMAGE);
-		
-		
-		urls.push ("assets/img/Sheets/SheetSalto.png");
-		types.push (lime.Assets.AssetType.IMAGE);
-		
-		
-		urls.push ("assets/img/Skills/balaplacebo.png");
-		types.push (lime.Assets.AssetType.IMAGE);
-		
-		
-		urls.push ("assets/map/cosahermosa.csv");
-		types.push (lime.Assets.AssetType.TEXT);
-		
-		
-		urls.push ("assets/map/cosahermosa2.tmx");
-		types.push (lime.Assets.AssetType.TEXT);
-		
-		
-		urls.push ("assets/map/dataTilespng.tsx");
-		types.push (lime.Assets.AssetType.TEXT);
-		
-		
-		urls.push ("assets/map/fondo_azul.png");
-		types.push (lime.Assets.AssetType.IMAGE);
-		
-		
-		urls.push ("assets/map/mapCSV_map2_specials.csv");
-		types.push (lime.Assets.AssetType.TEXT);
-		
-		
-		urls.push ("assets/map/mapCSV_map2_tiles.csv");
-		types.push (lime.Assets.AssetType.TEXT);
-		
-		
-		urls.push ("assets/map/tile_ladrillos.png");
-		types.push (lime.Assets.AssetType.IMAGE);
-		
-		
-		urls.push ("assets/map/tile_ladrillos.tsx");
-		types.push (lime.Assets.AssetType.TEXT);
-		
-		
-		urls.push ("assets/openfl.svg");
-		types.push (lime.Assets.AssetType.TEXT);
-		
-		
-		urls.push ("assets/sound/LaMulanaOSV.wav");
-		types.push (lime.Assets.AssetType.SOUND);
-		
-		
-		urls.push ("assets/sound/MarioJump.wav");
-		types.push (lime.Assets.AssetType.SOUND);
-		
-		
-		
-		if (config.assetsPrefix != null) {
-			
-			for (i in 0...urls.length) {
-				
-				if (types[i] != lime.Assets.AssetType.FONT) {
-					
-					urls[i] = config.assetsPrefix + urls[i];
-					
-				}
-				
-			}
-			
-		}
-		
-		preloader.load (urls, types);
-		#end
-		
-		var result = app.exec ();
-		
-		#if (sys && !nodejs && !emscripten)
-		Sys.exit (result);
-		#end
-		
-	}
-	
-	
-	public static function init ():Void {
-		
-		var loaded = 0;
-		var total = 0;
-		var library_onLoad = function (__) {
-			
-			loaded++;
-			
-			if (loaded == total) {
-				
-				start ();
-				
-			}
-			
-		}
-		
-		preloader = null;
-		
-		
-		
-		
-		if (total == 0) {
-			
-			start ();
-			
-		}
-		
-	}
+	#if !macro
 	
 	
 	public static function main () {
 		
-		config = {
+		var projectName = "Carmen";
+		
+		var config = {
 			
-			build: "1088",
+			build: "3",
 			company: "..",
 			file: "Carmen",
 			fps: 60,
@@ -290,15 +35,21 @@ class ApplicationMain {
 			windows: [
 				
 				{
+					allowHighDPI: false,
+					alwaysOnTop: false,
 					antialiasing: 0,
 					background: 0,
 					borderless: false,
+					colorDepth: 16,
 					depthBuffer: false,
 					display: 0,
 					fullscreen: false,
-					hardware: false,
+					hardware: true,
 					height: 1080,
-					parameters: "{}",
+					hidden: #if munit true #else false #end,
+					maximized: false,
+					minimized: false,
+					parameters: {},
 					resizable: true,
 					stencilBuffer: true,
 					title: "Carmen",
@@ -311,7 +62,13 @@ class ApplicationMain {
 			
 		};
 		
-		#if hxtelemetry
+		lime.system.System.__registerEntryPoint (projectName, create, config);
+		
+		#if sys
+		lime.system.System.__parseArguments (config);
+		#end
+		
+		#if (hxtelemetry && !macro)
 		var telemetry = new hxtelemetry.HxTelemetry.Config ();
 		telemetry.allocations = true;
 		telemetry.host = "localhost";
@@ -321,69 +78,185 @@ class ApplicationMain {
 		
 		#if (js && html5)
 		#if (munit || utest)
-		openfl.Lib.embed (null, 1920, 1080, "000000");
+		lime.system.System.embed (projectName, null, 1920, 1080, config);
 		#end
 		#else
-		create ();
+		create (config);
 		#end
 		
 	}
 	
 	
-	public static function start ():Void {
+	public static function create (config:lime.app.Config):Void {
 		
-		var hasMain = false;
-		var entryPoint = Type.resolveClass ("Main");
+		var app = new openfl.display.Application ();
+		app.create (config);
 		
-		for (methodName in Type.getClassFields (entryPoint)) {
+		ManifestResources.init (config);
+		
+		var preloader = getPreloader ();
+		app.setPreloader (preloader);
+		preloader.create (config);
+		preloader.onComplete.add (start.bind (app.window.stage));
+		
+		for (library in ManifestResources.preloadLibraries) {
 			
-			if (methodName == "main") {
+			preloader.addLibrary (library);
+			
+		}
+		
+		for (name in ManifestResources.preloadLibraryNames) {
+			
+			preloader.addLibraryName (name);
+			
+		}
+		
+		preloader.load ();
+		
+		var result = app.exec ();
+		
+		#if (sys && !ios && !nodejs && !emscripten)
+		lime.system.System.exit (result);
+		#end
+		
+	}
+	
+	
+	public static function start (stage:openfl.display.Stage):Void {
+		
+		#if flash
+		
+		ApplicationMain.getEntryPoint ();
+		
+		#else
+		
+		try {
+			
+			ApplicationMain.getEntryPoint ();
+			
+			stage.dispatchEvent (new openfl.events.Event (openfl.events.Event.RESIZE, false, false));
+			
+			if (stage.window.fullscreen) {
 				
-				hasMain = true;
-				break;
+				stage.dispatchEvent (new openfl.events.FullScreenEvent (openfl.events.FullScreenEvent.FULL_SCREEN, false, false, true, true));
 				
 			}
 			
-		}
-		
-		lime.Assets.initialize ();
-		
-		if (hasMain) {
+		} catch (e:Dynamic) {
 			
-			Reflect.callMethod (entryPoint, Reflect.field (entryPoint, "main"), []);
-			
-		} else {
-			
-			var instance:DocumentClass = Type.createInstance (DocumentClass, []);
-			
-			/*if (Std.is (instance, openfl.display.DisplayObject)) {
-				
-				openfl.Lib.current.addChild (cast instance);
-				
-			}*/
+			#if !display
+			stage.__handleError (e);
+			#end
 			
 		}
 		
-		#if !flash
-		if (openfl.Lib.current.stage.window.fullscreen) {
-			
-			openfl.Lib.current.stage.dispatchEvent (new openfl.events.FullScreenEvent (openfl.events.FullScreenEvent.FULL_SCREEN, false, false, true, true));
-			
-		}
-		
-		openfl.Lib.current.stage.dispatchEvent (new openfl.events.Event (openfl.events.Event.RESIZE, false, false));
 		#end
 		
 	}
 	
 	
-	#if neko
+	#end
+	
+	
+	macro public static function getEntryPoint () {
+		
+		var hasMain = false;
+		
+		switch (Context.follow (Context.getType ("Main"))) {
+			
+			case TInst (t, params):
+				
+				var type = t.get ();
+				
+				for (method in type.statics.get ()) {
+					
+					if (method.name == "main") {
+						
+						hasMain = true;
+						break;
+						
+					}
+					
+				}
+				
+				if (hasMain) {
+					
+					return Context.parse ("@:privateAccess Main.main ()", Context.currentPos ());
+					
+				} else if (type.constructor != null) {
+					
+					return macro {
+						
+						var current = stage.getChildAt (0);
+						
+						if (current == null || !Std.is (current, openfl.display.DisplayObjectContainer)) {
+							
+							current = new openfl.display.MovieClip ();
+							stage.addChild (current);
+							
+						}
+						
+						new DocumentClass (cast current);
+						
+					};
+					
+				} else {
+					
+					Context.fatalError ("Main class \"Main\" has neither a static main nor a constructor.", Context.currentPos ());
+					
+				}
+				
+			default:
+				
+				Context.fatalError ("Main class \"Main\" isn't a class.", Context.currentPos ());
+			
+		}
+		
+		return null;
+		
+	}
+	
+	
+	macro public static function getPreloader () {
+		
+		
+		return macro { new openfl.display.Preloader (new openfl.display.Preloader.DefaultPreloader ()); };
+		
+		
+	}
+	
+	
+	#if !macro
 	@:noCompletion @:dox(hide) public static function __init__ () {
 		
+		var init = lime.app.Application;
+		
+		#if neko
+		// Copy from https://github.com/HaxeFoundation/haxe/blob/development/std/neko/_std/Sys.hx#L164
+		// since Sys.programPath () isn't available in __init__
+		var sys_program_path = {
+			var m = neko.vm.Module.local().name;
+			try {
+				sys.FileSystem.fullPath(m);
+			} catch (e:Dynamic) {
+				// maybe the neko module name was supplied without .n extension...
+				if (!StringTools.endsWith(m, ".n")) {
+					try {
+						sys.FileSystem.fullPath(m + ".n");
+					} catch (e:Dynamic) {
+						m;
+					}
+				} else {
+					m;
+				}
+			}
+		};
+		
 		var loader = new neko.vm.Loader (untyped $loader);
-		loader.addPath (haxe.io.Path.directory (Sys.executablePath ()));
+		loader.addPath (haxe.io.Path.directory (#if (haxe_ver >= 3.3) sys_program_path #else Sys.executablePath () #end));
 		loader.addPath ("./");
 		loader.addPath ("@executable_path/");
+		#end
 		
 	}
 	#end
@@ -392,15 +265,14 @@ class ApplicationMain {
 }
 
 
+#if !macro
+
+
 @:build(DocumentClass.build())
-@:keep class DocumentClass extends Main {}
+@:keep @:dox(hide) class DocumentClass extends Main {}
 
 
 #else
-
-
-import haxe.macro.Context;
-import haxe.macro.Expr;
 
 
 class DocumentClass {
@@ -411,27 +283,35 @@ class DocumentClass {
 		var classType = Context.getLocalClass ().get ();
 		var searchTypes = classType;
 		
-		while (searchTypes.superClass != null) {
+		while (searchTypes != null) {
 			
-			if (searchTypes.pack.length == 2 && searchTypes.pack[1] == "display" && searchTypes.name == "DisplayObject") {
+			if (searchTypes.module == "openfl.display.DisplayObject" || searchTypes.module == "flash.display.DisplayObject") {
 				
 				var fields = Context.getBuildFields ();
 				
 				var method = macro {
 					
-					openfl.Lib.current.addChild (this);
+					current.addChild (this);
 					super ();
 					dispatchEvent (new openfl.events.Event (openfl.events.Event.ADDED_TO_STAGE, false, false));
 					
 				}
 				
-				fields.push ({ name: "new", access: [ APublic ], kind: FFun({ args: [], expr: method, params: [], ret: macro :Void }), pos: Context.currentPos () });
+				fields.push ({ name: "new", access: [ APublic ], kind: FFun({ args: [ { name: "current", opt: false, type: macro :openfl.display.DisplayObjectContainer, value: null } ], expr: method, params: [], ret: macro :Void }), pos: Context.currentPos () });
 				
 				return fields;
 				
 			}
 			
-			searchTypes = searchTypes.superClass.t.get ();
+			if (searchTypes.superClass != null) {
+				
+				searchTypes = searchTypes.superClass.t.get ();
+				
+			} else {
+				
+				searchTypes = null;
+				
+			}
 			
 		}
 		
