@@ -9,6 +9,7 @@ import flixel.math.FlxPoint;
 import flixel.system.FlxAssets.FlxGraphicAsset;
 import flixel.system.FlxSound;
 import flixel.tile.FlxTilemap;
+import powerups.IState;
 
 /**
  * ...
@@ -22,8 +23,9 @@ class Player1 extends FlxSprite
 	@:isVar public var vProjectilesCount:Int = -1;
 	public var vCoins:FlxGroup;
 
-	@:isVar public var vState:String = CharacterStates.cNormalState;
+	@:isVar public var vState:String = CharacterStates.cNormalState; //Reemplazar
 	@:isVar public var vStateDuration:Float = -1;
+	@:isVar public var vCurrentState:IState;
 
 	@:isVar public var vJumpSound:FlxSound;
 

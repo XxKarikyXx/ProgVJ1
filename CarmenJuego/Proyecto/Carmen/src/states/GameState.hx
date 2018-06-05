@@ -13,8 +13,10 @@ import gameObjects.Bomb;
 import gameObjects.Coin;
 import gameObjects.God;
 import gameObjects.Player1;
+import gameObjects.PowerUp;
 import gameObjects.ProjectilePlayer;
 import gameObjects.Trap;
+import powerups.PlayerPowerUpController;
 import skill.SkillsController;
 
 
@@ -27,6 +29,9 @@ class GameState extends FlxState
 	var vMap:FlxTilemap;
 	var vPlayer:Player1;
 	var vGod:God;
+	var vPowerUps:FlxGroup;
+	var vPlayerPowerUpController:PlayerPowerUpController;
+	var vGodPowerUpController:GodPowerUpController;
 	var vProjectilesPlayer:FlxGroup;
 	var vProjectilesGod:FlxGroup;
 
@@ -113,6 +118,11 @@ class GameState extends FlxState
 
 		vTextGame = new FlxText(50, 50, 0, "Objetos Jugador: " + vPlayer.vCoinsCount + "/" + vCoinsPlayer.length, 20);
 		add(vTextGame);
+		
+		vPowerUps = new FlxGroup();
+		add(vPowerUps);
+		
+		vPlayerPowerUpController = new PlayerPowerUpController();
 
 		vStunTextGod = new FlxText(50, 50, 0, "Inmovilizado", 10);
 		vStunTextGod.set_visible(false);
@@ -234,6 +244,8 @@ vSkillsController.set_vBombs(vBombsGod);
 		FlxG.overlap(vPlayer, vGod, playerVsGod);
 		FlxG.overlap(vPlayer, vTrapsGod, trapsVsPlayer);
 		FlxG.overlap(vPlayer, vBombsGod, bombsVsPlayer);
+		FlxG.overlap(vPlayer, vPowerUps, playerVsPowerUp);
+		FlxG.overlap(vGod, vPowerUps, godVsPowerUp);
 
 		if (playerCollectedAllCoins())
 		{
@@ -353,6 +365,18 @@ vSkillsController.set_vBombs(vBombsGod);
 		}
 	}
 
+	function playerVsPowerUp(aPlayer:Player1, aPowerUp:PowerUp){
+		vPlayerPowerUpController.activatePowerUp(aPowerUp, aPlayer);
+		vPowerUps.remove(aPowerUp, true);
+		aPowerUp.destroy();
+	}
+	
+	function godVsPowerUP(aGod:God, aPowerUp:PowerUp){
+		vGodPowerUpController.activatePowerUp(aPowerUp, aGod);
+		vPowerUps.remove(aPowerUp, true);
+		aPowerUp.destroy();
+	}
+	
 	function playerVsGod(aPlayer:Player1, aGod:God)
 	{
 		aGod.vState = "Stunned";
